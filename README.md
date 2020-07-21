@@ -22,5 +22,10 @@ remember set value as attribute if your option is a plain string but in direct a
 
 you can add callbacks to manage the way component works
 for example if you have array of object as a option list and want to show custome title for option you can use:
-`dropDownElement.callbacks.getOptionTitle = (option)=>{return`${option.province}-${option.state}-${option.city}`}`
+
+```js
+    dropDownElement.callbacks.getOptionTitle = (option)=>{return`${option.province}-${option.state}-${option.city}`}
+    dropDownElement.callbacks.getOptionValue = (option)=>{return`${option.value}`}
+```
+
 remember you must set this callback before set your optionList
