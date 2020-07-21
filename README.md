@@ -29,3 +29,11 @@ for example if you have array of object as a option list and want to show custom
 ```
 
 remember you must set this callback before set your optionList
+
+### events
+
+```js
+
+    dropDownElement.addEventListener('change',()=>{/*your function*/});
+
+```
