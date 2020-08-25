@@ -1,10 +1,11 @@
-@import '../../../../Assets/Scss/Medias.scss';
+@import '../../../common/scss/Medias.scss';
 
 .jb-select-web-component {
     width: 100%;
     margin: 12px 0;
     position: relative;
     box-sizing: border-box;
+    direction: rtl;
     &.--focused{
         @include mobile-tablet{
             position: absolute;
