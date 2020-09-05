@@ -2,7 +2,7 @@
 
 .jb-select-web-component {
     width: 100%;
-    margin: 12px 0;
+    margin: var(--jb-select-margin , 12px 0) ;
     position: relative;
     box-sizing: border-box;
     direction: rtl;
@@ -22,7 +22,7 @@
             @include mobile-tablet{
                 position: initial;
                 margin: 16px 0;
-                border-radius: 16px;
+                border-radius: var(--jb-select-border-radius , 16px);
             }
         }
         label{
@@ -36,7 +36,7 @@
     &.--has-value{
         //if user select a option and value is setted and not null
         .select-box{
-            border-color: #c3ff14;
+            border-color: var(--jb-select-border-color-selected , #c3ff14) ;
         }
     }
     label {
@@ -45,16 +45,19 @@
         display: block;
         font-size: 0.8em;
         color: #1f1735;
+        &.--hide{
+            display: none;
+        }
     }
 
     .select-box {
         width: 100%;
         box-sizing: border-box;
         height: 40px;
-        border: solid 1px #f7f6f6;
-        background-color: #f7f6f6;
-        border-bottom: solid 3px #f7f6f6;
-        border-radius: 16px;
+        border: solid 1px var(--jb-select-border-color , #f7f6f6);
+        background-color: var(--jb-select-bgcolor , #f7f6f6) ;
+        border-bottom: solid 3px var(--jb-select-border-color , #f7f6f6);
+        border-radius: var(--jb-select-border-radius , 16px);
         margin: 4px 0px;
         display: block;
         overflow: hidden;
@@ -63,10 +66,10 @@
 
         &:focus-within {
             border-color: #1e2832;
-            border-bottom-color: #f7f6f6;
-            border-radius: 16px 16px 0 0;
+            border-bottom-color: var(--jb-select-border-color , #f7f6f6);;
+            border-radius: var(--jb-select-border-radius , 16px) var(--jb-select-border-radius , 16px) 0 0;
             @include mobile-tablet{
-                border-radius: 16px;
+                border-radius: var(--jb-select-border-radius , 16px);
                 border-bottom-color: #1e2832;
             }
         }
@@ -107,8 +110,8 @@
         height: auto;
         overflow: hidden;
         width: 100%;
-        background-color: #f7f6f6;
-        border-radius: 0 0 16px 16px;
+        background-color: var(--jb-select-bgcolor , #f7f6f6) ;
+        border-radius: 0 0 var(--jb-select-border-radius , 16px) var(--jb-select-border-radius , 16px);
         border:solid 1px #1e2832;
         border-top: none;
         border-bottom:solid 3px #1e2832;

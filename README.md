@@ -37,3 +37,14 @@ remember you must set this callback before set your optionList
     dropDownElement.addEventListener('change',()=>{/*your function*/});
 
 ```
+### set custome style
+
+in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.    
+if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component 
+| css variable name                   | description                                                                                   |
+| -------------                       | -------------                                                                                 |
+| --jb-select-margin                  | web-component margin defualt is `0 12px`                                                      |
+| --jb-select-border-radius           | web-component border-radius defualt is `16px`                                                 |
+| --jb-select-border-color            | border color of select in normal mode                                                         |
+| --jb-select-border-color-selected   | border color when user select a value from list                                               |
+| --jb-select-bgcolor                 | background color of input                                                                     |
