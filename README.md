@@ -18,6 +18,11 @@ to select value in your code you have 2 option:
 2- set through dom attribute `<jb-select value="yourValueSting"></jb-select>`
 remember set value as attribute if your option is a plain string but in direct assign like first option you can attach both string or object value assignation
 
+### placeholder
+ you can set placeholder when data is empty
+ ```html
+ <jb-select placeholder="please select"></jb-select>
+ ```
 ### callbacks
 
 you can add callbacks to manage the way component works
