@@ -5,7 +5,6 @@
     margin: var(--jb-select-margin , 12px 0) ;
     position: relative;
     box-sizing: border-box;
-    direction: rtl;
     &.--focused{
         @include mobile-tablet{
             position: absolute;
@@ -59,11 +58,11 @@
         border-bottom: solid 3px var(--jb-select-border-color , #f7f6f6);
         border-radius: var(--jb-select-border-radius , 16px);
         margin: 4px 0px;
-        display: block;
         overflow: hidden;
         display: flex;
         justify-content: space-between;
-
+        padding-inline-end: 16px;
+        gap: 8px;
         &:focus-within {
             border-color: var(--jb-select-border-color , #1e2832);
             border-bottom-color: var(--jb-select-border-color , #f7f6f6);;
@@ -90,6 +89,15 @@
             &:focus {
                 outline: none;
             }
+        }
+        .arrow-icon{
+            width: 8px;
+            height: 100%;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' id='Layer_1' x='0px' y='0px' viewBox='0 0 494.1 371.1' style='enable-background:new 0 0 494.1 371.1;' xml:space='preserve'><path d='M293,343.8L480.9,69.3c8.7-12.7,13.3-25.4,13.3-36.1c0-20.5-16.5-33.2-44-33.2H44C16.4,0,0,12.7,0,33.2  c0,10.6,4.6,23.2,13.3,35.9l187.9,274.6c12.1,17.7,28.4,27.4,45.9,27.4C264.6,371.1,280.9,361.4,293,343.8z'/></svg>");
+            background-position: end;
+            background-repeat: no-repeat;
+            background-position-x: 0;
+            background-position-y: center;
         }
     }
     .message-box{
@@ -135,6 +143,7 @@
                 display: flex;
                 align-items: center;
                 font-size: 0.9em;
+                color: var( --jb-select-option-color, inherit);
                 &:hover{
                     background-color: #1073db;
                     color:#fff;
