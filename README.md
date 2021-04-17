@@ -1,12 +1,18 @@
 # jb-select
 
-pure js standalone select box for javascript
+pure js standalone select box web-component
+
+- with search ability
+- mobile freindly
+- cusomizable style with css variable
+
+sample:<https://codepen.io/javadbat/pen/abpjKVP>
 
 ## doc
 
 use `<jb-select></jb-select>`
 
-### inject option list
+### set option list
 
 if ypu want to add option to jb-select set option list to DOM
 `const dropDownElement = document.querySelector('jb-select').optionList = [your option array]`
