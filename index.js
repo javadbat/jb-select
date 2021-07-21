@@ -1,1 +1,1 @@
-import './dist/JBSelect'
+import './dist/JBSelect.js';
