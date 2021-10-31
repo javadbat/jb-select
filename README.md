@@ -57,14 +57,19 @@ remember you must set this callback before set your optionList
 
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
-| css variable name                   | description                                                                                   |
-| -------------                       | -------------                                                                                 |
-| --jb-select-margin                  | web-component margin defualt is `0 12px`                                                      |
-| --jb-select-border-radius           | web-component border-radius defualt is `16px`                                                 |
-| --jb-select-border-color            | border color of select in normal mode                                                         |
-| --jb-select-border-color-selected   | border color when user select a value from list                                               |
-| --jb-select-bgcolor                 | background color of input                                                                     |
-| --jb-select-option-color            | change option text color                                                                      |
-| --jb-select-list-max-height         | max height of option list                                                                     |
-| --jb-select-border-bottom-width     | width of border bottom                                                                        |
-| --jb-select-border-width            | width of border                                                                               |
+| css variable name                         | description                                                                                   |
+| -------------                             | -------------                                                                                 |
+| --jb-select-margin                        | web-component margin defualt is `0 12px`                                                      |
+| --jb-select-border-radius                 | web-component border-radius defualt is `16px`                                                 |
+| --jb-select-border-color                  | border color of select in normal mode                                                         |
+| --jb-select-border-color-selected         | border color when user select a value from list                                               |
+| --jb-select-bgcolor                       | background color of input                                                                     |
+| --jb-select-list-max-height               | max height of option list                                                                     |
+| --jb-select-border-bottom-width           | width of border bottom                                                                        |
+| --jb-select-border-width                  | width of border                                                                               |
+| --jb-select-label-color                   | color of label defualt is `#1f1735`                                                           |
+| --jb-select-option-color                  | change option text color                                                                      |
+| --jb-select-option-color-hover            | change option text color on hover                                                             |
+| --jb-select-option-background-color       | background of options defualt is `#fff`                                                       |
+| --jb-select-option-background-color-hover | background of options on mouse hover defualt is `#1073db`                                     |
+

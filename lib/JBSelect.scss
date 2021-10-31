@@ -43,7 +43,7 @@
         margin: 4px 0px;
         display: block;
         font-size: 0.8em;
-        color: #1f1735;
+        color: var(--jb-select-label-color, #1f1735);
         &.--hide{
             display: none;
         }
@@ -53,7 +53,7 @@
         width: 100%;
         box-sizing: border-box;
         height: 40px;
-        border: solid var(--jb-select-border-width , 3px) var(--jb-select-border-color , #f7f6f6);
+        border: solid var(--jb-select-border-width , 1px) var(--jb-select-border-color , #f7f6f6);
         background-color: var(--jb-select-bgcolor , #f7f6f6) ;
         border-bottom: solid var(--jb-select-border-bottom-width , 3px) var(--jb-select-border-color , #f7f6f6);
         border-radius: var(--jb-select-border-radius , 16px);
@@ -82,7 +82,7 @@
             display: block;
             font-family: inherit;
             font-size: 1.1em;
-            color: #1f1735;
+            color: var(--jb-select-input-color, #1f1735);
             margin: 0;
             border-radius: 0;
 
@@ -144,9 +144,10 @@
                 align-items: center;
                 font-size: 0.9em;
                 color: var( --jb-select-option-color, inherit);
+                background-color: var(--jb-select-option-background-color, #fff);
                 &:hover{
-                    background-color: #1073db;
-                    color:#fff;
+                    background-color: var(--jb-select-option-background-color-hover, #1073db);
+                    color:var( --jb-select-option-color-hover, #fff);
                     cursor: pointer;
                 }
             }
