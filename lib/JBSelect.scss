@@ -35,7 +35,8 @@
     &.--has-value{
         //if user select a option and value is setted and not null
         .select-box{
-            border-color: var(--jb-select-border-color-selected , #c3ff14) ;
+            border-color: var(--jb-select-border-color-selected , #c3ff14);
+            background-color: var(--jb-select-bgcolor-selected , #f7f6f6);
         }
     }
     label {
