@@ -40,6 +40,26 @@ for example if you have array of object as a option list and want to show custom
 ```js
     dropDownElement.callbacks.getOptionTitle = (option)=>{return`${option.province}-${option.state}-${option.city}`}
     dropDownElement.callbacks.getOptionValue = (option)=>{return`${option.value}`}
+    //to customizing options
+    dropDownElement.callbacks.getOptionDOM = (option,onOptionSelected)=>{
+        // option is the object or any other formatted data yoy=u privide to optionList array
+         const optionElement = document.createElement('div');
+         //defualt class of each option in jb-select. you can change or customize it if you wish
+        optionElement.classList.add('select-option');
+        // here in this example we want to show a color list with color sample next to it
+        optionElement.innerHTML = '<span part="color-box" style="background-color:'+option.colorCode+';width:16px;height:16px"></span>'+'&nbsp;'+option.name;
+        //onOptionSelected is a function you have to call when option selected it mostly bind on on option dom clicked'
+        optionElement.addEventListener('click', onOptionSelected);
+        //return HTMLElement in the end
+        return optionElement;
+    }
+    //to customizing selected value
+    dropDownElement.callbacks.getSelectedValueDOM = (option)=>{
+        const optionElement = document.createElement('div');
+        optionElement.classList.add('selected-value');
+        optionElement.innerHTML = '<span part="color-box" style="background-color:'+option.value+';width:16px;height:16px"></span>'+'&nbsp;'+option.name;
+        return optionElement;
+    }
 ```
 
 remember you must set this callback before set your optionList
