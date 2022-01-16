@@ -49,6 +49,7 @@ for example if you have array of object as a option list and want to show custom
         // here in this example we want to show a color list with color sample next to it
         optionElement.innerHTML = '<span part="color-box" style="background-color:'+option.colorCode+';width:16px;height:16px"></span>'+'&nbsp;'+option.name;
         //onOptionSelected is a function you have to call when option selected it mostly bind on on option dom clicked'
+        // if you want to set onClick on dom other than returned wrapper DOM for example on a color-box you must set value property on it: colorBoxDOM.value = option; colorBoxDOM.addEventListener('click', onOptionSelected);
         optionElement.addEventListener('click', onOptionSelected);
         //return HTMLElement in the end
         return optionElement;
