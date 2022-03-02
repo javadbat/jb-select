@@ -53,7 +53,7 @@
     .select-box {
         width: 100%;
         box-sizing: border-box;
-        height: 40px;
+        height: var(--jb-select-height, 40px);
         border: solid var(--jb-select-border-width , 1px) var(--jb-select-border-color , #f7f6f6);
         background-color: var(--jb-select-bgcolor , #f7f6f6) ;
         border-bottom: solid var(--jb-select-border-bottom-width , 3px) var(--jb-select-border-color , #f7f6f6);
@@ -93,7 +93,7 @@
                 display: block;
                 font-family: inherit;
                 font-size: 1.1em;
-                color:#1f1735;
+                color:var(--jb-select-selected-value-color, #1f1735);
                 margin: 0;
                 border-radius: 0;
                 display: flex;

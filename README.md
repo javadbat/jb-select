@@ -96,4 +96,5 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-option-background-color-hover | background of options on mouse hover default is `#1073db`                                     |
 | --jb-select-input-color                   | color of input value                                                                          |
 | --jb-select-bgcolor-selected              | set background color for selected status                                                      |
+| --jb-select-selected-value-color          | selected value text color default is `#1f1735`                                                |
 
