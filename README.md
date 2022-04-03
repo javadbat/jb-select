@@ -17,6 +17,16 @@ use `<jb-select></jb-select>`
 if ypu want to add option to jb-select set option list to DOM
 `const dropDownElement = document.querySelector('jb-select').optionList = [your option array]`
 
+### get value
+
+its simple like any other form element use `.value` of dom
+
+```javascript
+//get value
+document.querySelector('jb-select').value;
+// if you use a object in option list you can get selected option title beside value
+document.querySelector('jb-select').selectedOptionTitle;
+```
 ### set value
 
 to select value in your code you have 2 option:
