@@ -147,7 +147,7 @@
     .message-box{
         font-size: 0.7em;
         padding: 2px 8px;
-        color: #929292;
+        color: var(--jb-select-message-color, #929292);
         &:empty{
             padding: 0;
         }
