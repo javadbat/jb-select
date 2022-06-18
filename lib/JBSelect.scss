@@ -43,7 +43,8 @@
         width: 100%;
         margin: 4px 0px;
         display: block;
-        font-size: 0.8em;
+        font-size: var(--jb-input-label-font-size, 0.8em);
+        font-weight: var(--jb-input-label-font-weight, normal);
         color: var(--jb-select-label-color, #1f1735);
         &.--hide{
             display: none;
@@ -131,6 +132,10 @@
                 &:focus {
                     outline: none;
                 }
+                &::placeholder {
+                    color: var(--jb-select-placeholder-color, initial);
+                    font-size: var(--jb-select-placeholder-font-size, 1.1em);
+                }
             }
             .arrow-icon{
                 width: 8px;
@@ -145,7 +150,8 @@
         
     }
     .message-box{
-        font-size: 0.7em;
+        font-size: var(--jb-select-message-font-size, 0.7em);
+        font-weight: var(--jb-select-message-font-weight, normal);
         padding: 2px 8px;
         color: var(--jb-select-message-color, #929292);
         &:empty{

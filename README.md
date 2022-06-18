@@ -99,7 +99,9 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-list-max-height               | max height of option list                                                                     |
 | --jb-select-border-bottom-width           | width of border bottom                                                                        |
 | --jb-select-border-width                  | width of border                                                                               |
-| --jb-select-label-color                   | color of label defualt is `#1f1735`                                                           |
+| --jb-select-label-color                   | color of label default is `#1f1735`                                                           |
+| --jb-input-label-font-size                | label font size default is `0.8em`                                                            |
+| --jb-input-label-font-weight              | color of label defualt is `#1f1735`                                                           |
 | --jb-select-option-color                  | change option text color                                                                      |
 | --jb-select-option-color-hover            | change option text color on hover                                                             |
 | --jb-select-option-background-color       | background of options default is `#fff`                                                       |
@@ -108,4 +110,8 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-bgcolor-selected              | set background color for selected status                                                      |
 | --jb-select-selected-value-color          | selected value text color default is `#1f1735`                                                |
 | --jb-select-message-color                 | message text color default is `#929292`                                                       |
+| --jb-select-message-font-size             | font size of message default is `0.7em`                                                       |
+| --jb-select-message-font-weight           | font weight of message box default is `normal`                                                |
+| --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
+| --jb-select-placeholder-font-size         | placeholder font-size default is `1.1em`                                                      |
 
