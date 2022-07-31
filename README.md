@@ -42,6 +42,20 @@ remember set value as attribute if your option is a plain string but in direct a
  <jb-select placeholder="please select"></jb-select>
  ```
 
+### change empty state shape
+when the searched value in select is not found, there is an open dropdown with the not found message.
+you can customize this entire section by adding a div with the `slot="empty-list"`
+
+like the example the below:
+
+```html
+<jb-select>
+    <div slot="empty-list-message">
+        put your customize html here
+    </div>
+</jb-select>
+```
+
 ### callbacks
 
 you can add callbacks to manage the way component works
