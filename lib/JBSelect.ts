@@ -23,7 +23,7 @@ export class JBSelectWebComponent extends HTMLElement {
         }
     }
     set value(value) {
-        this._setValueFromOutside(value);
+        this.#setValueFromOutside(value);
     }
     get textValue() {
         return this.#textValue;
@@ -41,8 +41,8 @@ export class JBSelectWebComponent extends HTMLElement {
             return "";
         }
     }
-    #optionList = [];
-    #displayOptionList = [];
+    #optionList:any[] = [];
+    #displayOptionList:any[] = [];
     get optionList() {
         return this.#optionList || [];
     }
@@ -53,9 +53,8 @@ export class JBSelectWebComponent extends HTMLElement {
         }
         this.#optionList = value;
         //every time optionList get updated we set our value base on current option list we use _notFindedValue in case of value provided to component before optionList
-        this.#displayOptionList = this.filterOptionList(this.textValue);
+        this.displayOptionList = this.filterOptionList(this.textValue);
         this._setValueOnOptionListChanged();
-        this.updateOptionListDOM();
     }
     #placeholder = "";
     get placeholder() {
@@ -67,6 +66,15 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     get displayOptionList() {
         return this.#displayOptionList;
+    }
+    set displayOptionList(value:any[]){
+        if(Array.isArray(value) && value.length == 0){
+            this.elements.emptyListPlaceholder.classList.add('--show');
+        }else if(Array.isArray(value)){
+            this.elements.emptyListPlaceholder.classList.remove('--show');
+        }
+        this.#displayOptionList = value;
+        this.updateOptionListDOM();
     }
     get isMobileDevice() { return /Mobi/i.test(window.navigator.userAgent); }
 
@@ -110,6 +118,7 @@ export class JBSelectWebComponent extends HTMLElement {
                 wrapper: shadowRoot.querySelector('label')!,
                 text: shadowRoot.querySelector('label .label-value')!,
             },
+            emptyListPlaceholder: shadowRoot.querySelector('.empty-list-placeholder')!,
         };
         this.registerEventListener();
 
@@ -149,7 +158,7 @@ export class JBSelectWebComponent extends HTMLElement {
                 this.elements.messageBox.innerHTML = value;
                 break;
             case 'value':
-                this._setValueFromOutside(value);
+                this.#setValueFromOutside(value);
                 break;
             case 'required':
                 if (value === "" || value == "true" || value == true) {
@@ -170,10 +179,10 @@ export class JBSelectWebComponent extends HTMLElement {
         if (this.value || this.#notFindedValue) {
             //if select has no prev value or pending not finded value we dont set it becuase user may input some search terms in input box and developer-user update list base on that value
             //if we set it to null the search term and this.textvalue will become null and empty too and it make impossible for user to search in dynamic back-end provided searchable list so we put this condition to prevent it
-            this._setValueFromOutside(this.value || this.#notFindedValue);
+            this.#setValueFromOutside(this.value || this.#notFindedValue);
         }
     }
-    _setValueFromOutside(value:any) {
+    #setValueFromOutside(value:any) {
         //when user set value by attribute or value prop directly we call this function
         const matchedOption = this.optionList.find((option) => { // if we have value mapper we set selected value by object that match mapper
             if (this.callbacks.getOptionValue(option) == value) {
@@ -296,8 +305,7 @@ export class JBSelectWebComponent extends HTMLElement {
         this.elements.optionListWrapper.classList.remove('--show');
     }
     updateOptionList(filterText:string) {
-        this.#displayOptionList = this.filterOptionList(filterText);
-        this.updateOptionListDOM();
+        this.displayOptionList = this.filterOptionList(filterText);
     }
     updateOptionListDOM() {
         const optionDomList: HTMLElement[] = [];
@@ -339,8 +347,8 @@ export class JBSelectWebComponent extends HTMLElement {
         this._setValue(value);
         this.triggerInputValidation();
     }
-    filterOptionList(filterString) {
-        const displayOptionList = [];
+    filterOptionList(filterString:string):any[] {
+        const displayOptionList: any[] = [];
         this.optionList.filter((option) => {
             const optionTitle = this.callbacks.getOptionTitle(option);
             const isString = typeof optionTitle == 'string';
@@ -390,7 +398,7 @@ export class JBSelectWebComponent extends HTMLElement {
         const event = new Event("change");
         this.dispatchEvent(event);
     }
-    setSelectedOptionDom(value) {
+    setSelectedOptionDom(value:any) {
         //when user select option or value changed in any condition we set selected option DOM
         this.elements.selectedValueWrapper.innerHTML = '';
         //if value was null or undifined it remain empty
@@ -399,14 +407,14 @@ export class JBSelectWebComponent extends HTMLElement {
             this.elements.selectedValueWrapper.appendChild(selectedOptionDom);
         }
     }
-    createSelectedValueDom(value) {
+    private createSelectedValueDom(value:any) {
         if (typeof this.callbacks.getSelectedValueDOM == 'function') {
             return this.callbacks.getSelectedValueDOM(value);
         } else {
-            return this._createSelectedValueDom(value);
+            return this.#createSelectedValueDom(value);
         }
     }
-    _createSelectedValueDom(value) {
+    #createSelectedValueDom(value:any) {
         const valueText = this.callbacks.getOptionTitle(value);
         const selectedOptionDom = document.createElement('div');
         selectedOptionDom.classList.add('selected-value');

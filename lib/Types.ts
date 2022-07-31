@@ -18,5 +18,6 @@ export type JBSelectElements = {
     label:{
         wrapper: HTMLLabelElement,
         text: HTMLSpanElement
-    }
+    },
+    emptyListPlaceholder: HTMLDivElement,
 }

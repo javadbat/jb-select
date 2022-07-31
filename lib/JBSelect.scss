@@ -184,6 +184,9 @@
             max-height: var(--jb-select-list-max-height , 400px);
             overflow-y: auto;
             padding: 16px 0;
+            &:empty{
+                padding: 0;
+            }
             @include mobile-tablet{
                 max-height: calc(100vh - 240px);
             }
@@ -202,6 +205,15 @@
                 }
             }
         }
-
+        .empty-list-placeholder{
+            display: none;
+            text-align: center;
+            color: #838383;
+            font-style: italic;
+            padding: 8px 0;
+            &.--show{
+                display: block;
+            }
+        }
     }
 }
