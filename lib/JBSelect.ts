@@ -1,9 +1,23 @@
 import HTML from './JBSelect.html';
 import CSS from './JBSelect.scss';
-class JBSelectWebComponent extends HTMLElement {
+import { JBSelectCallbacks, JBSelectElements, JBSelectOptionElement } from './Types';
+export class JBSelectWebComponent extends HTMLElement {
+    #value: any;
+    #textValue = "";
+    // if user set value and current option list is not contain the option. 
+    // we hold it in _notFindedValue and select value when option value get updated
+    #notFindedValue: any = null;
+    required = false;
+    callbacks: JBSelectCallbacks = {
+        getOptionTitle: (option) => { return option; },
+        getOptionValue: (option) => { return option; },
+        getOptionDOM: null,
+        getSelectedValueDOM: null,
+    };
+    elements!: JBSelectElements;
     get value() {
-        if (this._value) {
-            return this.callbacks.getOptionValue(this._value);
+        if (this.#value) {
+            return this.callbacks.getOptionValue(this.#value);
         } else {
             return null;
         }
@@ -12,45 +26,47 @@ class JBSelectWebComponent extends HTMLElement {
         this._setValueFromOutside(value);
     }
     get textValue() {
-        return this._textValue;
+        return this.#textValue;
 
     }
     set textValue(value) {
-        this._textValue = value;
+        this.#textValue = value;
         this.elements.input.value = value;
         this.updateOptionList(value);
     }
     get selectedOptionTitle() {
         if (this.value) {
-            return this.callbacks.getOptionTitle(this._value);
+            return this.callbacks.getOptionTitle(this.#value);
         } else {
             return "";
         }
     }
+    #optionList = [];
+    #displayOptionList = [];
     get optionList() {
-        return this._optionList || [];
+        return this.#optionList || [];
     }
     set optionList(value) {
         if (!Array.isArray(value)) {
             console.error('your provided option list to jb-select is not a array. you must provide array value', { value });
             return;
         }
-        this._optionList = value;
+        this.#optionList = value;
         //every time optionList get updated we set our value base on current option list we use _notFindedValue in case of value provided to component before optionList
-        this._displayOptionList = this.filterOptionList(this.textValue);
+        this.#displayOptionList = this.filterOptionList(this.textValue);
         this._setValueOnOptionListChanged();
         this.updateOptionListDOM();
     }
     #placeholder = "";
-    get placeholder(){
+    get placeholder() {
         return this.#placeholder;
     }
-    set placeholder(value){
+    set placeholder(value:string) {
         this.#placeholder = value;
         this.elements.input.placeholder = value;
     }
     get displayOptionList() {
-        return this._displayOptionList;
+        return this.#displayOptionList;
     }
     get isMobileDevice() { return /Mobi/i.test(window.navigator.userAgent); }
 
@@ -67,11 +83,11 @@ class JBSelectWebComponent extends HTMLElement {
         this.callOnInitEvent();
     }
     callOnInitEvent() {
-        var event = new CustomEvent('init', { bubbles: true, composed: true });
+        const event = new CustomEvent('init', { bubbles: true, composed: true });
         this.dispatchEvent(event);
     }
     callOnLoadEvent() {
-        var event = new CustomEvent('load', { bubbles: true, composed: true });
+        const event = new CustomEvent('load', { bubbles: true, composed: true });
         this.dispatchEvent(event);
     }
     initWebComponent() {
@@ -83,42 +99,34 @@ class JBSelectWebComponent extends HTMLElement {
         element.innerHTML = html;
         shadowRoot.appendChild(element.content.cloneNode(true));
         this.elements = {
-            input: shadowRoot.querySelector('.select-box input'),
-            componentWrapper: shadowRoot.querySelector('.jb-select-web-component'),
-            selectedValueWrapper: shadowRoot.querySelector('.selected-value-wrapper'),
-            messageBox:shadowRoot.querySelector('.message-box'),
+            input: shadowRoot.querySelector('.select-box input')!,
+            componentWrapper: shadowRoot.querySelector('.jb-select-web-component')!,
+            selectedValueWrapper: shadowRoot.querySelector('.selected-value-wrapper')!,
+            messageBox: shadowRoot.querySelector('.message-box')!,
+            optionList: shadowRoot.querySelector('.select-list')!,
+            optionListWrapper: shadowRoot.querySelector('.select-list-wrapper')!,
+            arrowIcon: shadowRoot.querySelector('.arrow-icon')!,
+            label:{
+                wrapper: shadowRoot.querySelector('label')!,
+                text: shadowRoot.querySelector('label .label-value')!,
+            },
         };
-        this._optionListElement = shadowRoot.querySelector('.select-list');
-        this._optionListElementWrapper = shadowRoot.querySelector('.select-list-wrapper');
         this.registerEventListener();
 
     }
     registerEventListener() {
-        this.elements.input.addEventListener('change', this.onInputChange.bind(this));
+        this.elements.input.addEventListener('change', (e)=>{this.onInputChange(e);});
         this.elements.input.addEventListener('keypress', this.onInputKeyPress.bind(this));
         this.elements.input.addEventListener('keyup', this.onInputKeyup.bind(this));
         this.elements.input.addEventListener('beforeinput', this.onInputBeforeInput.bind(this));
-        this.elements.input.addEventListener('input', this.onInputInput.bind(this));
+        this.elements.input.addEventListener('input', (e)=>{this.onInputInput(e as unknown as InputEvent);});
         this.elements.input.addEventListener('focus', this.onInputFocus.bind(this));
         this.elements.input.addEventListener('blur', this.onInputBlur.bind(this));
-        this.shadowRoot.querySelector('.arrow-icon').addEventListener('click', this.onArrowKeyClick.bind(this));
+        this.elements.arrowIcon.addEventListener('click', this.onArrowKeyClick.bind(this));
     }
     initProp() {
         this.textValue = '';
-        /**
-         * @type {Record<string, function|null>} callbacks
-         */
-        this.callbacks = {
-            getOptionTitle: (option) => { return option; },
-            getOptionValue: (option) => { return option; },
-            getOptionDOM: null,
-            getSelectedValueDOM: null,
-        };
         this.value = this.getAttribute('value') || null;
-        // if user set value and current option list is not contain the option. 
-        // we hold it in _notFindedValue and select value when option value get updated
-        this._notFindedValue = null;
-        this.required = false;
     }
     static get observedAttributes() {
         return ['label', 'message', 'value', 'required', 'placeholder'];
@@ -130,11 +138,11 @@ class JBSelectWebComponent extends HTMLElement {
     onAttributeChange(name, value) {
         switch (name) {
             case 'label':
-                this.shadowRoot.querySelector('label .label-value').innerHTML = value;
+                this.elements.label.text.innerHTML = value;
                 if (value == null || value == undefined || value == "") {
-                    this.shadowRoot.querySelector('label').classList.add('--hide');
+                    this.elements.label.wrapper.classList.add('--hide');
                 } else {
-                    this.shadowRoot.querySelector('label').classList.remove('--hide');
+                    this.elements.label.wrapper.classList.remove('--hide');
                 }
                 break;
             case 'message':
@@ -159,13 +167,13 @@ class JBSelectWebComponent extends HTMLElement {
     _setValueOnOptionListChanged() {
         //when option list changed we see if current value is valid for new optionlist we set it if not we reset value to null.
         //in some scenario value is setted before otionList attached so we store it on this._notFindedValue and after option list setted we set value from this._notFindedValue
-        if (this.value || this._notFindedValue) {
+        if (this.value || this.#notFindedValue) {
             //if select has no prev value or pending not finded value we dont set it becuase user may input some search terms in input box and developer-user update list base on that value
             //if we set it to null the search term and this.textvalue will become null and empty too and it make impossible for user to search in dynamic back-end provided searchable list so we put this condition to prevent it
-            this._setValueFromOutside(this.value || this._notFindedValue);
+            this._setValueFromOutside(this.value || this.#notFindedValue);
         }
     }
-    _setValueFromOutside(value) {
+    _setValueFromOutside(value:any) {
         //when user set value by attribute or value prop directly we call this function
         const matchedOption = this.optionList.find((option) => { // if we have value mapper we set selected value by object that match mapper
             if (this.callbacks.getOptionValue(option) == value) {
@@ -175,29 +183,29 @@ class JBSelectWebComponent extends HTMLElement {
         if (matchedOption || value == null) {
             this._setValue(matchedOption);
         } else {
-            this._notFindedValue = value;
+            this.#notFindedValue = value;
         }
 
     }
-    _setValue(value) {
-        this._notFindedValue = null;
-        this._value = value;
+    _setValue(value:any) {
+        this.#notFindedValue = null;
+        this.#value = value;
         if ((value == null || value == undefined)) {
             this.textValue = '';
             this.setSelectedOptionDom(null);
-            this.shadowRoot.querySelector('.jb-select-web-component').classList.remove('--has-value');
+            this.elements.componentWrapper.classList.remove('--has-value');
             this.elements.input.setAttribute('placeholder', this.placeholder);
         } else {
             this.textValue = '';
             this.setSelectedOptionDom(value);
-            this.shadowRoot.querySelector('.jb-select-web-component').classList.add('--has-value');
+            this.elements.componentWrapper.classList.add('--has-value');
             this.elements.input.setAttribute('placeholder', '');
         }
         //if user select an option we rest filter so user see all option again when open a select
         this.updateOptionList('');
     }
     onArrowKeyClick() {
-        if (this._optionListElementWrapper.classList.contains('--show')) {
+        if (this.elements.optionListWrapper.classList.contains('--show')) {
             this.blur();
         } else {
             this.focus();
@@ -206,15 +214,16 @@ class JBSelectWebComponent extends HTMLElement {
     onInputKeyPress() {
         //TODO: raise keypress event
     }
-    onInputBeforeInput(e) {
-        this.handleSelectedValueDisplay(e.data);
+    onInputBeforeInput(e:InputEvent) {
+        const inputedText = e.data || '';
+        this.handleSelectedValueDisplay(inputedText);
     }
-    onInputInput(e) {
-        this.textValue = e.target.value;
+    onInputInput(e:InputEvent) {
+        this.textValue = (e.target as HTMLInputElement).value;
     }
-    onInputKeyup(e) {
-        const inputText = e.target.value;
-        //here is the rare  time we update _value directly becuase we want trigger event that may read value directly from dom
+    onInputKeyup(e:KeyboardEvent) {
+        const inputText = (e.target as HTMLInputElement).value;
+        //here is the rare  time we update #value directly becuase we want trigger event that may read value directly from dom
         if (e.key === "Backspace" || e.key === "Delete") {
             //becuase on keyprees dont recieve backspace key press
             this.handleSelectedValueDisplay(inputText);
@@ -223,14 +232,14 @@ class JBSelectWebComponent extends HTMLElement {
         this.triggerOnInputKeyup(e);
 
     }
-    handleSelectedValueDisplay(inputValue) {
+    handleSelectedValueDisplay(inputValue:string) {
         if (inputValue !== "") {
             this.elements.selectedValueWrapper.classList.add('--search-typed');
         } else {
             this.elements.selectedValueWrapper.classList.remove('--search-typed');
         }
     }
-    triggerOnInputKeyup(e) {
+    triggerOnInputKeyup(e:KeyboardEvent) {
         const event = new KeyboardEvent('keyup', {
             altKey: e.altKey,
             bubbles: e.bubbles,
@@ -251,17 +260,17 @@ class JBSelectWebComponent extends HTMLElement {
         });
         this.dispatchEvent(event);
     }
-    onInputChange(e) {
-        const inputText = e.target.value;
+    onInputChange(e: Event) {
+        const inputText = (e.target as HTMLInputElement).value;
         //here is the rare  time we update _text_value directly becuase we want trigger event that may read value directly from dom
-        this._textValue = inputText;
+        this.#textValue = inputText;
     }
     onInputFocus() {
         this.focus();
     }
-    onInputBlur(e) {
-        let focusedElement = e.relatedTarget;
-        if (focusedElement === this._optionListElement) {
+    onInputBlur(e: FocusEvent) {
+        const focusedElement = e.relatedTarget;
+        if (focusedElement === this.elements.optionListWrapper) {
             //user click on a menu item
         } else {
             this.blur();
@@ -281,28 +290,28 @@ class JBSelectWebComponent extends HTMLElement {
         this.triggerInputValidation();
     }
     showOptionList() {
-        this._optionListElementWrapper.classList.add('--show');
+        this.elements.optionListWrapper.classList.add('--show');
     }
     hideOptionList() {
-        this._optionListElementWrapper.classList.remove('--show');
+        this.elements.optionListWrapper.classList.remove('--show');
     }
-    updateOptionList(filterText) {
-        this._displayOptionList = this.filterOptionList(filterText);
+    updateOptionList(filterText:string) {
+        this.#displayOptionList = this.filterOptionList(filterText);
         this.updateOptionListDOM();
     }
     updateOptionListDOM() {
-        const optionDomList = [];
+        const optionDomList: HTMLElement[] = [];
         this.displayOptionList.forEach((item) => {
             const optionDOM = this.createOptionDOM(item);
             optionDomList.push(optionDOM);
         });
-        this._optionListElement.innerHTML = '';
-        optionDomList.forEach(optionElement => { this._optionListElement.appendChild(optionElement); });
+        this.elements.optionList.innerHTML = '';
+        optionDomList.forEach(optionElement => { this.elements.optionList.appendChild(optionElement); });
 
 
     }
-    createOptionDOM(item) {
-        let optionDOM = null;
+    createOptionDOM(item:any):JBSelectOptionElement{
+        let optionDOM: JBSelectOptionElement | null = null;
         if (typeof this.callbacks.getOptionDOM == 'function') {
             optionDOM = this.callbacks.getOptionDOM(item, this.onOptionClicked.bind(this));
         } else {
@@ -312,7 +321,7 @@ class JBSelectWebComponent extends HTMLElement {
         return optionDOM;
     }
 
-    _createOptionDom(item) {
+    _createOptionDom(item:any):JBSelectOptionElement{
         const optionElement = document.createElement('div');
         optionElement.classList.add('select-option');
         //it has defualt function who return wxact same input
@@ -320,13 +329,13 @@ class JBSelectWebComponent extends HTMLElement {
         optionElement.addEventListener('click', this.onOptionClicked.bind(this));
         return optionElement;
     }
-    onOptionClicked(e) {
-        const value = e.currentTarget.value;
+    onOptionClicked(e:MouseEvent) {
+        const value = (e.currentTarget as JBSelectOptionElement).value;
         this.selectOption(value);
         this.blur();
         this._triggerOnChangeEvent();
     }
-    selectOption(value) {
+    selectOption(value:any) {
         this._setValue(value);
         this.triggerInputValidation();
     }
@@ -355,7 +364,7 @@ class JBSelectWebComponent extends HTMLElement {
                 errorType = 'REQUIRED';
             }
         }
-        let isAllValid = requiredValid; //& other validation if they added
+        const isAllValid = requiredValid; //& other validation if they added
         if (isAllValid) {
             this.clearValidationError();
         } else if (showError) {
@@ -368,13 +377,13 @@ class JBSelectWebComponent extends HTMLElement {
     showValidationError(errorType) {
         if (errorType == 'REQUIRED') {
             const label = this.getAttribute('label');
-            this.shadowRoot.querySelector('.message-box').innerHTML = `${label} حتما باید انتخاب شود`;
-            this.shadowRoot.querySelector('.message-box').classList.add('--error');
+            this.elements.messageBox.innerHTML = `${label} حتما باید انتخاب شود`;
+            this.elements.messageBox.classList.add('--error');
         }
     }
     clearValidationError() {
-        this.shadowRoot.querySelector('.message-box').innerHTML = this.getAttribute('message') || '';
-        this.shadowRoot.querySelector('.message-box').classList.remove('--error');
+        this.elements.messageBox.innerHTML = this.getAttribute('message') || '';
+        this.elements.messageBox.classList.remove('--error');
 
     }
     _triggerOnChangeEvent() {
