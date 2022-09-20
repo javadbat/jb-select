@@ -279,7 +279,7 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     onInputBlur(e: FocusEvent) {
         const focusedElement = e.relatedTarget;
-        if (focusedElement === this.elements.optionListWrapper) {
+        if (this.elements.optionListWrapper.contains(<Node>(focusedElement))) {
             //user click on a menu item
         } else {
             this.blur();
