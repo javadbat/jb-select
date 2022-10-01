@@ -226,10 +226,11 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     onInputBeforeInput(e:InputEvent) {
         const inputedText = e.data || '';
-        this.handleSelectedValueDisplay(inputedText);
     }
     onInputInput(e:InputEvent) {
-        this.textValue = (e.target as HTMLInputElement).value;
+        const inputedText = (e.target as HTMLInputElement).value;
+        this.textValue = inputedText;
+        this.handleSelectedValueDisplay(inputedText);
     }
     onInputKeyup(e:KeyboardEvent) {
         const inputText = (e.target as HTMLInputElement).value;
