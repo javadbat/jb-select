@@ -80,6 +80,7 @@ export class JBSelectWebComponent extends HTMLElement {
 
 
     constructor() {
+
         super();
         this.initWebComponent();
         this.initProp();

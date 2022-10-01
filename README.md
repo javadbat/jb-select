@@ -110,6 +110,7 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-border-color                  | border color of select in normal mode                                                         |
 | --jb-select-border-color-selected         | border color when user select a value from list                                               |
 | --jb-select-bgcolor                       | background color of input                                                                     |
+| --jb-select-overlay-bgcolor               | background of select overlay when open in mobile and tablet screen                            |
 | --jb-select-list-max-height               | max height of option list                                                                     |
 | --jb-select-border-bottom-width           | width of border bottom                                                                        |
 | --jb-select-border-width                  | width of border                                                                               |

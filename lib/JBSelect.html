@@ -1,11 +1,19 @@
 <div class="jb-select-web-component">
-    <label class="--hide"><span class="label-value"></span></label>
+    <div class="label-wrapper">
+        <label class="--hide"><span class="label-value"></span></label>
+        <div class="close-button">
+            <svg width="24" height="24" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="close-btn-svg-path" d="M1 1L5 5M1 5L5 1" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </div>
+    </div>
     <div class="select-box">
         <div class="selected-value-wrapper">
-            
+
         </div>
         <div class="front-box">
-            <input class="input"/>
+            <input class="input" />
             <div class="arrow-icon"></div>
         </div>
     </div>
@@ -14,7 +22,7 @@
 
         </div>
         <div class="empty-list-placeholder">
-            <slot name="empty-list-message">no item available</slot> 
+            <slot name="empty-list-message">no item available</slot>
         </div>
     </div>
     <div class="message-box"></div>

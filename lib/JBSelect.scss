@@ -1,64 +1,88 @@
-@import '../../../common/scss/Medias.scss';
+@import "../../../common/scss/Medias.scss";
 
 .jb-select-web-component {
-    width: var(--jb-select-width, 100%) ;
-    margin: var(--jb-select-margin , 12px 0) ;
+    width: var(--jb-select-width, 100%);
+    margin: var(--jb-select-margin, 12px 0);
     position: relative;
     box-sizing: border-box;
-    &.--focused{
-        @include mobile-tablet{
+    &.--focused {
+        @include mobile-tablet {
             position: absolute;
-            top:0;
+            top: 0;
             left: 0;
-            background-color: #0008;
+            background-color: var(--jb-select-overlay-bgcolor, #0008);
             width: 100vw;
             height: 100vh;
             margin: 0;
             padding: 16px 8px;
             z-index: 900;
         }
-        .select-list-wrapper{
-            @include mobile-tablet{
+        .select-list-wrapper {
+            @include mobile-tablet {
                 position: initial;
                 margin: 16px 0;
-                border-radius: var(--jb-select-border-radius , 16px);
+                border-radius: var(--jb-select-border-radius, 16px);
             }
         }
-        label{
-            @include mobile-tablet{
-                color:#fff;
-                font-size: 1.5em;
+        .label-wrapper {
+            @include mobile-tablet {
+                display: flex;
+            }
+            label {
+                @include mobile-tablet {
+                    color: #fff;
+                    font-size: 1.5em;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .close-button {
+                display: none;
+                @include mobile-tablet {
+                    display: flex;
+                    width: 48px;
+                    height: 48px;
+                    justify-content: center;
+                    align-items: center;
+                    color:#fff;
+                    .close-btn-svg-path{
+                        stroke: #fff;
+                    }
+                }
             }
         }
-        
     }
-    &.--has-value{
+    &.--has-value {
         //if user select a option and value is setted and not null
-        .select-box{
-            border-color: var(--jb-select-border-color-selected , #c3ff14);
-            background-color: var(--jb-select-bgcolor-selected , #f7f6f6);
+        .select-box {
+            border-color: var(--jb-select-border-color-selected, #c3ff14);
+            background-color: var(--jb-select-bgcolor-selected, #f7f6f6);
         }
     }
-    label {
-        width: 100%;
-        margin: 4px 0px;
-        display: block;
-        font-size: var(--jb-input-label-font-size, 0.8em);
-        font-weight: var(--jb-input-label-font-weight, normal);
-        color: var(--jb-select-label-color, #1f1735);
-        &.--hide{
+    .label-wrapper {
+        label {
+            width: 100%;
+            margin: 4px 0px;
+            display: block;
+            font-size: var(--jb-input-label-font-size, 0.8em);
+            font-weight: var(--jb-input-label-font-weight, normal);
+            color: var(--jb-select-label-color, #1f1735);
+            &.--hide {
+                display: none;
+            }
+        }
+        .close-button {
             display: none;
         }
     }
-
     .select-box {
         width: 100%;
         box-sizing: border-box;
         height: var(--jb-select-height, 40px);
-        border: solid var(--jb-select-border-width , 1px) var(--jb-select-border-color , #f7f6f6);
-        background-color: var(--jb-select-bgcolor , #f7f6f6) ;
-        border-bottom: solid var(--jb-select-border-bottom-width , 3px) var(--jb-select-border-color , #f7f6f6);
-        border-radius: var(--jb-select-border-radius , 16px);
+        border: solid var(--jb-select-border-width, 1px) var(--jb-select-border-color, #f7f6f6);
+        background-color: var(--jb-select-bgcolor, #f7f6f6);
+        border-bottom: solid var(--jb-select-border-bottom-width, 3px) var(--jb-select-border-color, #f7f6f6);
+        border-radius: var(--jb-select-border-radius, 16px);
         margin: 4px 0px;
         overflow: hidden;
         display: flex;
@@ -67,25 +91,25 @@
         gap: 8px;
         position: relative;
         &:focus-within {
-            border-color: var(--jb-select-border-color , #1e2832);
-            border-bottom-color: var(--jb-select-border-color , #f7f6f6);;
-            border-radius: var(--jb-select-border-radius , 16px) var(--jb-select-border-radius , 16px) 0 0;
-            @include mobile-tablet{
-                border-radius: var(--jb-select-border-radius , 16px);
-                border-bottom-color: var(--jb-select-border-color , #1e2832);
+            border-color: var(--jb-select-border-color, #1e2832);
+            border-bottom-color: var(--jb-select-border-color, #f7f6f6);
+            border-radius: var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px) 0 0;
+            @include mobile-tablet {
+                border-radius: var(--jb-select-border-radius, 16px);
+                border-bottom-color: var(--jb-select-border-color, #1e2832);
             }
         }
-        .selected-value-wrapper{
+        .selected-value-wrapper {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: inherit;
             overflow: hidden;
             z-index: 1;
-            &.--search-typed{
+            &.--search-typed {
                 opacity: 0;
             }
-            .selected-value{
+            .selected-value {
                 width: 100%;
                 box-sizing: border-box;
                 height: 100%;
@@ -94,27 +118,25 @@
                 display: block;
                 font-family: inherit;
                 font-size: 1.1em;
-                color:var(--jb-select-selected-value-color, #1f1735);
+                color: var(--jb-select-selected-value-color, #1f1735);
                 margin: 0;
                 border-radius: 0;
                 display: flex;
                 align-items: center;
-
             }
-
         }
-        &:focus-within .selected-value{
+        &:focus-within .selected-value {
             opacity: 0.7;
             transition: all 0.3s ease;
         }
-        .front-box{
+        .front-box {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: inherit;
             overflow: hidden;
             z-index: 2;
-            
+
             input {
                 border: none;
                 width: 100%;
@@ -128,7 +150,7 @@
                 color: var(--jb-select-input-color, #1f1735);
                 margin: 0;
                 border-radius: 0;
-    
+
                 &:focus {
                     outline: none;
                 }
@@ -137,7 +159,7 @@
                     font-size: var(--jb-select-placeholder-font-size, 1.1em);
                 }
             }
-            .arrow-icon{
+            .arrow-icon {
                 width: 8px;
                 height: 100%;
                 background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' id='Layer_1' x='0px' y='0px' viewBox='0 0 494.1 371.1' style='enable-background:new 0 0 494.1 371.1;' xml:space='preserve'><path d='M293,343.8L480.9,69.3c8.7-12.7,13.3-25.4,13.3-36.1c0-20.5-16.5-33.2-44-33.2H44C16.4,0,0,12.7,0,33.2  c0,10.6,4.6,23.2,13.3,35.9l187.9,274.6c12.1,17.7,28.4,27.4,45.9,27.4C264.6,371.1,280.9,361.4,293,343.8z'/></svg>");
@@ -147,71 +169,70 @@
                 background-position-y: center;
             }
         }
-        
     }
-    .message-box{
+    .message-box {
         font-size: var(--jb-select-message-font-size, 0.7em);
         font-weight: var(--jb-select-message-font-weight, normal);
         padding: 2px 8px;
         color: var(--jb-select-message-color, #929292);
-        &:empty{
+        &:empty {
             padding: 0;
         }
-        &.--error{
+        &.--error {
             color: red;
         }
     }
-    .select-list-wrapper{
+    .select-list-wrapper {
         display: none;
         position: absolute;
         margin: -6px 0;
         height: auto;
         overflow: hidden;
         width: 100%;
-        background-color: var(--jb-select-bgcolor , #f7f6f6) ;
-        border-radius: 0 0 var(--jb-select-border-radius , 16px) var(--jb-select-border-radius , 16px);
-        border:solid 1px var(--jb-select-border-color , #1e2832);
+        background-color: var(--jb-select-bgcolor, #f7f6f6);
+        border-radius: 0 0 var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px);
+        border: solid 1px var(--jb-select-border-color, #1e2832);
         border-top: none;
-        border-bottom:solid 3px var(--jb-select-border-color , #1e2832) ;
+        border-bottom: solid 3px var(--jb-select-border-color, #1e2832);
         box-shadow: var(--jb-select-list-box-shadow);
         box-sizing: border-box;
         z-index: 999;
-        &.--show{
+        &.--show {
             display: block;
         }
-        .select-list{
+        .select-list {
             width: 100%;
-            max-height: var(--jb-select-list-max-height , 400px);
+            max-height: var(--jb-select-list-max-height, 400px);
             overflow-y: auto;
             padding: 16px 0;
-            &:empty{
+            &:empty {
                 padding: 0;
             }
-            @include mobile-tablet{
+            @include mobile-tablet {
                 max-height: calc(100vh - 240px);
             }
-            .select-option{
+            .select-option {
                 min-height: 36px;
                 padding: 4px 16px;
                 display: flex;
                 align-items: center;
                 font-size: 0.9em;
-                color: var( --jb-select-option-color, inherit);
+                color: var(--jb-select-option-color, inherit);
                 background-color: var(--jb-select-option-background-color, #fff);
-                &:hover{
+                &:hover {
                     background-color: var(--jb-select-option-background-color-hover, #1073db);
-                    color:var( --jb-select-option-color-hover, #fff);
+                    color: var(--jb-select-option-color-hover, #fff);
                     cursor: pointer;
                 }
             }
         }
-        .empty-list-placeholder{
+        .empty-list-placeholder {
             display: none;
             text-align: center;
             color: #838383;
             font-style: italic;
             padding: 8px 0;
-            &.--show{
+            &.--show {
                 display: block;
             }
         }
