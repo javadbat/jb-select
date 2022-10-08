@@ -64,8 +64,8 @@
             width: 100%;
             margin: 4px 0px;
             display: block;
-            font-size: var(--jb-input-label-font-size, 0.8em);
-            font-weight: var(--jb-input-label-font-weight, normal);
+            font-size: var(--jb-select-label-font-size, 0.8em);
+            font-weight: var(--jb-select-label-font-weight, normal);
             color: var(--jb-select-label-color, #1f1735);
             &.--hide {
                 display: none;
@@ -97,6 +97,7 @@
             @include mobile-tablet {
                 border-radius: var(--jb-select-border-radius, 16px);
                 border-bottom-color: var(--jb-select-border-color, #1e2832);
+                height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
             }
         }
         .selected-value-wrapper {

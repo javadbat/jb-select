@@ -129,4 +129,6 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-message-font-weight           | font weight of message box default is `normal`                                                |
 | --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1em`                                                      |
+| --jb-select-height                        | jb-select box height                                                                          |
+| --jb-select-mobile-search-input-height    | when user open select on mobile there is a search box input this var will set its height      |
 
