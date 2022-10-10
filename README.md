@@ -131,4 +131,5 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1em`                                                      |
 | --jb-select-height                        | jb-select box height                                                                          |
 | --jb-select-mobile-search-input-height    | when user open select on mobile there is a search box input this var will set its height      |
+| --jb-select-mobile-item-list-margin       | when user open select on mobile there is gap between search box & list that can be customized | 
 

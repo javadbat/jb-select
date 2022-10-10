@@ -20,7 +20,7 @@
         .select-list-wrapper {
             @include mobile-tablet {
                 position: initial;
-                margin: 16px 0;
+                margin: var(--jb-select-mobile-item-list-margin, 16px 0);
                 border-radius: var(--jb-select-border-radius, 16px);
             }
         }
