@@ -131,5 +131,9 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1em`                                                      |
 | --jb-select-height                        | jb-select box height                                                                          |
 | --jb-select-mobile-search-input-height    | when user open select on mobile there is a search box input this var will set its height      |
-| --jb-select-mobile-item-list-margin       | when user open select on mobile there is gap between search box & list that can be customized | 
+| --jb-select-mobile-item-list-margin       | when user open select on mobile there is gap between search box & list that can be customized |
+| --jb-select-list-padding                  | padding of opened list box default is `16px 0`                                                |
+| --jb-select-close-bg-color                | close button bg-color default is `#1f1735`                                                    |
+| --jb-select-close-x-color                 | close button x color default is `#fff`                                                        |
+| --jb-select-close-bg-opacity              | close button bg opacity default is `0.4`                                                      |
 
