@@ -1,3 +1,4 @@
+import { es } from 'date-fns/locale';
 import HTML from './JBSelect.html';
 import CSS from './JBSelect.scss';
 import { JBSelectCallbacks, JBSelectElements, JBSelectOptionElement } from './Types';
@@ -63,6 +64,14 @@ export class JBSelectWebComponent extends HTMLElement {
     set placeholder(value:string) {
         this.#placeholder = value;
         this.elements.input.placeholder = value;
+    }
+    //on mobile device when search modla open this will appear on searchbox
+    #searchPlaceholder = "search"
+    get searchPlaceholder(){
+        return this.#searchPlaceholder;
+    }
+    set searchPlaceholder(value){
+        this.#searchPlaceholder = value;
     }
     get displayOptionList() {
         return this.#displayOptionList;
@@ -139,7 +148,7 @@ export class JBSelectWebComponent extends HTMLElement {
         this.value = this.getAttribute('value') || null;
     }
     static get observedAttributes() {
-        return ['label', 'message', 'value', 'required', 'placeholder'];
+        return ['label', 'message', 'value', 'required', 'placeholder', 'search-placeholder'];
     }
     attributeChangedCallback(name, oldValue, newValue) {
         // do something when an attribute has changed
@@ -170,6 +179,9 @@ export class JBSelectWebComponent extends HTMLElement {
                 break;
             case 'placeholder':
                 this.placeholder = value;
+                break;
+            case 'search-placeholder':
+                this.searchPlaceholder = value;
                 break;
         }
 
@@ -204,12 +216,16 @@ export class JBSelectWebComponent extends HTMLElement {
             this.textValue = '';
             this.setSelectedOptionDom(null);
             this.elements.componentWrapper.classList.remove('--has-value');
-            this.elements.input.setAttribute('placeholder', this.placeholder);
+            if(!this.isMobileDevice){
+                this.elements.input.setAttribute('placeholder', this.placeholder);
+            }
         } else {
             this.textValue = '';
             this.setSelectedOptionDom(value);
             this.elements.componentWrapper.classList.add('--has-value');
-            this.elements.input.setAttribute('placeholder', '');
+            if(!this.isMobileDevice){
+                this.elements.input.setAttribute('placeholder', '');
+            }
         }
         //if user select an option we rest filter so user see all option again when open a select
         this.updateOptionList('');
@@ -291,6 +307,9 @@ export class JBSelectWebComponent extends HTMLElement {
         this.elements.input.focus();
         this.showOptionList();
         this.elements.componentWrapper.classList.add('--focused');
+        if(this.isMobileDevice){
+            this.elements.input.setAttribute('placeholder', this.#searchPlaceholder);
+        }
 
     }
     blur() {
@@ -299,6 +318,13 @@ export class JBSelectWebComponent extends HTMLElement {
         this.handleSelectedValueDisplay('');
         this.hideOptionList();
         this.triggerInputValidation();
+        if(this.isMobileDevice){
+            if(this.value){
+                this.elements.input.placeholder = "";
+            }else{
+                this.elements.input.placeholder = this.placeholder;
+            }
+        }
     }
     showOptionList() {
         this.elements.optionListWrapper.classList.add('--show');
