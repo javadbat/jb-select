@@ -36,10 +36,11 @@ remember set value as attribute if your option is a plain string but in direct a
 
 ### placeholder
 
- you can set placeholder when data is empty
+ you can set placeholder when data is empty.    
+ `search-placeholder`work on mobile device when user focus on select and modal open this text will be placed in top search input box
 
  ```html
- <jb-select placeholder="please select"></jb-select>
+ <jb-select placeholder="please select" search-placeholder="type to search"></jb-select>
  ```
 
 ### change empty state shape
