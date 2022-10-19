@@ -133,6 +133,10 @@
         &:focus-within .selected-value {
             opacity: 0.7;
             transition: all 0.3s ease;
+            @include mobile-tablet {
+                opacity: 0;
+                transition: none;
+            }
         }
         .front-box {
             position: absolute;
@@ -228,6 +232,9 @@
                     background-color: var(--jb-select-option-background-color-hover, #1073db);
                     color: var(--jb-select-option-color-hover, #fff);
                     cursor: pointer;
+                }
+                &.--selected-option{
+                    font-weight: 900;
                 }
             }
         }

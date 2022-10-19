@@ -65,7 +65,7 @@ for example if you have array of object as a option list and want to show custom
     dropDownElement.callbacks.getOptionTitle = (option)=>{return`${option.province}-${option.state}-${option.city}`}
     dropDownElement.callbacks.getOptionValue = (option)=>{return`${option.value}`}
     //to customizing options
-    dropDownElement.callbacks.getOptionDOM = (option,onOptionSelected)=>{
+    dropDownElement.callbacks.getOptionDOM = (option,onOptionSelected,isSelected)=>{
         // option is the object or any other formatted data yoy=u privide to optionList array
          const optionElement = document.createElement('div');
          //defualt class of each option in jb-select. you can change or customize it if you wish

@@ -322,18 +322,22 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     createOptionDOM(item:any):JBSelectOptionElement{
         let optionDOM: JBSelectOptionElement | null = null;
+        const isSelected = this.callbacks.getOptionValue(this.value) == this.callbacks.getOptionValue(item);
         if (typeof this.callbacks.getOptionDOM == 'function') {
-            optionDOM = this.callbacks.getOptionDOM(item, this.onOptionClicked.bind(this));
+            optionDOM = this.callbacks.getOptionDOM(item, this.onOptionClicked.bind(this),isSelected);
         } else {
-            optionDOM = this._createOptionDom(item);
+            optionDOM = this._createOptionDom(item, isSelected);
         }
         optionDOM.value = item;
         return optionDOM;
     }
 
-    _createOptionDom(item:any):JBSelectOptionElement{
+    _createOptionDom(item:any, isSelected:boolean):JBSelectOptionElement{
         const optionElement = document.createElement('div');
         optionElement.classList.add('select-option');
+        if(isSelected){
+            optionElement.classList.add('--selected-option');   
+        }
         //it has defualt function who return wxact same input
         optionElement.innerHTML = this.callbacks.getOptionTitle(item);
         optionElement.addEventListener('click', this.onOptionClicked.bind(this));

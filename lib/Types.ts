@@ -3,7 +3,7 @@ import { string } from "prop-types";
 export type JBSelectCallbacks = {
     getOptionTitle: (option:any) => string;
     getOptionValue: (option:any) => any;
-    getOptionDOM: null | ((option:any, onSelectCallback:(e:MouseEvent)=>void) => HTMLOptionElement);
+    getOptionDOM: null | ((option:any, onSelectCallback:(e:MouseEvent)=>void, isSelected:boolean) => HTMLOptionElement);
     getSelectedValueDOM: null | ((option:any) => HTMLElement);
 }
 export type JBSelectOptionElement = HTMLElement & {value?: any};
