@@ -84,9 +84,9 @@
         box-sizing: border-box;
         height: var(--jb-select-height, 40px);
         border: solid var(--jb-select-border-width, 1px) var(--jb-select-border-color, #f7f6f6);
-        background-color: var(--jb-select-bgcolor, #f7f6f6);
         border-bottom: solid var(--jb-select-border-bottom-width, 3px) var(--jb-select-border-color, #f7f6f6);
         border-radius: var(--jb-select-border-radius, 16px);
+        background-color: var(--jb-select-bgcolor, #f7f6f6);
         margin: 4px 0px;
         overflow: hidden;
         display: flex;
@@ -102,6 +102,11 @@
                 border-radius: var(--jb-select-border-radius, 16px);
                 border-bottom-color: var(--jb-select-border-color, #1e2832);
                 height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
+                background-color: var(--jb-select-mobile-input-bgcolor, #f7f6f6);
+                //
+                border: solid var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px)) var(--jb-select-mobile-search-border-color, var(--jb-select-border-color, #f7f6f6) );
+                border-bottom:solid var(--jb-select-mobile-search-border-bottom-width, var(--jb-select-border-bottom-width, 3px)) var(--jb-select-mobile-search-border-bottom-color, var(--jb-select-border-bottom-color, #f7f6f6) );
+                border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
             }
         }
         .selected-value-wrapper {

@@ -137,4 +137,10 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-close-bg-color                | close button bg-color default is `#1f1735`                                                    |
 | --jb-select-close-x-color                 | close button x color default is `#fff`                                                        |
 | --jb-select-close-bg-opacity              | close button bg opacity default is `0.4`                                                      |
+| --jb-select-mobile-input-bgcolor          | background color search input when open in mobile                                             |
+| --jb-select-mobile-search-border-width    | when user open select on mobile, search box can have its own border width config              |
+| --jb-select-mobile-search-border-color    | when user open select on mobile, search box can have its own border color config              |
+| --jb-select-mobile-search-border-bottom-width | when user open select on mobile, search box can have its own border bottom width config   |
+| --jb-select-mobile-search-border-bottom-color | when user open select on mobile, search box can have its own border bottom color config   |
+| --jb-select-mobile-search-border-radius    | when user open select on mobile, search box can have its own border radius                   |
 
