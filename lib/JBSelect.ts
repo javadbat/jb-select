@@ -313,18 +313,18 @@ export class JBSelectWebComponent extends HTMLElement {
 
     }
     blur() {
-        this.elements.componentWrapper.classList.remove('--focused');
-        this.textValue = "";
-        this.handleSelectedValueDisplay('');
-        this.hideOptionList();
-        this.triggerInputValidation();
-        if(this.isMobileDevice){
-            if(this.value){
-                this.elements.input.placeholder = "";
-            }else{
-                this.elements.input.placeholder = this.placeholder;
-            }
-        }
+        // this.elements.componentWrapper.classList.remove('--focused');
+        // this.textValue = "";
+        // this.handleSelectedValueDisplay('');
+        // this.hideOptionList();
+        // this.triggerInputValidation();
+        // if(this.isMobileDevice){
+        //     if(this.value){
+        //         this.elements.input.placeholder = "";
+        //     }else{
+        //         this.elements.input.placeholder = this.placeholder;
+        //     }
+        // }
     }
     showOptionList() {
         this.elements.optionListWrapper.classList.add('--show');

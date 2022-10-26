@@ -3,6 +3,9 @@
     //define private variable here
     --p-middle-div-height: var(--jb-select-middle-div-height, 0px);
     --p-p-color:#1e2832;
+    --p-border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
+    --p-base-z-index:1;
+    --p-mobile-modal-z-index:900;
 }
 .jb-select-web-component {
     width: var(--jb-select-width, 100%);
@@ -19,7 +22,7 @@
             height: 100vh;
             margin: 0;
             padding: 16px 8px;
-            z-index: 900;
+            z-index: var(--p-mobile-modal-z-index);
             
         }
         .select-box{
@@ -29,7 +32,7 @@
                 //
                 border-width: var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px));
                 border-color: var(--jb-select-mobile-search-border-color, var(--jb-select-border-color, #f7f6f6) );
-                border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px)));
+                border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--p-border-bottom-width));
                 border-bottom-color:  var(--jb-select-mobile-search-border-bottom-color, var(--jb-select-border-bottom-color, var(--jb-select-border-color, #f7f6f6)));
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
             }
@@ -52,6 +55,9 @@
         }
         .middle-divider{
             display: block;
+            @include mobile-tablet {
+                margin: var(--jb-select-middle-div-margin, 16px 0 0 0);
+            }
         }
         .select-list-wrapper {
             @include mobile-tablet {
@@ -120,10 +126,10 @@
         box-sizing: border-box;
         height: var(--jb-select-height, 40px);
         border: solid var(--jb-select-border-width, 1px) var(--jb-select-border-color, #f7f6f6);
-        border-bottom: solid var(--jb-select-border-bottom-width, 3px) var(--jb-select-border-color, #f7f6f6);
+        border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, #f7f6f6);
         border-radius: var(--jb-select-border-radius, 16px);
         background-color: var(--jb-select-bgcolor, #f7f6f6);
-        margin: 4px 0px;
+        margin: 4px 0px 0px 0px;
         overflow: hidden;
         display: flex;
         justify-content: space-between;
@@ -213,16 +219,18 @@
     }
     .middle-divider{
         display: none;
+        position: relative;
+        z-index: calc(var(--p-base-z-index) + 2);
         width: 100%;
         height: var(--p-middle-div-height);
         background-color: var(--jb-select-middle-div-color, var(--p-p-color));
-        margin: var(--jb-select-middle-div-margin, 0);
+        margin: var(--jb-select-middle-div-margin, calc(-1 * var(--p-border-bottom-width)) 0);
         border-radius: var(--jb-select-middle-div-radius, 0px);
     }
     .message-box {
         font-size: var(--jb-select-message-font-size, 0.7em);
         font-weight: var(--jb-select-message-font-weight, normal);
-        padding: 2px 8px;
+        padding: 4px 8px;
         color: var(--jb-select-message-color, #929292);
         &:empty {
             padding: 0;
@@ -234,7 +242,7 @@
     .select-list-wrapper {
         display: none;
         position: absolute;
-        margin: -6px 0;
+        margin: calc(-1 * var(--p-border-bottom-width)) 0;
         height: auto;
         overflow: hidden;
         width: 100%;
@@ -245,7 +253,7 @@
         border-bottom: solid 3px var(--jb-select-border-color, var(--p-p-color));
         box-shadow: var(--jb-select-list-box-shadow);
         box-sizing: border-box;
-        z-index: 999;
+        z-index: calc(var(--p-base-z-index) + 1);
         &.--show {
             display: block;
         }
@@ -267,7 +275,7 @@
                 align-items: center;
                 font-size: 0.9em;
                 color: var(--jb-select-option-color, inherit);
-                background-color: var(--jb-select-option-background-color, #fff);
+                background-color: var(--jb-select-option-background-color, transparent);
                 &:hover {
                     background-color: var(--jb-select-option-background-color-hover, #1073db);
                     color: var(--jb-select-option-color-hover, #fff);

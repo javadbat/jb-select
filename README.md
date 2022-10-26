@@ -120,7 +120,7 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-input-label-font-weight              | color of label defualt is `#1f1735`                                                           |
 | --jb-select-option-color                  | change option text color                                                                      |
 | --jb-select-option-color-hover            | change option text color on hover                                                             |
-| --jb-select-option-background-color       | background of options default is `#fff`                                                       |
+| --jb-select-option-background-color       | background of options default is `transparent`                                                |
 | --jb-select-option-background-color-hover | background of options on mouse hover default is `#1073db`                                     |
 | --jb-select-input-color                   | color of input value                                                                          |
 | --jb-select-bgcolor-selected              | set background color for selected status                                                      |
