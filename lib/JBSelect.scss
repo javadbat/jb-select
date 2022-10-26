@@ -1,5 +1,9 @@
 @import "../../../common/scss/Medias.scss";
-
+:host{
+    //define private variable here
+    --p-middle-div-height: var(--jb-select-middle-div-height, 0px);
+    --p-p-color:#1e2832;
+}
 .jb-select-web-component {
     width: var(--jb-select-width, 100%);
     margin: var(--jb-select-margin, 12px 0);
@@ -46,7 +50,9 @@
                } 
             }
         }
-       
+        .middle-divider{
+            display: block;
+        }
         .select-list-wrapper {
             @include mobile-tablet {
                 position: initial;
@@ -125,8 +131,8 @@
         gap: 8px;
         position: relative;
         &:focus-within {
-            border-color: var(--jb-select-border-color, #1e2832);
-            border-bottom-color: var(--jb-select-border-color, #1e2832);
+            border-color: var(--jb-select-border-color, var(--p-p-color));
+            border-bottom-color: var(--jb-select-border-color, var(--p-p-color));
             border-radius: var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px) 0 0;
             @include mobile-tablet {
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
@@ -205,6 +211,14 @@
             }
         }
     }
+    .middle-divider{
+        display: none;
+        width: 100%;
+        height: var(--p-middle-div-height);
+        background-color: var(--jb-select-middle-div-color, var(--p-p-color));
+        margin: var(--jb-select-middle-div-margin, 0);
+        border-radius: var(--jb-select-middle-div-radius, 0px);
+    }
     .message-box {
         font-size: var(--jb-select-message-font-size, 0.7em);
         font-weight: var(--jb-select-message-font-weight, normal);
@@ -226,9 +240,9 @@
         width: 100%;
         background-color: var(--jb-select-bgcolor, #f7f6f6);
         border-radius: 0 0 var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px);
-        border: solid 1px var(--jb-select-border-color, #1e2832);
+        border: solid 1px var(--jb-select-border-color, var(--p-p-color));
         border-top: none;
-        border-bottom: solid 3px var(--jb-select-border-color, #1e2832);
+        border-bottom: solid 3px var(--jb-select-border-color, var(--p-p-color));
         box-shadow: var(--jb-select-list-box-shadow);
         box-sizing: border-box;
         z-index: 999;
