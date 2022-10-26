@@ -16,7 +16,37 @@
             margin: 0;
             padding: 16px 8px;
             z-index: 900;
+            
         }
+        .select-box{
+            @include mobile-tablet {
+                height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
+                background-color: var(--jb-select-mobile-input-bgcolor, #f7f6f6);
+                //
+                border-width: var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px));
+                border-color: var(--jb-select-mobile-search-border-color, var(--jb-select-border-color, #f7f6f6) );
+                border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px)));
+                border-bottom-color:  var(--jb-select-mobile-search-border-bottom-color, var(--jb-select-border-bottom-color, var(--jb-select-border-color, #f7f6f6)));
+                border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
+            }
+            .front-box{
+                .arrow-icon{
+                    @include mobile-tablet {
+                        display: none;
+                    }
+                }
+            }
+            .selected-value-wrapper{
+                @include mobile-tablet {
+                    opacity: 0;
+                    transition: none;
+                }
+               .selected-value{
+               
+               } 
+            }
+        }
+       
         .select-list-wrapper {
             @include mobile-tablet {
                 position: initial;
@@ -96,18 +126,12 @@
         position: relative;
         &:focus-within {
             border-color: var(--jb-select-border-color, #1e2832);
-            border-bottom-color: var(--jb-select-border-color, #f7f6f6);
+            border-bottom-color: var(--jb-select-border-color, #1e2832);
             border-radius: var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px) 0 0;
             @include mobile-tablet {
-                border-radius: var(--jb-select-border-radius, 16px);
-                border-bottom-color: var(--jb-select-border-color, #1e2832);
-                height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
-                background-color: var(--jb-select-mobile-input-bgcolor, #f7f6f6);
-                //
-                border: solid var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px)) var(--jb-select-mobile-search-border-color, var(--jb-select-border-color, #f7f6f6) );
-                border-bottom:solid var(--jb-select-mobile-search-border-bottom-width, var(--jb-select-border-bottom-width, 3px)) var(--jb-select-mobile-search-border-bottom-color, var(--jb-select-border-bottom-color, #f7f6f6) );
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
             }
+            
         }
         .selected-value-wrapper {
             position: absolute;
@@ -138,10 +162,7 @@
         &:focus-within .selected-value {
             opacity: 0.7;
             transition: all 0.3s ease;
-            @include mobile-tablet {
-                opacity: 0;
-                transition: none;
-            }
+            
         }
         .front-box {
             position: absolute;
