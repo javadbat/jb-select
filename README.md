@@ -146,6 +146,7 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-middle-div-height              | separator line between input and list default is `0px` and hidden but you can cahange it     | 
 | --jb-select-middle-div-color               | change separator line color                                                                  |
 | --jb-select-middle-div-margin              | chnage seprator line margin                                                                  |
+| --jb-select-middle-div-mobile-margin       | chnage seprator line margin in mobile modal                                                  |
 | --jb-select-middle-div-radius              | change seperator line border-radius                                                          |
 
 
