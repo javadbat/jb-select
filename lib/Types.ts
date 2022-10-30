@@ -1,5 +1,3 @@
-import { string } from "prop-types";
-
 export type JBSelectCallbacks = {
     getOptionTitle: (option:any) => string;
     getOptionValue: (option:any) => any;
