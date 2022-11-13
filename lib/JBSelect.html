@@ -15,7 +15,11 @@
         </div>
         <div class="front-box">
             <input class="input" />
-            <div class="arrow-icon"></div>
+            <div class="arrow-icon">
+                <slot name="select-arrow-icon">
+                    <svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' id='Layer_1' x='0px' y='0px' viewBox='0 0 494.1 371.1' style='enable-background:new 0 0 494.1 371.1;' xml:space='preserve'><path d='M293,343.8L480.9,69.3c8.7-12.7,13.3-25.4,13.3-36.1c0-20.5-16.5-33.2-44-33.2H44C16.4,0,0,12.7,0,33.2  c0,10.6,4.6,23.2,13.3,35.9l187.9,274.6c12.1,17.7,28.4,27.4,45.9,27.4C264.6,371.1,280.9,361.4,293,343.8z'/></svg>
+                </slot>
+            </div>
         </div>
     </div>
     <div class="middle-divider">
