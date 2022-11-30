@@ -86,7 +86,7 @@ export class JBSelectWebComponent extends HTMLElement {
         this.updateOptionListDOM();
     }
     get isMobileDevice() { return /Mobi/i.test(window.navigator.userAgent); }
-
+    get isOpen(){ return this.elements.componentWrapper.classList.contains('--focused');}
 
     constructor() {
 
@@ -231,7 +231,7 @@ export class JBSelectWebComponent extends HTMLElement {
         this.updateOptionList('');
     }
     onArrowKeyClick() {
-        if (this.elements.optionListWrapper.classList.contains('--show')) {
+        if (this.isOpen) {
             this.blur();
         } else {
             this.focus();
@@ -296,8 +296,8 @@ export class JBSelectWebComponent extends HTMLElement {
         this.focus();
     }
     onInputBlur(e: FocusEvent) {
-        const focusedElement = e.relatedTarget;
-        if (this.elements.optionListWrapper.contains(<Node>(focusedElement))) {
+        const focusedElement = <Node>(e.relatedTarget);
+        if (this.elements.optionListWrapper.contains(focusedElement) || this.elements.arrowIcon.contains(focusedElement)) {
             //user click on a menu item
         } else {
             this.blur();
@@ -325,6 +325,7 @@ export class JBSelectWebComponent extends HTMLElement {
                 this.elements.input.placeholder = this.placeholder;
             }
         }
+        this.elements.input.blur();
     }
     showOptionList() {
         this.elements.optionListWrapper.classList.add('--show');
