@@ -156,7 +156,7 @@
         border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, #f7f6f6);
         border-radius: var(--jb-select-border-radius, 16px);
         background-color: var(--jb-select-bgcolor, #f7f6f6);
-        margin: 4px 0px 0px 0px;
+        margin:var(--jb-select-select-box-margin, 4px 0px 0px 0px);
         overflow: hidden;
         display: flex;
         justify-content: space-between;
