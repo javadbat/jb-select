@@ -17,7 +17,7 @@
 
     &.--focused {
         @include mobile-tablet {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             background-color: var(--jb-select-overlay-bgcolor, #0008);
