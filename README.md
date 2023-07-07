@@ -3,11 +3,26 @@
 pure js standalone select box web-component
 
 - with search ability
-- mobile freindly
+- mobile freindly and responsive
 - cusomizable style with css variable
+- support typescript
+- support both RTL & LTR direction pages
+- custom validation
+- support option dom customization
+- can get array of js object as a option list and extract value and label from it to show it to user.
 
 sample:<https://codepen.io/javadbat/pen/abpjKVP>
 
+## install
+
+### using npm:
+```cmd
+    npm i jb-select
+```
+### using cdn:
+```html
+    <script src="https://unpkg.com/jb-input/dist/JBInput.umd.js"></script>
+```
 ## doc
 
 use `<jb-select></jb-select>`
@@ -15,7 +30,24 @@ use `<jb-select></jb-select>`
 ### set option list
 
 if ypu want to add option to jb-select set option list to DOM
-`const dropDownElement = document.querySelector('jb-select').optionList = [your option array]`
+
+```js
+const dropDownElement = ocument.querySelector('jb-select')
+dropDownElement.optionList = [1,2,3]
+//or you can provide object as a option
+//if you provide array of object to optionList. rememmber to set callbacks as well so component would know how to extract label and value from it.
+dropDownElement.optionList = [
+    {
+        id:1,
+        productName:"book"
+    },
+    {
+        id:2,
+        productName:"pen"
+    },
+]
+
+```
 
 ### get value
 
@@ -105,7 +137,7 @@ in some cases in your project you need to change defualt style of web-component 
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
 | css variable name                         | description                                                                                   |
 | -------------                             | -------------                                                                                 |
-| --jb-select-margin                        | web-component margin default is `0 12px`                                                      |
+| --jb-select-margin                        | web-component margin default is `0 0`                                                      |
 | --jb-select-width                         | change the select component width default is `100%`                                           |
 | --jb-select-border-radius                 | web-component border-radius defualt is `16px`                                                 |
 | --jb-select-border-color                  | border color of select in normal mode                                                         |
