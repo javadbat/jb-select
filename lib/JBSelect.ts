@@ -189,13 +189,19 @@ export class JBSelectWebComponent extends HTMLElement {
     _setValueOnOptionListChanged() {
         //when option list changed we see if current value is valid for new optionlist we set it if not we reset value to null.
         //in some scenario value is setted before otionList attached so we store it on this._notFindedValue and after option list setted we set value from this._notFindedValue
-        if (this.value || this.#notFindedValue) {
+        if (this.#notFindedValue) {
             //if select has no prev value or pending not finded value we dont set it becuase user may input some search terms in input box and developer-user update list base on that value
             //if we set it to null the search term and this.textvalue will become null and empty too and it make impossible for user to search in dynamic back-end provided searchable list so we put this condition to prevent it
-            this.#setValueFromOutside(this.value || this.#notFindedValue);
+            const isSetted = this.#setValueFromOutside(this.#notFindedValue);
+            if(isSetted){
+                //after list update and when not founded value is found in new option list we clear old not finded value
+                this.#notFindedValue = null;
+            }
+        }else if(this.value){
+            this.#setValueFromOutside(this.value);
         }
     }
-    #setValueFromOutside(value:any) {
+    #setValueFromOutside(value:any):boolean{
         //when user set value by attribute or value prop directly we call this function
         const matchedOption = this.optionList.find((option) => { // if we have value mapper we set selected value by object that match mapper
             if (this.callbacks.getOptionValue(option) == value) {
@@ -204,8 +210,10 @@ export class JBSelectWebComponent extends HTMLElement {
         });
         if (matchedOption || value == null) {
             this._setValue(matchedOption);
+            return true;
         } else {
             this.#notFindedValue = value;
+            return false;
         }
 
     }
