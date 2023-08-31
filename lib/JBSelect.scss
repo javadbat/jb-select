@@ -194,7 +194,7 @@
                 padding: 2px 12px 0 12px;
                 display: block;
                 font-family: inherit;
-                font-size: 1.1em;
+                font-size: var(--jb-select-selected-value-font-size, 1.1em);
                 color: var(--jb-select-selected-value-color, #1f1735);
                 margin: 0;
                 border-radius: 0;
