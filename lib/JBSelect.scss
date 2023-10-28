@@ -151,103 +151,114 @@
     .select-box {
         width: 100%;
         box-sizing: border-box;
-        height: var(--jb-select-height, 40px);
+        height: var(--jb-select-height, 2.5rem);
         border: solid var(--jb-select-border-width, 1px) var(--jb-select-border-color, #f7f6f6);
         border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, #f7f6f6);
-        border-radius: var(--jb-select-border-radius, 16px);
+        border-radius: var(--jb-select-border-radius, 1rem);
         background-color: var(--jb-select-bgcolor, #f7f6f6);
         margin:var(--jb-select-select-box-margin, 4px 0px 0px 0px);
         overflow: hidden;
         display: flex;
-        justify-content: space-between;
-        padding-inline-end: var(--jb-select-box-padding-end, 16px);
-        gap: 8px;
-        position: relative;
-
+        padding-inline-end: var(--jb-select-box-padding-end, 1rem);
+        gap: 0.5rem;
+        align-items: center;
         &:focus-within {
             border-color: var(--jb-select-border-color, var(--p-p-color));
             border-bottom-color: var(--jb-select-border-color, var(--p-p-color));
-            border-radius: var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px) 0 0;
-
+            border-radius: var(--jb-select-border-radius, 1rem) var(--jb-select-border-radius, 1rem) 0 0;
             @include mobile-tablet {
-                border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
+                border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 1rem));
             }
         }
-
-        .selected-value-wrapper {
-            position: absolute;
+        .start-section{
+            height: 100%;
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .middle-section{
+            position: relative;
             width: 100%;
             height: 100%;
-            border-radius: inherit;
-            overflow: hidden;
-            z-index: 1;
-
-            &.--search-typed {
-                opacity: 0;
-            }
-
-            .selected-value {
+            flex:1;
+            .selected-value-wrapper {
+                position: absolute;
+                top:0;
+                left: 0;
                 width: 100%;
-                box-sizing: border-box;
                 height: 100%;
-                background-color: transparent;
-                padding: 2px 12px 0 12px;
-                display: block;
-                font-family: inherit;
-                font-size: var(--jb-select-selected-value-font-size, 1.1em);
-                color: var(--jb-select-selected-value-color, #1f1735);
-                margin: 0;
-                border-radius: 0;
-                display: flex;
-                align-items: center;
+                border-radius: inherit;
+                overflow: hidden;
+                z-index: 1;
+    
+                &.--search-typed {
+                    opacity: 0;
+                }
+    
+                .selected-value {
+                    width: 100%;
+                    box-sizing: border-box;
+                    height: 100%;
+                    background-color: transparent;
+                    padding: 2px 12px 0 12px;
+                    display: block;
+                    font-family: inherit;
+                    font-size: var(--jb-select-selected-value-font-size, 1.1em);
+                    color: var(--jb-select-selected-value-color, #1f1735);
+                    margin: 0;
+                    border-radius: 0;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            .front-box {
+                position: absolute;
+                top:0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: inherit;
+                overflow: hidden;
+                z-index: 2;
+                input {
+                    border: none;
+                    width: 100%;
+                    box-sizing: border-box;
+                    height: 100%;
+                    background-color: transparent;
+                    padding: 2px 12px 0 12px;
+                    display: block;
+                    font-family: inherit;
+                    font-size: 1.1em;
+                    color: var(--jb-select-input-color, #1f1735);
+                    margin: 0;
+                    border-radius: 0;
+    
+                    &:focus {
+                        outline: none;
+                    }
+    
+                    &::placeholder {
+                        color: var(--jb-select-placeholder-color, initial);
+                        font-size: var(--jb-select-placeholder-font-size, 1.1em);
+                    }
+                }
             }
         }
+        .end-section{
+            .arrow-icon {
+                margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
+            }
+        }
+        
 
         &:focus-within .selected-value {
             opacity: 0.7;
             transition: all 0.3s ease;
         }
 
-        .front-box {
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
-            overflow: hidden;
-            z-index: 2;
 
-            display: grid;
-            grid-template-columns: 1fr auto;
-            justify-content: center;
-            align-items: center;
-
-            input {
-                border: none;
-                width: 100%;
-                box-sizing: border-box;
-                height: 100%;
-                background-color: transparent;
-                padding: 2px 12px 0 12px;
-                display: block;
-                font-family: inherit;
-                font-size: 1.1em;
-                color: var(--jb-select-input-color, #1f1735);
-                margin: 0;
-                border-radius: 0;
-
-                &:focus {
-                    outline: none;
-                }
-
-                &::placeholder {
-                    color: var(--jb-select-placeholder-color, initial);
-                    font-size: var(--jb-select-placeholder-font-size, 1.1em);
-                }
-            }
-
-            .arrow-icon {
-                margin: var(--jb-select-arrow-icon-margin, 0 16px 0 0);
-            }
-        }
     }
 
     .middle-divider {

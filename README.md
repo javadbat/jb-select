@@ -88,6 +88,19 @@ like the example the below:
     </div>
 </jb-select>
 ```
+### Add Icon or Any Element into box
+sometimes you want to add icon into the select box before value box.
+you can customize this entire section by adding a div or any other Tag with the `slot="start-section"`
+
+like the example the below:
+
+```html
+<jb-select>
+    <div slot="start-section">
+        <img class="your-custom-icon" src="./path/to/file.svg">
+    </div>
+</jb-select>
+```
 
 ### callbacks
 
