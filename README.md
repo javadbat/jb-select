@@ -175,7 +175,7 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-message-font-size             | font size of message default is `0.7em`                                                       |
 | --jb-select-message-font-weight           | font weight of message box default is `normal`                                                |
 | --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
-| --jb-select-placeholder-font-size         | placeholder font-size default is `1.1em`                                                      |
+| --jb-select-placeholder-font-size         | placeholder font-size default is `1.1rem`                                                      |
 | --jb-select-height                        | jb-select box height                                                                          |
 | --jb-select-mobile-search-input-height    | when user open select on mobile there is a search box input this var will set its height      |
 | --jb-select-mobile-item-list-margin       | when user open select on mobile there is gap between search box & list that can be customized |
@@ -197,5 +197,6 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-list-scroll-color              | list item scroll color  default is `#c3c3c3`                                                 |
 | --jb-select-list-scroll-border-radius      | list item scroll border-radius default is `4px`                                              |
 | --jb-select-select-box-margin              | margin of internal element called select box that wrapper display element of form in one box |
+| --jb-select-value-font-size                | search input value font size default is `1.1rem`                                             |
 
 
