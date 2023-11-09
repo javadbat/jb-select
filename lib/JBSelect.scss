@@ -230,7 +230,7 @@
                     padding: 2px 12px 0 12px;
                     display: block;
                     font-family: inherit;
-                    font-size: 1.1em;
+                    font-size: var(--jb-select-value-font-size,1.1rem);
                     color: var(--jb-select-input-color, #1f1735);
                     margin: 0;
                     border-radius: 0;
