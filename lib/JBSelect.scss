@@ -73,7 +73,7 @@
             @include mobile-tablet {
                 position: initial;
                 margin: var(--jb-select-mobile-item-list-margin, 16px 0);
-                border-radius: var(--jb-select-border-radius, 16px);
+                border-radius: var(--jb-select-mobile-item-list-border-radius, var(--jb-select-border-radius, 16px));
             }
         }
 
@@ -298,7 +298,7 @@
         border-radius: 0 0 var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px);
         border: solid 1px var(--jb-select-border-color, var(--p-p-color));
         border-top: none;
-        border-bottom: solid 3px var(--jb-select-border-color, var(--p-p-color));
+        border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, var(--p-p-color));
         box-shadow: var(--jb-select-list-box-shadow);
         box-sizing: border-box;
         z-index: calc(var(--p-base-z-index) + 1);

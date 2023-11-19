@@ -150,9 +150,10 @@ in some cases in your project you need to change defualt style of web-component 
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
 | css variable name                         | description                                                                                   |
 | -------------                             | -------------                                                                                 |
-| --jb-select-margin                        | web-component margin default is `0 0`                                                      |
+| --jb-select-margin                        | web-component margin default is `0 0`                                                         |
 | --jb-select-width                         | change the select component width default is `100%`                                           |
 | --jb-select-border-radius                 | web-component border-radius defualt is `16px`                                                 |
+| --jb-select-mobile-item-list-border-radius| web-component item list border-radius on mobile and tablet when list is open                  |
 | --jb-select-border-color                  | border color of select in normal mode                                                         |
 | --jb-select-border-color-selected         | border color when user select a value from list                                               |
 | --jb-select-bgcolor                       | background color of input                                                                     |
