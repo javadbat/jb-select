@@ -296,7 +296,7 @@
         width: 100%;
         background-color: var(--jb-select-bgcolor, #f7f6f6);
         border-radius: 0 0 var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px);
-        border: solid 1px var(--jb-select-border-color, var(--p-p-color));
+        border: solid var(--jb-select-list-border-width, 1px) var(--jb-select-border-color, var(--p-p-color));
         border-top: none;
         border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, var(--p-p-color));
         box-shadow: var(--jb-select-list-box-shadow);

@@ -199,5 +199,6 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-list-scroll-border-radius      | list item scroll border-radius default is `4px`                                              |
 | --jb-select-select-box-margin              | margin of internal element called select box that wrapper display element of form in one box |
 | --jb-select-value-font-size                | search input value font size default is `1.1rem`                                             |
+| --jb-select-list-border-width              | border-width for list wrapper                                                                |
 
 
