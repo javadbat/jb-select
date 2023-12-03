@@ -425,7 +425,7 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     showValidationError(errorType) {
         if (errorType == 'REQUIRED') {
-            const label = this.getAttribute('label');
+            const label = this.getAttribute('label') || "";
             this.elements.messageBox.innerHTML = `${label} حتما باید انتخاب شود`;
             this.elements.messageBox.classList.add('--error');
         }
