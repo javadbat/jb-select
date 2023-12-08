@@ -140,9 +140,9 @@ remember you must set this callback before set your optionList
 ### events
 
 ```js
-
     dropDownElement.addEventListener('change',(e)=>{/*your function*/});
     dropDownElement.addEventListener('keyup',(e)=>{/*your function*/});
+    dropDownElement.addEventListener('input',(e)=>{/*your function*/});
 
 ```
 

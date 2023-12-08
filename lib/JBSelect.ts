@@ -1,4 +1,3 @@
-import { es } from 'date-fns/locale';
 import HTML from './JBSelect.html';
 import CSS from './JBSelect.scss';
 import { JBSelectCallbacks, JBSelectElements, JBSelectOptionElement } from './Types';
@@ -63,7 +62,11 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     set placeholder(value:string) {
         this.#placeholder = value;
-        this.elements.input.placeholder = value;
+        if(this.value !== null && this.value!== undefined){
+            this.elements.input.placeholder = "";
+        }else{
+            this.elements.input.placeholder = value;
+        }
     }
     //on mobile device when search modla open this will appear on searchbox
     #searchPlaceholder = "search"
@@ -154,7 +157,7 @@ export class JBSelectWebComponent extends HTMLElement {
         // do something when an attribute has changed
         this.onAttributeChange(name, newValue);
     }
-    onAttributeChange(name, value) {
+    onAttributeChange(name:string, value:string) {
         switch (name) {
             case 'label':
                 this.elements.label.text.innerHTML = value;
@@ -171,7 +174,7 @@ export class JBSelectWebComponent extends HTMLElement {
                 this.#setValueFromOutside(value);
                 break;
             case 'required':
-                if (value === "" || value == "true" || value == true) {
+                if (value === "" || value == "true" || value == "True") {
                     this.required = true;
                 } else {
                     this.required = false;
@@ -209,7 +212,7 @@ export class JBSelectWebComponent extends HTMLElement {
             }
         });
         if (matchedOption || value == null) {
-            this._setValue(matchedOption);
+            this.#setValue(matchedOption);
             return true;
         } else {
             this.#notFindedValue = value;
@@ -217,22 +220,24 @@ export class JBSelectWebComponent extends HTMLElement {
         }
 
     }
-    _setValue(value:any) {
+    #setValue(value:any) {
         this.#notFindedValue = null;
         this.#value = value;
         if ((value == null || value == undefined)) {
             this.textValue = '';
             this.setSelectedOptionDom(null);
             this.elements.componentWrapper.classList.remove('--has-value');
-            if(!this.isMobileDevice){
-                this.elements.input.setAttribute('placeholder', this.placeholder);
+            //show placeholder when user empty data
+            if(!(this.isMobileDevice && this.isOpen)){
+                this.elements.input.placeholder = this.placeholder;
             }
         } else {
             this.textValue = '';
             this.setSelectedOptionDom(value);
             this.elements.componentWrapper.classList.add('--has-value');
-            if(!this.isMobileDevice){
-                this.elements.input.setAttribute('placeholder', '');
+            //hide placeholder when user select data
+            if(!(this.isMobileDevice && this.isOpen)){
+                this.elements.input.placeholder = "";
             }
         }
         //if user select an option we rest filter so user see all option again when open a select
@@ -246,7 +251,9 @@ export class JBSelectWebComponent extends HTMLElement {
         }
     }
     onInputKeyPress() {
-        //TODO: raise keypress event
+        //TODO: add event detail to keypress
+        const event = new KeyboardEvent('keypress');
+        this.dispatchEvent(event);
     }
     onInputBeforeInput(e:InputEvent) {
         const inputedText = e.data || '';
@@ -255,6 +262,22 @@ export class JBSelectWebComponent extends HTMLElement {
         const inputedText = (e.target as HTMLInputElement).value;
         this.textValue = inputedText;
         this.handleSelectedValueDisplay(inputedText);
+        this.#dispatchInputEvent(e);
+    }
+    #dispatchInputEvent(e:InputEvent){
+        const event = new InputEvent('input',{
+            bubbles:e.bubbles,
+            cancelable:e.cancelable,
+            composed:e.composed,
+            data:e.data,
+            dataTransfer:e.dataTransfer,
+            detail:e.detail,
+            inputType:e.inputType,
+            isComposing:e.isComposing,
+            targetRanges:e.getTargetRanges(),
+            view:e.view,
+        });
+        this.dispatchEvent(event);
     }
     onInputKeyup(e:KeyboardEvent) {
         const inputText = (e.target as HTMLInputElement).value;
@@ -316,7 +339,7 @@ export class JBSelectWebComponent extends HTMLElement {
         this.showOptionList();
         this.elements.componentWrapper.classList.add('--focused');
         if(this.isMobileDevice){
-            this.elements.input.setAttribute('placeholder', this.#searchPlaceholder);
+            this.elements.input.placeholder = this.#searchPlaceholder;
         }
 
     }
@@ -385,7 +408,7 @@ export class JBSelectWebComponent extends HTMLElement {
         this._triggerOnChangeEvent();
     }
     selectOption(value:any) {
-        this._setValue(value);
+        this.#setValue(value);
         this.triggerInputValidation();
     }
     filterOptionList(filterString:string):any[] {
