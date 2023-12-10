@@ -7,6 +7,7 @@
     --p-border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
     --p-base-z-index: 1;
     --p-mobile-modal-z-index: 900;
+    --p-mobile-modal-height:var(--jb-select-mobile-modal-height, 100vh);
 }
 
 .jb-select-web-component {
@@ -18,11 +19,13 @@
     &.--focused {
         @include mobile-tablet {
             position: fixed;
-            top: 0;
+            bottom: 0;
+            top:initial;
             left: 0;
             background-color: var(--jb-select-overlay-bgcolor, #0008);
             width: 100vw;
-            height: 100vh;
+            height: var(--p-mobile-modal-height);
+            border-radius: var(--jb-select-mobile-modal-border-radius, 0) var(--jb-select-mobile-modal-border-radius, 0) 0 0;
             margin: 0;
             padding: 16px 8px;
             z-index: var(--p-mobile-modal-z-index);
@@ -318,7 +321,7 @@
             }
 
             @include mobile-tablet {
-                max-height: calc(100vh - 240px);
+                max-height: calc(var(--p-mobile-modal-height) - 240px);
             }
 
             .select-option {

@@ -202,5 +202,7 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-select-box-margin              | margin of internal element called select box that wrapper display element of form in one box |
 | --jb-select-value-font-size                | search input value font size default is `1.1rem`                                             |
 | --jb-select-list-border-width              | border-width for list wrapper                                                                |
+| --jb-select-mobile-modal-border-radius     | opend modal in mobile border radius. useful to chanage when you chnaged `--jb-select-mobile-modal-height` before |
+| --jb-select-mobile-modal-height            | modal height when list open in mobile                                                        |
 
 
