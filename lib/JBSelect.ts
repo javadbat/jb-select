@@ -6,7 +6,7 @@ export class JBSelectWebComponent extends HTMLElement {
     #textValue = "";
     // if user set value and current option list is not contain the option. 
     // we hold it in _notFindedValue and select value when option value get updated
-    #notFindedValue: any = null;
+    #notFoundedValue: any = null;
     required = false;
     callbacks: JBSelectCallbacks = {
         getOptionTitle: (option) => { return option; },
@@ -17,7 +17,7 @@ export class JBSelectWebComponent extends HTMLElement {
     elements!: JBSelectElements;
     get value() {
         if (this.#value) {
-            return this.callbacks.getOptionValue(this.#value);
+            return this.#getOptionValue(this.#value);
         } else {
             return null;
         }
@@ -36,7 +36,7 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     get selectedOptionTitle() {
         if (this.value) {
-            return this.callbacks.getOptionTitle(this.#value);
+            return this.#getOptionTitle(this.#value);
         } else {
             return "";
         }
@@ -191,14 +191,14 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     _setValueOnOptionListChanged() {
         //when option list changed we see if current value is valid for new optionlist we set it if not we reset value to null.
-        //in some scenario value is setted before otionList attached so we store it on this._notFindedValue and after option list setted we set value from this._notFindedValue
-        if (this.#notFindedValue) {
-            //if select has no prev value or pending not finded value we dont set it becuase user may input some search terms in input box and developer-user update list base on that value
+        //in some scenario value is setted before optionList attached so we store it on this.#notFoundedValue and after option list setted we set value from this.#notFoundedValue
+        if (this.#notFoundedValue) {
+            //if select has no prev value or pending not found value we don't set it because user may input some search terms in input box and developer-user update list base on that value
             //if we set it to null the search term and this.textvalue will become null and empty too and it make impossible for user to search in dynamic back-end provided searchable list so we put this condition to prevent it
-            const isSetted = this.#setValueFromOutside(this.#notFindedValue);
+            const isSetted = this.#setValueFromOutside(this.#notFoundedValue);
             if(isSetted){
-                //after list update and when not founded value is found in new option list we clear old not finded value
-                this.#notFindedValue = null;
+                //after list update and when not founded value is found in new option list we clear old not founded value
+                this.#notFoundedValue = null;
             }
         }else if(this.value){
             this.#setValueFromOutside(this.value);
@@ -207,7 +207,7 @@ export class JBSelectWebComponent extends HTMLElement {
     #setValueFromOutside(value:any):boolean{
         //when user set value by attribute or value prop directly we call this function
         const matchedOption = this.optionList.find((option) => { // if we have value mapper we set selected value by object that match mapper
-            if (this.callbacks.getOptionValue(option) == value) {
+            if (this.#getOptionValue(option) == value) {
                 return option;
             }
         });
@@ -215,13 +215,13 @@ export class JBSelectWebComponent extends HTMLElement {
             this.#setValue(matchedOption);
             return true;
         } else {
-            this.#notFindedValue = value;
+            this.#notFoundedValue = value;
             return false;
         }
 
     }
     #setValue(value:any) {
-        this.#notFindedValue = null;
+        this.#notFoundedValue = null;
         this.#value = value;
         if ((value == null || value == undefined)) {
             this.textValue = '';
@@ -380,7 +380,7 @@ export class JBSelectWebComponent extends HTMLElement {
     }
     createOptionDOM(item:any):JBSelectOptionElement{
         let optionDOM: JBSelectOptionElement | null = null;
-        const isSelected = this.callbacks.getOptionValue(this.value) == this.callbacks.getOptionValue(item);
+        const isSelected = this.#getOptionValue(this.value) == this.#getOptionValue(item);
         if (typeof this.callbacks.getOptionDOM == 'function') {
             optionDOM = this.callbacks.getOptionDOM(item, this.onOptionClicked.bind(this),isSelected);
         } else {
@@ -397,7 +397,7 @@ export class JBSelectWebComponent extends HTMLElement {
             optionElement.classList.add('--selected-option');   
         }
         //it has defualt function who return wxact same input
-        optionElement.innerHTML = this.callbacks.getOptionTitle(item);
+        optionElement.innerHTML = this.#getOptionTitle(item);
         optionElement.addEventListener('click', this.onOptionClicked.bind(this));
         return optionElement;
     }
@@ -414,7 +414,7 @@ export class JBSelectWebComponent extends HTMLElement {
     filterOptionList(filterString:string):any[] {
         const displayOptionList: any[] = [];
         this.optionList.filter((option) => {
-            const optionTitle = this.callbacks.getOptionTitle(option);
+            const optionTitle = this.#getOptionTitle(option);
             const isString = typeof optionTitle == 'string';
             if (isString && optionTitle.includes(filterString)) {
                 displayOptionList.push(option);
@@ -479,11 +479,32 @@ export class JBSelectWebComponent extends HTMLElement {
         }
     }
     #createSelectedValueDom(value:any) {
-        const valueText = this.callbacks.getOptionTitle(value);
+        const valueText = this.#getOptionTitle(value);
         const selectedOptionDom = document.createElement('div');
         selectedOptionDom.classList.add('selected-value');
         selectedOptionDom.innerHTML = valueText;
         return selectedOptionDom;
+    }
+    #getOptionValue(option:any){
+        if(typeof this.callbacks.getOptionValue !== "function"){
+            console.error("getOptionValue callback is not a function");
+        }
+        try{
+            return this.callbacks.getOptionValue(option);
+        }catch(e){
+            console.error(`Invalid getOptionValue callback Result, must be a function that returns the value of an option`,option);
+        }
+    }
+    #getOptionTitle(option:any):string{
+        if(typeof this.callbacks.getOptionTitle !== "function"){
+            console.error("getOptionTitle callback is not a function");
+        }
+        try{
+            return this.callbacks.getOptionTitle(option);
+        }catch(e){
+            console.error(`Invalid getOptionTitle callback Result, must be a function that returns the value of an option`,option);
+        }
+        return "";
     }
 }
 const myElementNotExists = !customElements.get('jb-select');
