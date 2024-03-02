@@ -211,7 +211,7 @@ export class JBSelectWebComponent extends HTMLElement {
                 return option;
             }
         });
-        if (matchedOption || value == null) {
+        if (matchedOption || value === null || value === undefined) {
             this.#setValue(matchedOption);
             return true;
         } else {
@@ -223,7 +223,7 @@ export class JBSelectWebComponent extends HTMLElement {
     #setValue(value:any) {
         this.#notFoundedValue = null;
         this.#value = value;
-        if ((value == null || value == undefined)) {
+        if ((value === null || value === undefined)) {
             this.textValue = '';
             this.setSelectedOptionDom(null);
             this.elements.componentWrapper.classList.remove('--has-value');
