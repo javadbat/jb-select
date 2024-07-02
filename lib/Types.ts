@@ -1,10 +1,10 @@
-export type JBSelectCallbacks = {
-    getOptionTitle: (option:any) => string;
-    getOptionValue: (option:any) => any;
-    getOptionDOM: null | ((option:any, onSelectCallback:(e:MouseEvent)=>void, isSelected:boolean) => HTMLElement);
-    getSelectedValueDOM: null | ((option:any) => HTMLElement);
+export type JBSelectCallbacks<TOption,TValue> = {
+    getOptionTitle: (option:TOption) => string;
+    getOptionValue?: (option:TOption) => TValue;
+    getOptionDOM: null | ((option:TOption, onSelectCallback:(e:MouseEvent)=>void, isSelected:boolean) => HTMLElement);
+    getSelectedValueDOM: null | ((option:TOption) => HTMLElement);
 }
-export type JBSelectOptionElement = HTMLElement & {value?: any};
+export type JBSelectOptionElement<TOption> = HTMLElement & {value?: TOption};
 export type JBSelectElements = {
     input: HTMLInputElement,
     componentWrapper: HTMLDivElement,
