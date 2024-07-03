@@ -303,18 +303,35 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       this.focus();
     }
   }
-  #onInputKeyPress() {
-    //TODO: add event detail to keypress
-    const event = new KeyboardEvent("keypress");
+  #onInputKeyPress(e:KeyboardEvent) {
+    const eventOptions:KeyboardEventInit = {
+      altKey:e.altKey,
+      bubbles:e.bubbles,
+      cancelable:e.cancelable,
+      code:e.code,
+      composed:e.composed,
+      ctrlKey:e.ctrlKey,
+      detail:e.detail,
+      isComposing:e.isComposing,
+      key:e.key,
+      location:e.location,
+      metaKey:e.metaKey,
+      view:e.view,
+      repeat:e.repeat,
+      shiftKey:e.shiftKey 
+    };
+    const event = new KeyboardEvent("keypress",eventOptions);
     this.dispatchEvent(event);
   }
   #onInputBeforeInput(e: InputEvent) {
     // const inputtedText = e.data || "";
+    //TODO: add cancelable event dispatch here
   }
   #onInputInput(e: InputEvent) {
     const inputtedText = (e.target as HTMLInputElement).value;
     this.textValue = inputtedText;
     this.#handleSelectedValueDisplay(inputtedText);
+    this.#validation.checkValidity(false);
     this.#dispatchInputEvent(e);
   }
   #dispatchInputEvent(e: InputEvent) {
@@ -402,7 +419,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.textValue = "";
     this.#handleSelectedValueDisplay("");
     this.#hideOptionList();
-    this.triggerInputValidation();
+    this.#validation.checkValidity(true);
     if (this.isMobileDevice) {
       if (this.value) {
         this.elements.input.placeholder = "";
@@ -468,7 +485,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   }
   #selectOption(value: TOption) {
     this.#setValue(value);
-    this.triggerInputValidation();
+    this.validation.checkValidity(true);
   }
   #filterOptionList(filterString: string): TOption[] {
     const displayOptionList: TOption[] = [];
@@ -487,25 +504,12 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     });
     return displayOptionList;
   }
+  /**
+   * @description please use dom.validation.checkValidity
+   * @deprecated 
+   */
   triggerInputValidation(showError = true) {
-    // this method is public and used outside of component to check if field validity param are met
-    let errorType = "";
-    let requiredValid = true;
-    if (this.required) {
-      requiredValid = this.value != null;
-      if (!requiredValid) {
-        errorType = "REQUIRED";
-      }
-    }
-    const isAllValid = requiredValid; //& other validation if they added
-    if (isAllValid) {
-      this.clearValidationError();
-    } else if (showError) {
-      this.showValidationError(errorType);
-    }
-    return {
-      isAllValid,
-    };
+    return this.validation.checkValidity(showError);
   }
   /**
    * @description show given string as a error in message place
