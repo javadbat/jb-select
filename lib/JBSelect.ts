@@ -4,8 +4,10 @@ import {
   JBSelectCallbacks,
   JBSelectElements,
   JBSelectOptionElement,
+  ValidationValue,
 } from "./Types";
 import {ValidationHelper} from "../../../common/scripts/validation/validation-helper";
+import { ValidationItem } from "../../../common/scripts/validation/validation-helper-types";
 //TOption is the type of option, TValue is the type of value we extract from option
 export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLElement {
   // we keep selected option here by option but we return TValue when user demand
@@ -110,7 +112,15 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   get isOpen() {
     return this.elements.componentWrapper.classList.contains("--focused");
   }
-  #validation = new ValidationHelper<TOption>(this.showValidationError.bind(this),this.clearValidationError.bind(this),()=>this.#value,this.callbacks.getOptionTitle,()=>[]);
+  // this value used by validation module to send to validation callbacks
+  get #ValidationValue():ValidationValue<TOption,TValue>{
+    return {
+      inputtedText:this.#textValue,
+      selectedOption:this.#value,
+      value:this.value
+    };
+  }
+  #validation = new ValidationHelper<ValidationValue<TOption,TValue>>(this.showValidationError.bind(this),this.clearValidationError.bind(this),()=>this.#ValidationValue,()=>this.textValue,this.#getInsideValidation);
   get validation(){
     return this.#validation;
   }
@@ -570,6 +580,20 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       );
     }
     return "";
+  }
+  #getInsideValidation(){
+    const ValidationList:ValidationItem<ValidationValue<TOption,TValue>>[] = [];
+    if(this.required){
+      const label = this.getAttribute("label") || "";
+      const message = `${label} حتما باید انتخاب شود`;
+      ValidationList.push({
+        validator:({selectedOption})=>{
+          return selectedOption !== null;
+        },
+        message:message,
+      });
+    }
+    return ValidationList;
   }
 }
 const myElementNotExists = !customElements.get("jb-select");

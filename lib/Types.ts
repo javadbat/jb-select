@@ -19,3 +19,8 @@ export type JBSelectElements = {
     },
     emptyListPlaceholder: HTMLDivElement,
 }
+export type ValidationValue<TOption,TValue> = {
+    selectedOption:TOption | null,
+    value:TValue | null,
+    inputtedText:string
+}
