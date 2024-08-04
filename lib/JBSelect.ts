@@ -8,6 +8,7 @@ import {
 } from "./Types";
 import {ValidationHelper} from "../../../common/scripts/validation/validation-helper";
 import { ValidationItem } from "../../../common/scripts/validation/validation-helper-types";
+import { isMobile } from "../../../common/scripts/device-detection";
 //TOption is the type of option, TValue is the type of value we extract from option
 export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLElement {
   // we keep selected option here by option but we return TValue when user demand
@@ -107,7 +108,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.#updateOptionListDOM();
   }
   get isMobileDevice() {
-    return /Mobi/i.test(window.navigator.userAgent);
+    return isMobile();
   }
   get isOpen() {
     return this.elements.componentWrapper.classList.contains("--focused");
