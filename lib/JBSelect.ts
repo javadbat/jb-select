@@ -6,8 +6,8 @@ import {
   JBSelectOptionElement,
   ValidationValue,
 } from "./Types";
-import {ValidationHelper} from "../../../common/scripts/validation/validation-helper";
-import { ValidationItem } from "../../../common/scripts/validation/validation-helper-types";
+import {ValidationHelper} from "jb-validation";
+import { ValidationItem } from "jb-validation/types";
 import { isMobile } from "../../../common/scripts/device-detection";
 //TOption is the type of option, TValue is the type of value we extract from option
 export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLElement {
