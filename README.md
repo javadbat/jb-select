@@ -194,15 +194,15 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-mobile-search-border-radius    | when user open select on mobile, search box can have its own border radius                   |
 | --jb-select-middle-div-height              | separator line between input and list default is `0px` and hidden but you can cahange it     | 
 | --jb-select-middle-div-color               | change separator line color                                                                  |
-| --jb-select-middle-div-margin              | chnage seprator line margin                                                                  |
-| --jb-select-middle-div-mobile-margin       | chnage seprator line margin in mobile modal                                                  |
+| --jb-select-middle-div-margin              | change separator line margin                                                                  |
+| --jb-select-middle-div-mobile-margin       | change separator line margin in mobile modal                                                  |
 | --jb-select-middle-div-radius              | change seperator line border-radius                                                          |
 | --jb-select-list-scroll-color              | list item scroll color  default is `#c3c3c3`                                                 |
 | --jb-select-list-scroll-border-radius      | list item scroll border-radius default is `4px`                                              |
 | --jb-select-select-box-margin              | margin of internal element called select box that wrapper display element of form in one box |
 | --jb-select-value-font-size                | search input value font size default is `1.1rem`                                             |
 | --jb-select-list-border-width              | border-width for list wrapper                                                                |
-| --jb-select-mobile-modal-border-radius     | opend modal in mobile border radius. useful to chanage when you chnaged `--jb-select-mobile-modal-height` before |
+| --jb-select-mobile-modal-border-radius     | opend modal in mobile border radius. useful to change when you changed `--jb-select-mobile-modal-height` before |
 | --jb-select-mobile-modal-height            | modal height when list open in mobile                                                        |
 
 
