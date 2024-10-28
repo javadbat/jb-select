@@ -7,17 +7,20 @@ import {
   ValidationValue,
 } from "./Types";
 import {ValidationHelper} from "jb-validation";
-import { ValidationItem } from "jb-validation/types";
+import { ValidationItem, ValidationResult, WithValidation } from "jb-validation/types";
 import { isMobile } from "../../../common/scripts/device-detection";
+import {JBFormInputStandards} from 'jb-form/types';
 //TOption is the type of option, TValue is the type of value we extract from option
-export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLElement {
+export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLElement implements WithValidation<ValidationValue<TOption,TValue>>, JBFormInputStandards<TValue> {
+  static get formAssociated() {
+    return true;
+  }
   // we keep selected option here by option but we return TValue when user demand
   #value: TOption;
   #textValue = "";
   // if user set value and current option list is not contain the option.
   // we hold it in _notFoundedValue and select value when option value get updated
   #notFoundedValue: TValue = null;
-  required = false;
   callbacks: JBSelectCallbacks<TOption,TValue> = {
     getOptionTitle: (option) => {
       if(typeof option == "string" || typeof option == "number"){
@@ -121,12 +124,53 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       value:this.value
     };
   }
-  #validation = new ValidationHelper<ValidationValue<TOption,TValue>>(this.showValidationError.bind(this),this.clearValidationError.bind(this),()=>this.#ValidationValue,()=>this.textValue,this.#getInsideValidation);
+  #validation = new ValidationHelper<ValidationValue<TOption,TValue>>(this.showValidationError.bind(this),this.clearValidationError.bind(this),()=>this.#ValidationValue,()=>this.textValue,this.#getInsideValidation.bind(this),this.#setValidationResult.bind(this));
   get validation(){
     return this.#validation;
   }
+  #disabled = false;
+  get disabled(){
+    return this.#disabled;
+  }
+  set disabled(value:boolean){
+    this.#disabled = value;
+    this.elements.input.disabled = value;
+    if(value){
+      //TODO: remove as any when typescript support
+      (this.#internals as any).states?.add("disabled");
+    }else{
+      (this.#internals as any).states?.delete("disabled");
+    }
+  }
+  #required = false;
+  set required(value:boolean){
+    this.#required = value;
+    this.#validation.checkValidity(false);
+  }
+  get required() {
+    return this.#required;
+  }
+  #internals?: ElementInternals;
+  /**
+ * @description will determine if component trigger jb-validation mechanism automatically on user event or it just let user-developer handle validation mechanism by himself
+ */
+  get isAutoValidationDisabled(): boolean {
+    //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
+    return this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true' ? true : false;
+  }
+  get name(){
+    return this.getAttribute('name') || '';
+  }
+  initialValue: TValue | null = null;
+  get isDirty(): boolean{
+    return this.value !== this.initialValue;
+  }
   constructor() {
     super();
+    if (typeof this.attachInternals == "function") {
+      //some browser dont support attachInternals
+      this.#internals = this.attachInternals();
+    }
     this.#initWebComponent();
     this.#initProp();
   }
@@ -146,6 +190,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   #initWebComponent() {
     const shadowRoot = this.attachShadow({
       mode: "open",
+      delegatesFocus:true,
     });
     const html = `<style>${CSS}</style>` + "\n" + HTML;
     const element = document.createElement("template");
@@ -390,7 +435,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   }
   #onInputChange(e: Event) {
     const inputText = (e.target as HTMLInputElement).value;
-    //here is the rare  time we update _text_value directly becuase we want trigger event that may read value directly from dom
+    //here is the rare  time we update _text_value directly because we want trigger event that may read value directly from dom
     this.#textValue = inputText;
   }
   #onInputFocus() {
@@ -486,7 +531,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   }
   #selectOption(value: TOption) {
     this.#setValue(value);
-    this.validation.checkValidity(true);
+    this.#checkValidity(true);
   }
   #filterOptionList(filterString: string): TOption[] {
     const displayOptionList: TOption[] = [];
@@ -504,13 +549,6 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       }
     });
     return displayOptionList;
-  }
-  /**
-   * @description please use dom.validation.checkValidity
-   * @deprecated 
-   */
-  triggerInputValidation(showError = true) {
-    return this.validation.checkValidity(showError);
   }
   /**
    * @description show given string as a error in message place
@@ -593,12 +631,70 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       const message = `${label} حتما باید انتخاب شود`;
       ValidationList.push({
         validator:({selectedOption})=>{
-          return selectedOption !== null;
+          return selectedOption !== null && selectedOption !== undefined;
         },
         message:message,
+        stateType:"valueMissing"
       });
     }
     return ValidationList;
+  }
+  //
+  #checkValidity(showError: boolean) {
+    if (!this.isAutoValidationDisabled) {
+      return this.#validation.checkValidity(showError);
+    }
+  }
+  /**
+ * @public
+ * @description this method used to check for validity but doesn't show error to user and just return the result
+ * this method used by #internal of component
+ */
+  checkValidity(): boolean {
+    const validationResult = this.#validation.checkValidity(false);
+    if (!validationResult.isAllValid) {
+      const event = new CustomEvent('invalid');
+      this.dispatchEvent(event);
+    }
+    return validationResult.isAllValid;
+  }
+  /**
+  * @public
+ * @description this method used to check for validity and show error to user
+ */
+  reportValidity(): boolean {
+    const validationResult = this.#validation.checkValidity(true);
+    if (!validationResult.isAllValid) {
+      const event = new CustomEvent('invalid');
+      this.dispatchEvent(event);
+    }
+    return validationResult.isAllValid;
+  }
+  /**
+   * @description this method called on every checkValidity calls and update validation result of #internal
+   */
+  #setValidationResult(result: ValidationResult<ValidationValue<TOption,TValue>>) {
+    if (result.isAllValid) {
+      this.#internals?.setValidity({}, '');
+    } else {
+      const states: ValidityStateFlags = {};
+      let message = "";
+      result.validationList.forEach((res) => {
+        if (!res.isValid) {
+          if (res.validation.stateType) {
+            states[res.validation.stateType] = true;
+          }else{
+            states["customError"] = true;
+          }
+          if (message == '') { message = res.message; }
+
+        }
+      });
+      this.#internals?.setValidity(states, message);
+    }
+  }
+  get validationMessage(){
+    return this.#internals?.validationMessage || this.#validation.resultSummary.message;
   }
 }
 const myElementNotExists = !customElements.get("jb-select");
