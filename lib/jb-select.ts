@@ -1,11 +1,11 @@
-import HTML from "./JBSelect.html";
-import CSS from "./JBSelect.scss";
+import HTML from "./jb-select.html";
+import CSS from "./jb-select.scss";
 import {
   JBSelectCallbacks,
   JBSelectElements,
   JBSelectOptionElement,
   ValidationValue,
-} from "./Types";
+} from "./types11";
 import {ValidationHelper} from "jb-validation";
 import { ValidationItem, ValidationResult, WithValidation } from "jb-validation/types";
 import { isMobile } from "../../../common/scripts/device-detection";
