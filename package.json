@@ -12,7 +12,7 @@
     "select",
     "web component"
   ],
-  "version": "4.8.8",
+  "version": "5.0.0",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "license": "MIT",
   "files": [
@@ -21,10 +21,16 @@
     "lib/",
     "dist/"
   ],
-  "types": "./dist/JBSelect.d.ts",
+  "types": "./dist/dist/web-component/jb-select/lib/jb-select.d.ts",
   "main": "index.js",
   "repository": {
 		"type": "git",
 		"url": "git@github.com:javadbat/jb-select.git"
+  },
+  "dependencies": {
+    "jb-validation": ">=0.0.3"
+  },
+  "devDependencies": {
+    "jb-form":">=0.0.8"
   }
 }

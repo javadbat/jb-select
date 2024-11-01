@@ -5,7 +5,7 @@ import {
   JBSelectElements,
   JBSelectOptionElement,
   ValidationValue,
-} from "./types11";
+} from "./types";
 import {ValidationHelper} from "jb-validation";
 import { ValidationItem, ValidationResult, WithValidation } from "jb-validation/types";
 import { isMobile } from "../../../common/scripts/device-detection";
