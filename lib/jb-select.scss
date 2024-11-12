@@ -1,4 +1,4 @@
-@import "../../../common/scss/Medias.scss";
+@use "../../../common/scss/Medias.scss" as *;
 
 :host {
     //define private variable here

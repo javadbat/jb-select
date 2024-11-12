@@ -21,14 +21,14 @@
     "lib/",
     "dist/"
   ],
-  "types": "./dist/dist/web-component/jb-select/lib/jb-select.d.ts",
+  "types": "./dist/web-component/jb-select/lib/jb-select.d.ts",
   "main": "index.js",
   "repository": {
 		"type": "git",
 		"url": "git@github.com:javadbat/jb-select.git"
   },
   "dependencies": {
-    "jb-validation": ">=0.0.3"
+    "jb-validation": ">=0.0.4"
   },
   "devDependencies": {
     "jb-form":">=0.0.8"
