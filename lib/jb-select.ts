@@ -524,10 +524,15 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     return optionElement;
   }
   #onOptionClicked(e: MouseEvent) {
+    const prevValue = this.#value;
     const value = (e.currentTarget as JBSelectOptionElement<TOption>).value;
     this.#selectOption(value);
     this.blur();
-    this.#triggerOnChangeEvent();
+    const dispatchedEvent = this.#dispatchOnChangeEvent();
+    if(dispatchedEvent.defaultPrevented){
+      e.preventDefault();
+      this.#selectOption(prevValue);
+    }
   }
   #selectOption(value: TOption) {
     this.#setValue(value);
@@ -566,9 +571,10 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.elements.messageBox.innerHTML = this.getAttribute("message") || "";
     this.elements.messageBox.classList.remove("--error");
   }
-  #triggerOnChangeEvent() {
-    const event = new Event("change");
+  #dispatchOnChangeEvent() {
+    const event = new Event("change",{bubbles:true,cancelable:true});
     this.dispatchEvent(event);
+    return event;
   }
   #setSelectedOptionDom(value: TOption) {
     //when user select option or value changed in any condition we set selected option DOM

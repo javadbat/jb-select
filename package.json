@@ -12,7 +12,7 @@
     "select",
     "web component"
   ],
-  "version": "5.0.0",
+  "version": "5.0.1",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "license": "MIT",
   "files": [
@@ -28,9 +28,10 @@
 		"url": "git@github.com:javadbat/jb-select.git"
   },
   "dependencies": {
-    "jb-validation": ">=0.0.5"
+    "jb-validation": ">=0.0.6"
   },
   "devDependencies": {
-    "jb-form":">=0.0.9"
+    "jb-form":">=0.1.0"
   }
 }
+jb-va
