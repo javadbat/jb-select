@@ -6,8 +6,7 @@ import {
   JBSelectOptionElement,
   ValidationValue,
 } from "./types";
-import {ValidationHelper} from "jb-validation";
-import { ValidationItem, ValidationResult, WithValidation } from "jb-validation";
+import {ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation} from "jb-validation";
 import { isMobile } from "../../../common/scripts/device-detection";
 import {JBFormInputStandards} from 'jb-form';
 //TOption is the type of option, TValue is the type of value we extract from option
