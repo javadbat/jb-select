@@ -123,7 +123,14 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       value:this.value
     };
   }
-  #validation = new ValidationHelper<ValidationValue<TOption,TValue>>(this.showValidationError.bind(this),this.clearValidationError.bind(this),()=>this.#ValidationValue,()=>this.textValue,this.#getInsideValidation.bind(this),this.#setValidationResult.bind(this));
+  #validation = new ValidationHelper<ValidationValue<TOption,TValue>>({
+    clearValidationError:this.clearValidationError.bind(this),
+    showValidationError:this.showValidationError.bind(this),
+    getInputtedValue:()=>this.#ValidationValue,
+    getInsideValidations:this.#getInsideValidation.bind(this),
+    getValueString:()=>this.#textValue,
+    setValidationResult:this.#setValidationResult.bind(this)
+  });
   get validation(){
     return this.#validation;
   }
@@ -144,7 +151,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   #required = false;
   set required(value:boolean){
     this.#required = value;
-    this.#validation.checkValidity(false);
+    this.#validation.checkValiditySync({showError:false});
   }
   get required() {
     return this.#required;
@@ -376,7 +383,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     const inputtedText = (e.target as HTMLInputElement).value;
     this.textValue = inputtedText;
     this.#handleSelectedValueDisplay(inputtedText);
-    this.#validation.checkValidity(false);
+    this.#validation.checkValidity({showError:false});
     this.#dispatchInputEvent(e);
   }
   #dispatchInputEvent(e: InputEvent) {
@@ -464,7 +471,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.textValue = "";
     this.#handleSelectedValueDisplay("");
     this.#hideOptionList();
-    this.#validation.checkValidity(true);
+    this.#validation.checkValidity({showError:true});
     if (this.isMobileDevice) {
       if (this.value) {
         this.elements.input.placeholder = "";
@@ -647,7 +654,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   //
   #checkValidity(showError: boolean) {
     if (!this.isAutoValidationDisabled) {
-      return this.#validation.checkValidity(showError);
+      return this.#validation.checkValidity({showError});
     }
   }
   /**
@@ -656,7 +663,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
  * this method used by #internal of component
  */
   checkValidity(): boolean {
-    const validationResult = this.#validation.checkValidity(false);
+    const validationResult = this.#validation.checkValiditySync({showError:false});
     if (!validationResult.isAllValid) {
       const event = new CustomEvent('invalid');
       this.dispatchEvent(event);
@@ -668,7 +675,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
  * @description this method used to check for validity and show error to user
  */
   reportValidity(): boolean {
-    const validationResult = this.#validation.checkValidity(true);
+    const validationResult = this.#validation.checkValiditySync({showError:true});
     if (!validationResult.isAllValid) {
       const event = new CustomEvent('invalid');
       this.dispatchEvent(event);

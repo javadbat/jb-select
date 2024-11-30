@@ -75,7 +75,7 @@ remember set value as attribute if your option is a plain string but in direct a
  <jb-select placeholder="please select" search-placeholder="type to search"></jb-select>
  ```
 ### validation
-since select has a limited value options, validation have different story here. the only validation i really neccessary here is required that indicate if user must select a value before he can move on so pass `required` attribute in dom then call `triggerInputValidation` function like all other jb web component family 
+since select has a limited value options, validation have different story here. the only validation i really necessary here is required that indicate if user must select a value before he can move on so pass `required` attribute in dom then call `checkValidity` function like all other jb web component family. but if you need more customize validation just read [jb-validation](https://github.com/javadbat/jb-validation) 
 
 ### change empty state shape
 when the searched value in select is not found, there is an open dropdown with the not found message.
@@ -205,4 +205,10 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-mobile-modal-border-radius     | opend modal in mobile border radius. useful to change when you changed `--jb-select-mobile-modal-height` before |
 | --jb-select-mobile-modal-height            | modal height when list open in mobile                                                        |
 
+## Other Related Docs:
 
+- see [jb-select-react](https://github.com/javadbat/jb-select-react) if you want to use this component in react.
+
+- see [All JB Design system Component List](https://github.com/javadbat/design-system/blob/master/docs/component-list.md) for more components.
+
+- use [Contribution Guide](https://github.com/javadbat/design-system/blob/master/docs/contribution-guide.md) if you want to contribute in this component.
