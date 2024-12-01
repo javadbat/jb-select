@@ -6,7 +6,7 @@ import {
   JBSelectOptionElement,
   ValidationValue,
 } from "./types";
-import {ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation} from "jb-validation";
+import {ShowValidationErrorInput, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation} from "jb-validation";
 import { isMobile } from "../../../common/scripts/device-detection";
 import {JBFormInputStandards} from 'jb-form';
 //TOption is the type of option, TValue is the type of value we extract from option
@@ -565,11 +565,8 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
    * @description show given string as a error in message place
    * @public
    */
-  showValidationError(message:string) {
-    // if (errorType == "REQUIRED") {
-    //   const label = this.getAttribute("label") || "";
-    //   this.elements.messageBox.innerHTML = `${label} حتما باید انتخاب شود`;
-    // }
+  showValidationError(error: ShowValidationErrorInput | string) {
+    const message = typeof error == "string"?error:error.message;
     this.elements.messageBox.innerHTML = message;
     this.elements.messageBox.classList.add("--error");
   }
