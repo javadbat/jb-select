@@ -126,8 +126,8 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   #validation = new ValidationHelper<ValidationValue<TOption,TValue>>({
     clearValidationError:this.clearValidationError.bind(this),
     showValidationError:this.showValidationError.bind(this),
-    getInputtedValue:()=>this.#ValidationValue,
-    getInsideValidations:this.#getInsideValidation.bind(this),
+    getValue:()=>this.#ValidationValue,
+    getValidations:this.#getInsideValidation.bind(this),
     getValueString:()=>this.#textValue,
     setValidationResult:this.#setValidationResult.bind(this)
   });
