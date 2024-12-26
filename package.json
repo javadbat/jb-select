@@ -19,7 +19,9 @@
     "LICENSE",
     "README.md",
     "lib/",
-    "dist/"
+    "dist/",
+    "react/",
+    "react/dist/"
   ],
   "types": "./dist/web-component/jb-select/lib/jb-select.d.ts",
   "main": "index.js",

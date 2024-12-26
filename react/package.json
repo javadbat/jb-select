@@ -1,0 +1,33 @@
+{
+  "name": "jb-select-react",
+  "description": "select react component",
+  "type": "module",
+  "author": {
+		"name": "mohammad javad bathaei",
+		"email": "javadbat@gmail.com"
+	},
+  "keywords": [
+    "jb",
+    "jb-select",
+    "select",
+    "react component"
+  ],
+  "version": "5.0.0",
+  "bugs": "https://github.com/javadbat/jb-select-react/issues",
+  "license": "MIT",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "lib/",
+    "dist/"
+  ],
+  "main": "index.js",
+  "types": "./dist/react-component/jb-select/lib/JBSelect.d.ts",
+  "repository": {
+		"type": "git",
+		"url": "git@github.com:javadbat/jb-select-react.git"
+  },
+  "dependencies": {
+    "jb-select": ">=5.0.0"
+  }
+}
