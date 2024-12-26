@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useRef, useState, useImperativeHandle,CSSProperties } from 'react';
 import 'jb-select';
-import { useEvent } from '../../../common/hooks/use-event.js';
+import { useBindEvent } from '../../../../common/hooks/use-event.js';
 // eslint-disable-next-line no-duplicate-imports
 import { JBSelectWebComponent } from 'jb-select';
 export type JBSelectEventType<T> = T & {
@@ -96,9 +96,9 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
       props.onInput(e);
     }
   }
-  useEvent(element.current, 'keyup', onKeyup);
-  useEvent(element.current, 'change', onChange);
-  useEvent(element.current, 'input', onInput);
+  useBindEvent(element, 'keyup', onKeyup);
+  useBindEvent(element, 'change', onChange);
+  useBindEvent(element, 'input', onInput);
   return (
     <jb-select style={props.style?props.style:undefined} class={props.className?props.className:""} label={props.label} ref={element} required={props.required || 'false'} name={props.name??undefined}>
       {props.children}
