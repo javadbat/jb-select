@@ -1,2 +1,2 @@
-import './dist/jb-select.js';
-export * from './dist/jb-select.js';
+import './dist/index.js';
+export * from './dist/index.js';

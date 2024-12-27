@@ -324,25 +324,8 @@
                 max-height: calc(var(--p-mobile-modal-height) - 240px);
             }
 
-            .select-option {
-                min-height: 36px;
-                padding: 4px 16px;
-                display: flex;
-                align-items: center;
-                font-size: 0.9em;
-                color: var(--jb-select-option-color, inherit);
-                background-color: var(--jb-select-option-background-color, transparent);
-
-                &:hover {
-                    background-color: var(--jb-select-option-background-color-hover, #1073db);
-                    color: var(--jb-select-option-color-hover, #fff);
-                    cursor: pointer;
-                }
-
-                &.--selected-option {
-                    font-weight: 900;
-                }
-            }
+           /* option style places */
+           
             &::-webkit-scrollbar {
                 width: 9px;
                 background-color: transparent;

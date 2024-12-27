@@ -1,11 +1,9 @@
-export type JBSelectCallbacks<TOption,TValue> = {
-    getOptionTitle: (option:TOption) => string;
-    getOptionValue?: (option:TOption) => TValue;
-    getOptionDOM: null | ((option:TOption, onSelectCallback:(e:MouseEvent)=>void, isSelected:boolean) => HTMLElement);
-    getSelectedValueDOM: null | ((option:TOption) => HTMLElement);
+import { type JBOptionWebComponent } from "./jb-option/jb-option";
+
+export type JBSelectCallbacks<TValue> = {
+    getSelectedValueDOM?:(value:TValue,content:HTMLElement) => HTMLElement;
 }
-//TODO: create real custom element for select options
-export type JBSelectOptionElement<TOption> = HTMLElement & {value?: TOption};
+
 export type JBSelectElements = {
     input: HTMLInputElement,
     componentWrapper: HTMLDivElement,
@@ -13,6 +11,7 @@ export type JBSelectElements = {
     messageBox:HTMLDivElement,
     optionList: HTMLDivElement,
     optionListWrapper: HTMLDivElement,
+    optionListSlot:HTMLSlotElement,
     arrowIcon: HTMLDivElement,
     label:{
         wrapper: HTMLLabelElement,
@@ -20,8 +19,8 @@ export type JBSelectElements = {
     },
     emptyListPlaceholder: HTMLDivElement,
 }
-export type ValidationValue<TOption,TValue> = {
-    selectedOption:TOption | null,
+export type ValidationValue<TValue> = {
+    selectedOption:JBOptionWebComponent<TValue> | null,
     value:TValue | null,
     inputtedText:string
 }

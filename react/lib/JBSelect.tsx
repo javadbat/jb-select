@@ -62,11 +62,6 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
     }
   }, [props.getSelectedValueDOM]);
   useEffect(() => {
-    if(element.current){
-      element.current.optionList = props.optionList || [];
-    }
-  }, [props.optionList]);
-  useEffect(() => {
     if (props.message !== null && props.message !== undefined ) {
       element.current?.setAttribute("message", props.message);
     }
@@ -109,7 +104,6 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
 export type JBSelectProps = {
     style?:CSSProperties,
     label?: string,
-    optionList?: any[],
     getOptionTitle?: (option:any)=>string,
     getOptionValue?: (option:any)=>string,
     getOptionDOM?: (option:any,onSelectCallback: (e: MouseEvent) => void, isSelected: boolean)=>HTMLElement,

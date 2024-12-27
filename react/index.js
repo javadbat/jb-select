@@ -1,1 +1,1 @@
-import * from './dist/JBSelect.js';
+export * from './dist/index.js';

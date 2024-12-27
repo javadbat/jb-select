@@ -3,45 +3,38 @@ import CSS from "./jb-select.scss";
 import {
   JBSelectCallbacks,
   JBSelectElements,
-  JBSelectOptionElement,
   ValidationValue,
 } from "./types";
-import {ShowValidationErrorInput, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation} from "jb-validation";
+import { ShowValidationErrorInput, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
 import { isMobile } from "../../../common/scripts/device-detection";
-import {JBFormInputStandards} from 'jb-form';
+import { JBFormInputStandards } from 'jb-form';
+// eslint-disable-next-line no-duplicate-imports
+import { JBOptionWebComponent } from "./jb-option/jb-option";
+// eslint-disable-next-line no-duplicate-imports
 //TOption is the type of option, TValue is the type of value we extract from option
-export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLElement implements WithValidation<ValidationValue<TOption,TValue>>, JBFormInputStandards<TValue> {
+export class JBSelectWebComponent<TValue = any> extends HTMLElement implements WithValidation<ValidationValue<TValue>>, JBFormInputStandards<TValue> {
   static get formAssociated() {
     return true;
   }
   // we keep selected option here by option but we return TValue when user demand
-  #value: TOption;
+  #value: TValue;
   #textValue = "";
   // if user set value and current option list is not contain the option.
   // we hold it in _notFoundedValue and select value when option value get updated
   #notFoundedValue: TValue = null;
-  callbacks: JBSelectCallbacks<TOption,TValue> = {
-    getOptionTitle: (option) => {
-      if(typeof option == "string" || typeof option == "number"){
-        return option.toString();
-      }else{
-        console.error("title must be string please provide a valid getOptionTitle","provided title:",option);
-        return "NOT SUPPORTED TITLE TYPE";
-      }
-    },
-    getOptionValue: null,
-    getOptionDOM: null,
-    getSelectedValueDOM: null,
-  };
+  #optionList = new Set<JBOptionWebComponent<TValue>>()
+  //keep selected option dom
+  #selectedOption: JBOptionWebComponent<TValue> | null = null;
+  callbacks: JBSelectCallbacks<TValue> = {}
   elements!: JBSelectElements;
-  get value():TValue{
+  get value(): TValue {
     if (this.#value) {
-      return this.#getOptionValue(this.#value);
+      return this.#value;
     } else {
       return null;
     }
   }
-  set value(value:TValue) {
+  set value(value: TValue) {
     this.#setValueFromOutside(value);
   }
   get textValue() {
@@ -54,28 +47,10 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   }
   get selectedOptionTitle() {
     if (this.value) {
-      return this.#getOptionTitle(this.#value);
+      return this.#selectedOption.optionContentText;
     } else {
       return "";
     }
-  }
-  #optionList: TOption[] = [];
-  #displayOptionList: TOption[] = [];
-  get optionList() {
-    return this.#optionList || [];
-  }
-  set optionList(value) {
-    if (!Array.isArray(value)) {
-      console.error(
-        "your provided option list to jb-select is not a array. you must provide array value",
-        { value }
-      );
-      return;
-    }
-    this.#optionList = value;
-    //every time optionList get updated we set our value base on current option list we use _notFoundedValue in case of value provided to component before optionList
-    this.displayOptionList = this.#filterOptionList(this.textValue);
-    this.#setValueOnOptionListChanged();
   }
   #placeholder = "";
   get placeholder() {
@@ -97,18 +72,6 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   set searchPlaceholder(value) {
     this.#searchPlaceholder = value;
   }
-  get displayOptionList() {
-    return this.#displayOptionList;
-  }
-  set displayOptionList(value: TOption[]) {
-    if (Array.isArray(value) && value.length == 0) {
-      this.elements.emptyListPlaceholder.classList.add("--show");
-    } else if (Array.isArray(value)) {
-      this.elements.emptyListPlaceholder.classList.remove("--show");
-    }
-    this.#displayOptionList = value;
-    this.#updateOptionListDOM();
-  }
   get isMobileDevice() {
     return isMobile();
   }
@@ -116,42 +79,41 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     return this.elements.componentWrapper.classList.contains("--focused");
   }
   // this value used by validation module to send to validation callbacks
-  get #ValidationValue():ValidationValue<TOption,TValue>{
+  get #ValidationValue(): ValidationValue<TValue> {
     return {
-      inputtedText:this.#textValue,
-      selectedOption:this.#value,
-      value:this.value
+      inputtedText: this.#textValue,
+      selectedOption: this.#value,
+      value: this.value
     };
   }
-  #validation = new ValidationHelper<ValidationValue<TOption,TValue>>({
-    clearValidationError:this.clearValidationError.bind(this),
-    showValidationError:this.showValidationError.bind(this),
-    getValue:()=>this.#ValidationValue,
-    getValidations:this.#getInsideValidation.bind(this),
-    getValueString:()=>this.#textValue,
-    setValidationResult:this.#setValidationResult.bind(this)
+  #validation = new ValidationHelper<ValidationValue<TValue>>({
+    clearValidationError: this.clearValidationError.bind(this),
+    showValidationError: this.showValidationError.bind(this),
+    getValue: () => this.#ValidationValue,
+    getValidations: this.#getInsideValidation.bind(this),
+    getValueString: () => this.#textValue,
+    setValidationResult: this.#setValidationResult.bind(this)
   });
-  get validation(){
+  get validation() {
     return this.#validation;
   }
   #disabled = false;
-  get disabled(){
+  get disabled() {
     return this.#disabled;
   }
-  set disabled(value:boolean){
+  set disabled(value: boolean) {
     this.#disabled = value;
     this.elements.input.disabled = value;
-    if(value){
-      //TODO: remove as any when typescript support
+    if (value) {
       (this.#internals as any).states?.add("disabled");
-    }else{
+    } else {
       (this.#internals as any).states?.delete("disabled");
     }
   }
   #required = false;
-  set required(value:boolean){
+  set required(value: boolean) {
     this.#required = value;
-    this.#validation.checkValiditySync({showError:false});
+    this.#validation.checkValiditySync({ showError: false });
   }
   get required() {
     return this.#required;
@@ -164,11 +126,11 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
     return this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true' ? true : false;
   }
-  get name(){
+  get name() {
     return this.getAttribute('name') || '';
   }
   initialValue: TValue | null = null;
-  get isDirty(): boolean{
+  get isDirty(): boolean {
     return this.value !== this.initialValue;
   }
   constructor() {
@@ -196,7 +158,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   #initWebComponent() {
     const shadowRoot = this.attachShadow({
       mode: "open",
-      delegatesFocus:true,
+      delegatesFocus: true,
     });
     const html = `<style>${CSS}</style>` + "\n" + HTML;
     const element = document.createElement("template");
@@ -211,6 +173,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       messageBox: shadowRoot.querySelector(".message-box")!,
       optionList: shadowRoot.querySelector(".select-list")!,
       optionListWrapper: shadowRoot.querySelector(".select-list-wrapper")!,
+      optionListSlot: shadowRoot.querySelector(".select-list-wrapper .select-list slot")!,
       arrowIcon: shadowRoot.querySelector(".arrow-icon")!,
       label: {
         wrapper: shadowRoot.querySelector("label")!,
@@ -223,31 +186,26 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.#registerEventListener();
   }
   #registerEventListener() {
-    this.elements.input.addEventListener("change", (e:Event) => {
+    this.elements.input.addEventListener("change", (e: Event) => {
       this.#onInputChange(e);
     });
-    this.elements.input.addEventListener(
-      "keypress",
-      this.#onInputKeyPress.bind(this)
-    );
+    this.elements.input.addEventListener("keypress", this.#onInputKeyPress.bind(this));
     this.elements.input.addEventListener("keyup", this.#onInputKeyup.bind(this));
-    this.elements.input.addEventListener(
-      "beforeinput",
-      this.#onInputBeforeInput.bind(this)
-    );
-    this.elements.input.addEventListener("input", (e) => {
-      this.#onInputInput(e as unknown as InputEvent);
-    });
+    this.elements.input.addEventListener("beforeinput", this.#onInputBeforeInput.bind(this));
+    this.elements.input.addEventListener("input", (e) => { this.#onInputInput(e as unknown as InputEvent); });
     this.elements.input.addEventListener("focus", this.#onInputFocus.bind(this));
     this.elements.input.addEventListener("blur", this.#onInputBlur.bind(this));
-    this.elements.arrowIcon.addEventListener(
-      "click",
-      this.#onArrowKeyClick.bind(this)
-    );
+    this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this));
+    //events to work with options
+    this.addEventListener("select", this.#onOptionSelect.bind(this));
+    this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this));
+    this.elements.optionListSlot.addEventListener("slotchange",this.#onOptionSlotChange);
+
   }
+
   #initProp() {
     this.textValue = "";
-    this.value = this.getAttribute("value") as TValue || null ;
+    this.value = this.getAttribute("value") as TValue || null;
   }
   static get observedAttributes() {
     return [
@@ -259,7 +217,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       "search-placeholder",
     ];
   }
-  attributeChangedCallback(name:string, oldValue:string, newValue:string) {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     // do something when an attribute has changed
     this.#onAttributeChange(name, newValue);
   }
@@ -294,6 +252,9 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
         break;
     }
   }
+  #onOptionSlotChange(){
+    this.#setValueOnOptionListChanged();
+  }
   #setValueOnOptionListChanged() {
     //when option list changed we see if current value is valid for new optionlist we set it if not we reset value to null.
     //in some scenario value is setted before optionList attached so we store it on this.#notFoundedValue and after option list setted we set value from this.#notFoundedValue
@@ -309,23 +270,29 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       this.#setValueFromOutside(this.value);
     }
   }
+  //when user set value by attribute or value prop directly we call this function
   #setValueFromOutside(value: TValue): boolean {
-    //when user set value by attribute or value prop directly we call this function
-    const matchedOption = this.optionList.find((option) => {
+    if(value === null || value === undefined){
+      this.#setValue(null);
+      return true;
+    }
+    let matchedOption:JBOptionWebComponent<TValue>| null = null; 
+    this.#optionList.forEach((option) => {
       // if we have value mapper we set selected value by object that match mapper
-      if (this.#getOptionValue(option) == value) {
-        return option;
+      if (option.value == value) {
+        matchedOption = option;
       }
     });
-    if (matchedOption || value === null || value === undefined) {
-      this.#setValue(matchedOption);
+    if (matchedOption) {
+      this.#setValue(matchedOption.value);
+      matchedOption.selected = true;
       return true;
     } else {
       this.#notFoundedValue = value;
       return false;
     }
   }
-  #setValue(value: TOption) {
+  #setValue(value: TValue) {
     this.#notFoundedValue = null;
     this.#value = value;
     if (value === null || value === undefined) {
@@ -355,24 +322,24 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       this.focus();
     }
   }
-  #onInputKeyPress(e:KeyboardEvent) {
-    const eventOptions:KeyboardEventInit = {
-      altKey:e.altKey,
-      bubbles:e.bubbles,
-      cancelable:e.cancelable,
-      code:e.code,
-      composed:e.composed,
-      ctrlKey:e.ctrlKey,
-      detail:e.detail,
-      isComposing:e.isComposing,
-      key:e.key,
-      location:e.location,
-      metaKey:e.metaKey,
-      view:e.view,
-      repeat:e.repeat,
-      shiftKey:e.shiftKey 
+  #onInputKeyPress(e: KeyboardEvent) {
+    const eventOptions: KeyboardEventInit = {
+      altKey: e.altKey,
+      bubbles: e.bubbles,
+      cancelable: e.cancelable,
+      code: e.code,
+      composed: e.composed,
+      ctrlKey: e.ctrlKey,
+      detail: e.detail,
+      isComposing: e.isComposing,
+      key: e.key,
+      location: e.location,
+      metaKey: e.metaKey,
+      view: e.view,
+      repeat: e.repeat,
+      shiftKey: e.shiftKey
     };
-    const event = new KeyboardEvent("keypress",eventOptions);
+    const event = new KeyboardEvent("keypress", eventOptions);
     this.dispatchEvent(event);
   }
   #onInputBeforeInput(e: InputEvent) {
@@ -383,7 +350,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     const inputtedText = (e.target as HTMLInputElement).value;
     this.textValue = inputtedText;
     this.#handleSelectedValueDisplay(inputtedText);
-    this.#validation.checkValidity({showError:false});
+    this.#validation.checkValidity({ showError: false });
     this.#dispatchInputEvent(e);
   }
   #dispatchInputEvent(e: InputEvent) {
@@ -471,7 +438,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.textValue = "";
     this.#handleSelectedValueDisplay("");
     this.#hideOptionList();
-    this.#validation.checkValidity({showError:true});
+    this.#validation.checkValidity({ showError: true });
     if (this.isMobileDevice) {
       if (this.value) {
         this.elements.input.placeholder = "";
@@ -488,85 +455,47 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.elements.optionListWrapper.classList.remove("--show");
   }
   #updateOptionList(filterText: string) {
-    this.displayOptionList = this.#filterOptionList(filterText);
+    const event = new CustomEvent("filter-change", { detail: { filterText }, bubbles: false, cancelable: false, composed: false });
+    this.dispatchEvent(event);
   }
-  #updateOptionListDOM() {
-    const optionDomList: HTMLElement[] = [];
-    this.displayOptionList.forEach((item) => {
-      const optionDOM = this.#createOptionDOM(item);
-      optionDomList.push(optionDOM);
-    });
-    this.elements.optionList.innerHTML = "";
-    optionDomList.forEach((optionElement) => {
-      this.elements.optionList.appendChild(optionElement);
-    });
-  }
-  #createOptionDOM(item: TOption): JBSelectOptionElement<TOption> {
-    let optionDOM: JBSelectOptionElement<TOption> | null = null;
-    const isSelected =
-      this.#getOptionValue(this.#value) == this.#getOptionValue(item);
-    if (typeof this.callbacks.getOptionDOM == "function") {
-      optionDOM = this.callbacks.getOptionDOM(
-        item,
-        this.#onOptionClicked.bind(this),
-        isSelected
-      );
-    } else {
-      optionDOM = this.#createDefaultOptionDom(item, isSelected);
-    }
-    optionDOM.value = item;
-    return optionDOM;
-  }
-
-  #createDefaultOptionDom(item: TOption, isSelected: boolean): JBSelectOptionElement<TOption> {
-    const optionElement = document.createElement("div");
-    optionElement.classList.add("select-option");
-    if (isSelected) {
-      optionElement.classList.add("--selected-option");
-    }
-    //it has default function who return exact same input
-    optionElement.innerHTML = this.#getOptionTitle(item);
-    optionElement.addEventListener("click", this.#onOptionClicked.bind(this));
-    return optionElement;
-  }
-  #onOptionClicked(e: MouseEvent) {
+  #onOptionSelect(e: CustomEvent) {
     const prevValue = this.#value;
-    const value = (e.currentTarget as JBSelectOptionElement<TOption>).value;
-    this.#selectOption(value);
-    this.blur();
-    const dispatchedEvent = this.#dispatchOnChangeEvent();
-    if(dispatchedEvent.defaultPrevented){
-      e.preventDefault();
-      this.#selectOption(prevValue);
+    const prevOption = this.#selectedOption;
+    //because jb-option may be in another shadow dom like jb-option-list we have to get first composed element as a target
+    const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
+    if (target instanceof JBOptionWebComponent) {
+      const value = target.value;
+      this.#selectOption(value,target);
+      this.blur();
+      const dispatchedEvent = this.#dispatchOnChangeEvent();
+      if (dispatchedEvent.defaultPrevented) {
+        e.preventDefault();
+        this.#selectOption(prevValue,prevOption);
+      }
+    }
+
+  }
+  //called when an jb-Option connected to the dom
+  #onOptionConnected(e: CustomEvent) {
+    const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
+    target.setSelectElement(this);
+    e.stopPropagation();
+    this.#optionList.add(target);
+    if(this.#notFoundedValue){
+      this.#setValueOnOptionListChanged();
     }
   }
-  #selectOption(value: TOption) {
+  #selectOption(value: TValue, optionDom:JBOptionWebComponent<TValue>) {
     this.#setValue(value);
+    this.#selectedOption = optionDom;
     this.#checkValidity(true);
-  }
-  #filterOptionList(filterString: string): TOption[] {
-    const displayOptionList: TOption[] = [];
-    this.optionList.filter((option) => {
-      const optionTitle = this.#getOptionTitle(option);
-      const isString = typeof optionTitle == "string";
-      if (isString && optionTitle.includes(filterString)) {
-        displayOptionList.push(option);
-      }
-      if (!isString) {
-        console.warn(
-          "the provided values for optionsList is not of type string.",
-          { option, title: optionTitle }
-        );
-      }
-    });
-    return displayOptionList;
   }
   /**
    * @description show given string as a error in message place
    * @public
    */
   showValidationError(error: ShowValidationErrorInput | string) {
-    const message = typeof error == "string"?error:error.message;
+    const message = typeof error == "string" ? error : error.message;
     this.elements.messageBox.innerHTML = message;
     this.elements.messageBox.classList.add("--error");
   }
@@ -575,11 +504,11 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
     this.elements.messageBox.classList.remove("--error");
   }
   #dispatchOnChangeEvent() {
-    const event = new Event("change",{bubbles:true,cancelable:true});
+    const event = new Event("change", { bubbles: true, cancelable: true });
     this.dispatchEvent(event);
     return event;
   }
-  #setSelectedOptionDom(value: TOption) {
+  #setSelectedOptionDom(value: TValue) {
     //when user select option or value changed in any condition we set selected option DOM
     this.elements.selectedValueWrapper.innerHTML = "";
     //if value was null or undefined it remain empty
@@ -588,62 +517,35 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       this.elements.selectedValueWrapper.appendChild(selectedOptionDom);
     }
   }
-  #createSelectedValueDom(value: TOption) {
+  #createSelectedValueDom(value: TValue) {
     if (typeof this.callbacks.getSelectedValueDOM == "function") {
-      return this.callbacks.getSelectedValueDOM(value);
+      return this.callbacks.getSelectedValueDOM(value,this.#selectedOption);
     } else {
-      return this.#createDefaultSelectedValueDom(value);
+      return this.#createDefaultSelectedValueDom();
     }
   }
-  #createDefaultSelectedValueDom(value: TOption) {
-    const valueText = this.#getOptionTitle(value);
+  #createDefaultSelectedValueDom() {
+    //TODO: put some backup way for when we have value but no option provided
+    let contentNodes:Node[] = [];
+    if(this.#selectedOption){
+      contentNodes = this.#selectedOption.optionContent;
+    }
     const selectedOptionDom = document.createElement("div");
     selectedOptionDom.classList.add("selected-value");
-    selectedOptionDom.innerHTML = valueText;
+    selectedOptionDom.append(...contentNodes);
     return selectedOptionDom;
   }
-  #getOptionValue(option: TOption):TValue{
-    if (this.callbacks.getOptionValue && typeof this.callbacks.getOptionValue !== "function") {
-      console.error("getOptionValue callback is not a function");
-    }
-    try {
-      if(typeof this.callbacks.getOptionValue == "function"){
-        return this.callbacks.getOptionValue(option);
-      }else{
-        return option as unknown as TValue;
-      }
-    } catch (e) {
-      console.error(
-        `Invalid getOptionValue callback Result, must be a function that returns the value of an option`,
-        option
-      );
-    }
-  }
-  #getOptionTitle(option: TOption): string {
-    if (typeof this.callbacks.getOptionTitle !== "function") {
-      console.error("getOptionTitle callback is not a function");
-    }
-    try {
-      return this.callbacks.getOptionTitle(option);
-    } catch (e) {
-      console.error(
-        `Invalid getOptionTitle callback Result, must be a function that returns the value of an option`,
-        option
-      );
-    }
-    return "";
-  }
-  #getInsideValidation(){
-    const ValidationList:ValidationItem<ValidationValue<TOption,TValue>>[] = [];
-    if(this.required){
+  #getInsideValidation() {
+    const ValidationList: ValidationItem<ValidationValue<TValue>>[] = [];
+    if (this.required) {
       const label = this.getAttribute("label") || "";
       const message = `${label} حتما باید انتخاب شود`;
       ValidationList.push({
-        validator:({selectedOption})=>{
-          return selectedOption !== null && selectedOption !== undefined;
+        validator: ({ value }) => {
+          return value !== null && value !== undefined;
         },
-        message:message,
-        stateType:"valueMissing"
+        message: message,
+        stateType: "valueMissing"
       });
     }
     return ValidationList;
@@ -651,7 +553,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   //
   #checkValidity(showError: boolean) {
     if (!this.isAutoValidationDisabled) {
-      return this.#validation.checkValidity({showError});
+      return this.#validation.checkValidity({ showError });
     }
   }
   /**
@@ -660,7 +562,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
  * this method used by #internal of component
  */
   checkValidity(): boolean {
-    const validationResult = this.#validation.checkValiditySync({showError:false});
+    const validationResult = this.#validation.checkValiditySync({ showError: false });
     if (!validationResult.isAllValid) {
       const event = new CustomEvent('invalid');
       this.dispatchEvent(event);
@@ -672,7 +574,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
  * @description this method used to check for validity and show error to user
  */
   reportValidity(): boolean {
-    const validationResult = this.#validation.checkValiditySync({showError:true});
+    const validationResult = this.#validation.checkValiditySync({ showError: true });
     if (!validationResult.isAllValid) {
       const event = new CustomEvent('invalid');
       this.dispatchEvent(event);
@@ -682,7 +584,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
   /**
    * @description this method called on every checkValidity calls and update validation result of #internal
    */
-  #setValidationResult(result: ValidationResult<ValidationValue<TOption,TValue>>) {
+  #setValidationResult(result: ValidationResult<ValidationValue<TValue>>) {
     if (result.isAllValid) {
       this.#internals?.setValidity({}, '');
     } else {
@@ -692,7 +594,7 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
         if (!res.isValid) {
           if (res.validation.stateType) {
             states[res.validation.stateType] = true;
-          }else{
+          } else {
             states["customError"] = true;
           }
           if (message == '') { message = res.message; }
@@ -702,9 +604,10 @@ export class JBSelectWebComponent<TOption = any, TValue = TOption> extends HTMLE
       this.#internals?.setValidity(states, message);
     }
   }
-  get validationMessage(){
+  get validationMessage() {
     return this.#internals?.validationMessage || this.#validation.resultSummary.message;
   }
+
 }
 const myElementNotExists = !customElements.get("jb-select");
 if (myElementNotExists) {

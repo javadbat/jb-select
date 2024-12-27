@@ -1,10 +1,14 @@
 # jb-select
 
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/jb-select)
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://raw.githubusercontent.com/javadbat/jb-select/main/LICENSE)
+[![NPM Downloads](https://img.shields.io/npm/dw/jb-textarea)](https://www.npmjs.com/package/jb-select)
+
 pure js standalone select box web-component
 
 - with search ability
-- mobile freindly and responsive
-- cusomizable style with css variable
+- mobile friendly and responsive
+- customizable style with css variable
 - support typescript
 - support both RTL & LTR direction pages
 - custom validation
@@ -12,6 +16,10 @@ pure js standalone select box web-component
 - can get array of js object as a option list and extract value and label from it to show it to user.
 
 sample:<https://codepen.io/javadbat/pen/abpjKVP>
+
+## using with JS frameworks
+
+to use this component in **react** see [`jb-select/react`](https://github.com/javadbat/jb-select/tree/main/react);
 
 ## install
 
@@ -207,7 +215,7 @@ if you want to set a custom style to this web-component all you need is to set c
 
 ## Other Related Docs:
 
-- see [jb-select-react](https://github.com/javadbat/jb-select-react) if you want to use this component in react.
+- see [`jb-select/react`](https://github.com/javadbat/jb-select/tree/main/react) if you want to use this component in react.
 
 - see [All JB Design system Component List](https://github.com/javadbat/design-system/blob/master/docs/component-list.md) for more components.
 

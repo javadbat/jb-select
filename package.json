@@ -23,7 +23,7 @@
     "react/",
     "react/dist/"
   ],
-  "types": "./dist/web-component/jb-select/lib/jb-select.d.ts",
+  "types": "./dist/web-component/jb-select/lib/index.d.ts",
   "main": "index.js",
   "repository": {
 		"type": "git",

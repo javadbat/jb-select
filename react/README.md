@@ -4,7 +4,7 @@ select component for react
 
 ## installation
 
-run `npm install jb-select-react` to install package with npm
+run `npm install jb-select` to install package with npm
 
 ## usage
 
