@@ -42,21 +42,6 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
     }
   }, [props.value]);
   useEffect(() => {
-    if (typeof props.getOptionTitle == "function" && element.current) {
-      element.current.callbacks.getOptionTitle = props.getOptionTitle;
-    }
-  }, [props.getOptionTitle]);
-  useEffect(() => {
-    if (typeof props.getOptionTitle == "function" && element.current) {
-      element.current.callbacks.getOptionTitle = props.getOptionTitle;
-    }
-  }, [props.getOptionTitle]);
-  useEffect(() => {
-    if (typeof props.getOptionDOM == "function" && element.current) {
-      element.current.callbacks.getOptionDOM = props.getOptionDOM;
-    }
-  }, [props.getOptionDOM]);
-  useEffect(() => {
     if (typeof props.getSelectedValueDOM == "function" && element.current && element.current) {
       element.current.callbacks.getSelectedValueDOM = props.getSelectedValueDOM;
     }
@@ -104,9 +89,6 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
 export type JBSelectProps = {
     style?:CSSProperties,
     label?: string,
-    getOptionTitle?: (option:any)=>string,
-    getOptionValue?: (option:any)=>string,
-    getOptionDOM?: (option:any,onSelectCallback: (e: MouseEvent) => void, isSelected: boolean)=>HTMLElement,
     getSelectedValueDOM?: (option:any)=>HTMLElement,
     value?: any,
     onChange?: (e:JBSelectEventType<Event>)=>void,

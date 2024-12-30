@@ -28,6 +28,19 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     const optionNodes = this.#elements.contentWrapper.querySelector("slot").assignedNodes();
     return optionNodes;
   }
+  //TODO: add search hidden property for more accurate hidden and more personalized logic
+  #hidden = false;
+  get hidden(){
+    return this.#hidden;
+  }
+  set hidden(value:boolean){
+    this.#hidden = value;
+    if(value){
+      this.#elements.componentWrapper.classList.add('--hidden');
+    }else{
+      this.#elements.componentWrapper.classList.remove('--hidden');
+    }
+  }
   /**
    * return text content of option (it used in search by default to filter option)
    */
@@ -58,14 +71,15 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     const {filterText} = e.detail;
     const optionTextContent = this.optionContentText;
     if(optionTextContent.includes(filterText)){
-      this.#elements.componentWrapper.classList.remove('--hidden');
+      this.hidden = false;
     }else{
-      this.#elements.componentWrapper.classList.add('--hidden');
+      this.hidden = true;
     }
   }
   disconnectedCallback() {
     this.#SelectElement?.removeEventListener("filter-change", this.#onFilterChange.bind(this));
-    console.log("disconnected");
+    const event = new CustomEvent("jb-option-disconnected",{bubbles:true,composed:true,cancelable:false});
+    this.dispatchEvent(event);
   }
   #initWebComponent() {
     const shadowRoot = this.attachShadow({
@@ -93,16 +107,17 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     this.value = this.getAttribute("value") as TValue || null;
   }
   static get observedAttributes() {
-    return [""];
+    return ["value"];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     // do something when an attribute has changed
     this.#onAttributeChange(name, newValue);
   }
   #onAttributeChange(name: string, value: string) {
-    // switch (name) {
-
-    // }
+    switch (name) {
+      case 'value':
+        this.#value = value as TValue;
+    }
   }
   #onOptionClick() {
     if (!this.#selected) {

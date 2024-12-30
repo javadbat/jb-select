@@ -2,6 +2,8 @@
 
 select component for react 
 
+> this component is a react wrapper for [jb-select](https://github.com/javadbat/jb-select)
+
 ## installation
 
 run `npm install jb-select` to install package with npm
@@ -22,14 +24,86 @@ use label property to describe your select component.
 <JBSelect label='your label name' ></JBSelect>
 ```
 
-### option value
+## option list
+if you want to add option to jb-select, you have 2 way:
 
-set an array object.
+- use `<JBOption>`
+- use `<jbOptionList>`
+
+### using `JBOption`:
+
+using `JBOption` is quite an easy job:
+
+```jsx
+import {JBSelect,JBOption} from 'jb-select/react';
+
+  <JBSelect label="gender">
+      <JBOption value="male">Male</JBOption>
+      <JBOption value="female">Female</JBOption>
+      <JBOption value="0">Other</JBOption>
+  </JBSelect>
+  //or
+  const optionList = ["1","2","3"]
+  <JBSelect { ...args}>
+    {
+      optionList.map((option)=>(<JBOption key={option} value={option}>{option}</JBOption>))
+    }
+  </JBSelect>
+```
+you can also set object or any other data type as an value
+```jsx
+const [colorList] = useState([
+    {
+      id: 1,
+      name: "Red",
+      value: "#f00",
+    },
+    {
+      id: 2,
+      name: "Green",
+      value: "#0f0",
+    },
+    {
+      id: 3,
+      name: "Blue",
+      value: "#00f",
+    },
+    {
+      id: 4,
+      name: "Yellow",
+      value: "#ff0",
+    },
+  ]);
+  //this function is used to create selected value dom and can be styled using jb-select::part.
+function getSelectedValueDOM(option) {
+    const optionElement = document.createElement("div");
+    optionElement.classList.add("selected-value");
+    optionElement.innerHTML =
+      '<span part="color-box" style="background-color:' + option.value +
+      ';width:16px;height:16px;display:inline-block;"></span>' + "&nbsp;" +
+      option.name;
+    return optionElement;
+}
+return(
+    <JBSelect label="normal" getSelectedValueDOM={getSelectedValueDOM}>
+        {
+          colorList.map((color)=>{
+            return (<JBOption key={color.value} value={color}><span className="color-circle" style={{backgroundColor:color.value}}></span>{color.name}</JBOption>);
+          })
+        }
+    </JBSelect>
+)
+```
+### using `jbOptionList`:
+`JBOptionList` will create options for you and it's good for when you want some easy to use options without complexity of update & manage JSX and it's a little faster for high performance app
+
 example:
 
 ```jsx
+import {JBSelect,JBOptionList} from 'jb-select/react';
+
 render(){
-    const obj = [{name:'reza',family:'asadi',userId:1},{name:'peter',family:'peterson',userId:2}];
+    const list = [{name:'reza',family:'asadi',userId:1},{name:'peter',family:'peterson',userId:2}];
     getOptionTitle:(option)=>{
         return `${option.name} ${option.family}`;
     },
@@ -37,7 +111,9 @@ render(){
         return option.userId;
     }
     return(
-        <JBSelect label='your label name' optionList={obj} getOptionTitle={getOptionTitle} getOptionValue={getOptionValue}></JBSelect>;
+        <JBSelect label='your label name' >
+            <JBOptionList optionList={list} getTitle={getOptionTitle} getValue={getOptionValue}/>
+        </JBSelect>;
     );
 }
 ```

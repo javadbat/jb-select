@@ -82,7 +82,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   get #ValidationValue(): ValidationValue<TValue> {
     return {
       inputtedText: this.#textValue,
-      selectedOption: this.#value,
+      selectedOption: this.#selectedOption,
       value: this.value
     };
   }
@@ -179,9 +179,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         wrapper: shadowRoot.querySelector("label")!,
         text: shadowRoot.querySelector("label .label-value")!,
       },
-      emptyListPlaceholder: shadowRoot.querySelector(
-        ".empty-list-placeholder"
-      )!,
+      emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
     };
     this.#registerEventListener();
   }
@@ -199,7 +197,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     //events to work with options
     this.addEventListener("select", this.#onOptionSelect.bind(this));
     this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this));
-    this.elements.optionListSlot.addEventListener("slotchange",this.#onOptionSlotChange);
+    this.elements.optionListSlot.addEventListener("slotchange",this.#onOptionSlotChange.bind(this));
 
   }
 
@@ -252,8 +250,22 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         break;
     }
   }
-  #onOptionSlotChange(){
+  /**
+   * will check option list and if select has no option it will show empty list placeholder
+   */
+  #updateListEmptyPlaceholder(){
+    const ss = Array.from(this.#optionList);
+    console.log(ss);
+    const isAnyOptionVisible = Array.from(this.#optionList).some(x=>x.hidden==false);
+    if(isAnyOptionVisible){
+      this.elements.emptyListPlaceholder.classList.remove("--show");
+    }else{
+      this.elements.emptyListPlaceholder.classList.add("--show");
+    }
+  }
+  #onOptionSlotChange(e:Event){
     this.#setValueOnOptionListChanged();
+    this.#updateListEmptyPlaceholder();
   }
   #setValueOnOptionListChanged() {
     //when option list changed we see if current value is valid for new optionlist we set it if not we reset value to null.
@@ -352,6 +364,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#handleSelectedValueDisplay(inputtedText);
     this.#validation.checkValidity({ showError: false });
     this.#dispatchInputEvent(e);
+    this.#updateListEmptyPlaceholder();
   }
   #dispatchInputEvent(e: InputEvent) {
     const event = new InputEvent("input", {
@@ -477,17 +490,28 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   //called when an jb-Option connected to the dom
   #onOptionConnected(e: CustomEvent) {
-    const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
-    target.setSelectElement(this);
     e.stopPropagation();
+    const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
+    target.addEventListener("jb-option-disconnected",this.#onOptionDisconnected.bind(this),{once:true,passive:true});
+    target.setSelectElement(this);
     this.#optionList.add(target);
     if(this.#notFoundedValue){
       this.#setValueOnOptionListChanged();
     }
+    this.#updateListEmptyPlaceholder();
+  }
+  #onOptionDisconnected(e:CustomEvent){
+    e.stopPropagation();
+    const target = e.target as JBOptionWebComponent<TValue>;
+    this.#optionList.delete(target);
+    this.#updateListEmptyPlaceholder();
+    if(target.value == this.#value){
+      this.#setValueOnOptionListChanged();
+    }
   }
   #selectOption(value: TValue, optionDom:JBOptionWebComponent<TValue>) {
-    this.#setValue(value);
     this.#selectedOption = optionDom;
+    this.#setValue(value);
     this.#checkValidity(true);
   }
   /**
@@ -532,7 +556,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
     const selectedOptionDom = document.createElement("div");
     selectedOptionDom.classList.add("selected-value");
-    selectedOptionDom.append(...contentNodes);
+    selectedOptionDom.append(...contentNodes.map(n=>n.cloneNode()));
     return selectedOptionDom;
   }
   #getInsideValidation() {

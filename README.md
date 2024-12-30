@@ -31,20 +31,55 @@ to use this component in **react** see [`jb-select/react`](https://github.com/ja
 ```html
     <script src="https://unpkg.com/jb-input/dist/JBInput.umd.js"></script>
 ```
-## doc
 
 use `<jb-select></jb-select>`
 
-### set option list
+## set option list
 
-if ypu want to add option to jb-select set option list to DOM
+if you want to add option to jb-select, you have 2 way:
+
+- use `<jb-option>` tag 
+- use `<jb-option-list>`
+
+### using `jb-option`:
+
+using `jb-option` is quite an easy job:
+
+```html
+<jb-select label="gender">
+    <jb-option value="male" >Male</jb-option>
+    <jb-option value="female" >Female</jb-option>
+    <jb-option value="0" >Other</jb-option>
+</jb-select>
+```
+its easy and simple to customization options display content. for example you can set option value like this for user to pick color:
+
+```html
+<jb-option value="red"><span class="color-circle" style="background-color:#f00"></span>red</jb-option>
+```
+you can also assign non-string value to option in js in some advance scenario:
 
 ```js
-const dropDownElement = ocument.querySelector('jb-select')
-dropDownElement.optionList = [1,2,3]
+document.querySelector('jb-option').value = {
+    name:"foo",
+    age:10
+}
+```
+by doing this, calling a `document.querySelector('jb-select').value` will give you the object in javascript
+
+### using `jb-option-list`
+this web-component is an assistance for developers to manage their option list in javascript without involving too much HTML in their logic
+```html
+<jb-select>
+    <jb-option-list />
+</jb-select>
+```
+```js
+const optionListElement = document.querySelector('jb-option-list')
+optionListElement.optionList = [1,2,3]
 //or you can provide object as a option
-//if you provide array of object to optionList. rememmber to set callbacks as well so component would know how to extract label and value from it.
-dropDownElement.optionList = [
+//if you provide array of object to optionList. remember to set callbacks as well so component would know how to extract label and value from it.
+optionListElement.optionList = [
     {
         id:1,
         productName:"book"
@@ -54,10 +89,21 @@ dropDownElement.optionList = [
         productName:"pen"
     },
 ]
+//if you set an array of object into optionList you must set callback to set the visible content of an option
+optionListElement.setCallback("getTitle", (option)=>option.productName);
+//or if you have more complex ui
+optionListElement.setCallback("getTitle", (option)=>{
+    const optionContent = document.createElement("div");
+    optionContent.innerHTML = `${option.id}-${option.productName}`;
+    return optionContent;
+});
+//or optionally you can set the value getter callback if you want one field of an object as a value
+optionListElement.setCallback("getValue", (option)=>option.id);
 
 ```
+`jb-option-list` use `jb-option` inside itself and just help you to manage your option list easier in js
 
-### get value
+## get value
 
 its simple like any other form element use `.value` of dom
 
@@ -118,22 +164,6 @@ you can add callbacks to manage the way component works
 for example if you have array of object as a option list and want to show custome title for option you can use:
 
 ```js
-    dropDownElement.callbacks.getOptionTitle = (option)=>{return`${option.province}-${option.state}-${option.city}`}
-    dropDownElement.callbacks.getOptionValue = (option)=>{return`${option.value}`}
-    //to customizing options
-    dropDownElement.callbacks.getOptionDOM = (option,onOptionSelected,isSelected)=>{
-        // option is the object or any other formatted data yoy=u privide to optionList array
-         const optionElement = document.createElement('div');
-         //defualt class of each option in jb-select. you can change or customize it if you wish
-        optionElement.classList.add('select-option');
-        // here in this example we want to show a color list with color sample next to it
-        optionElement.innerHTML = '<span part="color-box" style="background-color:'+option.colorCode+';width:16px;height:16px"></span>'+'&nbsp;'+option.name;
-        //onOptionSelected is a function you have to call when option selected it mostly bind on on option dom clicked'
-        // if you want to set onClick on dom other than returned wrapper DOM for example on a color-box you must set value property on it: colorBoxDOM.value = option; colorBoxDOM.addEventListener('click', onOptionSelected);
-        optionElement.addEventListener('click', onOptionSelected);
-        //return HTMLElement in the end
-        return optionElement;
-    }
     //to customizing selected value
     dropDownElement.callbacks.getSelectedValueDOM = (option)=>{
         const optionElement = document.createElement('div');
@@ -143,7 +173,7 @@ for example if you have array of object as a option list and want to show custom
     }
 ```
 
-remember you must set this callback before set your optionList
+remember you must set this callback before set value and option list
 
 ### events
 
@@ -154,7 +184,7 @@ remember you must set this callback before set your optionList
 
 ```
 
-### set custome style
+### set custom style
 
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component

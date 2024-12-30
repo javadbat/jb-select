@@ -7,7 +7,7 @@
     --p-border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
     --p-base-z-index: 1;
     --p-mobile-modal-z-index: 900;
-    --p-mobile-modal-height:var(--jb-select-mobile-modal-height, 100vh);
+    --p-mobile-modal-height: var(--jb-select-mobile-modal-height, 100vh);
 }
 
 .jb-select-web-component {
@@ -20,7 +20,7 @@
         @include mobile-tablet {
             position: fixed;
             bottom: 0;
-            top:initial;
+            top: initial;
             left: 0;
             background-color: var(--jb-select-overlay-bgcolor, #0008);
             width: 100vw;
@@ -38,10 +38,8 @@
                 border-width: var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px));
                 border-color: var(--jb-select-mobile-search-border-color, var(--jb-select-border-color, #f7f6f6));
                 border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--p-border-bottom-width));
-                border-bottom-color: var(
-                    --jb-select-mobile-search-border-bottom-color,
-                    var(--jb-select-border-bottom-color, var(--jb-select-border-color, #f7f6f6))
-                );
+                border-bottom-color: var(--jb-select-mobile-search-border-bottom-color,
+                        var(--jb-select-border-bottom-color, var(--jb-select-border-color, #f7f6f6)));
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
             }
 
@@ -59,8 +57,7 @@
                     transition: none;
                 }
 
-                .selected-value {
-                }
+                .selected-value {}
             }
         }
 
@@ -119,6 +116,7 @@
     }
 
     &.--has-value {
+
         //if user select a option and value is setted and not null
         .select-box {
             border-color: var(--jb-select-border-color-selected, #c3ff14);
@@ -159,46 +157,51 @@
         border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, #f7f6f6);
         border-radius: var(--jb-select-border-radius, 1rem);
         background-color: var(--jb-select-bgcolor, #f7f6f6);
-        margin:var(--jb-select-select-box-margin, 4px 0px 0px 0px);
+        margin: var(--jb-select-select-box-margin, 4px 0px 0px 0px);
         overflow: hidden;
         display: flex;
         padding-inline-end: var(--jb-select-box-padding-end, 1rem);
         gap: 0.5rem;
         align-items: center;
+
         &:focus-within {
             border-color: var(--jb-select-border-color, var(--p-p-color));
             border-bottom-color: var(--jb-select-border-color, var(--p-p-color));
             border-radius: var(--jb-select-border-radius, 1rem) var(--jb-select-border-radius, 1rem) 0 0;
+
             @include mobile-tablet {
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 1rem));
             }
         }
-        .start-section{
+
+        .start-section {
             height: 100%;
             width: auto;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        .middle-section{
+
+        .middle-section {
             position: relative;
             width: 100%;
             height: 100%;
-            flex:1;
+            flex: 1;
+
             .selected-value-wrapper {
                 position: absolute;
-                top:0;
+                top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
                 border-radius: inherit;
                 overflow: hidden;
                 z-index: 1;
-    
+
                 &.--search-typed {
                     opacity: 0;
                 }
-    
+
                 .selected-value {
                     width: 100%;
                     box-sizing: border-box;
@@ -215,15 +218,17 @@
                     align-items: center;
                 }
             }
+
             .front-box {
                 position: absolute;
-                top:0;
+                top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
                 border-radius: inherit;
                 overflow: hidden;
                 z-index: 2;
+
                 input {
                     border: none;
                     width: 100%;
@@ -233,15 +238,15 @@
                     padding: 2px 12px 0 12px;
                     display: block;
                     font-family: inherit;
-                    font-size: var(--jb-select-value-font-size,1.1rem);
+                    font-size: var(--jb-select-value-font-size, 1.1rem);
                     color: var(--jb-select-input-color, #1f1735);
                     margin: 0;
                     border-radius: 0;
-    
+
                     &:focus {
                         outline: none;
                     }
-    
+
                     &::placeholder {
                         color: var(--jb-select-placeholder-color, initial);
                         font-size: var(--jb-select-placeholder-font-size, 1.1em);
@@ -249,12 +254,13 @@
                 }
             }
         }
-        .end-section{
+
+        .end-section {
             .arrow-icon {
                 margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
             }
         }
-        
+
 
         &:focus-within .selected-value {
             opacity: 0.7;
@@ -314,23 +320,25 @@
             width: 100%;
             max-height: var(--jb-select-list-max-height, 400px);
             overflow-y: auto;
-            padding: var(--jb-select-list-padding, 16px 0);
-
-            &:empty {
-                padding: 0;
+            slot {
+                padding: var(--jb-select-list-padding, 16px 0);
+                &:empty {
+                    padding: 0;
+                }
             }
+
 
             @include mobile-tablet {
                 max-height: calc(var(--p-mobile-modal-height) - 240px);
             }
 
-           /* option style places */
-           
+            /* option style places */
+
             &::-webkit-scrollbar {
                 width: 9px;
                 background-color: transparent;
             }
-    
+
             &::-webkit-scrollbar-thumb {
                 background-color: var(--jb-select-list-scroll-color, #c3c3c3);
                 border-radius: var(--jb-select-list-scroll-border-radius, 4px);

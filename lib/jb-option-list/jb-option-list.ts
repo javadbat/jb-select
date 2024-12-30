@@ -1,13 +1,14 @@
 import { JBOptionWebComponent } from "../jb-option/jb-option";
-import { type JBSelectWebComponent } from "../jb-select";
 import { type OptionListCallbacks } from "./types";
 
 //TOption is the type of option, TValue is the type of value we extract from option
-export class JBOptionListWebComponent<TOption,TValue> extends HTMLElement {
-  callbacks:OptionListCallbacks<TOption,TValue> = {};
-  // it may be empty
-  #parentSelectElement?: JBSelectWebComponent
+export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
+  #callbacks: OptionListCallbacks<TOption, TValue> = {};
+  get callbacks() {
+    return this.#callbacks;
+  }
   #optionList: TOption[] = [];
+  #optionPairMap: Map<TOption, JBOptionWebComponent<TValue>> = new Map();
   get optionList() {
     return this.#optionList || [];
   }
@@ -20,9 +21,7 @@ export class JBOptionListWebComponent<TOption,TValue> extends HTMLElement {
       return;
     }
     this.#optionList = value;
-    setTimeout(()=>{
-      this.#initOptionList(value);
-    },1000);
+    this.#initOptionList(value);
   }
   constructor() {
     super();
@@ -30,7 +29,27 @@ export class JBOptionListWebComponent<TOption,TValue> extends HTMLElement {
   }
   connectedCallback() {
     // standard web component event that called when all of dom is bounded
-    this.#findParentSelect();
+  }
+  setCallback<T extends keyof OptionListCallbacks<TOption, TValue>>(key: T, callbackFn: OptionListCallbacks<TOption, TValue>[T]) {
+    this.#callbacks[key] = callbackFn;
+    switch (key) {
+      case 'getContentDOM':
+      case 'getTitle':
+        this.#updateOptionsContent();
+        break;
+      case 'getValue':
+        this.#updateOptionsValue();
+    }
+  }
+  #updateOptionsContent() {
+    this.#optionPairMap.forEach((dom, option) => {
+      this.#fillOptionContent(option, dom);
+    });
+  }
+  #updateOptionsValue() {
+    this.#optionPairMap.forEach((dom, option) => {
+      dom.value = this.#getOptionValue(option);
+    });
   }
   #initWebComponent() {
     const shadowRoot = this.attachShadow({
@@ -40,25 +59,13 @@ export class JBOptionListWebComponent<TOption,TValue> extends HTMLElement {
 
     shadowRoot.appendChild(element.content.cloneNode(true));
   }
-  #findParentSelect() {
-    const checkParent = (element: HTMLElement) => {
-      if (!element) {
-        return;
-      }
-      if (element.tagName == "jb-select") {
-        this.#parentSelectElement = element as JBSelectWebComponent;
-      } else {
-        checkParent(element.parentElement);
-      }
-    };
-    checkParent(this.parentElement);
-  }
   //
-  #initOptionList(optionList:TOption[]){
+  #initOptionList(optionList: TOption[]) {
     this.shadowRoot.innerHTML = "";
-    optionList.forEach((option)=>{
+    optionList.forEach((option) => {
       const dom = this.#createOptionDOM(option);
       this.shadowRoot.appendChild(dom);
+      this.#optionPairMap.set(option, dom);
     });
   }
   #getOptionValue(option: TOption): TValue {
@@ -66,8 +73,8 @@ export class JBOptionListWebComponent<TOption,TValue> extends HTMLElement {
       console.error("getOptionValue callback is not a function");
     }
     try {
-      if (typeof this.callbacks.getValue == "function") {
-        return this.callbacks.getValue(option);
+      if (typeof this.#callbacks.getValue == "function") {
+        return this.#callbacks.getValue(option);
       } else {
         return option as unknown as TValue;
       }
@@ -79,26 +86,33 @@ export class JBOptionListWebComponent<TOption,TValue> extends HTMLElement {
     }
   }
   #getOptionTitle(option: TOption): string {
-    if(typeof this.callbacks.getTitle == "function"){
+    if (typeof this.#callbacks.getTitle == "function") {
       try {
-        return this.callbacks.getTitle(option);
+        return this.#callbacks.getTitle(option);
       } catch (e) {
         console.error(
           `Invalid getOptionTitle callback Result, must be a function that returns the value of an option`,
           option
         );
       }
-    }else{
+    } else {
       return String(option);
     }
     return "";
   }
-
+  #fillOptionContent(option: TOption, element: JBOptionWebComponent<TValue>) {
+    element.innerHTML = "";
+    if (typeof this.#callbacks.getContentDOM == "function") {
+      element.appendChild(this.#callbacks.getContentDOM(option));
+    } else {
+      element.innerHTML = this.#getOptionTitle(option);
+    }
+  }
   #createOptionDOM(item: TOption): JBOptionWebComponent<TValue> {
     // const optionElement = document.createElement("jb-option") as JBOptionWebComponent<TValue>;
     const optionElement = new JBOptionWebComponent<TValue>();
     //it has default function who return exact same input
-    optionElement.innerHTML = this.#getOptionTitle(item);
+    this.#fillOptionContent(item, optionElement);
     optionElement.value = this.#getOptionValue(item);
     return optionElement;
   }
