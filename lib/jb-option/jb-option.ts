@@ -19,7 +19,11 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   #selected = false;
   set selected(value: boolean) {
     this.#selected = value;
-    this.#elements.componentWrapper.classList.add("--selected");
+    if(value){
+      this.#elements.componentWrapper.classList.add("--selected");
+    }else{
+      this.#elements.componentWrapper.classList.remove("--selected");
+    }
   }
   get selected() {
     return this.#selected;

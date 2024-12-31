@@ -254,8 +254,6 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
    * will check option list and if select has no option it will show empty list placeholder
    */
   #updateListEmptyPlaceholder(){
-    const ss = Array.from(this.#optionList);
-    console.log(ss);
     const isAnyOptionVisible = Array.from(this.#optionList).some(x=>x.hidden==false);
     if(isAnyOptionVisible){
       this.elements.emptyListPlaceholder.classList.remove("--show");
@@ -285,7 +283,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   //when user set value by attribute or value prop directly we call this function
   #setValueFromOutside(value: TValue): boolean {
     if(value === null || value === undefined){
-      this.#setValue(null);
+      this.#setValue(null,null);
       return true;
     }
     let matchedOption:JBOptionWebComponent<TValue>| null = null; 
@@ -296,20 +294,29 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       }
     });
     if (matchedOption) {
-      this.#setValue(matchedOption.value);
-      matchedOption.selected = true;
+      this.#setValue(matchedOption.value,matchedOption);
       return true;
     } else {
       this.#notFoundedValue = value;
       return false;
     }
   }
-  #setValue(value: TValue) {
+  //null option mean deselect all
+  #changeSelectedOption(option:JBOptionWebComponent<TValue>|null){
+    this.#optionList.forEach((x)=>x.selected = false);
+    if(option){
+      option.selected = true;
+      this.#selectedOption = option;
+    }
+  }
+  #setValue(value: TValue,option:JBOptionWebComponent<TValue>|null) {
     this.#notFoundedValue = null;
     this.#value = value;
     if (value === null || value === undefined) {
       this.textValue = "";
       this.#setSelectedOptionDom(null);
+      //will deselect all option
+      this.#changeSelectedOption(null);
       this.elements.componentWrapper.classList.remove("--has-value");
       //show placeholder when user empty data
       if (!(this.isMobileDevice && this.isOpen)) {
@@ -317,6 +324,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       }
     } else {
       this.textValue = "";
+      this.#changeSelectedOption(option);
       this.#setSelectedOptionDom(value);
       this.elements.componentWrapper.classList.add("--has-value");
       //hide placeholder when user select data
@@ -509,9 +517,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.#setValueOnOptionListChanged();
     }
   }
+
   #selectOption(value: TValue, optionDom:JBOptionWebComponent<TValue>) {
-    this.#selectedOption = optionDom;
-    this.#setValue(value);
+    this.#setValue(value,optionDom);
     this.#checkValidity(true);
   }
   /**

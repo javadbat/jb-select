@@ -12,7 +12,7 @@
     "select",
     "react component"
   ],
-  "version": "5.0.0",
+  "version": "6.0.2",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "license": "MIT",
   "files": [
@@ -28,6 +28,6 @@
 		"url": "git@github.com:javadbat/jb-select.git"
   },
   "dependencies": {
-    "jb-select": ">=5.0.0"
+    "jb-select": ">=6.0.0"
   }
 }
