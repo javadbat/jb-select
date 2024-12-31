@@ -4,6 +4,8 @@ select component for react
 
 > this component is a react wrapper for [jb-select](https://github.com/javadbat/jb-select)
 
+Demo :  Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-select) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBSelect.tsx) if you want to see and play with code
+
 ## installation
 
 run `npm install jb-select` to install package with npm
