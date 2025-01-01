@@ -73,8 +73,8 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   }
   #onFilterChange(e: CustomEvent){
     const {filterText} = e.detail;
-    const optionTextContent = this.optionContentText;
-    if(optionTextContent.includes(filterText)){
+    const optionTextContent = this.optionContentText.toLowerCase();
+    if(optionTextContent.includes(filterText.toLowerCase())){
       this.hidden = false;
     }else{
       this.hidden = true;

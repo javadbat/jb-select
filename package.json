@@ -12,7 +12,7 @@
     "select",
     "web component"
   ],
-  "version": "6.0.3",
+  "version": "6.0.5",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "license": "MIT",
   "files": [

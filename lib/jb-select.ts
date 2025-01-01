@@ -182,6 +182,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
     };
     this.#registerEventListener();
+    this.#updateListEmptyPlaceholder();
   }
   #registerEventListener() {
     this.elements.input.addEventListener("change", (e: Event) => {
