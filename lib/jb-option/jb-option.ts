@@ -41,8 +41,10 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     this.#hidden = value;
     if(value){
       this.#elements.componentWrapper.classList.add('--hidden');
+      this.setAttribute("inert","");
     }else{
       this.#elements.componentWrapper.classList.remove('--hidden');
+      this.removeAttribute("inert");
     }
   }
   /**
