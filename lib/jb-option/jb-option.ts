@@ -4,6 +4,8 @@ import { renderHTML } from "./render";
 import { JBOptionElements } from "./types";
 
 //TODO: check for filter text to set visibility on mount
+//TODO: add disable option (will be displayed but can not be select)
+//TODO: add highlight to highlight the searched value
 export class JBOptionWebComponent<TValue> extends HTMLElement {
 
   #elements: JBOptionElements;

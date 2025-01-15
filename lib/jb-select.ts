@@ -10,8 +10,12 @@ import { isMobile } from "../../../common/scripts/device-detection";
 import { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";
-// eslint-disable-next-line no-duplicate-imports
-//TOption is the type of option, TValue is the type of value we extract from option
+
+//TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
+//TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
+/**
+ *  TValue is the type of value we extract from option
+ */
 export class JBSelectWebComponent<TValue = any> extends HTMLElement implements WithValidation<ValidationValue<TValue>>, JBFormInputStandards<TValue> {
   static get formAssociated() {
     return true;
