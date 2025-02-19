@@ -6,7 +6,7 @@ import {
   ValidationValue,
 } from "./types";
 import { ShowValidationErrorInput, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
-import { isMobile } from "../../../common/scripts/device-detection";
+import { isMobile } from "jb-core";
 import { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";

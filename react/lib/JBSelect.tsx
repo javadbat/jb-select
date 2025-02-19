@@ -1,9 +1,9 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useRef, useState, useImperativeHandle,CSSProperties } from 'react';
 import 'jb-select';
-import { useBindEvent } from '../../../../common/hooks/use-event.js';
 // eslint-disable-next-line no-duplicate-imports
 import { JBSelectWebComponent } from 'jb-select';
+import { EventProps, useEvents } from './events-hook.js';
 export type JBSelectEventType<T> = T & {
     target: JBSelectWebComponent
 }
@@ -61,24 +61,7 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
       element.current?.setAttribute("search-placeholder", props.searchPlaceholder);
     }
   }, [props.searchPlaceholder]);
-  function onKeyup(e:JBSelectEventType<KeyboardEvent>) {
-    if ( typeof props.onKeyup == "function") {
-      props.onKeyup(e);
-    }
-  }
-  function onChange(e:JBSelectEventType<Event>) {
-    if (typeof props.onChange =="function") {
-      props.onChange(e);
-    }
-  }
-  function onInput(e:JBSelectEventType<InputEvent>) {
-    if (typeof props.onInput == "function") {
-      props.onInput(e);
-    }
-  }
-  useBindEvent(element, 'keyup', onKeyup);
-  useBindEvent(element, 'change', onChange);
-  useBindEvent(element, 'input', onInput);
+  useEvents(element,props);
   return (
     <jb-select style={props.style?props.style:undefined} class={props.className?props.className:""} label={props.label} ref={element} required={props.required || 'false'} name={props.name??undefined}>
       {props.children}
@@ -86,14 +69,11 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
   );
 });
 
-export type JBSelectProps = {
+export type JBSelectProps = EventProps & {
     style?:CSSProperties,
     label?: string,
     getSelectedValueDOM?: (option:any)=>HTMLElement,
     value?: any,
-    onChange?: (e:JBSelectEventType<Event>)=>void,
-    onKeyup?: (e:JBSelectEventType<KeyboardEvent>)=>void,
-    onInput?: (e:JBSelectEventType<InputEvent>)=>void,
     required?: boolean,
     message?: string,
     placeholder?: string,

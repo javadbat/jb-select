@@ -1,5 +1,6 @@
-import { type JBOptionWebComponent } from "./jb-option/jb-option";
-
+import type { JBOptionWebComponent } from "./jb-option/jb-option";
+import type {EventTypeWithTarget} from "jb-core";
+import type{ JBSelectWebComponent } from "./jb-select";
 export type JBSelectCallbacks<TValue> = {
     getSelectedValueDOM?:(value:TValue,content:HTMLElement) => HTMLElement;
 }
@@ -24,3 +25,5 @@ export type ValidationValue<TValue> = {
     value:TValue | null,
     inputtedText:string
 }
+
+export type JBSelectEventType<TEvent> = EventTypeWithTarget<TEvent,JBSelectWebComponent>

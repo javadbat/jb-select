@@ -30,7 +30,8 @@
 		"url": "git@github.com:javadbat/jb-select.git"
   },
   "dependencies": {
-    "jb-validation": ">=0.2.0"
+    "jb-validation": ">=0.2.0",
+    "jb-core":">=0.1.0"
   },
   "devDependencies": {
     "jb-form":">=0.6.10"
