@@ -21,6 +21,7 @@ export const reactComponentList: ReactComponentBuildConfig[] = [
     external: ["jb-select", "prop-types", "react", "jb-core", "jb-core/react"],
     globals: {
       react: "React",
+      "jb-select": "JBSelect",
       "jb-core":"JBCore",
       "jb-core/react":"JBCoreReact",
     },
