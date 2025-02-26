@@ -25,7 +25,7 @@ declare global {
     }
 }
 
-export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
+export const JBSelect = React.forwardRef((props:Props, ref) => {
   const element = useRef<JBSelectWebComponent>(null);
   const [refChangeCount, refChangeCountSetter] = useState(0);
   useImperativeHandle(
@@ -69,7 +69,7 @@ export const JBSelect = React.forwardRef((props:JBSelectProps, ref) => {
   );
 });
 
-export type JBSelectProps = EventProps & {
+export type Props = EventProps & {
     style?:CSSProperties,
     label?: string,
     getSelectedValueDOM?: (option:any)=>HTMLElement,
