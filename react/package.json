@@ -22,7 +22,7 @@
     "dist/"
   ],
   "main": "index.js",
-  "types": "./dist/web-component/jb-select/react/lib/index.d.ts",
+  "types": "./dist/index.d.ts",
   "repository": {
 		"type": "git",
 		"url": "git@github.com:javadbat/jb-select.git"

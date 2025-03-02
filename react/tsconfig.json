@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
+        "rootDir": "./lib",
     },
     "include": [
         "lib/**/*.ts",
@@ -12,5 +13,5 @@
         "**/*.spec.ts",
         "dist",
     ],
-    "extends":"../../tsconfig-react.json"
+    "extends":"jb-core/configs/tsconfig-react.json"
 }
