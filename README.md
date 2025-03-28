@@ -129,7 +129,13 @@ remember set value as attribute if your option is a plain string but in direct a
  <jb-select placeholder="please select" search-placeholder="type to search"></jb-select>
  ```
 ### validation
-since select has a limited value options, validation have different story here. the only validation i really necessary here is required that indicate if user must select a value before he can move on so pass `required` attribute in dom then call `checkValidity` function like all other jb web component family. but if you need more customize validation just read [jb-validation](https://github.com/javadbat/jb-validation) 
+since select has a limited value options, validation have different story here. the only validation i really necessary here is required that indicate if user must select a value before he can move on so pass `required` attribute in dom then call `checkValidity` function like all other jb web component family. but if you need more customize validation just read [jb-validation](https://github.com/javadbat/jb-validation)
+
+you can also set `error` attribute to pass error directly to the component
+
+```html
+<jb-select error="your error message"></jb-select>
+```
 
 ### change empty state shape
 when the searched value in select is not found, there is an open dropdown with the not found message.

@@ -61,6 +61,13 @@ export const JBSelect = React.forwardRef((props:Props, ref) => {
       element.current?.setAttribute("search-placeholder", props.searchPlaceholder);
     }
   }, [props.searchPlaceholder]);
+  useEffect(() => {
+    if (props.error) {
+      element?.current?.setAttribute('error', props.error);
+    } else {
+      element?.current?.removeAttribute('error');
+    }
+  }, [props.error]);
   useEvents(element,props);
   return (
     <jb-select style={props.style?props.style:undefined} class={props.className?props.className:""} label={props.label} ref={element} required={props.required || 'false'} name={props.name??undefined}>
@@ -80,6 +87,7 @@ export type Props = EventProps & {
     searchPlaceholder?: string,
     className?: string,
     children?:React.ReactNode,
-    name?:string
+    name?:string,
+    error?:string,
 }
 JBSelect.displayName = 'JBSelect';

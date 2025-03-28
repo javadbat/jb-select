@@ -5,7 +5,7 @@ import {
   JBSelectElements,
   ValidationValue,
 } from "./types";
-import { ShowValidationErrorInput, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
+import { ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
 import { isMobile } from "jb-core";
 import { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
@@ -218,6 +218,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       "required",
       "placeholder",
       "search-placeholder",
+      "error",
     ];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -252,6 +253,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         break;
       case "search-placeholder":
         this.searchPlaceholder = value;
+        break;
+      case "error":
+        this.reportValidity();
         break;
     }
   }
@@ -531,7 +535,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
    * @description show given string as a error in message place
    * @public
    */
-  showValidationError(error: ShowValidationErrorInput | string) {
+  showValidationError(error: ShowValidationErrorParameters | string) {
     const message = typeof error == "string" ? error : error.message;
     this.elements.messageBox.innerHTML = message;
     this.elements.messageBox.classList.add("--error");
@@ -573,11 +577,18 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     return selectedOptionDom;
   }
   #getInsideValidation() {
-    const ValidationList: ValidationItem<ValidationValue<TValue>>[] = [];
+    const validationList: ValidationItem<ValidationValue<TValue>>[] = [];
+    if(this.getAttribute("error") !== null && this.getAttribute("error").trim().length > 0){
+      validationList.push({
+        validator: undefined,
+        message: this.getAttribute("error"),
+        stateType: "customError"
+      });
+    }
     if (this.required) {
       const label = this.getAttribute("label") || "";
       const message = `${label} حتما باید انتخاب شود`;
-      ValidationList.push({
+      validationList.push({
         validator: ({ value }) => {
           return value !== null && value !== undefined;
         },
@@ -585,7 +596,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         stateType: "valueMissing"
       });
     }
-    return ValidationList;
+    return validationList;
   }
   //
   #checkValidity(showError: boolean) {
