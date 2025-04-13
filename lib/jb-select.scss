@@ -1,13 +1,8 @@
 @use "~jb-core/styles/medias.scss" as *;
+@use './variables.css';
 
 :host {
-    //define private variable here
-    --p-middle-div-height: var(--jb-select-middle-div-height, 0px);
-    --p-p-color: #1e2832;
-    --p-border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
-    --p-base-z-index: 1;
-    --p-mobile-modal-z-index: 900;
-    --p-mobile-modal-height: var(--jb-select-mobile-modal-height, 100vh);
+
 }
 
 .jb-select-web-component {
@@ -22,24 +17,24 @@
             bottom: 0;
             top: initial;
             left: 0;
-            background-color: var(--jb-select-overlay-bgcolor, #0008);
+            background-color: var(--overlay-bg-color);
             width: 100vw;
-            height: var(--p-mobile-modal-height);
+            height: var(--mobile-modal-height);
             border-radius: var(--jb-select-mobile-modal-border-radius, 0) var(--jb-select-mobile-modal-border-radius, 0) 0 0;
             margin: 0;
             padding: 16px 8px;
-            z-index: var(--p-mobile-modal-z-index);
+            z-index: var(--mobile-modal-z-index);
         }
 
         .select-box {
             @include mobile-tablet {
                 height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
-                background-color: var(--jb-select-mobile-input-bgcolor, #f7f6f6);
+                background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
                 border-width: var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px));
-                border-color: var(--jb-select-mobile-search-border-color, var(--jb-select-border-color, #f7f6f6));
+                border-color: var(--jb-select-mobile-search-border-color, var(--border-color));
                 border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--p-border-bottom-width));
                 border-bottom-color: var(--jb-select-mobile-search-border-bottom-color,
-                        var(--jb-select-border-bottom-color, var(--jb-select-border-color, #f7f6f6)));
+                        var(--jb-select-border-bottom-color, var(--border-color)));
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
             }
 
@@ -84,7 +79,7 @@
 
             label {
                 @include mobile-tablet {
-                    color: #fff;
+                    color: var(--modal-label-color);
                     font-size: 1.5em;
                     display: flex;
                     align-items: center;
@@ -100,15 +95,15 @@
                     height: 48px;
                     justify-content: center;
                     align-items: center;
-                    color: #fff;
+                    color: var(--modal-close-color);
 
                     .close-btn-svg-bg {
                         opacity: var(--jb-select-close-bg-opacity, 0.4);
-                        fill: var(--jb-select-close-bg-color, #1f1735);
+                        fill: var(--close-bg-color);
                     }
 
                     .close-btn-svg-path {
-                        fill: var(--jb-select-close-x-color, #fff);
+                        fill: var(--modal-close-color);
                     }
                 }
             }
@@ -119,12 +114,11 @@
 
         //if user select a option and value is setted and not null
         .select-box {
-            border-color: var(--jb-select-border-color-selected, #c3ff14);
-            background-color: var(--jb-select-bgcolor-selected, #f7f6f6);
-
+            border-color: var(--jb-select-border-color-selected, var(--border-color));
+            background-color: var(--jb-select-bgcolor-selected, var(--select-box-bg-color));
             @include mobile-tablet {
                 &:focus-within {
-                    background-color: var(--jb-select-mobile-input-bgcolor, #f7f6f6);
+                    background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
                 }
             }
         }
@@ -137,7 +131,7 @@
             display: block;
             font-size: var(--jb-select-label-font-size, 0.8em);
             font-weight: var(--jb-select-label-font-weight, normal);
-            color: var(--jb-select-label-color, #1f1735);
+            color: var(--label-color);
 
             &.--hide {
                 display: none;
@@ -153,10 +147,10 @@
         width: 100%;
         box-sizing: border-box;
         height: var(--jb-select-height, 2.5rem);
-        border: solid var(--jb-select-border-width, 1px) var(--jb-select-border-color, #f7f6f6);
-        border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, #f7f6f6);
+        border: solid var(--jb-select-border-width, 1px) var(--border-color);
+        border-bottom: solid var(--p-border-bottom-width) var(--border-color);
         border-radius: var(--jb-select-border-radius, 1rem);
-        background-color: var(--jb-select-bgcolor, #f7f6f6);
+        background-color: var(--select-box-bg-color);
         margin: var(--jb-select-select-box-margin, 4px 0px 0px 0px);
         overflow: hidden;
         display: flex;
@@ -165,8 +159,8 @@
         align-items: center;
 
         &:focus-within {
-            border-color: var(--jb-select-border-color, var(--p-p-color));
-            border-bottom-color: var(--jb-select-border-color, var(--p-p-color));
+            border-color: var(--jb-select-border-color, var(--border-color));
+            border-bottom-color: var(--jb-select-border-color, var(--border-color));
             border-radius: var(--jb-select-border-radius, 1rem) var(--jb-select-border-radius, 1rem) 0 0;
 
             @include mobile-tablet {
@@ -211,7 +205,7 @@
                     display: block;
                     font-family: inherit;
                     font-size: var(--jb-select-selected-value-font-size, 1.1em);
-                    color: var(--jb-select-selected-value-color, #1f1735);
+                    color: var(--value-color);
                     margin: 0;
                     border-radius: 0;
                     display: flex;
@@ -239,7 +233,7 @@
                     display: block;
                     font-family: inherit;
                     font-size: var(--jb-select-value-font-size, 1.1rem);
-                    color: var(--jb-select-input-color, #1f1735);
+                    color: var(--value-color);
                     margin: 0;
                     border-radius: 0;
 
@@ -248,7 +242,7 @@
                     }
 
                     &::placeholder {
-                        color: var(--jb-select-placeholder-color, initial);
+                        color: var(--placeholder-color);
                         font-size: var(--jb-select-placeholder-font-size, 1.1em);
                     }
                 }
@@ -275,9 +269,9 @@
         position: relative;
         z-index: calc(var(--p-base-z-index) + 3);
         width: 100%;
-        height: var(--p-middle-div-height);
-        background-color: var(--jb-select-middle-div-color, var(--p-p-color));
-        margin: var(--jb-select-middle-div-margin, calc(-1 * var(--p-border-bottom-width)) 0);
+        height: var(--middle-div-height);
+        background-color: var(--jb-select-middle-div-color, var(--border-color));
+        margin: var(--jb-select-middle-div-margin, calc(-1 * var(--border-bottom-width)) 0);
         border-radius: var(--jb-select-middle-div-radius, 0px);
     }
 
@@ -285,7 +279,7 @@
         font-size: var(--jb-select-message-font-size, 0.7em);
         font-weight: var(--jb-select-message-font-weight, normal);
         padding: 4px 8px;
-        color: var(--jb-select-message-color, #929292);
+        color: var(--message-color);
 
         &:empty {
             padding: 0;
@@ -303,14 +297,14 @@
         height: auto;
         overflow: hidden;
         width: 100%;
-        background-color: var(--jb-select-bgcolor, #f7f6f6);
+        background-color: var(--select-box-bg-color);
         border-radius: 0 0 var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px);
-        border: solid var(--jb-select-list-border-width, 1px) var(--jb-select-border-color, var(--p-p-color));
+        border: solid var(--jb-select-list-border-width, 1px) var(--border-color);
         border-top: none;
-        border-bottom: solid var(--p-border-bottom-width) var(--jb-select-border-color, var(--p-p-color));
+        border-bottom: solid var(--p-border-bottom-width) var(--border-color);
         box-shadow: var(--jb-select-list-box-shadow);
         box-sizing: border-box;
-        z-index: calc(var(--p-base-z-index) + 2);
+        z-index: calc(var(--base-z-index) + 2);
 
         &.--show {
             display: block;
@@ -329,7 +323,7 @@
 
 
             @include mobile-tablet {
-                max-height: calc(var(--p-mobile-modal-height) - 240px);
+                max-height: calc(var(--p-mobile-modal-height) - 15rem);
             }
 
             /* option style places */
@@ -340,7 +334,7 @@
             }
 
             &::-webkit-scrollbar-thumb {
-                background-color: var(--jb-select-list-scroll-color, #c3c3c3);
+                background-color: var(--list-scroll-color);
                 border-radius: var(--jb-select-list-scroll-border-radius, 4px);
             }
         }
@@ -348,7 +342,7 @@
         .empty-list-placeholder {
             display: none;
             text-align: center;
-            color: #838383;
+            color: var(--empty-list-placeholder-color);
             font-style: italic;
             padding: 8px 0;
 

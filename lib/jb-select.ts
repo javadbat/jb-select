@@ -10,6 +10,7 @@ import { isMobile } from "jb-core";
 import { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";
+import { defineColors } from 'jb-core/theme';
 
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
 //TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
@@ -164,6 +165,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       mode: "open",
       delegatesFocus: true,
     });
+    defineColors();
     const html = `<style>${CSS}</style>` + "\n" + HTML;
     const element = document.createElement("template");
     element.innerHTML = html;
@@ -202,7 +204,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     //events to work with options
     this.addEventListener("select", this.#onOptionSelect.bind(this));
     this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this));
-    this.elements.optionListSlot.addEventListener("slotchange",this.#onOptionSlotChange.bind(this));
+    this.elements.optionListSlot.addEventListener("slotchange", this.#onOptionSlotChange.bind(this));
 
   }
 
@@ -262,15 +264,15 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   /**
    * will check option list and if select has no option it will show empty list placeholder
    */
-  #updateListEmptyPlaceholder(){
-    const isAnyOptionVisible = Array.from(this.#optionList).some(x=>x.hidden==false);
-    if(isAnyOptionVisible){
+  #updateListEmptyPlaceholder() {
+    const isAnyOptionVisible = Array.from(this.#optionList).some(x => x.hidden == false);
+    if (isAnyOptionVisible) {
       this.elements.emptyListPlaceholder.classList.remove("--show");
-    }else{
+    } else {
       this.elements.emptyListPlaceholder.classList.add("--show");
     }
   }
-  #onOptionSlotChange(e:Event){
+  #onOptionSlotChange(e: Event) {
     this.#setValueOnOptionListChanged();
     this.#updateListEmptyPlaceholder();
   }
@@ -291,11 +293,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   //when user set value by attribute or value prop directly we call this function
   #setValueFromOutside(value: TValue): boolean {
-    if(value === null || value === undefined){
-      this.#setValue(null,null);
+    if (value === null || value === undefined) {
+      this.#setValue(null, null);
       return true;
     }
-    let matchedOption:JBOptionWebComponent<TValue>| null = null; 
+    let matchedOption: JBOptionWebComponent<TValue> | null = null;
     this.#optionList.forEach((option) => {
       // if we have value mapper we set selected value by object that match mapper
       if (option.value == value) {
@@ -303,7 +305,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       }
     });
     if (matchedOption) {
-      this.#setValue(matchedOption.value,matchedOption);
+      this.#setValue(matchedOption.value, matchedOption);
       return true;
     } else {
       this.#notFoundedValue = value;
@@ -311,14 +313,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   //null option mean deselect all
-  #changeSelectedOption(option:JBOptionWebComponent<TValue>|null){
-    this.#optionList.forEach((x)=>x.selected = false);
-    if(option){
+  #changeSelectedOption(option: JBOptionWebComponent<TValue> | null) {
+    this.#optionList.forEach((x) => x.selected = false);
+    if (option) {
       option.selected = true;
       this.#selectedOption = option;
     }
   }
-  #setValue(value: TValue,option:JBOptionWebComponent<TValue>|null) {
+  #setValue(value: TValue, option: JBOptionWebComponent<TValue> | null) {
     this.#notFoundedValue = null;
     this.#value = value;
     if (value === null || value === undefined) {
@@ -495,12 +497,12 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
     if (target instanceof JBOptionWebComponent) {
       const value = target.value;
-      this.#selectOption(value,target);
+      this.#selectOption(value, target);
       this.blur();
       const dispatchedEvent = this.#dispatchOnChangeEvent();
       if (dispatchedEvent.defaultPrevented) {
         e.preventDefault();
-        this.#selectOption(prevValue,prevOption);
+        this.#selectOption(prevValue, prevOption);
       }
     }
 
@@ -509,26 +511,26 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #onOptionConnected(e: CustomEvent) {
     e.stopPropagation();
     const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
-    target.addEventListener("jb-option-disconnected",this.#onOptionDisconnected.bind(this),{once:true,passive:true});
+    target.addEventListener("jb-option-disconnected", this.#onOptionDisconnected.bind(this), { once: true, passive: true });
     target.setSelectElement(this);
     this.#optionList.add(target);
-    if(this.#notFoundedValue){
+    if (this.#notFoundedValue) {
       this.#setValueOnOptionListChanged();
     }
     this.#updateListEmptyPlaceholder();
   }
-  #onOptionDisconnected(e:CustomEvent){
+  #onOptionDisconnected(e: CustomEvent) {
     e.stopPropagation();
     const target = e.target as JBOptionWebComponent<TValue>;
     this.#optionList.delete(target);
     this.#updateListEmptyPlaceholder();
-    if(target.value == this.#value){
+    if (target.value == this.#value) {
       this.#setValueOnOptionListChanged();
     }
   }
 
-  #selectOption(value: TValue, optionDom:JBOptionWebComponent<TValue>) {
-    this.#setValue(value,optionDom);
+  #selectOption(value: TValue, optionDom: JBOptionWebComponent<TValue>) {
+    this.#setValue(value, optionDom);
     this.#checkValidity(true);
   }
   /**
@@ -560,25 +562,25 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   #createSelectedValueDom(value: TValue) {
     if (typeof this.callbacks.getSelectedValueDOM == "function") {
-      return this.callbacks.getSelectedValueDOM(value,this.#selectedOption);
+      return this.callbacks.getSelectedValueDOM(value, this.#selectedOption);
     } else {
       return this.#createDefaultSelectedValueDom();
     }
   }
   #createDefaultSelectedValueDom() {
     //TODO: put some backup way for when we have value but no option provided
-    let contentNodes:Node[] = [];
-    if(this.#selectedOption){
+    let contentNodes: Node[] = [];
+    if (this.#selectedOption) {
       contentNodes = this.#selectedOption.optionContent;
     }
     const selectedOptionDom = document.createElement("div");
     selectedOptionDom.classList.add("selected-value");
-    selectedOptionDom.append(...contentNodes.map(n=>n.cloneNode()));
+    selectedOptionDom.append(...contentNodes.map(n => n.cloneNode()));
     return selectedOptionDom;
   }
   #getInsideValidation() {
     const validationList: ValidationItem<ValidationValue<TValue>>[] = [];
-    if(this.getAttribute("error") !== null && this.getAttribute("error").trim().length > 0){
+    if (this.getAttribute("error") !== null && this.getAttribute("error").trim().length > 0) {
       validationList.push({
         validator: undefined,
         message: this.getAttribute("error"),

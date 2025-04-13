@@ -12,10 +12,11 @@
     "select",
     "autocomplete",
     "dropdown",
+    "select box",
     "web component",
     "react component"
   ],
-  "version": "6.1.0",
+  "version": "6.3.0",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "license": "MIT",
   "files": [
@@ -34,7 +35,7 @@
   },
   "dependencies": {
     "jb-validation": ">=0.4.0",
-    "jb-core":">=0.4.0"
+    "jb-core":">=0.8.0"
   },
   "devDependencies": {
     "jb-form":">=0.6.10"
