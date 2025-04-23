@@ -267,7 +267,7 @@
     .middle-divider {
         display: none;
         position: relative;
-        z-index: calc(var(--p-base-z-index) + 3);
+        z-index: calc(var(--base-z-index) + 3);
         width: 100%;
         height: var(--middle-div-height);
         background-color: var(--jb-select-middle-div-color, var(--border-color));
@@ -293,7 +293,7 @@
     .select-list-wrapper {
         display: none;
         position: absolute;
-        margin: calc(-1 * var(--p-border-bottom-width)) 0;
+        margin: calc(-1 * var(--border-bottom-width)) 0;
         height: auto;
         overflow: hidden;
         width: 100%;
@@ -301,7 +301,7 @@
         border-radius: 0 0 var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px);
         border: solid var(--jb-select-list-border-width, 1px) var(--border-color);
         border-top: none;
-        border-bottom: solid var(--p-border-bottom-width) var(--border-color);
+        border-bottom: solid var(--border-bottom-width) var(--border-color);
         box-shadow: var(--jb-select-list-box-shadow);
         box-sizing: border-box;
         z-index: calc(var(--base-z-index) + 2);
@@ -323,7 +323,7 @@
 
 
             @include mobile-tablet {
-                max-height: calc(var(--p-mobile-modal-height) - 15rem);
+                max-height: calc(var(--mobile-modal-height) - 15rem);
             }
 
             /* option style places */
