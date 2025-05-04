@@ -33,9 +33,8 @@
                 border-width: var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px));
                 border-color: var(--jb-select-mobile-search-border-color, var(--border-color));
                 border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--p-border-bottom-width));
-                border-bottom-color: var(--jb-select-mobile-search-border-bottom-color,
-                        var(--jb-select-border-bottom-color, var(--border-color)));
-                border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 16px));
+                border-bottom-color: var(--jb-select-mobile-search-border-bottom-color, var(--jb-select-border-bottom-color, var(--border-color)));
+                border-radius: var(--jb-select-mobile-search-border-radius, var(--border-radius));
             }
 
             .front-box {
@@ -68,7 +67,7 @@
             @include mobile-tablet {
                 position: initial;
                 margin: var(--jb-select-mobile-item-list-margin, 16px 0);
-                border-radius: var(--jb-select-mobile-item-list-border-radius, var(--jb-select-border-radius, 16px));
+                border-radius: var(--jb-select-mobile-item-list-border-radius, var(--border-radius));
             }
         }
 
@@ -149,7 +148,7 @@
         height: var(--jb-select-height, 2.5rem);
         border: solid var(--jb-select-border-width, 1px) var(--border-color);
         border-bottom: solid var(--p-border-bottom-width) var(--border-color);
-        border-radius: var(--jb-select-border-radius, 1rem);
+        border-radius: var(--border-radius);
         background-color: var(--select-box-bg-color);
         margin: var(--jb-select-select-box-margin, 4px 0px 0px 0px);
         overflow: hidden;
@@ -161,10 +160,10 @@
         &:focus-within {
             border-color: var(--jb-select-border-color, var(--border-color));
             border-bottom-color: var(--jb-select-border-color, var(--border-color));
-            border-radius: var(--jb-select-border-radius, 1rem) var(--jb-select-border-radius, 1rem) 0 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
 
             @include mobile-tablet {
-                border-radius: var(--jb-select-mobile-search-border-radius, var(--jb-select-border-radius, 1rem));
+                border-radius: var(--jb-select-mobile-search-border-radius, var(--border-radius));
             }
         }
 
@@ -298,7 +297,7 @@
         overflow: hidden;
         width: 100%;
         background-color: var(--select-box-bg-color);
-        border-radius: 0 0 var(--jb-select-border-radius, 16px) var(--jb-select-border-radius, 16px);
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
         border: solid var(--jb-select-list-border-width, 1px) var(--border-color);
         border-top: none;
         border-bottom: solid var(--border-bottom-width) var(--border-color);

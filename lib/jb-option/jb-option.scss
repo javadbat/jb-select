@@ -6,11 +6,11 @@
     align-items: center;
     font-size: 0.9em;
     color: var(--jb-select-option-color, inherit);
-    background-color: var(--jb-select-option-background-color, transparent);
+    background-color: var(--background-color);
 
     &:hover {
-      background-color: var(--jb-select-option-background-color-hover, #1073db);
-      color: var(--jb-select-option-color-hover, #fff);
+      background-color: var(--background-color-hover);
+      color: var(--option-color-hover);
       cursor: pointer;
     }
   }

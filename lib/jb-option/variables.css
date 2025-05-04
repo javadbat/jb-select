@@ -1,0 +1,5 @@
+:host{
+  --background-color:var(--jb-select-option-background-color, transparent);
+  --background-color-hover:var(--jb-select-option-background-color-hover, #1073db);
+  --option-color-hover:var(--jb-select-option-color-hover, #fff);
+}

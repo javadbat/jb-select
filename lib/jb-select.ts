@@ -10,7 +10,7 @@ import { isMobile } from "jb-core";
 import { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";
-import { defineColors } from 'jb-core/theme';
+import { registerDefaultVariables } from 'jb-core/theme';
 
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
 //TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
@@ -165,7 +165,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       mode: "open",
       delegatesFocus: true,
     });
-    defineColors();
+    registerDefaultVariables();
     const html = `<style>${CSS}</style>` + "\n" + HTML;
     const element = document.createElement("template");
     element.innerHTML = html;
