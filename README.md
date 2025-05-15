@@ -69,11 +69,13 @@ by doing this, calling a `document.querySelector('jb-select').value` will give y
 
 ### using `jb-option-list`
 this web-component is an assistance for developers to manage their option list in javascript without involving too much HTML in their logic
+
 ```html
 <jb-select>
     <jb-option-list />
 </jb-select>
 ```
+
 ```js
 const optionListElement = document.querySelector('jb-option-list')
 optionListElement.optionList = [1,2,3]
@@ -101,6 +103,7 @@ optionListElement.setCallback("getTitle", (option)=>{
 optionListElement.setCallback("getValue", (option)=>option.id);
 
 ```
+
 `jb-option-list` use `jb-option` inside itself and just help you to manage your option list easier in js
 
 ## get value
@@ -194,6 +197,8 @@ remember you must set this callback before set value and option list
 
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
+
+
 | css variable name                         | description                                                                                   |
 | -------------                             | -------------                                                                                 |
 | --jb-select-margin                        | web-component margin default is `0 0`                                                         |
