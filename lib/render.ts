@@ -1,4 +1,6 @@
-<div class="jb-select-web-component">
+export function renderHTML(): string {
+  return /* html */ `
+  <div class="jb-select-web-component">
     <div class="label-wrapper">
         <label class="--hide"><span class="label-value"></span></label>
         <!-- close button will be visible on mobile modal -->
@@ -47,4 +49,6 @@
         </div>
     </div>
     <div class="message-box"></div>
-</div>
+  </div>
+  `;
+}

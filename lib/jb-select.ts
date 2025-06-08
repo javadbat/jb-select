@@ -1,4 +1,3 @@
-import HTML from "./jb-select.html";
 import CSS from "./jb-select.scss";
 import {
   JBSelectCallbacks,
@@ -11,6 +10,7 @@ import { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";
 import { registerDefaultVariables } from 'jb-core/theme';
+import { renderHTML } from "./render";
 
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
 //TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
@@ -166,7 +166,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       delegatesFocus: true,
     });
     registerDefaultVariables();
-    const html = `<style>${CSS}</style>` + "\n" + HTML;
+    const html = `<style>${CSS}</style>` + "\n" + renderHTML();
     const element = document.createElement("template");
     element.innerHTML = html;
     shadowRoot.appendChild(element.content.cloneNode(true));
