@@ -2,7 +2,6 @@
 import React from 'react';
 import { JBSelect, JBOptionList, JBOption, Props } from 'jb-select/react';
 import JBSelectStyleTest from './samples/JBSelectStyleTestPage';
-import { action } from '@storybook/addon-actions';
 import JBSelectDynamicList from './samples/JBSelectDynamicList';
 import CustomizedOptions from './samples/CustomizedOptions';
 import JBSelectDesign from './samples/JbSelectDesign';
@@ -40,7 +39,7 @@ export const OptionObject: Story = {
   args: {
     label: 'از منو انتخاب کنید',
     children: <JBOptionList optionList={[{ name: 'peter', family: 'hanan', userId: 1 }, { name: 'reza', family: 'asadi', userId: 2 }]} getTitle={(option) => `${option.name} ${option.family}`} getValue={(option) => option.userId} />,
-    onChange: (e) => { action('onChange')(e.target.value); }
+    onChange: (e) => { console.log('onChange',e.target.value); }
   }
 };
 
