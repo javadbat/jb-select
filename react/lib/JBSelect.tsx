@@ -1,5 +1,6 @@
+'use client'
 /* eslint-disable react/display-name */
-import React, { useEffect, useRef, useState, useImperativeHandle,CSSProperties } from 'react';
+import React, { useRef, useImperativeHandle,CSSProperties } from 'react';
 import 'jb-select';
 // eslint-disable-next-line no-duplicate-imports
 import { JBSelectWebComponent } from 'jb-select';
@@ -8,7 +9,7 @@ import { useJBSelectAttribute, type JBSelectAttributes } from './attributes-hook
 export type JBSelectEventType<T> = T & {
     target: JBSelectWebComponent
 }
-declare global {
+declare module "react" {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
       interface IntrinsicElements {

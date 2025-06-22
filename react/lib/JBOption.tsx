@@ -1,10 +1,11 @@
+'use client'
 /* eslint-disable react/display-name */
 import React, { useEffect, useRef, useImperativeHandle, PropsWithChildren, ComponentProps } from 'react';
 import { JBOptionWebComponent } from 'jb-select';
 //TODO: make it generic when remove forward ref
 type TValue = any;
 
-declare global {
+declare module "react" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
@@ -41,5 +42,5 @@ type Props<TValue> = {
   value:TValue
 }
 
-export type JBOptionProps<TValue> = PropsWithChildren<JSX.JBOptionType & Props<TValue>>
+export type JBOptionProps<TValue> = PropsWithChildren<React.JSX.JBOptionType & Props<TValue>>
 JBOption.displayName = 'JBOption';

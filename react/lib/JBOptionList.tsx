@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable react/display-name */
 import React, { useEffect, useRef, useImperativeHandle } from 'react';
 // eslint-disable-next-line no-duplicate-imports
@@ -5,7 +6,7 @@ import { JBOptionListWebComponent } from 'jb-select';
 type TOption = any;
 type TValue = any;
 
-declare global {
+declare module "react" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
