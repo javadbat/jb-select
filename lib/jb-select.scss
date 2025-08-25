@@ -30,9 +30,9 @@
             @include mobile-tablet {
                 height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
                 background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
-                border-width: var(--jb-select-mobile-search-border-width, var(--jb-select-border-width, 1px));
+                border-width: var(--jb-select-mobile-search-border-width, var(--border-width));
                 border-color: var(--jb-select-mobile-search-border-color, var(--border-color));
-                border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--p-border-bottom-width));
+                border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--border-bottom-width));
                 border-bottom-color: var(--jb-select-mobile-search-border-bottom-color, var(--jb-select-border-bottom-color, var(--border-color)));
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--border-radius));
             }
@@ -146,8 +146,8 @@
         width: 100%;
         box-sizing: border-box;
         height: var(--jb-select-height, 2.5rem);
-        border: solid var(--jb-select-border-width, 1px) var(--border-color);
-        border-bottom: solid var(--p-border-bottom-width) var(--border-color);
+        border: solid var(--border-width) var(--border-color);
+        border-bottom: solid var(--border-bottom-width) var(--border-color);
         border-radius: var(--border-radius);
         background-color: var(--select-box-bg-color);
         margin: var(--jb-select-select-box-margin, 4px 0px 0px 0px);

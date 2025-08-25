@@ -26,12 +26,10 @@ declare module "react" {
       }
     }
 }
-//TODO: use generic when using react19 ref
-type TValue = any;
-export const JBSelect = React.forwardRef((props:Props, ref) => {
+export function JBSelect<TValue>(props:Props<TValue>) {
   const element = useRef<JBSelectWebComponent>(null);
   useImperativeHandle(
-    ref,
+    props.ref,
     () => (element ? element.current : undefined),
     [element],
   );
@@ -44,9 +42,10 @@ export const JBSelect = React.forwardRef((props:Props, ref) => {
       {props.children}
     </jb-select>
   );
-});
+};
 
-export type Props = EventProps & JBSelectAttributes<TValue> & {
+export type Props<TValue> = EventProps & JBSelectAttributes<TValue> & {
+    ref?: React.RefObject<JBSelectWebComponent>,
     style?:CSSProperties,
     className?: string,
     children?:React.ReactNode,

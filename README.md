@@ -15,7 +15,12 @@ pure js standalone select box web-component
 - support option dom customization
 - can get array of js object as a option list and extract value and label from it to show it to user.
 
-sample:<https://codepen.io/javadbat/pen/abpjKVP>
+
+## Sample
+
+- [Codepen](https://codepen.io/javadbat/pen/abpjKVP)
+- [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect)
+- [CodeSandbox](https://3f63dj.csb.app/samples/jb-select)
 
 ## using with JS frameworks
 
@@ -24,15 +29,20 @@ to use this component in **react** see [`jb-select/react`](https://github.com/ja
 ## install
 
 ### using npm:
-```cmd
+
+```bash
     npm i jb-select
 ```
 ### using cdn:
-```html
-    <script src="https://unpkg.com/jb-input/dist/JBInput.umd.js"></script>
-```
 
-use `<jb-select></jb-select>`
+```html
+    <script src="https://unpkg.com/jb-select/dist/index.umd.js"></script>
+```
+then in your HTML file just use 
+
+```html
+<jb-select></jb-select>
+```
 
 ## set option list
 
@@ -52,11 +62,13 @@ using `jb-option` is quite an easy job:
     <jb-option value="0" >Other</jb-option>
 </jb-select>
 ```
+
 its easy and simple to customization options display content. for example you can set option value like this for user to pick color:
 
 ```html
 <jb-option value="red"><span class="color-circle" style="background-color:#f00"></span>red</jb-option>
 ```
+
 you can also assign non-string value to option in js in some advance scenario:
 
 ```js
@@ -65,6 +77,7 @@ document.querySelector('jb-option').value = {
     age:10
 }
 ```
+
 by doing this, calling a `document.querySelector('jb-select').value` will give you the object in javascript
 
 ### using `jb-option-list`
@@ -116,7 +129,8 @@ document.querySelector('jb-select').value;
 // if you use a object in option list you can get selected option title beside value
 document.querySelector('jb-select').selectedOptionTitle;
 ```
-### set value
+
+## set value
 
 to select value in your code you have 2 option:
 1- set it via dom assign `dropDownElement.value = yourValue`
@@ -131,7 +145,8 @@ remember set value as attribute if your option is a plain string but in direct a
  ```html
  <jb-select placeholder="please select" search-placeholder="type to search"></jb-select>
  ```
-### validation
+
+## validation
 since select has a limited value options, validation have different story here. the only validation i really necessary here is required that indicate if user must select a value before he can move on so pass `required` attribute in dom then call `checkValidity` function like all other jb web component family. but if you need more customize validation just read [jb-validation](https://github.com/javadbat/jb-validation)
 
 you can also set `error` attribute to pass error directly to the component
@@ -140,7 +155,7 @@ you can also set `error` attribute to pass error directly to the component
 <jb-select error="your error message"></jb-select>
 ```
 
-### change empty state shape
+## change empty state shape
 when the searched value in select is not found, there is an open dropdown with the not found message.
 you can customize this entire section by adding a div with the `slot="empty-list"`
 
@@ -153,6 +168,7 @@ like the example the below:
     </div>
 </jb-select>
 ```
+
 ### Add Icon or Any Element into box
 sometimes you want to add icon into the select box before value box.
 you can customize this entire section by adding a div or any other Tag with the `slot="start-section"`
@@ -167,7 +183,7 @@ like the example the below:
 </jb-select>
 ```
 
-### callbacks
+## callbacks
 
 you can add callbacks to manage the way component works
 for example if you have array of object as a option list and want to show custom title for option you can use:
@@ -184,7 +200,7 @@ for example if you have array of object as a option list and want to show custom
 
 remember you must set this callback before set value and option list
 
-### events
+## events
 
 ```js
     dropDownElement.addEventListener('change',(e)=>{/*your function*/});
@@ -193,7 +209,7 @@ remember you must set this callback before set value and option list
 
 ```
 
-### set custom style
+## set custom style
 
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component

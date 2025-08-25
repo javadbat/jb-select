@@ -1,6 +1,7 @@
 :host {
   --border-radius:var(--jb-select-border-radius, var(--jb-radius));
   --middle-div-height: var(--jb-select-middle-div-height, 0px);
+  --border-width: var(--jb-select-border-width, 1px);
   --border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
   --base-z-index: 1;
   --mobile-modal-z-index: 900;
