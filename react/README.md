@@ -8,7 +8,9 @@ Demo :  Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-select) fo
 
 ## installation
 
-run `npm install jb-select` to install package with npm
+```sh
+npm install jb-select
+```
 
 ## usage
 

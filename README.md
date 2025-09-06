@@ -30,7 +30,7 @@ to use this component in **react** see [`jb-select/react`](https://github.com/ja
 
 ### using npm:
 
-```bash
+```sh
     npm i jb-select
 ```
 ### using cdn:
