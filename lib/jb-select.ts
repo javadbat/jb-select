@@ -63,6 +63,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   set placeholder(value: string) {
     this.#placeholder = value;
+    this.#internals.ariaPlaceholder = value;
     if (this.value !== null && this.value !== undefined) {
       this.elements.input.placeholder = "";
     } else {
@@ -111,13 +112,16 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.disabled = value;
     if (value) {
       (this.#internals as any).states?.add("disabled");
+      this.#internals.ariaDisabled = "true";
     } else {
       (this.#internals as any).states?.delete("disabled");
+      this.#internals.ariaDisabled = "false";
     }
   }
   #required = false;
   set required(value: boolean) {
     this.#required = value;
+    this.#internals.ariaRequired = value?"true":"false";
     this.#validation.checkValiditySync({ showError: false });
   }
   get required() {
@@ -231,6 +235,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     switch (name) {
       case "label":
         this.elements.label.text.innerHTML = value;
+        this.#internals.ariaLabel = value;
         if (value == null || value == undefined || value == "") {
           this.elements.label.wrapper.classList.add("--hide");
         } else {
@@ -238,6 +243,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         }
         break;
       case "message":
+        this.#internals.ariaDescription = value;
         this.elements.messageBox.innerHTML = value;
         break;
       case "value":
@@ -252,6 +258,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         break;
       case "placeholder":
         this.placeholder = value;
+        this.#internals.ariaPlaceholder = value;
         break;
       case "search-placeholder":
         this.searchPlaceholder = value;
