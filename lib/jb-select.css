@@ -1,9 +1,6 @@
-@use "~jb-core/styles/medias.scss" as *;
-@use './variables.css';
+/* @use "~jb-core/styles/medias.scss" as *; */
 
-:host {
-
-}
+@custom-media --tablet-until (max-width: 768px);
 
 .jb-select-web-component {
     width: var(--jb-select-width, 100%);
@@ -12,7 +9,7 @@
     box-sizing: border-box;
 
     &.--focused {
-        @include mobile-tablet {
+        @media(--tablet-until) {
             position: fixed;
             bottom: 0;
             top: initial;
@@ -27,7 +24,7 @@
         }
 
         .select-box {
-            @include mobile-tablet {
+            @media(--tablet-until) {
                 height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
                 background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
                 border-width: var(--jb-select-mobile-search-border-width, var(--border-width));
@@ -39,14 +36,14 @@
 
             .front-box {
                 .arrow-icon {
-                    @include mobile-tablet {
+                    @media(--tablet-until) {
                         display: none;
                     }
                 }
             }
 
             .selected-value-wrapper {
-                @include mobile-tablet {
+                @media(--tablet-until) {
                     opacity: 0;
                     transition: none;
                 }
@@ -58,13 +55,13 @@
         .middle-divider {
             display: block;
 
-            @include mobile-tablet {
+            @media(--tablet-until) {
                 margin: var(--jb-select-middle-div-mobile-margin, 16px 0 0 0);
             }
         }
 
         .select-list-wrapper {
-            @include mobile-tablet {
+            @media(--tablet-until) {
                 position: initial;
                 margin: var(--jb-select-mobile-item-list-margin, 16px 0);
                 border-radius: var(--jb-select-mobile-item-list-border-radius, var(--border-radius));
@@ -72,12 +69,12 @@
         }
 
         .label-wrapper {
-            @include mobile-tablet {
+            @media(--tablet-until) {
                 display: flex;
             }
 
             label {
-                @include mobile-tablet {
+                @media(--tablet-until) {
                     color: var(--modal-label-color);
                     font-size: 1.5em;
                     display: flex;
@@ -88,7 +85,7 @@
             .close-button {
                 display: none;
 
-                @include mobile-tablet {
+                @media(--tablet-until) {
                     display: flex;
                     width: 48px;
                     height: 48px;
@@ -111,11 +108,11 @@
 
     &.--has-value {
 
-        //if user select a option and value is setted and not null
+        /*if user select a option and value is setted and not null*/
         .select-box {
             border-color: var(--jb-select-border-color-selected, var(--border-color));
             background-color: var(--jb-select-bgcolor-selected, var(--select-box-bg-color));
-            @include mobile-tablet {
+            @media(--tablet-until) {
                 &:focus-within {
                     background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
                 }
@@ -162,7 +159,7 @@
             border-bottom-color: var(--jb-select-border-color, var(--border-color));
             border-radius: var(--border-radius) var(--border-radius) 0 0;
 
-            @include mobile-tablet {
+            @media(--tablet-until) {
                 border-radius: var(--jb-select-mobile-search-border-radius, var(--border-radius));
             }
         }
@@ -321,7 +318,7 @@
             }
 
 
-            @include mobile-tablet {
+            @media(--tablet-until) {
                 max-height: calc(var(--mobile-modal-height) - 15rem);
             }
 

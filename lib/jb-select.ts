@@ -1,4 +1,5 @@
-import CSS from "./jb-select.scss";
+import CSS from "./jb-select.css";
+import VariablesCSS from "./variables.css";
 import {
   JBSelectCallbacks,
   JBSelectElements,
@@ -170,7 +171,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       delegatesFocus: true,
     });
     registerDefaultVariables();
-    const html = `<style>${CSS}</style>` + "\n" + renderHTML();
+    const html = `<style>${CSS} ${VariablesCSS}</style>` + "\n" + renderHTML();
     const element = document.createElement("template");
     element.innerHTML = html;
     shadowRoot.appendChild(element.content.cloneNode(true));

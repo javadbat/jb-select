@@ -1,5 +1,5 @@
 import { type JBSelectWebComponent } from '../jb-select';
-import CSS from './jb-option.scss';
+import CSS from './jb-option.css';
 import { renderHTML } from "./render";
 import { JBOptionElements } from "./types";
 
