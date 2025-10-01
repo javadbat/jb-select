@@ -16,7 +16,7 @@
     "web component",
     "react component"
   ],
-  "version": "6.4.2",
+  "version": "6.5.0",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "license": "MIT",
   "files": [
@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "jb-validation": ">=0.4.0",
-    "jb-core":">=0.14.0"
+    "jb-core":">=0.18.1"
   },
   "devDependencies": {
-    "jb-form":">=0.6.10"
+    "jb-form":">=0.7.1"
   }
 }

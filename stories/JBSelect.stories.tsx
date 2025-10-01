@@ -36,7 +36,7 @@ export const WithValue: Story = {
 
 export const OptionObject: Story = {
   args: {
-    label: 'از منو انتخاب کنید',
+    label: 'select from menu',
     children: <JBOptionList optionList={[{ name: 'peter', family: 'hanan', userId: 1 }, { name: 'reza', family: 'asadi', userId: 2 }]} getTitle={(option) => `${option.name} ${option.family}`} getValue={(option) => option.userId} />,
     onChange: (e) => { console.log('onChange', e.target.value); }
   }
@@ -78,6 +78,14 @@ export const OptionObjectAsChildren: Story = {
     )
   }
 }
+
+export const Required: Story = {
+  args: {
+    label: 'required select',
+    message: "focus and un focus without selecting a value to see validation error",
+    required: true,
+  }
+};
 
 export const EventTest: Story = {
   args: {
@@ -292,7 +300,7 @@ export const CustomOptionRender: Story = {
 
 export const JBSelectDesignTest: Story = {
   render: () => {
-    function getSelectedValueDOM(option) {
+    function getSelectedValueDOM(option:any) {
       const optionElement = document.createElement("div");
       optionElement.classList.add("selected-value");
       optionElement.innerHTML =

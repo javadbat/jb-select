@@ -12,7 +12,10 @@ import { JBFormInputStandards } from 'jb-form';
 import { JBOptionWebComponent } from "./jb-option/jb-option";
 import { registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from "./render";
+import { dictionary } from "./i18n";
+import { i18n } from "jb-core/i18n";
 
+//TODO: add clean button to empty the select box after value selection
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
 //TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
 /**
@@ -597,7 +600,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
     if (this.required) {
       const label = this.getAttribute("label") || "";
-      const message = `${label} حتما باید انتخاب شود`;
+      const message = dictionary.get(i18n,"requireMessage")(label || null);
       validationList.push({
         validator: ({ value }) => {
           return value !== null && value !== undefined;
