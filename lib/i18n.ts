@@ -4,10 +4,10 @@ export type JBSelectDictionary = {
 }
 
 /**
- * dictionary of jb select input. it's already loaded with persian and english lang but you can also extend it with you apps other language or replace already exist language 
+ * dictionary of jb select. it's already loaded with persian and english lang but you can also extend it with you apps other language or replace already exist language 
  * @example 
  * ```js
- * import {dictionary} from 'jb-select-input'
+ * import {dictionary} from 'jb-select'
  * dictionary.setLanguage("fr", {
  *  requireMessage: (label:string| null)=>`${label} french require message`,
  * // other dictionary keys
