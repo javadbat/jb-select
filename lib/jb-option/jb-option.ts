@@ -12,6 +12,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   // it may be empty
   #SelectElement?: JBSelectWebComponent
   #value: TValue;
+  #internals?: ElementInternals;
   get value(): TValue {
     return this.#value;
   }
@@ -21,30 +22,30 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   #selected = false;
   set selected(value: boolean) {
     this.#selected = value;
-    if(value){
+    if (value) {
       this.#elements.componentWrapper.classList.add("--selected");
-    }else{
+    } else {
       this.#elements.componentWrapper.classList.remove("--selected");
     }
   }
   get selected() {
     return this.#selected;
   }
-  get optionContent():Node[]{
+  get optionContent(): Node[] {
     const optionNodes = this.#elements.contentWrapper.querySelector("slot").assignedNodes();
     return optionNodes;
   }
   //TODO: add search hidden property for more accurate hidden and more personalized logic
   #hidden = false;
-  get hidden(){
+  get hidden() {
     return this.#hidden;
   }
-  set hidden(value:boolean){
+  set hidden(value: boolean) {
     this.#hidden = value;
-    if(value){
+    if (value) {
       this.#elements.componentWrapper.classList.add('--hidden');
-      this.setAttribute("inert","");
-    }else{
+      this.setAttribute("inert", "");
+    } else {
       this.#elements.componentWrapper.classList.remove('--hidden');
       this.removeAttribute("inert");
     }
@@ -52,15 +53,20 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   /**
    * return text content of option (it used in search by default to filter option)
    */
-  get optionContentText(){
-    const optionTextContent = this.optionContent.reduce((acc,item)=>{
+  get optionContentText() {
+    const optionTextContent = this.optionContent.reduce((acc, item) => {
       acc += item.textContent;
       return acc;
-    },"");
+    }, "");
     return optionTextContent;
   }
   constructor() {
     super();
+    if (typeof this.attachInternals == "function") {
+      //some browser don't support attachInternals
+      this.#internals = this.attachInternals();
+      this.#internals.role = "option";
+    }
     this.#initWebComponent();
     this.#initProp();
   }
@@ -75,18 +81,18 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
       this.#SelectElement.addEventListener("filter-change", this.#onFilterChange.bind(this));
     }
   }
-  #onFilterChange(e: CustomEvent){
-    const {filterText} = e.detail;
+  #onFilterChange(e: CustomEvent) {
+    const { filterText } = e.detail;
     const optionTextContent = this.optionContentText.toLowerCase();
-    if(optionTextContent.includes(filterText.toLowerCase())){
+    if (optionTextContent.includes(filterText.toLowerCase())) {
       this.hidden = false;
-    }else{
+    } else {
       this.hidden = true;
     }
   }
   disconnectedCallback() {
     this.#SelectElement?.removeEventListener("filter-change", this.#onFilterChange.bind(this));
-    const event = new CustomEvent("jb-option-disconnected",{bubbles:true,composed:true,cancelable:false});
+    const event = new CustomEvent("jb-option-disconnected", { bubbles: true, composed: true, cancelable: false });
     this.dispatchEvent(event);
   }
   #initWebComponent() {

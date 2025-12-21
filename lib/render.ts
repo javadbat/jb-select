@@ -41,7 +41,7 @@ export function renderHTML(): string {
         <!-- middle line between input box and list (hidden by default but user may need it sometimes) -->
     </div>
     <div class="select-list-wrapper">
-        <div class="select-list" tabindex="-1">
+        <div class="select-list" tabindex="-1" role="listbox">
             <slot></slot>
         </div>
         <div class="empty-list-placeholder">

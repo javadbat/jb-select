@@ -151,6 +151,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     if (typeof this.attachInternals == "function") {
       //some browser dont support attachInternals
       this.#internals = this.attachInternals();
+      this.#internals.role = "combobox"
     }
     this.#initWebComponent();
     this.#initProp();
