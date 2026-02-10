@@ -1,15 +1,15 @@
 /* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
-import { JBSelect, JBOptionList, JBOption, Props, type JBSelectEventType } from 'jb-select/react';
+import { JBSelect, JBOptionList, JBOption, type Props, type JBSelectEventType } from 'jb-select/react';
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
-import { colorList, numberOptionList } from './constants';
+import { colorList, nameList, numberOptionList } from './constants';
 
 const meta: Meta<Props<unknown>> = {
   title: "Components/form elements/JBSelect",
   component: JBSelect,
   args: {
-    children: <JBOptionList optionList={numberOptionList} />
+    children: <JBOptionList optionList={nameList} />
   }
 };
 
@@ -20,7 +20,7 @@ export const Normal: Story = {
   args: {
     label: 'select from menu',
     message: "please select a value",
-    placeholder: "select number here",
+    placeholder: "placeholder",
   }
 };
 
@@ -28,9 +28,9 @@ export const WithValue: Story = {
   args: {
     label: 'select from menu',
     message: "please select a value",
-    placeholder: "select number here",
-    value: "5",
-    children: <JBOptionList optionList={numberOptionList} />
+    placeholder: "placeholder",
+    value: nameList[3],
+    children: <JBOptionList optionList={nameList} />
   }
 };
 
@@ -46,7 +46,7 @@ export const OptionAsChildren: Story = {
   args: {
     label: 'select from menu',
     message: "please select a value",
-    placeholder: "select number here",
+    placeholder: "placeholder",
     children: (
       <>
         <JBOption value="1">one</JBOption>
@@ -95,14 +95,14 @@ export const EventTest: Story = {
 };
 
 export const RTL: Story = {
+  globals:{
+    dir:"rtl"
+  },
   args: {
     label: 'از منو انتخاب کنید',
     children: <JBOptionList optionList={numberOptionList} />
   },
   parameters: {
-    themes: {
-      themeOverride: 'rtl'
-    },
     docs: {
       description: {
         story: 'RTL test'
@@ -121,7 +121,7 @@ export const StyleTest: Story = {
         <div className='style-table-title-1'>JB Select Custom Style 1</div>
         <div className='style-table-content-1'>
           --jb-select-margin: 0px 2px;<br /><br />
-          --jb-select-border-radius: 24px;<br /><br />
+          --jb-select-rounded: 24px;<br /><br />
           --jb-select-border-color: royalblue;<br /><br />
           --jb-select-border-color-selected: tomato;<br /><br />
           --jb-select-bgcolor: mintcream;
@@ -133,7 +133,7 @@ export const StyleTest: Story = {
         <div className='style-table-title-2'>JB Select Custom Style 2</div>
         <div className='style-table-content-2'>
           --jb-select-margin: 0px 4px;<br /><br />
-          --jb-select-border-radius: 0px;<br /><br />
+          --jb-select-rounded: 0px;<br /><br />
           --jb-select-border-color: rgb(26, 23, 23);<br /><br />
           --jb-select-border-color-selected: rgb(30, 29, 43);<br /><br />
           --jb-select-bgcolor-selected: rgb(195, 57, 230);<br /><br />
@@ -149,7 +149,7 @@ export const StyleTest: Story = {
         <div className='style-table-title-2'>JB Select Custom Style 2</div>
         <div className='style-table-content-2'>
           --jb-select-margin: 0px 4px;<br /><br />
-          --jb-select-border-radius: 0px;<br /><br />
+          --jb-select-rounded: 0px;<br /><br />
           --jb-select-border-color: rgb(26, 23, 23);<br /><br />
           --jb-select-border-color-selected: rgb(30, 29, 43);<br /><br />
           --jb-select-bgcolor-selected: rgb(195, 57, 230);<br /><br />
@@ -162,7 +162,7 @@ export const StyleTest: Story = {
         <div className='style-table-title-2'>JB Select Custom Style 3</div>
         <div className='style-table-content-2'>
           --jb-select-margin: 0px 4px;<br /><br />
-          --jb-select-border-radius: 0px;<br /><br />
+          --jb-select-rounded: 0px;<br /><br />
           --jb-select-border-color: rgb(26, 23, 23);<br /><br />
           --jb-select-border-color-selected: rgb(30, 29, 43);<br /><br />
           --jb-select-bgcolor-selected: rgb(195, 57, 230);<br /><br />
@@ -318,13 +318,8 @@ export const JBSelectDesignTest: Story = {
             colorList.map((o) => (<JBOption value={o} key={o.value}><span className="color-circle" style={{ backgroundColor: o.value }}></span>{o.name}</JBOption>))
           }
           <div style={{ height: "24px" }} slot="select-arrow-icon">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <title>arrow icon</title>
               <rect width="24" height="24" rx="5" fill="#E7E7E7" />
               <path
                 d="M19 8.5L12 15.5L5 8.5"

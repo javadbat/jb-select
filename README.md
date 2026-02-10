@@ -211,7 +211,7 @@ remember you must set this callback before set value and option list
 
 ## set custom style
 
-in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
+in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
 
 
@@ -219,7 +219,8 @@ if you want to set a custom style to this web-component all you need is to set c
 | -------------                             | -------------                                                                                 |
 | --jb-select-margin                        | web-component margin default is `0 0`                                                         |
 | --jb-select-width                         | change the select component width default is `100%`                                           |
-| --jb-select-border-radius                 | web-component border-radius                                                                   |
+| --jb-select-rounded                       | main value for corner radius it must be a single value like `1rem` not `1rem 1rem` used for all `border-radius`|
+| --jb-select-box-border-radius             | box `border-radius` it's full value so you can change it whatever you want                    |
 | --jb-select-mobile-item-list-border-radius| web-component item list border-radius on mobile and tablet when list is open                  |
 | --jb-select-border-color                  | border color of select in normal mode                                                         |
 | --jb-select-border-color-selected         | border color when user select a value from list                                               |
@@ -229,8 +230,8 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-border-bottom-width           | width of border bottom                                                                        |
 | --jb-select-border-width                  | width of border                                                                               |
 | --jb-select-label-color                   | color of label                                                                                |
-| --jb-input-label-font-size                | label font size default is `0.8em`                                                            |
-| --jb-input-label-font-weight              | label font weight                                                                             |
+| --jb-select-label-font-size               | label font size default is `0.8em`                                                            |
+| --jb-select-label-font-weight             | label font weight                                                                             |
 | --jb-select-option-color                  | change option text color                                                                      |
 | --jb-select-option-color-hover            | change option text color on hover                                                             |
 | --jb-select-option-background-color       | background of options default is `transparent`                                                |
@@ -250,13 +251,11 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-list-padding                  | padding of opened list box default is `16px 0`                                                |
 | --jb-select-close-bg-color                | close button bg-color                                                                         |
 | --jb-select-close-x-color                 | close button x color                                                                          |
-| --jb-select-close-bg-opacity              | close button bg opacity default is `0.4`                                                      |
 | --jb-select-mobile-input-bgcolor          | background color search input when open in mobile                                             |
 | --jb-select-mobile-search-border-width    | when user open select on mobile, search box can have its own border width config              |
 | --jb-select-mobile-search-border-color    | when user open select on mobile, search box can have its own border color config              |
 | --jb-select-mobile-search-border-bottom-width | when user open select on mobile, search box can have its own border bottom width config   |
 | --jb-select-mobile-search-border-bottom-color | when user open select on mobile, search box can have its own border bottom color config   |
-| --jb-select-mobile-search-border-radius    | when user open select on mobile, search box can have its own border radius                   |
 | --jb-select-middle-div-height              | separator line between input and list default is `0px` and hidden but you can change it      | 
 | --jb-select-middle-div-color               | change separator line color                                                                  |
 | --jb-select-middle-div-margin              | change separator line margin                                                                 |

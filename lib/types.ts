@@ -1,6 +1,8 @@
 import type { JBOptionWebComponent } from "./jb-option/jb-option";
 import type {EventTypeWithTarget} from "jb-core";
 import type{ JBSelectWebComponent } from "./jb-select";
+import type {JBButtonWebComponent} from "jb-button";
+import type { JBPopoverWebComponent } from "jb-popover";
 export type JBSelectCallbacks<TValue> = {
     getSelectedValueDOM?:(value:TValue,content:HTMLElement) => HTMLElement;
 }
@@ -11,14 +13,17 @@ export type JBSelectElements = {
     selectedValueWrapper: HTMLDivElement,
     messageBox:HTMLDivElement,
     optionList: HTMLDivElement,
-    optionListWrapper: HTMLDivElement,
+    optionListWrapper: JBPopoverWebComponent,
     optionListSlot:HTMLSlotElement,
     arrowIcon: HTMLDivElement,
+    clearButton: JBButtonWebComponent,
     label:{
         wrapper: HTMLLabelElement,
         text: HTMLSpanElement
     },
     emptyListPlaceholder: HTMLDivElement,
+    mobileSearchInputWrapper:HTMLDivElement,
+    frontBox:HTMLDivElement
 }
 export type ValidationValue<TValue> = {
     selectedOption:JBOptionWebComponent<TValue> | null,

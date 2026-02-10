@@ -1,11 +1,13 @@
 :host {
-  --border-radius:var(--jb-select-border-radius, var(--jb-radius));
+  --height:var(--jb-select-height, 2.5rem);
+  /*its rounded because it's only one value and not all radius 4 part value and needed to be one vale due to change in different situation*/
+  --rounded:var(--jb-select-rounded, var(--jb-radius));
+  --box-border-radius:var(--jb-select-box-border-radius, var(--rounded));
+  --list-border-radius: 0 0 var(--rounded) var(--rounded);
   --middle-div-height: var(--jb-select-middle-div-height, 0px);
   --border-width: var(--jb-select-border-width, 1px);
   --border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
   --base-z-index: 1;
-  --mobile-modal-z-index: 900;
-  --mobile-modal-height: var(--jb-select-mobile-modal-height, 100vh);
   /*colors*/
   --border-color: var(--jb-select-border-color, var(--jb-neutral-10));
   --message-color: var(--jb-select-message-color, var(--jb-text-secondary));
@@ -13,10 +15,7 @@
   --value-color: var(--jb-select-value-color, var(--jb-text-primary));
   --placeholder-color: var(--jb-select-placeholder-color, var(--jb-neutral-6));
   --select-box-bg-color: var(--jb-select-bgcolor, var(--jb-neutral-10));
-  --overlay-bg-color:var(--jb-select-overlay-bg-color, oklch(from var(--jb-neutral) l c h / calc(alpha - 0.5)));
-  --modal-label-color:var(--jb-select-modal-label-color, var(--jb-text-contrast));
-  --modal-close-color:var(--jb-select-modal-close-color, var(--jb-white));
-  --close-bg-color:var(--jb-select-close-bg-color, var(--jb-neutral-2));
+  --overlay-bg-color:var(--jb-select-overlay-bg-color, oklch(from var(--jb-black) l c h / calc(alpha - 0.5)));
   --list-scroll-color:var(--jb-select-list-scroll-color, oklch(from var(--select-box-bg-color) calc(l - 0.2) c h));
   --empty-list-placeholder-color:var(--jb-select-empty-list-placeholder-color, var(--jb-text-secondary))
 }

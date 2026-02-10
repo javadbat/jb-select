@@ -3,7 +3,7 @@ jb-select::part(color-box){
 }
 .select-custom-design{
     --jb-select-border-color:none;
-    --jb-select-border-radius:8px;
+    --jb-select-rounded:8px;
     --jb-select-border-color-selected:none;
     --jb-input-label-font-size:14px;
     --jb-input-label-font-weight:500;
@@ -14,17 +14,6 @@ jb-select::part(color-box){
     --jb-select-option-color:#c3c5b7;
     --jb-select-selected-value-color:#c3c5b7;
     --jb-select-input-color:#c3c5b7;
-    --jb-select-margin:0;
-    --jb-select-height:48px;
-    --jb-select-overlay-bgcolor:#ececec;
-    --jb-select-mobile-search-input-height:48px;
-    --jb-select-mobile-item-list-margin:40px 0 0 0 ;
-    --jb-select-list-padding:0;
-    --jb-select-mobile-input-bgcolor:red;
-    --jb-select-mobile-search-border-radius:8px;
-    --jb-select-mobile-search-border-bottom-width:1px;
-    --jb-select-mobile-search-border-bottom-color:transparent;
-    --jb-select-list-max-height:250px;
 }
 .style-table-title-1{
     display: flex;
@@ -57,7 +46,7 @@ jb-select::part(color-box){
 }
 .filter-select-style-1{
     --jb-select-margin: 0px 2px;
-    --jb-select-border-radius: 24px;
+    --jb-select-rounded: 24px;
     --jb-select-border-color: royalblue;
     --jb-select-border-color-selected: tomato;
     --jb-select-bgcolor: mintcream;
@@ -92,7 +81,7 @@ jb-select::part(color-box){
 }
 .filter-select-style-2{
     --jb-select-margin: 0px 4px;
-    --jb-select-border-radius: 0px;
+    --jb-select-rounded: 0px;
     --jb-select-border-color: rgb(26, 23, 23);
     --jb-select-border-color-selected: rgb(30, 29, 43);
     --jb-select-bgcolor-selected: rgb(195, 57, 230);
@@ -103,7 +92,7 @@ jb-select::part(color-box){
 }
 .self-style-select{
     --jb-select-margin: 0px 4px;
-    --jb-select-border-radius: 0px;
+    --jb-select-rounded: 0px;
     --jb-select-border-color: rgb(26, 23, 23);
     --jb-select-border-color-selected: rgb(30, 29, 43);
     --jb-select-bgcolor-selected: rgb(195, 57, 230);

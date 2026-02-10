@@ -1,122 +1,23 @@
 /* @use "~jb-core/styles/medias.scss" as *; */
 
 @custom-media --tablet-until (max-width: 768px);
+@custom-media --tablet-from (min-width: 769px);
 
 .jb-select-web-component {
     width: var(--jb-select-width, 100%);
     margin: var(--jb-select-margin, 0 0);
-    position: relative;
     box-sizing: border-box;
-
-    &.--focused {
-        @media(--tablet-until) {
-            position: fixed;
-            bottom: 0;
-            top: initial;
-            left: 0;
-            background-color: var(--overlay-bg-color);
-            width: 100vw;
-            height: var(--mobile-modal-height);
-            border-radius: var(--jb-select-mobile-modal-border-radius, 0) var(--jb-select-mobile-modal-border-radius, 0) 0 0;
-            margin: 0;
-            padding: 16px 8px;
-            z-index: var(--mobile-modal-z-index);
-        }
-
-        .select-box {
-            @media(--tablet-until) {
-                height: var(--jb-select-mobile-search-input-height, var(--jb-select-height, 40px));
-                background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
-                border-width: var(--jb-select-mobile-search-border-width, var(--border-width));
-                border-color: var(--jb-select-mobile-search-border-color, var(--border-color));
-                border-bottom-width: var(--jb-select-mobile-search-border-bottom-width, var(--border-bottom-width));
-                border-bottom-color: var(--jb-select-mobile-search-border-bottom-color, var(--jb-select-border-bottom-color, var(--border-color)));
-                border-radius: var(--jb-select-mobile-search-border-radius, var(--border-radius));
-            }
-
-            .front-box {
-                .arrow-icon {
-                    @media(--tablet-until) {
-                        display: none;
-                    }
-                }
-            }
-
-            .selected-value-wrapper {
-                @media(--tablet-until) {
-                    opacity: 0;
-                    transition: none;
-                }
-
-                .selected-value {}
-            }
-        }
-
-        .middle-divider {
-            display: block;
-
-            @media(--tablet-until) {
-                margin: var(--jb-select-middle-div-mobile-margin, 16px 0 0 0);
-            }
-        }
-
-        .select-list-wrapper {
-            @media(--tablet-until) {
-                position: initial;
-                margin: var(--jb-select-mobile-item-list-margin, 16px 0);
-                border-radius: var(--jb-select-mobile-item-list-border-radius, var(--border-radius));
-            }
-        }
-
-        .label-wrapper {
-            @media(--tablet-until) {
-                display: flex;
-            }
-
-            label {
-                @media(--tablet-until) {
-                    color: var(--modal-label-color);
-                    font-size: 1.5em;
-                    display: flex;
-                    align-items: center;
-                }
-            }
-
-            .close-button {
-                display: none;
-
-                @media(--tablet-until) {
-                    display: flex;
-                    width: 48px;
-                    height: 48px;
-                    justify-content: center;
-                    align-items: center;
-                    color: var(--modal-close-color);
-
-                    .close-btn-svg-bg {
-                        opacity: var(--jb-select-close-bg-opacity, 0.4);
-                        fill: var(--close-bg-color);
-                    }
-
-                    .close-btn-svg-path {
-                        fill: var(--modal-close-color);
-                    }
-                }
-            }
-        }
-    }
 
     &.--has-value {
 
-        /*if user select a option and value is setted and not null*/
+        /*if user select a option and value is set and not null*/
         .select-box {
             border-color: var(--jb-select-border-color-selected, var(--border-color));
             background-color: var(--jb-select-bgcolor-selected, var(--select-box-bg-color));
-            @media(--tablet-until) {
-                &:focus-within {
-                    background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
-                }
-            }
+        }
+
+        .select-box .end-section .clear-button {
+            display: block;
         }
     }
 
@@ -133,19 +34,25 @@
                 display: none;
             }
         }
+    }
 
-        .close-button {
-            display: none;
+    &:focus-within .select-box {
+
+        @media(--tablet-from) {
+            /*when there is focus on whole select means menu is open so we change select styles*/
+            border-color: var(--border-color);
+            border-bottom-color: transparent;
+            border-radius: var(--rounded) var(--rounded) 0 0;
         }
     }
 
     .select-box {
         width: 100%;
         box-sizing: border-box;
-        height: var(--jb-select-height, 2.5rem);
+        height: var(--height);
         border: solid var(--border-width) var(--border-color);
         border-bottom: solid var(--border-bottom-width) var(--border-color);
-        border-radius: var(--border-radius);
+        border-radius: var(--box-border-radius);
         background-color: var(--select-box-bg-color);
         margin: var(--jb-select-select-box-margin, 4px 0px 0px 0px);
         overflow: hidden;
@@ -153,16 +60,6 @@
         padding-inline-end: var(--jb-select-box-padding-end, 1rem);
         gap: 0.5rem;
         align-items: center;
-
-        &:focus-within {
-            border-color: var(--jb-select-border-color, var(--border-color));
-            border-bottom-color: var(--jb-select-border-color, var(--border-color));
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-
-            @media(--tablet-until) {
-                border-radius: var(--jb-select-mobile-search-border-radius, var(--border-radius));
-            }
-        }
 
         .start-section {
             height: 100%;
@@ -219,17 +116,11 @@
                 overflow: hidden;
                 z-index: 2;
 
-                input {
-                    border: none;
-                    width: 100%;
-                    box-sizing: border-box;
+                .search-input {
                     height: 100%;
                     background-color: transparent;
                     padding: 2px 12px 0 12px;
                     display: block;
-                    font-family: inherit;
-                    font-size: var(--jb-select-value-font-size, 1.1rem);
-                    color: var(--value-color);
                     margin: 0;
                     border-radius: 0;
 
@@ -246,8 +137,19 @@
         }
 
         .end-section {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+
             .arrow-icon {
                 margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
+            }
+
+            .clear-button {
+                /*show when there is value*/
+                display: none;
+                --jb-button-padding-xs: 0;
+                --jb-button-height-xs: 1rem;
             }
         }
 
@@ -258,17 +160,6 @@
         }
 
 
-    }
-
-    .middle-divider {
-        display: none;
-        position: relative;
-        z-index: calc(var(--base-z-index) + 3);
-        width: 100%;
-        height: var(--middle-div-height);
-        background-color: var(--jb-select-middle-div-color, var(--border-color));
-        margin: var(--jb-select-middle-div-margin, calc(-1 * var(--border-bottom-width)) 0);
-        border-radius: var(--jb-select-middle-div-radius, 0px);
     }
 
     .message-box {
@@ -286,66 +177,103 @@
         }
     }
 
-    .select-list-wrapper {
-        display: none;
-        position: absolute;
-        margin: calc(-1 * var(--border-bottom-width)) 0;
-        height: auto;
-        overflow: hidden;
-        width: 100%;
-        background-color: var(--select-box-bg-color);
-        border-radius: 0 0 var(--border-radius) var(--border-radius);
-        border: solid var(--jb-select-list-border-width, 1px) var(--border-color);
-        border-top: none;
-        border-bottom: solid var(--border-bottom-width) var(--border-color);
-        box-shadow: var(--jb-select-list-box-shadow);
-        box-sizing: border-box;
-        z-index: calc(var(--base-z-index) + 2);
+    .popover-wrapper {
+        position: relative;
+        .select-list-wrapper {
+            @media(--tablet-from) {
+                width: 100%;
+                --jb-popover-border-radius: var(--list-border-radius);
+                --jb-popover-bg-color: var(--select-box-bg-color);
+                --jb-popover-top: 0;
+            }
 
-        &.--show {
-            display: block;
-        }
+            &::part(content) {
 
-        .select-list {
-            width: 100%;
-            max-height: var(--jb-select-list-max-height, 400px);
-            overflow-y: auto;
-            slot {
-                padding: var(--jb-select-list-padding, 16px 0);
-                &:empty {
-                    padding: 0;
+                @media(--tablet-from) {
+                    /*in desktop*/
+                    border: solid var(--border-width) var(--border-color);
+                    border-bottom: solid var(--border-bottom-width) var(--border-color);
+                    border-top: none;
                 }
             }
 
+            .mobile-search-input-wrapper {
+                display: none;
 
-            @media(--tablet-until) {
-                max-height: calc(var(--mobile-modal-height) - 15rem);
+                @media(--tablet-until) {
+                    display: block;
+                    margin-block-end: 1rem;
+                    margin-inline: 0.75rem;
+
+                    .search-input {
+                        background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
+                        border-radius: var(--box-border-radius);
+                        width: 100%;
+                        height: var(--height);
+                    }
+                }
+
             }
 
-            /* option style places */
 
-            &::-webkit-scrollbar {
-                width: 9px;
-                background-color: transparent;
+            .select-list {
+                width: 100%;
+                max-height: var(--jb-select-list-max-height, 400px);
+                overflow-y: auto;
+
+                slot {
+                    padding: var(--jb-select-list-padding, 16px 0);
+
+                    &:empty {
+                        padding: 0;
+                    }
+                }
+
+                /* option style places */
+
+                &::-webkit-scrollbar {
+                    width: 9px;
+                    background-color: transparent;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: var(--list-scroll-color);
+                    border-radius: var(--jb-select-list-scroll-border-radius, 4px);
+                }
             }
 
-            &::-webkit-scrollbar-thumb {
-                background-color: var(--list-scroll-color);
-                border-radius: var(--jb-select-list-scroll-border-radius, 4px);
+            .empty-list-placeholder {
+                display: none;
+                text-align: center;
+                color: var(--empty-list-placeholder-color);
+                font-style: italic;
+                padding: 8px 0;
+
+                &.--show {
+                    display: block;
+                }
             }
+
+        }
+    }
+
+    .search-input {
+        border: none;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 2px 12px 0 12px;
+        display: block;
+        font-family: inherit;
+        font-size: var(--jb-select-value-font-size, 1.1rem);
+        color: var(--value-color);
+
+        &:focus {
+            outline: none;
         }
 
-        .empty-list-placeholder {
-            display: none;
-            text-align: center;
-            color: var(--empty-list-placeholder-color);
-            font-style: italic;
-            padding: 8px 0;
-
-            &.--show {
-                display: block;
-            }
+        &::placeholder {
+            color: var(--placeholder-color);
+            font-size: var(--jb-select-placeholder-font-size, 1.1em);
         }
-
     }
 }

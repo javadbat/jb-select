@@ -6,11 +6,13 @@ export const webComponentList: WebComponentBuildConfig[] = [
     path: "./lib/index.ts",
     outputPath: "./dist/index.js",
     umdName: "JBSelect",
-    external: ["jb-validation", "jb-core","jb-form","jb-core/i18n","jb-core/theme"],
+    external: ["jb-validation", "jb-core","jb-form","jb-core/i18n","jb-core/theme", "jb-button", "jb-popover"],
     globals: {
       "jb-validation": "JBValidation",
       "jb-core":"JBCore",
       "jb-form":"JBForm",
+      "jb-popover":"JBPopover",
+      "jb-button":"JBButton",
       "jb-core/i18n":"JBCoreI18N",
       "jb-core/theme":"JBCoreTheme"
     },

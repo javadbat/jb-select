@@ -1,0 +1,17 @@
+import {Meta, Title, Story, Controls, Stories, Source} from '@storybook/blocks';
+import * as SelectStories from './JBSelect.stories';
+
+<Meta of={SelectStories}/>
+
+<Title>JB Select</Title>
+
+Dynamic Select Component.
+
+<Story of={SelectStories.Normal}  inline={true}/>
+<Controls />
+<Source of={SelectStories.Normal}/>
+
+## Option as Children
+here we have sample of using `JBOption` an an children for options. in this mode you can easily customize how option must be shown to the user
+<Story of={SelectStories.OptionAsChildren}  inline={true}/>
+<Source of={SelectStories.OptionAsChildren}/>

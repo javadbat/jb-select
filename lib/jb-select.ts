@@ -1,19 +1,22 @@
+import "jb-button";
+import "jb-popover";
 import CSS from "./jb-select.css";
 import VariablesCSS from "./variables.css";
-import {
+import type {
   JBSelectCallbacks,
   JBSelectElements,
   ValidationValue,
 } from "./types";
-import { ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
+import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
 import { isMobile } from "jb-core";
-import { JBFormInputStandards } from 'jb-form';
+import type { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";
 import { registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from "./render";
 import { dictionary } from "./i18n";
 import { i18n } from "jb-core/i18n";
+import type { JBButtonWebComponent } from "jb-button";
 
 //TODO: add clean button to empty the select box after value selection
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
@@ -21,6 +24,8 @@ import { i18n } from "jb-core/i18n";
 /**
  *  TValue is the type of value we extract from option
  */
+
+// biome-ignore lint/suspicious/noExplicitAny: <we support any type of value and there is no limitation on value type>
 export class JBSelectWebComponent<TValue = any> extends HTMLElement implements WithValidation<ValidationValue<TValue>>, JBFormInputStandards<TValue> {
   static get formAssociated() {
     return true;
@@ -125,7 +130,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #required = false;
   set required(value: boolean) {
     this.#required = value;
-    this.#internals.ariaRequired = value?"true":"false";
+    this.#internals.ariaRequired = value ? "true" : "false";
     this.#validation.checkValiditySync({ showError: false });
   }
   get required() {
@@ -175,29 +180,45 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       delegatesFocus: true,
     });
     registerDefaultVariables();
-    const html = `<style>${CSS} ${VariablesCSS}</style>` + "\n" + renderHTML();
+    const html = `<style>${CSS} ${VariablesCSS}</style>\n${renderHTML()}`;
     const element = document.createElement("template");
     element.innerHTML = html;
     shadowRoot.appendChild(element.content.cloneNode(true));
     this.elements = {
-      input: shadowRoot.querySelector(".select-box input")!,
+      input: shadowRoot.querySelector(".search-input")!,
       componentWrapper: shadowRoot.querySelector(".jb-select-web-component")!,
-      selectedValueWrapper: shadowRoot.querySelector(
-        ".selected-value-wrapper"
-      )!,
+      selectedValueWrapper: shadowRoot.querySelector(".selected-value-wrapper")!,
       messageBox: shadowRoot.querySelector(".message-box")!,
       optionList: shadowRoot.querySelector(".select-list")!,
       optionListWrapper: shadowRoot.querySelector(".select-list-wrapper")!,
       optionListSlot: shadowRoot.querySelector(".select-list-wrapper .select-list slot")!,
       arrowIcon: shadowRoot.querySelector(".arrow-icon")!,
+      clearButton: shadowRoot.querySelector(".clear-button") as JBButtonWebComponent,
       label: {
         wrapper: shadowRoot.querySelector("label")!,
         text: shadowRoot.querySelector("label .label-value")!,
       },
       emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
+      mobileSearchInputWrapper: shadowRoot.querySelector(".mobile-search-input-wrapper"),
+      frontBox: shadowRoot.querySelector(".front-box"),
     };
     this.#registerEventListener();
     this.#updateListEmptyPlaceholder();
+    this.#setupDeviceRelates();
+  }
+  /**
+   * place code that change on select resize between mobile & desktop
+   */
+  #setupDeviceRelates() {
+    const onResize = ()=> {
+      if (isMobile()) {
+        this.elements.mobileSearchInputWrapper.appendChild(this.elements.input)
+      } else {
+        this.elements.frontBox.appendChild(this.elements.input);
+      }
+    }
+    addEventListener("resize", onResize);
+    onResize();
   }
   #registerEventListener() {
     this.elements.input.addEventListener("change", (e: Event) => {
@@ -207,9 +228,10 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.addEventListener("keyup", this.#onInputKeyup.bind(this));
     this.elements.input.addEventListener("beforeinput", this.#onInputBeforeInput.bind(this));
     this.elements.input.addEventListener("input", (e) => { this.#onInputInput(e as unknown as InputEvent); });
-    this.elements.input.addEventListener("focus", this.#onInputFocus.bind(this));
+    this.addEventListener("focus", this.#onSelectFocus.bind(this));
     this.elements.input.addEventListener("blur", this.#onInputBlur.bind(this));
     this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this));
+    this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this));
     //events to work with options
     this.addEventListener("select", this.#onOptionSelect.bind(this));
     this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this));
@@ -232,7 +254,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       "error",
     ];
   }
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
     // do something when an attribute has changed
     this.#onAttributeChange(name, newValue);
   }
@@ -290,12 +312,12 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   #setValueOnOptionListChanged() {
     //when option list changed we see if current value is valid for new optionlist we set it if not we reset value to null.
-    //in some scenario value is setted before optionList attached so we store it on this.#notFoundedValue and after option list setted we set value from this.#notFoundedValue
+    //in some scenario value is set before optionList attached so we store it on this.#notFoundedValue and after option list set we set value from this.#notFoundedValue
     if (this.#notFoundedValue) {
       //if select has no prev value or pending not found value we don't set it because user may input some search terms in input box and developer-user update list base on that value
       //if we set it to null the search term and this.textValue will become null and empty too and it make impossible for user to search in dynamic back-end provided searchable list so we put this condition to prevent it
-      const isSetted = this.#setValueFromOutside(this.#notFoundedValue);
-      if (isSetted) {
+      const isSet = this.#setValueFromOutside(this.#notFoundedValue);
+      if (isSet) {
         //after list update and when not founded value is found in new option list we clear old not founded value
         this.#notFoundedValue = null;
       }
@@ -326,7 +348,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   //null option mean deselect all
   #changeSelectedOption(option: JBOptionWebComponent<TValue> | null) {
-    this.#optionList.forEach((x) => x.selected = false);
+    this.#optionList.forEach((x) => { x.selected = false });
     if (option) {
       option.selected = true;
       this.#selectedOption = option;
@@ -365,6 +387,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.focus();
     }
   }
+  #onClearButtonClick(e:MouseEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.#setValue(null,null);
+    this.#checkValidity(true);
+    this.#dispatchOnChangeEvent();
+  }
   #onInputKeyPress(e: KeyboardEvent) {
     const eventOptions: KeyboardEventInit = {
       altKey: e.altKey,
@@ -385,7 +414,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const event = new KeyboardEvent("keypress", eventOptions);
     this.dispatchEvent(event);
   }
-  #onInputBeforeInput(e: InputEvent) {
+  #onInputBeforeInput(_e: InputEvent) {
     // const inputtedText = e.data || "";
     //TODO: add cancelable event dispatch here
   }
@@ -455,6 +484,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     //here is the rare  time we update _text_value directly because we want trigger event that may read value directly from dom
     this.#textValue = inputText;
   }
+  #onSelectFocus() {
+    this.focus();
+  }
   #onInputFocus() {
     this.focus();
   }
@@ -472,13 +504,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   focus() {
     this.elements.input.focus();
     this.#showOptionList();
-    this.elements.componentWrapper.classList.add("--focused");
+    this.elements.optionListWrapper.open();
     if (this.isMobileDevice) {
       this.elements.input.placeholder = this.#searchPlaceholder;
     }
   }
   blur() {
-    this.elements.componentWrapper.classList.remove("--focused");
+    // this.elements.componentWrapper.classList.remove("--focused");
+    this.elements.optionListWrapper.close();
     this.textValue = "";
     this.#handleSelectedValueDisplay("");
     this.#hideOptionList();
@@ -601,7 +634,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
     if (this.required) {
       const label = this.getAttribute("label") || "";
-      const message = dictionary.get(i18n,"requireMessage")(label || null);
+      const message = dictionary.get(i18n, "requireMessage")(label || null);
       validationList.push({
         validator: ({ value }) => {
           return value !== null && value !== undefined;
