@@ -23,12 +23,15 @@
 
     .label-wrapper {
         label {
+
+
             width: 100%;
-            margin: 4px 0px;
+            margin: var(--label-margin);
             display: block;
-            font-size: var(--jb-select-label-font-size, 0.8em);
-            font-weight: var(--jb-select-label-font-weight, normal);
+            font-size: var(--label-font-size);
             color: var(--label-color);
+            
+            font-weight: var(--jb-input-label-font-weight, 300);
 
             &.--hide {
                 display: none;
@@ -163,22 +166,18 @@
     }
 
     .message-box {
-        font-size: var(--jb-select-message-font-size, 0.7em);
-        font-weight: var(--jb-select-message-font-weight, normal);
-        padding: 4px 8px;
+        font-size: var(--message-font-size);
+        padding: 0.125rem var(--inline-space);
         color: var(--message-color);
-
+        display: var(--jb-select-message-box-display, block);
         &:empty {
             padding: 0;
-        }
-
-        &.--error {
-            color: red;
         }
     }
 
     .popover-wrapper {
         position: relative;
+
         .select-list-wrapper {
             @media(--tablet-from) {
                 width: 100%;

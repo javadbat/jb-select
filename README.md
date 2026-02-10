@@ -256,7 +256,6 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-mobile-search-border-color    | when user open select on mobile, search box can have its own border color config              |
 | --jb-select-mobile-search-border-bottom-width | when user open select on mobile, search box can have its own border bottom width config   |
 | --jb-select-mobile-search-border-bottom-color | when user open select on mobile, search box can have its own border bottom color config   |
-| --jb-select-middle-div-height              | separator line between input and list default is `0px` and hidden but you can change it      | 
 | --jb-select-middle-div-color               | change separator line color                                                                  |
 | --jb-select-middle-div-margin              | change separator line margin                                                                 |
 | --jb-select-middle-div-mobile-margin       | change separator line margin in mobile modal                                                 |
