@@ -32,3 +32,6 @@ export type ValidationValue<TValue> = {
 }
 
 export type JBSelectEventType<TEvent> = EventTypeWithTarget<TEvent,JBSelectWebComponent>
+
+/* Variants */
+export type SizeVariants = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

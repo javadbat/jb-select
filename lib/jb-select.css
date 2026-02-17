@@ -3,9 +3,18 @@
 @custom-media --tablet-until (max-width: 768px);
 @custom-media --tablet-from (min-width: 769px);
 
+:host {
+    display: block;
+    margin: var(--jb-select-margin, 0 0);
+}
+
+:host(:focus),
+:host(:focus-visible) {
+    outline: none;
+}
+
 .jb-select-web-component {
     width: var(--jb-select-width, 100%);
-    margin: var(--jb-select-margin, 0 0);
     box-sizing: border-box;
 
     &.--has-value {
@@ -23,14 +32,12 @@
 
     .label-wrapper {
         label {
-
-
             width: 100%;
             margin: var(--label-margin);
             display: block;
             font-size: var(--label-font-size);
             color: var(--label-color);
-            
+
             font-weight: var(--jb-input-label-font-weight, 300);
 
             &.--hide {
@@ -59,9 +66,10 @@
         background-color: var(--select-box-bg-color);
         margin: var(--jb-select-select-box-margin, 4px 0px 0px 0px);
         overflow: hidden;
-        display: flex;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr);
+        grid-template-columns: auto 1fr auto;
         padding-inline-end: var(--jb-select-box-padding-end, 1rem);
-        gap: 0.5rem;
         align-items: center;
 
         .start-section {
@@ -97,10 +105,10 @@
                     box-sizing: border-box;
                     height: 100%;
                     background-color: transparent;
-                    padding: 2px 12px 0 12px;
+                    padding: var(--selected-value-padding);
                     display: block;
                     font-family: inherit;
-                    font-size: var(--jb-select-selected-value-font-size, 1.1em);
+                    font-size: var(--selected-value-font-size);
                     color: var(--value-color);
                     margin: 0;
                     border-radius: 0;
@@ -122,18 +130,18 @@
                 .search-input {
                     height: 100%;
                     background-color: transparent;
-                    padding: 2px 12px 0 12px;
+                    padding: var(--inline-slots-padding);
                     display: block;
                     margin: 0;
                     border-radius: 0;
-
+                    font-size: var(--input-font-size);
                     &:focus {
                         outline: none;
                     }
 
                     &::placeholder {
                         color: var(--placeholder-color);
-                        font-size: var(--jb-select-placeholder-font-size, 1.1em);
+                        font-size: var(--jb-select-placeholder-font-size, var(--input-font-size));
                     }
                 }
             }
@@ -143,7 +151,7 @@
             display: flex;
             gap: 1.5rem;
             align-items: center;
-
+            padding-inline-start: 0.5rem;
             .arrow-icon {
                 margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
             }
@@ -151,11 +159,24 @@
             .clear-button {
                 /*show when there is value*/
                 display: none;
-                --jb-button-padding-xs: 0;
-                --jb-button-height-xs: 1rem;
+                --icon-size: var(--clear-icon-size);
+                height: 100%;
             }
         }
 
+        ::slotted([slot="start-section"]),
+        ::slotted([slot="end-section"]) {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-height: 100%;
+            overflow-y: hidden;
+            background-color: transparent;
+            padding: var(--inline-slots-padding);
+            width: auto;
+            box-sizing: border-box;
+        }
 
         &:focus-within .selected-value {
             opacity: 0.7;
@@ -170,6 +191,7 @@
         padding: 0.125rem var(--inline-space);
         color: var(--message-color);
         display: var(--jb-select-message-box-display, block);
+
         &:empty {
             padding: 0;
         }
@@ -207,6 +229,8 @@
                     .search-input {
                         background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
                         border-radius: var(--box-border-radius);
+                        padding: 0.125rem 0.75rem;
+                        font-size: 1rem;
                         width: 100%;
                         height: var(--height);
                     }
@@ -246,8 +270,7 @@
                 text-align: center;
                 color: var(--empty-list-placeholder-color);
                 font-style: italic;
-                padding: 8px 0;
-
+                font-size: var(--input-font-size);
                 &.--show {
                     display: block;
                 }
@@ -260,10 +283,9 @@
         border: none;
         width: 100%;
         box-sizing: border-box;
-        padding: 2px 12px 0 12px;
         display: block;
         font-family: inherit;
-        font-size: var(--jb-select-value-font-size, 1.1rem);
+        font-size: var(--input-font-size);
         color: var(--value-color);
 
         &:focus {

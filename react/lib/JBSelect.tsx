@@ -1,11 +1,12 @@
 'use client'
 /* eslint-disable react/display-name */
-import React, { useRef, useImperativeHandle,CSSProperties } from 'react';
+import React, { useRef, useImperativeHandle, type PropsWithChildren } from 'react';
 import 'jb-select';
 // eslint-disable-next-line no-duplicate-imports
-import { JBSelectWebComponent } from 'jb-select';
-import { EventProps, useEvents } from './events-hook.js';
+import type { JBSelectWebComponent, SizeVariants } from 'jb-select';
+import { type EventProps, useEvents } from './events-hook.js';
 import { useJBSelectAttribute, type JBSelectAttributes } from './attributes-hook.js';
+import type { JBElementStandardProps } from 'jb-core/react';
 export type JBSelectEventType<T> = T & {
     target: JBSelectWebComponent
 }
@@ -22,7 +23,7 @@ declare module "react" {
         required?:string | boolean,
         message?:string,
         tabindex?:string,
-        // ref:React.RefObject<JBDateInputWebComponent>,
+        size?:string,
       }
     }
 }
@@ -33,21 +34,18 @@ export function JBSelect<TValue>(props:Props<TValue>) {
     () => (element ? element.current : undefined),
     [element],
   );
-
-
-  useEvents(element,props);
-  useJBSelectAttribute(element,props);
+  const {onChange,onInit,onInput,onKeyUp,onLoad,error,getSelectedValueDOM,label,name,required,message,placeholder,searchPlaceholder,validationList,value, ...otherProps} = props;
+  useEvents(element,{onChange,onInit,onInput,onKeyUp,onLoad});
+  useJBSelectAttribute(element,{error,getSelectedValueDOM,label,name,required,message,placeholder,searchPlaceholder,validationList,value});
   return (
-    <jb-select style={props.style?props.style:undefined} class={props.className?props.className:""} ref={element}>
+    <jb-select ref={element} {...otherProps}>
       {props.children}
     </jb-select>
   );
 };
 
-export type Props<TValue> = EventProps & JBSelectAttributes<TValue> & {
+export type Props<TValue> = EventProps & JBSelectAttributes<TValue> & PropsWithChildren<JBElementStandardProps> & {
     ref?: React.RefObject<JBSelectWebComponent>,
-    style?:CSSProperties,
-    className?: string,
-    children?:React.ReactNode,
+    size?: SizeVariants,
 }
 JBSelect.displayName = 'JBSelect';

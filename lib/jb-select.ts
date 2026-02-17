@@ -8,7 +8,7 @@ import type {
   ValidationValue,
 } from "./types";
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
-import { isMobile } from "jb-core";
+import { createInputEvent, createKeyboardEvent, isMobile } from "jb-core";
 import type { JBFormInputStandards } from 'jb-form';
 // eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";
@@ -120,10 +120,10 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#disabled = value;
     this.elements.input.disabled = value;
     if (value) {
-      (this.#internals as any).states?.add("disabled");
+      this.#internals.states?.add("disabled");
       this.#internals.ariaDisabled = "true";
     } else {
-      (this.#internals as any).states?.delete("disabled");
+      this.#internals.states?.delete("disabled");
       this.#internals.ariaDisabled = "false";
     }
   }
@@ -142,10 +142,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
  */
   get isAutoValidationDisabled(): boolean {
     //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
-    return this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true' ? true : false;
+    return !!(this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true' );
   }
   get name() {
     return this.getAttribute('name') || '';
+  }
+  set name(value:string){
+    this.setAttribute('name',value);
   }
   initialValue: TValue | null = null;
   get isDirty(): boolean {
@@ -162,7 +165,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#initProp();
   }
   connectedCallback() {
-    // standard web component event that called when all of dom is binded
+    // standard web component event that called when all of dom is bound
     this.#callOnLoadEvent();
     this.#callOnInitEvent();
   }
@@ -306,7 +309,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.elements.emptyListPlaceholder.classList.add("--show");
     }
   }
-  #onOptionSlotChange(e: Event) {
+  #onOptionSlotChange(_e: Event) {
     this.#setValueOnOptionListChanged();
     this.#updateListEmptyPlaceholder();
   }
@@ -395,23 +398,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#dispatchOnChangeEvent();
   }
   #onInputKeyPress(e: KeyboardEvent) {
-    const eventOptions: KeyboardEventInit = {
-      altKey: e.altKey,
-      bubbles: e.bubbles,
-      cancelable: e.cancelable,
-      code: e.code,
-      composed: e.composed,
-      ctrlKey: e.ctrlKey,
-      detail: e.detail,
-      isComposing: e.isComposing,
-      key: e.key,
-      location: e.location,
-      metaKey: e.metaKey,
-      view: e.view,
-      repeat: e.repeat,
-      shiftKey: e.shiftKey
-    };
-    const event = new KeyboardEvent("keypress", eventOptions);
+    const event = createKeyboardEvent("keypress",e,{})
     this.dispatchEvent(event);
   }
   #onInputBeforeInput(_e: InputEvent) {
@@ -427,18 +414,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#updateListEmptyPlaceholder();
   }
   #dispatchInputEvent(e: InputEvent) {
-    const event = new InputEvent("input", {
-      bubbles: e.bubbles,
-      cancelable: e.cancelable,
-      composed: e.composed,
-      data: e.data,
-      dataTransfer: e.dataTransfer,
-      detail: e.detail,
-      inputType: e.inputType,
-      isComposing: e.isComposing,
-      targetRanges: e.getTargetRanges(),
-      view: e.view,
-    });
+    const event = createInputEvent("input",e,{});
     this.dispatchEvent(event);
   }
   #onInputKeyup(e: KeyboardEvent) {
@@ -459,24 +435,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   #triggerOnInputKeyup(e: KeyboardEvent) {
-    const event = new KeyboardEvent("keyup", {
-      altKey: e.altKey,
-      bubbles: e.bubbles,
-      cancelable: e.cancelable,
-      code: e.code,
-      ctrlKey: e.ctrlKey,
-      detail: e.detail,
-      key: e.key,
-      shiftKey: e.shiftKey,
-      charCode: e.charCode,
-      location: e.location,
-      composed: e.composed,
-      isComposing: e.isComposing,
-      metaKey: e.metaKey,
-      repeat: e.repeat,
-      keyCode: e.keyCode,
-      view: e.view,
-    });
+    
+    const event = createKeyboardEvent('keyup',e,{})
     this.dispatchEvent(event);
   }
   #onInputChange(e: Event) {
@@ -484,10 +444,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     //here is the rare  time we update _text_value directly because we want trigger event that may read value directly from dom
     this.#textValue = inputText;
   }
-  #onSelectFocus() {
-    this.focus();
-  }
-  #onInputFocus() {
+  #onSelectFocus(e:FocusEvent) {
+    if(e.composedPath().find(x=>x == this.elements.clearButton)){
+      // we don't want focus when user click on clear button 
+      return;
+    }
     this.focus();
   }
   #onInputBlur(e: FocusEvent) {

@@ -1,9 +1,10 @@
 /* eslint-disable indent */
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { JBSelect, JBOptionList, JBOption, type Props, type JBSelectEventType } from 'jb-select/react';
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
-import { colorList, nameList, numberOptionList } from './constants';
+import { colorList, nameList, numberOptionList, persons } from './constants';
+import { JBInput } from 'jb-input/react';
 
 const meta: Meta<Props<unknown>> = {
   title: "Components/form elements/JBSelect",
@@ -86,6 +87,37 @@ export const Required: Story = {
     required: true,
   }
 };
+
+export const SizeVariants: Story = {
+  render:()=>{
+    const options = <Fragment>
+      {
+        persons.map((p) => <JBOption key={p.userId} value={p}>{p.name}</JBOption>)
+      }
+    </Fragment>
+    return (<div style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'1rem'}}>
+      <JBSelect label='xl size' message="message underneath" size='xl'></JBSelect>
+      <JBSelect label='xl size' placeholder="placeholder" size='xl'>{options}</JBSelect>
+      <JBSelect label='xl size' value={persons[0]} size='xl'>{options}</JBSelect>
+
+      <JBSelect label='lg size' message="message underneath" size='lg'></JBSelect>
+      <JBSelect label='lg size' placeholder="placeholder" size='lg'>{options}</JBSelect>
+      <JBSelect label='lg size' value={persons[0]} size='lg'>{options}</JBSelect>
+
+      <JBSelect label='md size' message="message underneath" size='md'></JBSelect>
+      <JBSelect label='md size' placeholder="placeholder" size='md'>{options}</JBSelect>
+      <JBSelect label='md size' value={persons[0]} size='md'>{options}</JBSelect>
+
+      <JBSelect label='sm size' message="message underneath" size='sm'></JBSelect>
+      <JBSelect label='sm size' placeholder="placeholder" size='sm'>{options}</JBSelect>
+      <JBSelect label='sm size' value={persons[0]} size='sm'>{options}</JBSelect>
+
+      <JBSelect label='xs size' message="message underneath" size='xs'></JBSelect>
+      <JBSelect label='xs size' placeholder="placeholder" size='xs'>{options}</JBSelect>
+      <JBSelect label='xs size' value={persons[0]} size='xs'>{options}</JBSelect>
+    </div>)
+  }
+}
 
 export const EventTest: Story = {
   args: {
