@@ -23,7 +23,8 @@ export type JBSelectElements = {
     },
     emptyListPlaceholder: HTMLDivElement,
     mobileSearchInputWrapper:HTMLDivElement,
-    frontBox:HTMLDivElement
+    frontBox:HTMLDivElement,
+    selectBox:HTMLDivElement
 }
 export type ValidationValue<TValue> = {
     selectedOption:JBOptionWebComponent<TValue> | null,

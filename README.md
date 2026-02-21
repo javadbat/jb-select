@@ -2,7 +2,8 @@
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/jb-select)
 [![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://raw.githubusercontent.com/javadbat/jb-select/main/LICENSE)
-[![NPM Downloads](https://img.shields.io/npm/dw/jb-switch)](https://www.npmjs.com/package/jb-select)
+[![NPM Version](https://img.shields.io/npm/v/jb-select)](https://www.npmjs.com/package/jb-select)
+![GitHub Created At](https://img.shields.io/github/created-at/javadbat/jb-select)
 
 pure js standalone select box web-component
 
@@ -18,8 +19,8 @@ pure js standalone select box web-component
 
 ## Sample
 
-- [Codepen](https://codepen.io/javadbat/pen/abpjKVP)
 - [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect)
+- [Codepen](https://codepen.io/javadbat/pen/abpjKVP)
 - [CodeSandbox](https://3f63dj.csb.app/samples/jb-select)
 
 ## using with JS frameworks
