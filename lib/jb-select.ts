@@ -17,6 +17,7 @@ import { renderHTML } from "./render";
 import { dictionary } from "./i18n";
 import { i18n } from "jb-core/i18n";
 import type { JBButtonWebComponent } from "jb-button";
+import { JBPopoverWebComponent } from "jb-popover";
 
 //TODO: add clean button to empty the select box after value selection
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
@@ -142,13 +143,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
  */
   get isAutoValidationDisabled(): boolean {
     //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
-    return !!(this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true' );
+    return !!(this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true');
   }
   get name() {
     return this.getAttribute('name') || '';
   }
-  set name(value:string){
-    this.setAttribute('name',value);
+  set name(value: string) {
+    this.setAttribute('name', value);
   }
   initialValue: TValue | null = null;
   get isDirty(): boolean {
@@ -168,6 +169,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     // standard web component event that called when all of dom is bound
     this.#callOnLoadEvent();
     this.#callOnInitEvent();
+    if (this.elements.optionListWrapper instanceof JBPopoverWebComponent) {
+      this.#setupPopover();
+    } else {
+      customElements.whenDefined("jb-popover").then(() =>this.#setupPopover())
+    }
+  }
+  #setupPopover(){
+      this.elements.optionListWrapper.bindTarget(this.elements.selectBox);
   }
   #callOnInitEvent() {
     const event = new CustomEvent("init", { bubbles: true, composed: true });
@@ -204,6 +213,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
       mobileSearchInputWrapper: shadowRoot.querySelector(".mobile-search-input-wrapper"),
       frontBox: shadowRoot.querySelector(".front-box"),
+      selectBox: shadowRoot.querySelector(".select-box")
     };
     this.#registerEventListener();
     this.#updateListEmptyPlaceholder();
@@ -213,7 +223,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
    * place code that change on select resize between mobile & desktop
    */
   #setupDeviceRelates() {
-    const onResize = ()=> {
+    const onResize = () => {
       if (isMobile()) {
         this.elements.mobileSearchInputWrapper.appendChild(this.elements.input)
       } else {
@@ -390,15 +400,15 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.focus();
     }
   }
-  #onClearButtonClick(e:MouseEvent) {
+  #onClearButtonClick(e: MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
-    this.#setValue(null,null);
+    this.#setValue(null, null);
     this.#checkValidity(true);
     this.#dispatchOnChangeEvent();
   }
   #onInputKeyPress(e: KeyboardEvent) {
-    const event = createKeyboardEvent("keypress",e,{})
+    const event = createKeyboardEvent("keypress", e, {})
     this.dispatchEvent(event);
   }
   #onInputBeforeInput(_e: InputEvent) {
@@ -414,7 +424,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#updateListEmptyPlaceholder();
   }
   #dispatchInputEvent(e: InputEvent) {
-    const event = createInputEvent("input",e,{});
+    const event = createInputEvent("input", e, {});
     this.dispatchEvent(event);
   }
   #onInputKeyup(e: KeyboardEvent) {
@@ -435,8 +445,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   #triggerOnInputKeyup(e: KeyboardEvent) {
-    
-    const event = createKeyboardEvent('keyup',e,{})
+
+    const event = createKeyboardEvent('keyup', e, {})
     this.dispatchEvent(event);
   }
   #onInputChange(e: Event) {
@@ -444,8 +454,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     //here is the rare  time we update _text_value directly because we want trigger event that may read value directly from dom
     this.#textValue = inputText;
   }
-  #onSelectFocus(e:FocusEvent) {
-    if(e.composedPath().find(x=>x == this.elements.clearButton)){
+  #onSelectFocus(e: FocusEvent) {
+    if (e.composedPath().find(x => x == this.elements.clearButton)) {
       // we don't want focus when user click on clear button 
       return;
     }

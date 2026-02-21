@@ -16,7 +16,7 @@
 .jb-select-web-component {
     width: var(--jb-select-width, 100%);
     box-sizing: border-box;
-
+    container-type: inline-size;
     &.--has-value {
 
         /*if user select a option and value is set and not null*/
@@ -202,7 +202,7 @@
 
         .select-list-wrapper {
             @media(--tablet-from) {
-                width: 100%;
+                width: 100cqi;
                 --jb-popover-border-radius: var(--list-border-radius);
                 --jb-popover-bg-color: var(--select-box-bg-color);
                 --jb-popover-top: 0;

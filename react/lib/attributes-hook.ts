@@ -1,6 +1,6 @@
-import { JBSelectWebComponent, type ValidationValue } from "jb-select";
-import { type ValidationItem } from "jb-validation";
-import { RefObject, useEffect } from "react";
+import type { JBSelectWebComponent, ValidationValue } from "jb-select";
+import type { ValidationItem } from "jb-validation";
+import { type RefObject, useEffect } from "react";
 
 export type JBSelectAttributes<TValue> = {
   validationList?: ValidationItem<ValidationValue<TValue>>[],
@@ -23,18 +23,20 @@ export function useJBSelectAttribute<TValue>(element: RefObject<JBSelectWebCompo
       element.current?.removeAttribute("message");
     }
   }, [props.message]);
+
   useEffect(() => {
-    if (element && element.current) {
+    if (element?.current) {
       element.current.validation.list = props.validationList || [];
     }
-  }, [props.validationList]);
+  }, [element.current, props.validationList]);
+
   useEffect(() => {
     if (props.label !== null && props.label !== undefined) {
       element.current?.setAttribute("label", props.label);
     } else {
       element.current?.removeAttribute("label");
     }
-  }, [props.label]);
+  }, [props.label, element.current]);
 
   useEffect(() => {
     if (props.required !== null && props.required !== undefined) {
