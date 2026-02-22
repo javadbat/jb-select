@@ -97,25 +97,25 @@ export const SizeVariants: Story = {
       }
     </Fragment>
     return (<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-      <JBSelect label='xl size' message="message underneath" size='xl'></JBSelect>
-      <JBSelect label='xl size' placeholder="placeholder" size='xl'>{options}</JBSelect>
-      <JBSelect label='xl size' value={persons[0]} size='xl'>{options}</JBSelect>
+      <JBSelect size='xl' label='xl size' message="message underneath" ></JBSelect>
+      <JBSelect size='xl' label='xl size' placeholder="placeholder" >{options}</JBSelect>
+      <JBSelect size='xl' label='xl size' value={persons[0]} >{options}</JBSelect>
 
-      <JBSelect label='lg size' message="message underneath" size='lg'></JBSelect>
-      <JBSelect label='lg size' placeholder="placeholder" size='lg'>{options}</JBSelect>
-      <JBSelect label='lg size' value={persons[0]} size='lg'>{options}</JBSelect>
+      <JBSelect size='lg' label='lg size' message="message underneath" ></JBSelect>
+      <JBSelect size='lg' label='lg size' placeholder="placeholder" >{options}</JBSelect>
+      <JBSelect size='lg' label='lg size' value={persons[0]} >{options}</JBSelect>
 
-      <JBSelect label='md size' message="message underneath" size='md'></JBSelect>
-      <JBSelect label='md size' placeholder="placeholder" size='md'>{options}</JBSelect>
-      <JBSelect label='md size' value={persons[0]} size='md'>{options}</JBSelect>
+      <JBSelect size='md' label='md size' message="message underneath"></JBSelect>
+      <JBSelect size='md' label='md size' placeholder="placeholder">{options}</JBSelect>
+      <JBSelect size='md' label='md size' value={persons[0]} >{options}</JBSelect>
 
-      <JBSelect label='sm size' message="message underneath" size='sm'></JBSelect>
-      <JBSelect label='sm size' placeholder="placeholder" size='sm'>{options}</JBSelect>
-      <JBSelect label='sm size' value={persons[0]} size='sm'>{options}</JBSelect>
+      <JBSelect size='sm' label='sm size' message="message underneath"></JBSelect>
+      <JBSelect size='sm' label='sm size' placeholder="placeholder">{options}</JBSelect>
+      <JBSelect size='sm' label='sm size' value={persons[0]} >{options}</JBSelect>
 
-      <JBSelect label='xs size' message="message underneath" size='xs'></JBSelect>
-      <JBSelect label='xs size' placeholder="placeholder" size='xs'>{options}</JBSelect>
-      <JBSelect label='xs size' value={persons[0]} size='xs'>{options}</JBSelect>
+      <JBSelect size='xs' label='xs size' message="message underneath"></JBSelect>
+      <JBSelect size='xs' label='xs size' placeholder="placeholder">{options}</JBSelect>
+      <JBSelect size='xs' label='xs size' value={persons[0]}>{options}</JBSelect>
     </div>)
   }
 }
