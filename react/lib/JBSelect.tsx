@@ -44,7 +44,7 @@ export function JBSelect<TValue>(props:Props<TValue>) {
   );
 };
 
-export type Props<TValue> = EventProps & JBSelectAttributes<TValue> & PropsWithChildren<JBElementStandardProps> & {
+export type Props<TValue> = PropsWithChildren<EventProps & JBSelectAttributes<TValue>> & JBElementStandardProps<JBSelectWebComponent, keyof EventProps & JBSelectAttributes<TValue>>  & {
     ref?: React.RefObject<JBSelectWebComponent>,
     size?: SizeVariants,
 }

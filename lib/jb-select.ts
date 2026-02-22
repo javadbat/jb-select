@@ -149,7 +149,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     return this.getAttribute('name') || '';
   }
   set name(value: string) {
-    this.setAttribute('name', value);
+    if(value){
+      this.setAttribute('name', value);
+    }else{
+      this.removeAttribute('name');
+    }
   }
   initialValue: TValue | null = null;
   get isDirty(): boolean {

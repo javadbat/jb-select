@@ -1,10 +1,10 @@
 /* eslint-disable indent */
-import React, { Fragment, useEffect, useState } from 'react';
+import type React from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { JBSelect, JBOptionList, JBOption, type Props, type JBSelectEventType } from 'jb-select/react';
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
 import { colorList, nameList, numberOptionList, persons } from './constants';
-import { JBInput } from 'jb-input/react';
 
 const meta: Meta<Props<unknown>> = {
   title: "Components/form elements/JBSelect",
@@ -89,13 +89,13 @@ export const Required: Story = {
 };
 
 export const SizeVariants: Story = {
-  render:()=>{
+  render: () => {
     const options = <Fragment>
       {
         persons.map((p) => <JBOption key={p.userId} value={p}>{p.name}</JBOption>)
       }
     </Fragment>
-    return (<div style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'1rem'}}>
+    return (<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
       <JBSelect label='xl size' message="message underneath" size='xl'></JBSelect>
       <JBSelect label='xl size' placeholder="placeholder" size='xl'>{options}</JBSelect>
       <JBSelect label='xl size' value={persons[0]} size='xl'>{options}</JBSelect>
@@ -118,7 +118,18 @@ export const SizeVariants: Story = {
     </div>)
   }
 }
-
+export const OverflowTest: Story = {
+  render: () => {
+    return <div style={{height:'10rem', overflowY:"auto"}}>
+      <JBSelect label='overflow test' style={{width:"10rem"}}>
+        {
+          persons.map((p) => <JBOption key={p.userId} value={p}>{p.name}</JBOption>)
+        }
+      </JBSelect>
+      <div style={{height:'20rem', background:'red'}}></div>
+    </div>
+  }
+}
 export const EventTest: Story = {
   args: {
     ...Normal.args,
@@ -127,8 +138,8 @@ export const EventTest: Story = {
 };
 
 export const RTL: Story = {
-  globals:{
-    dir:"rtl"
+  globals: {
+    dir: "rtl"
   },
   args: {
     label: 'از منو انتخاب کنید',
@@ -332,7 +343,7 @@ export const CustomOptionRender: Story = {
 
 export const JBSelectDesignTest: Story = {
   render: () => {
-    function getSelectedValueDOM(option:any) {
+    function getSelectedValueDOM(option: any) {
       const optionElement = document.createElement("div");
       optionElement.classList.add("selected-value");
       optionElement.innerHTML =
