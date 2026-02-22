@@ -1,5 +1,6 @@
-/* eslint-disable indent */
-import type React from 'react';
+
+// biome-ignore lint/style/useImportType: <react must be import>
+import React from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { JBSelect, JBOptionList, JBOption, type Props, type JBSelectEventType } from 'jb-select/react';
 import './styles/style.css'
