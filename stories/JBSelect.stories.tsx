@@ -139,8 +139,9 @@ export const EventTest: Story = {
 };
 
 export const RTL: Story = {
-  globals: {
-    dir: "rtl"
+  globals:{
+    locale:"fa",
+    dir:"rtl"
   },
   args: {
     label: 'از منو انتخاب کنید',
