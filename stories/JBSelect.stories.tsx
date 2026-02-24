@@ -43,7 +43,14 @@ export const OptionObject: Story = {
     onChange: (e) => { console.log('onChange', e.target.value); }
   }
 };
-
+export const HideCleanButton: Story = {
+  args: {
+    label: 'select from menu',
+    message: "please select a value",
+    placeholder: "placeholder",
+    hideClear:true,
+  }
+};
 export const OptionAsChildren: Story = {
   args: {
     label: 'select from menu',
@@ -380,3 +387,17 @@ export const JBSelectDesignTest: Story = {
     );
   },
 };
+
+export const BooleanValue:Story = {
+  render:()=>{
+    const [value,setValue] = useState<boolean|null>(null);
+    return (
+      <JBSelect value={value} onChange={(e)=>{
+        setValue(e.target.value);
+      }}>
+        <JBOption value={true}>True</JBOption>
+        <JBOption value={false}>False</JBOption>
+      </JBSelect>
+    )
+  }
+}

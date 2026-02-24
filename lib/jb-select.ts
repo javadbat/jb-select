@@ -32,7 +32,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     return true;
   }
   // we keep selected option here by option but we return TValue when user demand
-  #value: TValue;
+  #value: TValue| null;
   #textValue = "";
   // if user set value and current option list is not contain the option.
   // we hold it in _notFoundedValue and select value when option value get updated
@@ -43,13 +43,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   callbacks: JBSelectCallbacks<TValue> = {}
   elements!: JBSelectElements;
   get value(): TValue {
-    if (this.#value) {
+    if (this.#value !== null && this.#value !== undefined) {
       return this.#value;
     } else {
       return null;
     }
   }
-  set value(value: TValue) {
+  set value(value: TValue | null | undefined) {
     this.#setValueFromOutside(value);
   }
   get textValue() {
@@ -264,6 +264,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     return [
       "label",
       "message",
+      "hide-clear",
       "value",
       "required",
       "placeholder",
@@ -310,6 +311,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       case "error":
         this.reportValidity();
         break;
+      case 'hide-clear':
+        if(value === '' || value === 'true'){
+          this.elements.clearButton.style.display = 'none'
+        }else{
+          this.elements.clearButton.style.display = 'block'
+        }
+        break;
     }
   }
   /**
@@ -343,7 +351,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   //when user set value by attribute or value prop directly we call this function
-  #setValueFromOutside(value: TValue): boolean {
+  #setValueFromOutside(value: TValue | null | undefined): boolean {
     if (value === null || value === undefined) {
       this.#setValue(null, null);
       return true;

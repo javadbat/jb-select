@@ -24,6 +24,7 @@ declare module "react" {
         message?:string,
         tabindex?:string,
         size?:string,
+        "hide-clean"?:string,
       }
     }
 }
@@ -34,9 +35,9 @@ export function JBSelect<TValue>(props:Props<TValue>) {
     () => (element ? element.current : undefined),
     [element],
   );
-  const {onChange,onInit,onInput,onKeyUp,onLoad,error,getSelectedValueDOM,label,name,required,message,placeholder,searchPlaceholder,validationList,value, ...otherProps} = props;
+  const {onChange,onInit,onInput,onKeyUp,onLoad,error,getSelectedValueDOM,label,name,required,message,placeholder,searchPlaceholder,validationList,value, hideClear, ...otherProps} = props;
   useEvents(element,{onChange,onInit,onInput,onKeyUp,onLoad});
-  useJBSelectAttribute(element,{error,getSelectedValueDOM,label,name,required,message,placeholder,searchPlaceholder,validationList,value});
+  useJBSelectAttribute(element,{error,getSelectedValueDOM,label,name,required,message,placeholder,searchPlaceholder,validationList,value,hideClear});
   return (
     <jb-select ref={element} {...otherProps}>
       {props.children}
