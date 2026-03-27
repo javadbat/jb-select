@@ -98,6 +98,8 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   #initWebComponent() {
     const shadowRoot = this.attachShadow({
       mode: "open",
+      clonable:true,
+      serializable:true
     });
     const html = `<style>${CSS}</style>` + "\n" + renderHTML();
     const element = document.createElement("template");

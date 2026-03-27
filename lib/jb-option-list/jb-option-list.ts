@@ -54,6 +54,8 @@ export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
   #initWebComponent() {
     const shadowRoot = this.attachShadow({
       mode: "open",
+      clonable:true,
+      serializable:true
     });
     const element = document.createElement("template");
 

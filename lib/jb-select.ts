@@ -194,6 +194,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const shadowRoot = this.attachShadow({
       mode: "open",
       delegatesFocus: true,
+      clonable:true,
+      serializable:true
     });
     registerDefaultVariables();
     const html = `<style>${CSS} ${VariablesCSS}</style>\n${renderHTML()}`;
