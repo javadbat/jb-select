@@ -1,11 +1,10 @@
-/* @use "~jb-core/styles/medias.scss" as *; */
-
 @custom-media --tablet-until (max-width: 768px);
 @custom-media --tablet-from (min-width: 769px);
 
 :host {
     display: block;
     margin: var(--jb-select-margin, 0 0);
+    width: var(--jb-select-width, 100%);
 }
 
 :host(:focus),
@@ -14,7 +13,7 @@
 }
 
 .jb-select-web-component {
-    width: var(--jb-select-width, 100%);
+    width: 100%;
     box-sizing: border-box;
     container-type: inline-size;
     &.--has-value {
@@ -30,19 +29,16 @@
         }
     }
 
-    .label-wrapper {
-        label {
-            width: 100%;
-            margin: var(--label-margin);
-            display: block;
-            font-size: var(--label-font-size);
-            color: var(--label-color);
+    label {
+        width: 100%;
+        margin: var(--label-margin);
+        display: block;
+        font-size: var(--label-font-size);
+        color: var(--label-color);
+        font-weight: var(--jb-input-label-font-weight, 300);
 
-            font-weight: var(--jb-input-label-font-weight, 300);
-
-            &.--hide {
-                display: none;
-            }
+        &:empty {
+            display: none;
         }
     }
 
@@ -64,7 +60,7 @@
         border-bottom: solid var(--border-bottom-width) var(--border-color);
         border-radius: var(--box-border-radius);
         background-color: var(--select-box-bg-color);
-        margin: var(--jb-select-select-box-margin, 4px 0px 0px 0px);
+        margin: var(--jb-select-box-margin, 0px);
         overflow: hidden;
         display: grid;
         grid-template-rows: minmax(0, 1fr);
@@ -135,6 +131,7 @@
                     margin: 0;
                     border-radius: 0;
                     font-size: var(--input-font-size);
+
                     &:focus {
                         outline: none;
                     }
@@ -152,6 +149,7 @@
             gap: 1.5rem;
             align-items: center;
             padding-inline-start: 0.5rem;
+
             .arrow-icon {
                 margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
             }
@@ -271,6 +269,7 @@
                 color: var(--empty-list-placeholder-color);
                 font-style: italic;
                 font-size: var(--input-font-size);
+
                 &.--show {
                     display: block;
                 }

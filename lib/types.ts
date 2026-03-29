@@ -17,10 +17,7 @@ export type JBSelectElements = {
     optionListSlot:HTMLSlotElement,
     arrowIcon: HTMLDivElement,
     clearButton: JBButtonWebComponent,
-    label:{
-        wrapper: HTMLLabelElement,
-        text: HTMLSpanElement
-    },
+    label:HTMLLabelElement,
     emptyListPlaceholder: HTMLDivElement,
     mobileSearchInputWrapper:HTMLDivElement,
     frontBox:HTMLDivElement,

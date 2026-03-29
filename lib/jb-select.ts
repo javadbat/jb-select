@@ -194,7 +194,6 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const shadowRoot = this.attachShadow({
       mode: "open",
       delegatesFocus: true,
-      clonable:true,
       serializable:true
     });
     registerDefaultVariables();
@@ -212,10 +211,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       optionListSlot: shadowRoot.querySelector(".select-list-wrapper .select-list slot")!,
       arrowIcon: shadowRoot.querySelector(".arrow-icon")!,
       clearButton: shadowRoot.querySelector(".clear-button") as JBButtonWebComponent,
-      label: {
-        wrapper: shadowRoot.querySelector("label")!,
-        text: shadowRoot.querySelector("label .label-value")!,
-      },
+      label:shadowRoot.querySelector("label"),
       emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
       mobileSearchInputWrapper: shadowRoot.querySelector(".mobile-search-input-wrapper"),
       frontBox: shadowRoot.querySelector(".front-box"),
@@ -281,13 +277,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #onAttributeChange(name: string, value: string) {
     switch (name) {
       case "label":
-        this.elements.label.text.innerHTML = value;
+        this.elements.label.innerHTML = value;
         this.#internals.ariaLabel = value;
-        if (value == null || value == undefined || value == "") {
-          this.elements.label.wrapper.classList.add("--hide");
-        } else {
-          this.elements.label.wrapper.classList.remove("--hide");
-        }
         break;
       case "message":
         this.#internals.ariaDescription = value;

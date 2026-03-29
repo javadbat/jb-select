@@ -263,7 +263,7 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-middle-div-radius              | change separator line border-radius                                                          |
 | --jb-select-list-scroll-color              | list item scroll color                                                                       |
 | --jb-select-list-scroll-border-radius      | list item scroll border-radius default is `4px`                                              |
-| --jb-select-select-box-margin              | margin of internal element called select box that wrapper display element of form in one box |
+| --jb-select-box-margin                     | margin of internal element called select box that wrapper display element of form in one box |
 | --jb-select-value-font-size                | search input value font size default is `1.1rem`                                             |
 | --jb-select-list-border-width              | border-width for list wrapper                                                                |
 | --jb-select-mobile-modal-border-radius     | opened modal in mobile border radius. useful to change when you changed `--jb-select-mobile-modal-height` before |

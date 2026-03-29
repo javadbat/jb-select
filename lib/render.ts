@@ -1,9 +1,7 @@
 export function renderHTML(): string {
     return /* html */ `
   <div class="jb-select-web-component">
-    <div class="label-wrapper">
-        <label class="--hide"><span class="label-value"></span></label>
-    </div>
+    <label class="label-value"></label>
     <div class="select-box">
         <div class="start-section">
             <slot name="start-section"></slot>
