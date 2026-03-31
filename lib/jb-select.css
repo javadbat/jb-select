@@ -90,7 +90,7 @@
                 height: 100%;
                 border-radius: inherit;
                 overflow: hidden;
-                z-index: 1;
+                z-index: var(--base-z-index);
 
                 &.--search-typed {
                     opacity: 0;
@@ -121,7 +121,7 @@
                 height: 100%;
                 border-radius: inherit;
                 overflow: hidden;
-                z-index: 2;
+                z-index: calc(var(--base-z-index) + 1);
 
                 .search-input {
                     height: 100%;

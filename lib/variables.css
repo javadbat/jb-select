@@ -7,7 +7,7 @@
   --list-border-radius: 0 0 var(--rounded) var(--rounded);
   --border-width: var(--jb-select-border-width, 1px);
   --border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
-  --base-z-index: 1;
+  --base-z-index: var(--jb-select-base-z-index, 1);
   --selected-value-font-size:var(--jb-select-selected-value-font-size, 1rem);
   --input-font-size:var(--jb-select-input-font-size, 1rem);
   --selected-value-padding:var(--jb-select-selected-value-padding, 0.125rem 0.75rem 0 0.75rem);
