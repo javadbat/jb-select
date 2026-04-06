@@ -4,7 +4,6 @@ import { type RefObject, useEffect } from "react";
 
 export type JBSelectAttributes<TValue> = {
   validationList?: ValidationItem<ValidationValue<TValue>>[],
-  name?: string,
   label?: string,
   error?: string,
   value?: TValue,
@@ -73,14 +72,6 @@ export function useJBSelectAttribute<TValue>(element: RefObject<JBSelectWebCompo
       element?.current?.removeAttribute('error');
     }
   }, [props.error]);
-
-  useEffect(() => {
-    if (props.name) {
-      element?.current?.setAttribute('name', props.name || '');
-    } else {
-      element?.current?.removeAttribute('name');
-    }
-  }, [props.name]);
   useEffect(() => {
     if (element.current) {
       element.current.value = props.value;
