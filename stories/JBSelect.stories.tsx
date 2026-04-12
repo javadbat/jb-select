@@ -35,7 +35,14 @@ export const WithValue: Story = {
     children: <JBOptionList optionList={nameList} />
   }
 };
-
+export const Disabled: Story = {
+  args: {
+    label: 'select from menu',
+    message: "please select a value",
+    value: nameList[3],
+    disabled:true
+  }
+};
 export const OptionObject: Story = {
   args: {
     label: 'select from menu',

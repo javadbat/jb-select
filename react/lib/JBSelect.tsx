@@ -49,5 +49,6 @@ export type Props<TValue> = PropsWithChildren<EventProps & JBSelectAttributes<TV
   ref?: React.RefObject<JBSelectWebComponent>,
   size?: SizeVariants,
   name?: string,
+  disabled?:boolean,
 }
 JBSelect.displayName = 'JBSelect';

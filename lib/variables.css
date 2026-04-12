@@ -33,8 +33,12 @@
 :host(:state(invalid)) {
   --message-color: var(--jb-select-message-error-color, var(--jb-red));
 }
-
-:host(:focus-within) {
+:host(:state(disabled)) {
+ cursor: not-allowed;
+ --select-box-bg-color: var(--jb-select-bg-color-disabled, hsl(from var(--jb-neutral-10) h 12% 66.1));
+ --value-color:var(--jb-button-color-disabled, var(--jb-neutral-3));
+}
+:host(:focus-within:not(:state(disabled))) {
   --border-color: var(--jb-select-border-color-focus, var(--jb-neutral));
 }
 

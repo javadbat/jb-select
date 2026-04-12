@@ -19,7 +19,6 @@ import { i18n } from "jb-core/i18n";
 import type { JBButtonWebComponent } from "jb-button";
 import { JBPopoverWebComponent } from "jb-popover";
 
-//TODO: add clean button to empty the select box after value selection
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
 //TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
 /**
@@ -123,6 +122,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     if (value) {
       this.#internals.states?.add("disabled");
       this.#internals.ariaDisabled = "true";
+      this.#hideOptionList();
     } else {
       this.#internals.states?.delete("disabled");
       this.#internals.ariaDisabled = "false";
@@ -478,6 +478,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   focus() {
+    if(this.#disabled){
+      return;
+    }
     this.elements.input.focus();
     this.#showOptionList();
     this.elements.optionListWrapper.open();
@@ -502,9 +505,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.blur();
   }
   #showOptionList() {
+    this.#internals.states.add("open")
     this.elements.optionListWrapper.classList.add("--show");
   }
   #hideOptionList() {
+    this.#internals.states.delete("open")
     this.elements.optionListWrapper.classList.remove("--show");
   }
   #updateOptionList(filterText: string) {
