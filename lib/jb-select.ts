@@ -26,29 +26,29 @@ import { JBPopoverWebComponent } from "jb-popover";
  */
 
 // biome-ignore lint/suspicious/noExplicitAny: <we support any type of value and there is no limitation on value type>
-export class JBSelectWebComponent<TValue = any> extends HTMLElement implements WithValidation<ValidationValue<TValue>>, JBFormInputStandards<TValue> {
+export class JBSelectWebComponent<TValue = any> extends HTMLElement implements WithValidation<ValidationValue<TValue>>, JBFormInputStandards<TValue|null> {
   static get formAssociated() {
     return true;
   }
   // we keep selected option here by option but we return TValue when user demand
-  #value: TValue| null;
+  #value: TValue| null = null;
   #textValue = "";
   // if user set value and current option list is not contain the option.
   // we hold it in _notFoundedValue and select value when option value get updated
-  #notFoundedValue: TValue = null;
+  #notFoundedValue: TValue| null = null;
   #optionList = new Set<JBOptionWebComponent<TValue>>()
   //keep selected option dom
   #selectedOption: JBOptionWebComponent<TValue> | null = null;
   callbacks: JBSelectCallbacks<TValue> = {}
   elements!: JBSelectElements;
-  get value(): TValue {
+  get value() {
     if (this.#value !== null && this.#value !== undefined) {
       return this.#value;
     } else {
       return null;
     }
   }
-  set value(value: TValue | null | undefined) {
+  set value(value: TValue | null ) {
     this.#setValueFromOutside(value);
   }
   get textValue() {
@@ -61,7 +61,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   get selectedOptionTitle() {
     if (this.value) {
-      return this.#selectedOption.optionContentText;
+      return this.#selectedOption?.optionContentText;
     } else {
       return "";
     }
@@ -137,7 +137,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   get required() {
     return this.#required;
   }
-  #internals?: ElementInternals;
+  #internals!: ElementInternals;
   /**
  * @description will determine if component trigger jb-validation mechanism automatically on user event or it just let user-developer handle validation mechanism by himself
  */
@@ -211,11 +211,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       optionListSlot: shadowRoot.querySelector(".select-list-wrapper .select-list slot")!,
       arrowIcon: shadowRoot.querySelector(".arrow-icon")!,
       clearButton: shadowRoot.querySelector(".clear-button") as JBButtonWebComponent,
-      label:shadowRoot.querySelector("label"),
+      label:shadowRoot.querySelector("label")!,
       emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
-      mobileSearchInputWrapper: shadowRoot.querySelector(".mobile-search-input-wrapper"),
-      frontBox: shadowRoot.querySelector(".front-box"),
-      selectBox: shadowRoot.querySelector(".select-box")
+      mobileSearchInputWrapper: shadowRoot.querySelector(".mobile-search-input-wrapper")!,
+      frontBox: shadowRoot.querySelector(".front-box")!,
+      selectBox: shadowRoot.querySelector(".select-box")!
     };
     this.#registerEventListener();
     this.#updateListEmptyPlaceholder();
@@ -372,7 +372,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.#selectedOption = option;
     }
   }
-  #setValue(value: TValue, option: JBOptionWebComponent<TValue> | null) {
+  #setValue(value: TValue|null, option: JBOptionWebComponent<TValue> | null) {
     this.#notFoundedValue = null;
     this.#value = value;
     if (value === null || value === undefined) {
@@ -577,7 +577,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.dispatchEvent(event);
     return event;
   }
-  #setSelectedOptionDom(value: TValue) {
+  #setSelectedOptionDom(value: TValue|null) {
     //when user select option or value changed in any condition we set selected option DOM
     this.elements.selectedValueWrapper.innerHTML = "";
     //if value was null or undefined it remain empty
@@ -606,10 +606,10 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   #getInsideValidation() {
     const validationList: ValidationItem<ValidationValue<TValue>>[] = [];
-    if (this.getAttribute("error") !== null && this.getAttribute("error").trim().length > 0) {
+    if (this.getAttribute("error") !== null && (this.getAttribute("error")??"").trim().length > 0) {
       validationList.push({
         validator: undefined,
-        message: this.getAttribute("error"),
+        message: this.getAttribute("error")!,
         stateType: "customError"
       });
     }
@@ -673,7 +673,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
           } else {
             states["customError"] = true;
           }
-          if (message == '') { message = res.message; }
+          if (message == '') { message = res.message??""; }
 
         }
       });

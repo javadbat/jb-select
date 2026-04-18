@@ -4,7 +4,7 @@ import type{ JBSelectWebComponent } from "./jb-select";
 import type {JBButtonWebComponent} from "jb-button";
 import type { JBPopoverWebComponent } from "jb-popover";
 export type JBSelectCallbacks<TValue> = {
-    getSelectedValueDOM?:(value:TValue,content:HTMLElement) => HTMLElement;
+    getSelectedValueDOM?:(value:TValue|null,content:HTMLElement|null) => HTMLElement;
 }
 
 export type JBSelectElements = {
