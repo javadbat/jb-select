@@ -8,15 +8,15 @@ import { JBOptionElements } from "./types";
 //TODO: add highlight to highlight the searched value
 export class JBOptionWebComponent<TValue> extends HTMLElement {
 
-  #elements: JBOptionElements;
+  #elements!: JBOptionElements;
   // it may be empty
   #SelectElement?: JBSelectWebComponent
-  #value: TValue;
+  #value: TValue | null = null;
   #internals?: ElementInternals;
-  get value(): TValue {
+  get value(): TValue | null {
     return this.#value;
   }
-  set value(value: TValue) {
+  set value(value: TValue | null) {
     this.#value = value;
   }
   #selected = false;
@@ -32,7 +32,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     return this.#selected;
   }
   get optionContent(): Node[] {
-    const optionNodes = this.#elements.contentWrapper.querySelector("slot").assignedNodes();
+    const optionNodes = this.#elements.contentWrapper.querySelector("slot")!.assignedNodes();
     return optionNodes;
   }
   //TODO: add search hidden property for more accurate hidden and more personalized logic
@@ -119,7 +119,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     this.dispatchEvent(event);
   }
   #initProp() {
-    this.value = this.getAttribute("value") as TValue || null;
+    this.value = (this.getAttribute("value") as TValue )?? null;
   }
   static get observedAttributes() {
     return ["value"];
@@ -140,7 +140,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     }
   }
   #dispatchSelectEvent() {
-    const event = new CustomEvent("select", { bubbles: true, cancelable: false, composed: true });
+    const event = new Event("select", { bubbles: true, cancelable: false, composed: true });
     this.dispatchEvent(event);
   }
 }

@@ -3,6 +3,7 @@
 import React from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { JBSelect, JBOptionList, JBOption, type Props, type JBSelectEventType } from 'jb-select/react';
+import { JBButton } from 'jb-button/react';
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
 import { colorList, nameList, numberOptionList, persons } from './constants';
@@ -40,7 +41,7 @@ export const Disabled: Story = {
     label: 'select from menu',
     message: "please select a value",
     value: nameList[3],
-    disabled:true
+    disabled: true
   }
 };
 export const OptionObject: Story = {
@@ -55,7 +56,7 @@ export const HideCleanButton: Story = {
     label: 'select from menu',
     message: "please select a value",
     placeholder: "placeholder",
-    hideClear:true,
+    hideClear: true,
   }
 };
 export const OptionAsChildren: Story = {
@@ -135,13 +136,13 @@ export const SizeVariants: Story = {
 }
 export const OverflowTest: Story = {
   render: () => {
-    return <div style={{height:'10rem', overflowY:"auto"}}>
-      <JBSelect label='overflow test' style={{width:"10rem"}}>
+    return <div style={{ height: '10rem', overflowY: "auto" }}>
+      <JBSelect label='overflow test' style={{ width: "10rem" }}>
         {
           persons.map((p) => <JBOption key={p.userId} value={p}>{p.name}</JBOption>)
         }
       </JBSelect>
-      <div style={{height:'20rem', background:'red'}}></div>
+      <div style={{ height: '20rem', background: 'red' }}></div>
     </div>
   }
 }
@@ -153,9 +154,9 @@ export const EventTest: Story = {
 };
 
 export const RTL: Story = {
-  globals:{
-    locale:"fa",
-    dir:"rtl"
+  globals: {
+    locale: "fa",
+    dir: "rtl"
   },
   args: {
     label: 'از منو انتخاب کنید',
@@ -395,16 +396,38 @@ export const JBSelectDesignTest: Story = {
   },
 };
 
-export const BooleanValue:Story = {
-  render:()=>{
-    const [value,setValue] = useState<boolean|null>(null);
+export const BooleanValue: Story = {
+  render: () => {
+    const [value, setValue] = useState<boolean | null>(null);
     return (
-      <JBSelect value={value} onChange={(e)=>{
+      <JBSelect value={value} onChange={(e) => {
         setValue(e.target.value);
       }}>
         <JBOption value={true}>True</JBOption>
         <JBOption value={false}>False</JBOption>
       </JBSelect>
     )
+  }
+}
+export const MissingOption: Story = {
+  render: (args) => {
+    const { value } = args
+    const [optionList, setOptionList] = useState<typeof persons>([])
+    return (
+      <div>
+        <JBSelect value={value} label="missing option" message="value is already set but options are not available when option available value will be set">
+          {
+            optionList.map((person) => (
+              <JBOption value={person}>{person.name}</JBOption>
+            ))
+          }
+        </JBSelect>
+        <JBButton onClick={()=>setOptionList(persons)}>Fill Option</JBButton>
+      </div>
+
+    )
+  },
+  args: {
+    value: persons[3]
   }
 }

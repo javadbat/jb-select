@@ -16,7 +16,7 @@
     "web component",
     "react component"
   ],
-  "version": "7.1.0",
+  "version": "7.1.1",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "homepage": "https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect",
   "license": "MIT",
@@ -38,9 +38,9 @@
     "jb-validation": ">=0.4.0",
     "jb-button": ">=3.9.1",
     "jb-popover": ">=1.6.1",
-    "jb-core":">=0.25.0"
+    "jb-core":">=0.26.0"
   },
   "devDependencies": {
-    "jb-form":">=0.9.1"
+    "jb-form":">=0.11.0"
   }
 }
