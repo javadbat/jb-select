@@ -31,7 +31,7 @@
 }
 
 :host(:state(invalid)) {
-  --message-color: var(--jb-select-message-error-color, var(--jb-red));
+  --message-color: var(--jb-select-message-color-error, var(--jb-red));
 }
 :host(:state(disabled)) {
  cursor: not-allowed;

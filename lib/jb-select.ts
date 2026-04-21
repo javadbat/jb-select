@@ -66,7 +66,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       return "";
     }
   }
-  get form(){
+  get form() {
     return this.#internals.form;
   }
   #placeholder = "";
@@ -569,11 +569,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   showValidationError(error: ShowValidationErrorParameters | string) {
     const message = typeof error == "string" ? error : error.message;
     this.elements.messageBox.innerHTML = message;
-    this.elements.messageBox.classList.add("--error");
+    //invalid state is used for ui purpose
+    this.#internals.states?.add("invalid");
+    this.#internals.ariaInvalid = "true"
   }
   clearValidationError() {
     this.elements.messageBox.innerHTML = this.getAttribute("message") || "";
-    this.elements.messageBox.classList.remove("--error");
+    this.#internals.states?.delete("invalid");
+    this.#internals.ariaInvalid = "false"
   }
   #dispatchOnChangeEvent() {
     const event = new Event("change", { bubbles: true, cancelable: true });
