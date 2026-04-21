@@ -15,7 +15,7 @@ export type JBSelectAttributes<TValue> = {
   getSelectedValueDOM?: (option: any) => HTMLElement,
 
 }
-export function useJBSelectAttribute<TValue>(element: RefObject<JBSelectWebComponent>, props: JBSelectAttributes<TValue>) {
+export function useJBSelectAttribute<TValue>(element: RefObject<JBSelectWebComponent|null>, props: JBSelectAttributes<TValue>) {
   useEffect(() => {
     if (props.message !== null && props.message !== undefined) {
       element.current?.setAttribute("message", props.message);

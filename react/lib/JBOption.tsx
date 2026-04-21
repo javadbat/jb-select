@@ -1,5 +1,6 @@
 'use client'
-import React, { useEffect, useRef, useImperativeHandle, PropsWithChildren, ComponentProps, type RefObject } from 'react';
+// biome-ignore lint/style/useImportType: <explanation>
+import React, { useRef, useImperativeHandle, PropsWithChildren } from 'react';
 import { JBOptionWebComponent } from 'jb-select';
 import './module-declaration.js';
 

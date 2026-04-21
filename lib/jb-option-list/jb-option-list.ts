@@ -1,5 +1,5 @@
 import { JBOptionWebComponent } from "../jb-option/jb-option";
-import { type OptionListCallbacks } from "./types";
+import type { OptionListCallbacks } from "./types";
 
 //TOption is the type of option, TValue is the type of value we extract from option
 export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
@@ -62,10 +62,10 @@ export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
   }
   //
   #initOptionList(optionList: TOption[]) {
-    this.shadowRoot.innerHTML = "";
+    this.shadowRoot!.innerHTML = "";
     optionList.forEach((option) => {
       const dom = this.#createOptionDOM(option);
-      this.shadowRoot.appendChild(dom);
+      this.shadowRoot!.appendChild(dom);
       this.#optionPairMap.set(option, dom);
     });
   }
@@ -85,6 +85,8 @@ export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
         option
       );
     }
+    // just to quite typescript
+    return undefined as unknown as TValue;
   }
   #getOptionTitle(option: TOption): string {
     if (typeof this.#callbacks.getTitle == "function") {

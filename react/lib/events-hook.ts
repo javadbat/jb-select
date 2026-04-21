@@ -15,7 +15,7 @@ export type EventProps = {
   onKeyUp?: (e: JBSelectEventType<KeyboardEvent>) => void,
   onInput?: (e: JBSelectEventType<InputEvent>) => void,
 }
-export function useEvents(element: RefObject<JBSelectWebComponent>, props: EventProps) {
+export function useEvents(element: RefObject<JBSelectWebComponent|null>, props: EventProps) {
   useEvent(element, 'load', props.onLoad, true);
   useEvent(element, 'init', props.onInit, true);
   useEvent(element, 'keyup', props.onKeyUp);
