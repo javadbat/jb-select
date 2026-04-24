@@ -33,3 +33,8 @@ export type JBSelectEventType<TEvent> = EventTypeWithTarget<TEvent,JBSelectWebCo
 
 /* Variants */
 export type SizeVariants = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+/**
+ * 
+ */
+export type PopoverPosition = 'fixed'|"absolute";

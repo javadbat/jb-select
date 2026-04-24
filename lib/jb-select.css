@@ -213,6 +213,7 @@
         --jb-popover-border-radius: var(--list-border-radius);
         --jb-popover-bg-color: var(--select-box-bg-color);
         --jb-popover-top: 0;
+        --jb-popover-margin-top: calc(-1 * var(--border-bottom-width));
       }
 
       &::part(content) {

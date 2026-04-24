@@ -44,6 +44,13 @@ export const Disabled: Story = {
     disabled: true
   }
 };
+export const FixedPopoverPosition: Story = {
+  args: {
+    label: 'fixed',
+    message: "open select and see popover(only works in a desktop)",
+    popoverPosition:"fixed"
+  }
+};
 export const OptionObject: Story = {
   args: {
     label: 'select from menu',

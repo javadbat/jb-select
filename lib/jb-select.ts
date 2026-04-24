@@ -5,6 +5,7 @@ import VariablesCSS from "./variables.css";
 import type {
   JBSelectCallbacks,
   JBSelectElements,
+  PopoverPosition,
   ValidationValue,
 } from "./types";
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
@@ -41,6 +42,17 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #selectedOption: JBOptionWebComponent<TValue> | null = null;
   callbacks: JBSelectCallbacks<TValue> = {}
   elements!: JBSelectElements;
+  #popoverPosition:PopoverPosition = "absolute"
+  /**
+   * how we set popover position
+   */
+  get popoverPosition(){
+    return this.#popoverPosition
+  }
+  set popoverPosition(value:PopoverPosition|undefined){
+    if(value === undefined) return;
+    this.#popoverPosition = value;
+  }
   get value() {
     if (this.#value !== null && this.#value !== undefined) {
       return this.#value;
@@ -183,7 +195,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   #setupPopover() {
-    this.elements.optionListWrapper.bindTarget(this.elements.selectBox);
+    if(this.popoverPosition =="fixed"){
+      this.elements.optionListWrapper.bindTarget(this.elements.selectBox);
+    }else{
+      this.elements.optionListWrapper.unBindTarget();
+    }
   }
   #callOnInitEvent() {
     const event = new CustomEvent("init", { bubbles: true, composed: true });

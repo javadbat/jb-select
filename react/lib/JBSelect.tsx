@@ -3,7 +3,7 @@
 import React, { useRef, useImperativeHandle, type PropsWithChildren } from 'react';
 import 'jb-select';
 // eslint-disable-next-line no-duplicate-imports
-import type { JBSelectWebComponent, SizeVariants } from 'jb-select';
+import type { JBSelectWebComponent, PopoverPosition, SizeVariants } from 'jb-select';
 import { type EventProps, useEvents } from './events-hook.js';
 import { useJBSelectAttribute, type JBSelectAttributes } from './attributes-hook.js';
 import type { JBElementStandardProps } from 'jb-core/react';
@@ -33,4 +33,5 @@ export type Props<TValue> = PropsWithChildren<EventProps & JBSelectAttributes<TV
   size?: SizeVariants,
   name?: string,
   disabled?:boolean,
+  popoverPosition?:PopoverPosition
 }
