@@ -144,7 +144,7 @@ export const SizeVariants: Story = {
 export const OverflowTest: Story = {
   render: () => {
     return <div style={{ height: '10rem', overflowY: "auto" }}>
-      <JBSelect label='overflow test' style={{ width: "10rem" }}>
+      <JBSelect label='overflow test' style={{ width: "10rem" }} popoverPosition='fixed'>
         {
           persons.map((p) => <JBOption key={p.userId} value={p}>{p.name}</JBOption>)
         }
