@@ -1,7 +1,8 @@
-import { type JBSelectWebComponent } from '../jb-select';
+import type { JBSelectWebComponent } from '../jb-select';
 import CSS from './jb-option.css';
 import { renderHTML } from "./render";
-import { JBOptionElements } from "./types";
+import type { JBOptionElements } from "./types";
+import { removeCheckboxNodes } from './utils';
 
 //TODO: check for filter text to set visibility on mount
 //TODO: add disable option (will be displayed but can not be select)
@@ -32,7 +33,10 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     return this.#selected;
   }
   get optionContent(): Node[] {
-    const optionNodes = this.#elements.contentWrapper.querySelector("slot")!.assignedNodes();
+    const optionNodes = this.#elements.contentWrapper.querySelector("slot")!.assignedNodes().map(x => x.cloneNode(true));
+    if (this.#SelectElement?.multiple) {
+      removeCheckboxNodes(optionNodes);
+    }
     return optionNodes;
   }
   //TODO: add search hidden property for more accurate hidden and more personalized logic
@@ -98,9 +102,9 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   #initWebComponent() {
     const shadowRoot = this.attachShadow({
       mode: "open",
-      serializable:true
+      serializable: true
     });
-    const html = `<style>${CSS}</style>` + "\n" + renderHTML();
+    const html = `<style>${CSS}</style>\n${renderHTML()}`;
     const element = document.createElement("template");
     element.innerHTML = html;
     shadowRoot.appendChild(element.content.cloneNode(true));
@@ -112,6 +116,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   }
   #registerEventListener() {
     this.#elements.componentWrapper.addEventListener("click", this.#onOptionClick.bind(this));
+    this.addEventListener("change", this.#onInnerElementChange.bind(this), { passive: true });
   }
   //this event called on each connectedCallback so select could find it's option
   #dispatchPlaceEvent() {
@@ -119,7 +124,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     this.dispatchEvent(event);
   }
   #initProp() {
-    this.value = (this.getAttribute("value") as TValue )?? null;
+    this.value = (this.getAttribute("value") as TValue) ?? null;
   }
   static get observedAttributes() {
     return ["value"];
@@ -135,14 +140,50 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     }
   }
   #onOptionClick() {
+    if (this.#isChangeCalled) {
+      this.#isChangeCalled = false;
+      return;
+    }
     if (!this.#selected) {
       this.#dispatchSelectEvent();
+      const checkbox = this.#getInsideCheckbox();
+      if (checkbox && checkbox?.value !== true) {
+        checkbox.value = true;
+      }
+    } else if (this.#SelectElement?.multiple) {
+      this.#dispatchDeSelectEvent();
+      const checkbox = this.#getInsideCheckbox();
+      if (checkbox && checkbox?.value !== false) {
+        checkbox.value = false;
+      }
     }
   }
   #dispatchSelectEvent() {
     const event = new Event("select", { bubbles: true, cancelable: false, composed: true });
     this.dispatchEvent(event);
   }
+  #dispatchDeSelectEvent() {
+    const event = new Event("deselect", { bubbles: true, cancelable: false, composed: true });
+    this.dispatchEvent(event);
+  }
+  #getInsideCheckbox() {
+    return this.querySelector("jb-checkbox") as (Element & { value: boolean }) | null
+  }
+  #isChangeCalled = false;
+  #onInnerElementChange(e: Event) {
+    // biome-ignore lint/suspicious/noExplicitAny: <it happen after change so it must have a value>
+    if (typeof (e.target as any)?.value == "boolean") {
+      const value: boolean = (e.target as any)?.value;
+      if (value) {
+        this.#dispatchSelectEvent();
+        this.#isChangeCalled = true;
+      } else if (this.#SelectElement?.multiple) {
+        this.#dispatchDeSelectEvent();
+        this.#isChangeCalled = true;
+      }
+    }
+  }
+
 }
 const myElementNotExists = !customElements.get("jb-option");
 if (myElementNotExists) {

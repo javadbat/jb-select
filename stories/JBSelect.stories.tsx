@@ -4,10 +4,11 @@ import React from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { JBSelect, JBOptionList, JBOption, type Props, type JBSelectEventType } from 'jb-select/react';
 import { JBButton } from 'jb-button/react';
+//@ts-ignore
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
 import { colorList, nameList, numberOptionList, persons } from './constants';
-
+import {JBCheckbox} from'jb-checkbox/react';
 const meta: Meta<Props<unknown>> = {
   title: "Components/form elements/JBSelect",
   component: JBSelect,
@@ -26,7 +27,73 @@ export const Normal: Story = {
     placeholder: "placeholder",
   }
 };
-
+export const Multiple: Story = {
+  render:()=>{
+    return(
+      <JBSelect multiple>
+        {
+          persons.map(p=>{
+            return(
+              <JBOption key={p.userId} value={p.userId}>{`${p.name} ${p.family}`}</JBOption>
+            )
+          })
+        }
+      </JBSelect>
+    )
+  }
+};
+export const MultipleWithCheckbox: Story = {
+  render:()=>{
+    return(
+      <JBSelect multiple>
+        {
+          persons.map(p=>{
+            return(
+              <JBOption key={p.userId} value={p.userId}><JBCheckbox size='sm' /><span>{`${p.name} ${p.family}`}</span></JBOption>
+            )
+          })
+        }
+      </JBSelect>
+    )
+  }
+};
+export const MultipleWithCheckboxAndLabel: Story = {
+  render:()=>{
+    return(
+      <JBSelect multiple>
+        {
+          persons.map(p=>{
+            return(
+              <JBOption key={p.userId} value={p.userId}><JBCheckbox size='sm'><div slot="label">{`${p.name} ${p.family}`}</div></JBCheckbox></JBOption>
+            )
+          })
+        }
+      </JBSelect>
+    )
+  }
+};
+export const MultipleWithValue: Story = {
+  render:(args)=>{
+    const [value,setValue] = useState(args.value);
+    useEffect(()=>{
+      setValue(args.value);
+    },[args.value])
+    return(
+      <JBSelect multiple value={value} onChange={(e)=>setValue(e.target.value)} >
+        {
+          persons.map(p=>{
+            return(
+              <JBOption key={p.userId} value={p.userId}>{`${p.name} ${p.family}`}</JBOption>
+            )
+          })
+        }
+      </JBSelect>
+    )
+  },
+  args:{
+    value:[...persons.filter((_,i)=>i%2 ==0).map(x=>x.userId)]
+  }
+};
 export const WithValue: Story = {
   args: {
     label: 'select from menu',

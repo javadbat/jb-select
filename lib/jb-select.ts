@@ -35,23 +35,37 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #value: TValue | null = null;
   #textValue = "";
   // if user set value and current option list is not contain the option.
-  // we hold it in _notFoundedValue and select value when option value get updated
+  // we hold it in #notFoundedValue and select value when option value get updated
   #notFoundedValue: TValue | null = null;
   #optionList = new Set<JBOptionWebComponent<TValue>>()
   //keep selected option dom
   #selectedOption: JBOptionWebComponent<TValue> | null = null;
+  /**
+   * selected option when multiple mode
+   */
+  #selectedOptions = new Set<JBOptionWebComponent<TValue>>([]);
   callbacks: JBSelectCallbacks<TValue> = {}
   elements!: JBSelectElements;
-  #popoverPosition:PopoverPosition = "absolute"
+  #popoverPosition: PopoverPosition = "absolute"
   /**
    * how we set popover position
    */
-  get popoverPosition(){
+  get popoverPosition() {
     return this.#popoverPosition
   }
-  set popoverPosition(value:PopoverPosition|undefined){
-    if(value === undefined) return;
+  set popoverPosition(value: PopoverPosition | undefined) {
+    if (value === undefined) return;
     this.#popoverPosition = value;
+  }
+  get multiple() {
+    return this.hasAttribute('multiple')
+  }
+  set multiple(value: boolean) {
+    if (value) {
+      this.setAttribute('multiple', '');
+    } else {
+      this.removeAttribute('multiple')
+    }
   }
   get value() {
     if (this.#value !== null && this.#value !== undefined) {
@@ -71,9 +85,12 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.value = value;
     this.#updateOptionList(value);
   }
-  get selectedOptionTitle() {
+  get selectedOptionTitle(): string {
     if (this.value) {
-      return this.#selectedOption?.optionContentText;
+      if (this.multiple) {
+        return Array.from(this.#selectedOptions).reduce((acc, x) => acc.concat(", ", x.optionContentText), "")
+      }
+      return this.#selectedOption?.optionContentText ?? "";
     } else {
       return "";
     }
@@ -195,9 +212,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   #setupPopover() {
-    if(this.popoverPosition =="fixed"){
+    if (this.popoverPosition == "fixed") {
       this.elements.optionListWrapper.bindTarget(this.elements.selectBox);
-    }else{
+    } else {
       this.elements.optionListWrapper.unBindTarget();
     }
   }
@@ -268,6 +285,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this));
     //events to work with options
     this.addEventListener("select", this.#onOptionSelect.bind(this));
+    this.addEventListener("deselect", this.#onOptionDeselect.bind(this));
     this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this));
     this.elements.optionListSlot.addEventListener("slotchange", this.#onOptionSlotChange.bind(this));
 
@@ -361,6 +379,18 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     } else if (this.value) {
       this.#setValueFromOutside(this.value);
     }
+    if (this.multiple && Array.isArray(this.#value) && this.#selectedOptions.values.length< this.#value.length) {
+      //in this particular edge case our value is already set but some option maybe missing in first place and added later
+      const missing:JBOptionWebComponent<TValue>[] = [];
+      this.#optionList.forEach((op)=>{
+        if(op.selected == false && (this.#value as unknown[]).includes(op.value)){
+          missing.push(op);
+        }
+      });
+      if(missing.length>0){
+        this.#setSelectedOption(missing);
+      }
+    }
   }
   //when user set value by attribute or value prop directly we call this function
   #setValueFromOutside(value: TValue | null | undefined): boolean {
@@ -368,37 +398,75 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.#setValue(null, null);
       return true;
     }
-    let matchedOption: JBOptionWebComponent<TValue> | null = null;
-    for (const option of this.#optionList) {
-      // if we have value mapper we set selected value by object that match mapper
-      if (option.value == value) {
-        matchedOption = option;
+    if (!this.multiple) {
+      // single value mode
+      let matchedOption: JBOptionWebComponent<TValue> | null = null;
+      for (const option of this.#optionList) {
+        // if we have value mapper we set selected value by object that match mapper
+        if (option.value == value) {
+          matchedOption = option;
+        }
+      }
+      if (matchedOption !== null) {
+        this.#setValue(matchedOption.value!, matchedOption);
+        return true;
+      } else {
+        this.#notFoundedValue = value;
+        return false;
+      }
+    } else {
+      // in multiple values mode
+      if (!Array.isArray(value)) {
+        return false;
+      }
+      const selectedOptions: JBOptionWebComponent<TValue>[] = [];
+      this.#optionList.forEach((op) => {
+        if (value.includes(op.value)) {
+          selectedOptions.push(op)
+        } else {
+          // because in multi select `setValue` only append select and do not deselect options if they are not in list (it used internally when new item selected) so we de-select here.
+          op.selected = false;
+          this.#selectedOptions.delete(op)
+        }
+      });
+      if (selectedOptions.length == 0 && value.length > 0) {
+        this.#notFoundedValue = value;
+      } else {
+        this.#setValue(value, selectedOptions);
       }
     }
-    if (matchedOption !== null) {
-      this.#setValue(matchedOption.value, matchedOption);
-      return true;
-    } else {
-      this.#notFoundedValue = value;
-      return false;
-    }
+    return false;
   }
   //null option mean deselect all
-  #changeSelectedOption(option: JBOptionWebComponent<TValue> | null) {
-    this.#optionList.forEach((x) => { x.selected = false });
-    if (option) {
-      option.selected = true;
-      this.#selectedOption = option;
-    }
+  #setSelectedOption(options: JBOptionWebComponent<TValue>[]): void
+  #setSelectedOption(option: JBOptionWebComponent<TValue> | null): void
+  #setSelectedOption(option: JBOptionWebComponent<TValue>[] | JBOptionWebComponent<TValue> | null): void {
+    if (option)
+      if (this.multiple) {
+        const selectOption = (op: JBOptionWebComponent<TValue>) => {
+          op.selected = true;
+          this.#selectedOptions.add(op);
+        }
+        Array.isArray(option) ? option.forEach(op => { selectOption(op) }) : selectOption(option)
+      } else {
+        // single select
+        if (Array.isArray(option)) return;
+        this.#optionList.forEach((x) => { x.selected = false });
+        option.selected = true;
+        this.#selectedOption = option;
+      }
   }
-  #setValue(value: TValue | null, option: JBOptionWebComponent<TValue> | null) {
+  #setValue(value: null, option: null): void
+  #setValue(value: TValue, option: JBOptionWebComponent<TValue>): void
+  #setValue(value: TValue, option: JBOptionWebComponent<TValue>[]): void
+  #setValue(value: TValue | null, option: JBOptionWebComponent<TValue> | JBOptionWebComponent<TValue>[] | null): void {
     this.#notFoundedValue = null;
     this.#value = value;
-    if (value === null || value === undefined) {
+    if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
       this.textValue = "";
-      this.#setSelectedOptionDom(null);
+      this.#updateSelectedOptionDom();
       //will deselect all option
-      this.#changeSelectedOption(null);
+      this.#setSelectedOption(null);
       this.elements.componentWrapper.classList.remove("--has-value");
       //show placeholder when user empty data
       if (!(this.isMobileDevice && this.isOpen)) {
@@ -406,8 +474,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       }
     } else {
       this.textValue = "";
-      this.#changeSelectedOption(option);
-      this.#setSelectedOptionDom(value);
+      Array.isArray(option) ? this.#setSelectedOption(option) : this.#setSelectedOption(option);
+      this.#updateSelectedOptionDom();
       this.elements.componentWrapper.classList.add("--has-value");
       //hide placeholder when user select data
       if (!(this.isMobileDevice && this.isOpen)) {
@@ -487,11 +555,20 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   #onInputBlur(e: FocusEvent) {
     const focusedElement = <Node>e.relatedTarget;
+    if (this.elements.arrowIcon.contains(focusedElement)) {
+      if (this.isOpen) {
+        this.blur();
+        return
+      } else {
+        return;
+      }
+    }
     if (
       this.elements.optionListWrapper.contains(focusedElement) ||
-      this.elements.arrowIcon.contains(focusedElement)
+      //focused element is children of slots of us like option content
+      this.contains(focusedElement)
     ) {
-      //user click on a menu item
+      focusedElement.addEventListener("blur", (e) => { this.#onInputBlur(e as FocusEvent) }, { once: true, passive: true })
     } else {
       this.blur();
     }
@@ -541,16 +618,26 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     //because jb-option may be in another shadow dom like jb-option-list we have to get first composed element as a target
     const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
     if (target instanceof JBOptionWebComponent) {
-      const value = target.value;
+      const value = target.value!;
       this.#selectOption(value, target);
-      this.blur();
+      if (!this.multiple) {
+        this.blur();
+      }
       const dispatchedEvent = this.#dispatchOnChangeEvent();
       if (dispatchedEvent.defaultPrevented) {
         e.preventDefault();
-        this.#selectOption(prevValue, prevOption!);
+        this.#selectOption(prevValue!, prevOption!);
       }
     }
 
+  }
+  #onOptionDeselect(e: Event) {
+    const target = e.target as JBOptionWebComponent<unknown>;
+    //this only works on multi mode
+    target.selected = false;
+    this.#selectedOptions.delete(e.target as JBOptionWebComponent<TValue>)
+    this.#updateSelectedOptionDom()
+    this.#checkValidity(true);
   }
   //called when an jb-Option connected to the dom
   #onOptionConnected(e: CustomEvent) {
@@ -574,7 +661,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
 
-  #selectOption(value: TValue | null, optionDom: JBOptionWebComponent<TValue>) {
+  #selectOption(value: TValue, optionDom: JBOptionWebComponent<TValue>) {
     this.#setValue(value, optionDom);
     this.#checkValidity(true);
   }
@@ -599,31 +686,45 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.dispatchEvent(event);
     return event;
   }
-  #setSelectedOptionDom(value: TValue | null) {
+  #updateSelectedOptionDom() {
     //when user select option or value changed in any condition we set selected option DOM
     this.elements.selectedValueWrapper.innerHTML = "";
     //if value was null or undefined it remain empty
-    if (value !== null && value !== undefined) {
-      const selectedOptionDom = this.#createSelectedValueDom(value);
+    if (this.#value !== null && this.#value !== undefined) {
+      const selectedOptionDom = this.#createSelectedValueDom(this.#value);
       this.elements.selectedValueWrapper.appendChild(selectedOptionDom);
     }
   }
   #createSelectedValueDom(value: TValue) {
     if (typeof this.callbacks.getSelectedValueDOM == "function") {
+      //TODO: make it work with multiple select too
       return this.callbacks.getSelectedValueDOM(value, this.#selectedOption);
     } else {
       return this.#createDefaultSelectedValueDom();
     }
   }
   #createDefaultSelectedValueDom() {
-    //TODO: put some backup way for when we have value but no option provided
     let contentNodes: Node[] = [];
-    if (this.#selectedOption) {
-      contentNodes = this.#selectedOption.optionContent;
+    if (this.multiple) {
+      const wrapperDiv = document.createElement('div');
+      wrapperDiv.style.display = "flex";
+      const divider = document.createElement("div");
+      divider.innerHTML = ",";
+      divider.classList.add("multiple-divider");
+      Array.from(this.#selectedOptions).forEach((x, i) => {
+        wrapperDiv.append(...(i !== 0 ? [divider.cloneNode(true)] : []), ...x.optionContent)
+      });
+      contentNodes = [wrapperDiv];
+    } else {
+      // on single select mode
+      if (this.#selectedOption) {
+        contentNodes = this.#selectedOption.optionContent;
+      }
     }
+
     const selectedOptionDom = document.createElement("div");
     selectedOptionDom.classList.add("selected-value");
-    selectedOptionDom.append(...contentNodes.map(n => n.cloneNode()));
+    selectedOptionDom.append(...contentNodes);
     return selectedOptionDom;
   }
   #getInsideValidation() {

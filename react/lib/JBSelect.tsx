@@ -14,6 +14,7 @@ export type JBSelectEventType<T> = T & {
 export function JBSelect<TValue>(props: Props<TValue>) {
   const element = useRef<JBSelectWebComponent>(null);
   const { onChange, onInit, onInput, onKeyUp, onLoad, ref, error, getSelectedValueDOM, label, required, message, placeholder, searchPlaceholder, validationList, value, hideClear, ...otherProps } = props;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <we need element for merging>
   useImperativeHandle(
     ref,
     () => (element.current??undefined),
@@ -30,6 +31,7 @@ export function JBSelect<TValue>(props: Props<TValue>) {
 
 export type Props<TValue> = PropsWithChildren<EventProps & JBSelectAttributes<TValue>> & JBElementStandardProps<JBSelectWebComponent, keyof EventProps & JBSelectAttributes<TValue>> & {
   ref?: React.ForwardedRef<JBSelectWebComponent|null|undefined>,
+  multiple?:boolean
   size?: SizeVariants,
   name?: string,
   disabled?:boolean,
