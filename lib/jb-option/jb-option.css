@@ -1,7 +1,6 @@
 .jb-options-web-component {
   .option-content-wrapper {
     min-height: 36px;
-    padding: 4px 16px;
     display: flex;
     align-items: center;
     font-size: 0.9em;

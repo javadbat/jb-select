@@ -8,7 +8,7 @@ import { JBButton } from 'jb-button/react';
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
 import { colorList, nameList, numberOptionList, persons } from './constants';
-import {JBCheckbox} from'jb-checkbox/react';
+import { JBCheckbox } from 'jb-checkbox/react';
 const meta: Meta<Props<unknown>> = {
   title: "Components/form elements/JBSelect",
   component: JBSelect,
@@ -28,12 +28,12 @@ export const Normal: Story = {
   }
 };
 export const Multiple: Story = {
-  render:()=>{
-    return(
+  render: () => {
+    return (
       <JBSelect multiple>
         {
-          persons.map(p=>{
-            return(
+          persons.map(p => {
+            return (
               <JBOption key={p.userId} value={p.userId}>{`${p.name} ${p.family}`}</JBOption>
             )
           })
@@ -43,12 +43,12 @@ export const Multiple: Story = {
   }
 };
 export const MultipleWithCheckbox: Story = {
-  render:()=>{
-    return(
+  render: () => {
+    return (
       <JBSelect multiple>
         {
-          persons.map(p=>{
-            return(
+          persons.map(p => {
+            return (
               <JBOption key={p.userId} value={p.userId}><JBCheckbox size='sm' /><span>{`${p.name} ${p.family}`}</span></JBOption>
             )
           })
@@ -58,12 +58,12 @@ export const MultipleWithCheckbox: Story = {
   }
 };
 export const MultipleWithCheckboxAndLabel: Story = {
-  render:()=>{
-    return(
+  render: () => {
+    return (
       <JBSelect multiple>
         {
-          persons.map(p=>{
-            return(
+          persons.map(p => {
+            return (
               <JBOption key={p.userId} value={p.userId}><JBCheckbox size='sm'><div slot="label">{`${p.name} ${p.family}`}</div></JBCheckbox></JBOption>
             )
           })
@@ -73,25 +73,28 @@ export const MultipleWithCheckboxAndLabel: Story = {
   }
 };
 export const MultipleWithValue: Story = {
-  render:(args)=>{
-    const [value,setValue] = useState(args.value);
-    useEffect(()=>{
+  render: (args) => {
+    const [value, setValue] = useState(args.value);
+    useEffect(() => {
       setValue(args.value);
-    },[args.value])
-    return(
-      <JBSelect multiple value={value} onChange={(e)=>setValue(e.target.value)} >
-        {
-          persons.map(p=>{
-            return(
-              <JBOption key={p.userId} value={p.userId}>{`${p.name} ${p.family}`}</JBOption>
-            )
-          })
-        }
-      </JBSelect>
+    }, [args.value])
+    return (
+      <div style={{display:'flex',flexDirection:'column', gap:'0.5rem'}}>
+        <JBSelect multiple value={value} onChange={(e) => setValue(e.target.value)} >
+          {
+            persons.map(p => {
+              return (
+                <JBOption key={p.userId} value={p.userId}>{`${p.name} ${p.family}`}</JBOption>
+              )
+            })
+          }
+        </JBSelect>
+        <JBButton size='sm' onClick={()=>console.log(value)}>Log Value (see console)</JBButton>
+      </div>
     )
   },
-  args:{
-    value:[...persons.filter((_,i)=>i%2 ==0).map(x=>x.userId)]
+  args: {
+    value: [...persons.filter((_, i) => i % 2 == 0).map(x => x.userId)]
   }
 };
 export const WithValue: Story = {
@@ -115,7 +118,7 @@ export const FixedPopoverPosition: Story = {
   args: {
     label: 'fixed',
     message: "open select and see popover(only works in a desktop)",
-    popoverPosition:"fixed"
+    popoverPosition: "fixed"
   }
 };
 export const OptionObject: Story = {
@@ -496,7 +499,7 @@ export const MissingOption: Story = {
             ))
           }
         </JBSelect>
-        <JBButton onClick={()=>setOptionList(persons)}>Fill Option</JBButton>
+        <JBButton onClick={() => setOptionList(persons)}>Fill Option</JBButton>
       </div>
 
     )

@@ -636,7 +636,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     //this only works on multi mode
     target.selected = false;
     this.#selectedOptions.delete(e.target as JBOptionWebComponent<TValue>)
-    this.#updateSelectedOptionDom()
+    this.#updateSelectedOptionDom();
+    if(Array.isArray(this.#value)){
+      const index = this.#value.indexOf(target.value);
+      if(index !== -1) this.#value.splice(index,1);
+    }else if(this.value === target.value){
+      this.#value = null;
+    }
+    this.#value=this.#value
     this.#checkValidity(true);
   }
   //called when an jb-Option connected to the dom
@@ -662,6 +669,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
 
   #selectOption(value: TValue, optionDom: JBOptionWebComponent<TValue>) {
+    if(this.multiple){
+      if(Array.isArray(this.#value)){
+        value = [...this.#value,value] as TValue
+      }else{
+        value = [this.#value,value] as TValue
+      }
+    }
     this.#setValue(value, optionDom);
     this.#checkValidity(true);
   }
