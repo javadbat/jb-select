@@ -479,7 +479,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#notFoundedValue = null;
     this.#value = value;
     if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
-      this.textValue = "";
+      if(!this.multiple){this.textValue = "";}
       this.#updateSelectedOptionDom();
       //will deselect all option
       this.#setSelectedOption(null);
@@ -489,7 +489,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         this.elements.input.placeholder = this.placeholder;
       }
     } else {
-      this.textValue = "";
+      
+      if(!this.multiple){this.textValue = "";}
+      //for typescript error
       Array.isArray(option) ? this.#setSelectedOption(option) : this.#setSelectedOption(option);
       this.#updateSelectedOptionDom();
       this.elements.componentWrapper.classList.add("--has-value");
@@ -499,7 +501,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       }
     }
     //if user select an option we rest filter so user see all option again when open a select
-    this.#updateOptionList("");
+    if(!this.multiple){
+      this.#updateOptionList("");
+    }
   }
   #onArrowKeyClick() {
     if (this.isOpen) {
