@@ -248,10 +248,10 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-select-label-color                   | color of label                                                                                |
 | --jb-select-label-font-size               | label font size default is `0.8em`                                                            |
 | --jb-select-label-font-weight             | label font weight                                                                             |
-| --jb-select-option-color                  | change option text color                                                                      |
-| --jb-select-option-color-hover            | change option text color on hover                                                             |
-| --jb-select-option-background-color       | background of options default is `transparent`                                                |
-| --jb-select-option-background-color-hover | background of options on mouse hover                                                          |
+| --jb-option-color                         | change option text color                                                                      |
+| --jb-option-color-active                  | change option text color on hover or keyboard navigate                                        |
+| --jb-option-background-color              | background of options default is `transparent`                                                |
+| --jb-option-background-color-active       | background of options on mouse hover or keyboard navigate                                     |
 | --jb-select-input-color                   | color of input value                                                                          |
 | --jb-select-bgcolor-selected              | set background color for selected status                                                      |
 | --jb-select-selected-value-color          | selected value text color                                                                     |

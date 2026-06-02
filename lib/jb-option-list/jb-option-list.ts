@@ -23,6 +23,9 @@ export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
     this.#optionList = value;
     this.#initOptionList(value);
   }
+  get optionListDom(){
+    return Array.from(this.#optionPairMap.values());
+  }
   constructor() {
     super();
     this.#initWebComponent();

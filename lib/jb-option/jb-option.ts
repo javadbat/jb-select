@@ -1,5 +1,6 @@
 import type { JBSelectWebComponent } from '../jb-select';
 import CSS from './jb-option.css';
+import CSSVariable from './variables.css';
 import { renderHTML } from "./render";
 import type { JBOptionElements } from "./types";
 import { removeCheckboxNodes } from './utils';
@@ -104,7 +105,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
       mode: "open",
       serializable: true
     });
-    const html = `<style>${CSS}</style>\n${renderHTML()}`;
+    const html = `<style>${CSSVariable} \n ${CSS}</style>\n${renderHTML()}`;
     const element = document.createElement("template");
     element.innerHTML = html;
     shadowRoot.appendChild(element.content.cloneNode(true));
@@ -139,6 +140,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
         this.#value = value as TValue;
     }
   }
+
   #onOptionClick() {
     if (this.#isChangeCalled) {
       this.#isChangeCalled = false;
@@ -157,6 +159,13 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
         checkbox.value = false;
       }
     }
+  }
+  /**
+   * @public
+   * this function used by jb-select to toggle option when it active and user hit enter to select or deselect option
+   */
+  toggleOption(){
+    this.#onOptionClick();
   }
   #dispatchSelectEvent() {
     const event = new Event("select", { bubbles: true, cancelable: false, composed: true });
@@ -181,6 +190,18 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
         this.#dispatchDeSelectEvent();
         this.#isChangeCalled = true;
       }
+    }
+  }
+  #active = false;
+  get active(){
+    return this.#active;
+  }
+  set active(value:boolean){
+    this.#active = value;
+    if(value){
+      this.#internals?.states.add("active");
+    }else{
+      this.#internals?.states.delete("active");
     }
   }
 

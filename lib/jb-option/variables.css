@@ -1,5 +1,12 @@
 :host{
-  --background-color:var(--jb-select-option-background-color, transparent);
-  --background-color-hover:var(--jb-select-option-background-color-hover, #1073db);
-  --option-color-hover:var(--jb-select-option-color-hover, #fff);
+  /*Sizes*/
+  --border-radius:var(--jb-option-border-radius, 0);
+  --padding: var(--jb-option-padding, 0.5rem 1rem);
+  --font-size: var(--jb-option-font-size, 0.9rem);
+  --min-height: var(--jb-option-min-height, 2.25rem);
+  /*Colors*/
+  --color: var(--jb-option-color, inherit);
+  --color-active: var(--jb-option-color-active, var(--jb-option-color, inherit));
+  --background-color:var(--jb-option-background-color, transparent);
+  --background-color-active:var(--jb-option-background-color-active, var(--jb-primary-subtle));
 }

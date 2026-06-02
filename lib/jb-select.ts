@@ -19,6 +19,7 @@ import { dictionary } from "./i18n";
 import { i18n } from "jb-core/i18n";
 import type { JBButtonWebComponent } from "jb-button";
 import { JBPopoverWebComponent } from "jb-popover";
+import { JBOptionListWebComponent } from "./jb-option-list/jb-option-list";
 
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
 //TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
@@ -56,6 +57,21 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   set popoverPosition(value: PopoverPosition | undefined) {
     if (value === undefined) return;
     this.#popoverPosition = value;
+  }
+  /**
+  * this is a expensive option list please use it when you really need optionList with order
+  */
+  get optionListWithOrder(): JBOptionWebComponent<TValue>[] {
+    const elements = this.elements.optionListSlot.assignedElements();
+    const optionList = elements.flatMap(x => {
+      // extract option list from JBOptionList to make option list flat by index
+      if (x instanceof JBOptionListWebComponent) {
+        return x.optionListDom;
+      } else {
+        return x
+      }
+    }).filter(x => (x instanceof JBOptionWebComponent && !x.hidden));
+    return optionList as JBOptionWebComponent<TValue>[];
   }
   get multiple() {
     return this.hasAttribute('multiple')
@@ -379,15 +395,15 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     } else if (this.value) {
       this.#setValueFromOutside(this.value);
     }
-    if (this.multiple && Array.isArray(this.#value) && this.#selectedOptions.values.length< this.#value.length) {
+    if (this.multiple && Array.isArray(this.#value) && this.#selectedOptions.values.length < this.#value.length) {
       //in this particular edge case our value is already set but some option maybe missing in first place and added later
-      const missing:JBOptionWebComponent<TValue>[] = [];
-      this.#optionList.forEach((op)=>{
-        if(op.selected == false && (this.#value as unknown[]).includes(op.value)){
+      const missing: JBOptionWebComponent<TValue>[] = [];
+      this.#optionList.forEach((op) => {
+        if (op.selected == false && (this.#value as unknown[]).includes(op.value)) {
           missing.push(op);
         }
       });
-      if(missing.length>0){
+      if (missing.length > 0) {
         this.#setSelectedOption(missing);
       }
     }
@@ -503,6 +519,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const event = createKeyboardEvent("keypress", e, {})
     this.dispatchEvent(event);
   }
+
+
   #onInputBeforeInput(_e: InputEvent) {
     // const inputtedText = e.data || "";
     //TODO: add cancelable event dispatch here
@@ -526,8 +544,59 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       //because on keypress dont receive backspace key press
       this.#handleSelectedValueDisplay(inputText);
     }
-
+    switch (e.key) {
+      case "ArrowUp":
+        this.#activePrevOption();
+        break;
+      case "ArrowDown":
+        this.#activeNextOption();
+        break;
+      case "Enter":
+        this.#optionList.forEach(x => {
+          if (x.active) {x.toggleOption();}
+        })
+        break;
+    }
     this.#triggerOnInputKeyup(e);
+  }
+  /**
+* used when change activeItem with arrow keys 
+*/
+  #activePrevOption() {
+    const optionList = this.optionListWithOrder;
+    const activeOption = optionList.find((option, index) => {
+      if (option.active) {
+        if (optionList[index - 1]) {
+          option.active = false;
+          optionList[index - 1].active = true;
+          optionList[index - 1].scrollIntoView({ block: "nearest" });
+        }
+        return true;
+      }
+      return false
+    });
+    if (!activeOption && optionList[optionList.length - 1]) {
+      optionList[optionList.length - 1].active = true;
+      optionList[optionList.length - 1].scrollIntoView({ block: "nearest" });
+    }
+  }
+  /**
+  * used when change activeItem with arrow keys 
+  */
+  #activeNextOption() {
+    const optionList = this.optionListWithOrder;
+    const activeOption = optionList.find((option, index) => {
+      if (option.active) {
+        if (optionList[index + 1]) {
+          option.active = false;
+          optionList[index + 1].active = true;
+          optionList[index + 1].scrollIntoView({ block: "nearest" });
+        }
+        return true;
+      }
+      return false
+    });
+    if (!activeOption && optionList[0]) { optionList[0].active = true; optionList[0].scrollIntoView({ block: "nearest" }) }
   }
   #handleSelectedValueDisplay(inputValue: string) {
     if (inputValue !== "") {
@@ -599,6 +668,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       }
     }
     this.elements.input.blur();
+    this.#optionList.forEach(x => { x.active = false })
   }
   #showOptionList() {
     this.#internals.states.add("open")
@@ -637,13 +707,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     target.selected = false;
     this.#selectedOptions.delete(e.target as JBOptionWebComponent<TValue>)
     this.#updateSelectedOptionDom();
-    if(Array.isArray(this.#value)){
+    if (Array.isArray(this.#value)) {
       const index = this.#value.indexOf(target.value);
-      if(index !== -1) this.#value.splice(index,1);
-    }else if(this.value === target.value){
+      if (index !== -1) this.#value.splice(index, 1);
+    } else if (this.value === target.value) {
       this.#value = null;
     }
-    this.#value=this.#value
+    this.#value = this.#value
     this.#checkValidity(true);
   }
   //called when an jb-Option connected to the dom
@@ -657,6 +727,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.#setValueOnOptionListChanged();
     }
     this.#updateListEmptyPlaceholder();
+    target.addEventListener("mouseenter",this.#onOptionHover)
   }
   #onOptionDisconnected(e: CustomEvent) {
     e.stopPropagation();
@@ -666,14 +737,21 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     if (target.value == this.#value) {
       this.#setValueOnOptionListChanged();
     }
+    target.removeEventListener("mouseenter",this.#onOptionHover)
   }
-
+  #onOptionHover = (e:MouseEvent)=>{
+    const target = e.target as JBOptionWebComponent<TValue>;
+    if(!target.active){
+      this.#optionList.forEach(x=>{x.active = false});
+    }
+    target.active = true;
+  }
   #selectOption(value: TValue, optionDom: JBOptionWebComponent<TValue>) {
-    if(this.multiple){
-      if(Array.isArray(this.#value)){
-        value = [...this.#value,value] as TValue
-      }else{
-        value = [this.#value,value] as TValue
+    if (this.multiple) {
+      if (Array.isArray(this.#value)) {
+        value = [...this.#value, value] as TValue
+      } else {
+        value = [this.#value, value] as TValue
       }
     }
     this.#setValue(value, optionDom);

@@ -213,6 +213,7 @@
 
   .popover-wrapper {
     position: relative;
+    --jb-popover-padding: 0;
 
     .select-list-wrapper {
       @media(--tablet-from) {
