@@ -5,7 +5,7 @@
 [![NPM Version](https://img.shields.io/npm/v/jb-select)](https://www.npmjs.com/package/jb-select)
 ![GitHub Created At](https://img.shields.io/github/created-at/javadbat/jb-select)
 
-pure js standalone select box web-component
+pure js standalone select box web-component.
 
 - with search ability
 - mobile friendly and responsive
