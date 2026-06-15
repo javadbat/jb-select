@@ -9,16 +9,14 @@ select component for react
 
 > this component is a react wrapper for [jb-select](https://github.com/javadbat/jb-select)
 
-Demo :  Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-select) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBSelect.tsx) if you want to see and play with code
+Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-select) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBSelect.tsx) if you want to see and play with code
 
-## installation
-
+## Installation
 ```sh
 npm install jb-select
 ```
 
-## usage
-
+## Usage
 use below syntax in your render function.
 ```jsx
 import {JBSelect} from 'jb-select/react';
@@ -155,3 +153,7 @@ you can also set `error` attribute to pass error directly to the component
 ## set custom style
 
 please read [jb-select](https://github.com/javadbat/jb-select) custom style section.
+
+## Shared Documentation
+
+For web-component behavior, events, slots, and CSS variables, see [`jb-select`](https://github.com/javadbat/jb-select).

@@ -53,7 +53,7 @@
     display: block;
     font-size: var(--label-font-size);
     color: var(--label-color);
-    font-weight: var(--jb-input-label-font-weight, 300);
+    font-weight: var(--jb-select-label-font-weight, 300);
 
     &:empty {
       display: none;

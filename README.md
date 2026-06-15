@@ -9,7 +9,7 @@ pure js standalone select box web-component.
 
 - with search ability
 - mobile friendly and responsive
-- customizable style with css variable
+- customizable style with CSS variable
 - support typescript
 - support both RTL & LTR direction pages
 - custom validation
@@ -17,17 +17,27 @@ pure js standalone select box web-component.
 - can get array of js object as a option list and extract value and label from it to show it to user.
 
 
-## Sample
-
+## Demo
 - [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect)
 - [Codepen](https://codepen.io/javadbat/pen/abpjKVP)
 - [CodeSandbox](https://3f63dj.csb.app/samples/jb-select)
 
-## using with JS frameworks
-
+## Using With JS Frameworks
 - [<img src="https://img.shields.io/badge/React.js-jb--select%2Freact-000.svg?logo=react&logoColor=%2361DAFB" height="30" />](https://github.com/javadbat/jb-select/tree/main/react)
 
-## install
+## Installation
+
+## Attributes/Properties
+
+| name | type | description |
+| --- | --- | --- |
+| `value` | property/attribute | Current selected value. |
+| `selectedOptionTitle` | property | Visible title of the selected option. |
+| `multiple` | attribute | Enables multiple selection. |
+| `placeholder` | attribute | Placeholder when no value is selected. |
+| `search-placeholder` | attribute | Search input placeholder in mobile modal mode. |
+| `required` | attribute | Marks the select as required. |
+| `checkValidity()` | method | Runs validation and returns validation result. |
 
 ### using npm:
 
@@ -119,6 +129,8 @@ optionListElement.setCallback("getValue", (option)=>option.id);
 ```
 
 `jb-option-list` use `jb-option` inside itself and just help you to manage your option list easier in js
+
+For the standalone `jb-option` API and CSS variables, see [jb-option README](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-jboption-readme--docs).
 
 ## get value
 
@@ -217,7 +229,6 @@ for example if you have array of object as a option list and want to show custom
 remember you must set this callback before set value and option list
 
 ## Events
-
 ```js
     dropDownElement.addEventListener('change',(e)=>{/*your function*/});
     dropDownElement.addEventListener('keyup',(e)=>{/*your function*/});
@@ -228,64 +239,95 @@ remember you must set this callback before set value and option list
 ## set custom style
 
 in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
-if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
+if you want to set a custom style to this web-component all you need is to set CSS variable in parent scope of web-component
 
 
-| css variable name                         | description                                                                                   |
+| CSS variable name                         | description                                                                                   |
 | -------------                             | -------------                                                                                 |
 | --jb-select-margin                        | web-component margin default is `0 0`                                                         |
 | --jb-select-width                         | change the select component width default is `100%`                                           |
 | --jb-select-rounded                       | main value for corner radius it must be a single value like `1rem` not `1rem 1rem` used for all `border-radius`|
 | --jb-select-box-border-radius             | box `border-radius` it's full value so you can change it whatever you want                    |
-| --jb-select-mobile-item-list-border-radius| web-component item list border-radius on mobile and tablet when list is open                  |
 | --jb-select-border-color                  | border color of select in normal mode                                                         |
 | --jb-select-border-color-selected         | border color when user select a value from list                                               |
 | --jb-select-bgcolor                       | background color of input                                                                     |
-| --jb-select-overlay-bgcolor               | background of select overlay when open in mobile and tablet screen                            |
 | --jb-select-list-max-height               | max height of option list                                                                     |
 | --jb-select-border-bottom-width           | width of border bottom                                                                        |
 | --jb-select-border-width                  | width of border                                                                               |
 | --jb-select-label-color                   | color of label                                                                                |
 | --jb-select-label-font-size               | label font size default is `0.8em`                                                            |
 | --jb-select-label-font-weight             | label font weight                                                                             |
-| --jb-option-color                         | change option text color                                                                      |
-| --jb-option-color-active                  | change option text color on hover or keyboard navigate                                        |
-| --jb-option-background-color              | background of options default is `transparent`                                                |
-| --jb-option-background-color-active       | background of options on mouse hover or keyboard navigate                                     |
-| --jb-select-input-color                   | color of input value                                                                          |
 | --jb-select-bgcolor-selected              | set background color for selected status                                                      |
-| --jb-select-selected-value-color          | selected value text color                                                                     |
 | --jb-select-selected-value-font-size      | font-size of selected value default is `1.1rem`                                               |
 | --jb-select-message-color                 | message text color                                                                            |
 | --jb-select-message-font-size             | font size of message default is `0.7em`                                                       |
-| --jb-select-message-font-weight           | font weight of message box default is `normal`                                                |
 | --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1rem`                                                     |
 | --jb-select-height                        | jb-select box height                                                                          |
-| --jb-select-mobile-search-input-height    | when user open select on mobile there is a search box input this var will set its height      |
-| --jb-select-mobile-item-list-margin       | when user open select on mobile there is gap between search box & list that can be customized |
 | --jb-select-list-padding                  | padding of opened list box default is `16px 0`                                                |
-| --jb-select-close-bg-color                | close button bg-color                                                                         |
-| --jb-select-close-x-color                 | close button x color                                                                          |
 | --jb-select-mobile-input-bgcolor          | background color search input when open in mobile                                             |
-| --jb-select-mobile-search-border-width    | when user open select on mobile, search box can have its own border width config              |
-| --jb-select-mobile-search-border-color    | when user open select on mobile, search box can have its own border color config              |
-| --jb-select-mobile-search-border-bottom-width | when user open select on mobile, search box can have its own border bottom width config   |
-| --jb-select-mobile-search-border-bottom-color | when user open select on mobile, search box can have its own border bottom color config   |
-| --jb-select-middle-div-color               | change separator line color                                                                  |
-| --jb-select-middle-div-margin              | change separator line margin                                                                 |
-| --jb-select-middle-div-mobile-margin       | change separator line margin in mobile modal                                                 |
-| --jb-select-middle-div-radius              | change separator line border-radius                                                          |
 | --jb-select-list-scroll-color              | list item scroll color                                                                       |
 | --jb-select-list-scroll-border-radius      | list item scroll border-radius default is `4px`                                              |
 | --jb-select-box-margin                     | margin of internal element called select box that wrapper display element of form in one box |
-| --jb-select-value-font-size                | search input value font size default is `1.1rem`                                             |
-| --jb-select-list-border-width              | border-width for list wrapper                                                                |
-| --jb-select-mobile-modal-border-radius     | opened modal in mobile border radius. useful to change when you changed `--jb-select-mobile-modal-height` before |
-| --jb-select-mobile-modal-height            | modal height when list open in mobile                                                        |
+| --jb-select-arrow-icon-margin | Customize arrow icon margin. |
+| --jb-select-base-z-index | Customize base z index. |
+| --jb-select-bg-color-disabled | Customize bg color disabled. |
+| --jb-select-border-color-focus | Customize border color focus. |
+| --jb-select-box-padding-end | Customize box padding end. |
+| --jb-select-empty-list-placeholder-color | Customize empty list placeholder color. |
+| --jb-select-height-lg | Customize height lg. |
+| --jb-select-height-sm | Customize height sm. |
+| --jb-select-height-xl | Customize height xl. |
+| --jb-select-height-xs | Customize height xs. |
+| --jb-select-input-font-size | Customize input font size. |
+| --jb-select-input-font-size-lg | Customize input font size lg. |
+| --jb-select-input-font-size-sm | Customize input font size sm. |
+| --jb-select-input-font-size-xl | Customize input font size xl. |
+| --jb-select-input-font-size-xs | Customize input font size xs. |
+| --jb-select-label-font-size-lg | Customize label font size lg. |
+| --jb-select-label-font-size-sm | Customize label font size sm. |
+| --jb-select-label-font-size-xl | Customize label font size xl. |
+| --jb-select-label-font-size-xs | Customize label font size xs. |
+| --jb-select-label-margin | Customize label margin. |
+| --jb-select-message-box-display | Customize message box display. |
+| --jb-select-message-color-error | Customize message color error. |
+| --jb-select-message-font-size-lg | Customize message font size lg. |
+| --jb-select-message-font-size-sm | Customize message font size sm. |
+| --jb-select-message-font-size-xl | Customize message font size xl. |
+| --jb-select-message-font-size-xs | Customize message font size xs. |
+| --jb-select-overlay-bg-color | Customize overlay bg color. |
+| --jb-select-rounded-lg | Customize rounded lg. |
+| --jb-select-rounded-sm | Customize rounded sm. |
+| --jb-select-rounded-xl | Customize rounded xl. |
+| --jb-select-rounded-xs | Customize rounded xs. |
+| --jb-select-selected-value-font-size-lg | Customize selected value font size lg. |
+| --jb-select-selected-value-font-size-sm | Customize selected value font size sm. |
+| --jb-select-selected-value-font-size-xl | Customize selected value font size xl. |
+| --jb-select-selected-value-font-size-xs | Customize selected value font size xs. |
+| --jb-select-selected-value-padding | Customize selected value padding. |
+| --jb-select-selected-value-padding-lg | Customize selected value padding lg. |
+| --jb-select-selected-value-padding-sm | Customize selected value padding sm. |
+| --jb-select-selected-value-padding-xl | Customize selected value padding xl. |
+| --jb-select-selected-value-padding-xs | Customize selected value padding xs. |
+| --jb-select-value-color | Customize value color. |
+| --jb-select-value-color-disabled | Customize value color disabled. |
 
-## Other Related Docs:
+### jb-option CSS variables
 
+For usage examples and the standalone option API, see [jb-option README](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-jboption-readme--docs).
+
+| CSS variable name | description |
+| --- | --- |
+| --jb-option-border-radius | Option border radius. |
+| --jb-option-padding | Option padding. |
+| --jb-option-font-size | Option font size. |
+| --jb-option-min-height | Option minimum height. |
+| --jb-option-color | Option text color. |
+| --jb-option-color-active | Option text color on hover or keyboard navigate. |
+| --jb-option-background-color | Option background color. |
+| --jb-option-background-color-active | Option background color on hover or keyboard navigate. |
+
+## Related Docs
 - see [`jb-select/react`](https://github.com/javadbat/jb-select/tree/main/react) if you want to use this component in react.
 
 - see [All JB Design system Component List](https://javadbat.github.io/design-system/) for more components.
