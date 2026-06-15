@@ -25,7 +25,7 @@ pure js standalone select box web-component.
 
 ## using with JS frameworks
 
-to use this component in **react** see [`jb-select/react`](https://github.com/javadbat/jb-select/tree/main/react);
+- [<img src="https://img.shields.io/badge/React.js-jb--select%2Freact-000.svg?logo=react&logoColor=%2361DAFB" height="30" />](https://github.com/javadbat/jb-select/tree/main/react)
 
 ## install
 
