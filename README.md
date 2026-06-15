@@ -16,6 +16,11 @@ pure js standalone select box web-component.
 - support option dom customization
 - can get array of js object as a option list and extract value and label from it to show it to user.
 
+## When to use
+
+Use `jb-select` when the user must choose one or more values from a known option list and you need search, validation, custom option content, mobile-friendly popover behavior, or form association.
+
+Use `jb-option` for hand-written options. Use `jb-option-list` when the options come from a JavaScript array and you want callbacks to extract title, value, or custom DOM.
 
 ## Demo
 - [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect)
@@ -26,18 +31,6 @@ pure js standalone select box web-component.
 - [<img src="https://img.shields.io/badge/React.js-jb--select%2Freact-000.svg?logo=react&logoColor=%2361DAFB" height="30" />](https://github.com/javadbat/jb-select/tree/main/react)
 
 ## Installation
-
-## Attributes/Properties
-
-| name | type | description |
-| --- | --- | --- |
-| `value` | property/attribute | Current selected value. |
-| `selectedOptionTitle` | property | Visible title of the selected option. |
-| `multiple` | attribute | Enables multiple selection. |
-| `placeholder` | attribute | Placeholder when no value is selected. |
-| `search-placeholder` | attribute | Search input placeholder in mobile modal mode. |
-| `required` | attribute | Marks the select as required. |
-| `checkValidity()` | method | Runs validation and returns validation result. |
 
 ### using npm:
 
@@ -54,6 +47,70 @@ then in your HTML file just use
 ```html
 <jb-select></jb-select>
 ```
+
+## API reference
+
+### `jb-select` attributes
+
+| name | type | default | description |
+| --- | --- | --- | --- |
+| [`value`](#get-value) | `string` | `""` | Initial selected value from markup. Use the property for non-string values or runtime updates. |
+| `label` | `string` | `""` | Visible label text and accessible aria label. |
+| `message` | `string` | `""` | Helper text shown when no validation error is visible. |
+| `name` | `string` | `""` | Form field name. |
+| [`multiple`](#multiple) | `boolean` | `false` | Enables multiple selection. |
+| [`placeholder`](#placeholder) | `string` | `""` | Placeholder when no value is selected. |
+| `search-placeholder` | `string` | `"search"` | Placeholder used by the mobile search input while open. |
+| [`required`](#validation) | `boolean` | `false` | Enables required validation. |
+| [`error`](#validation) | `string` | `""` | External validation error message. |
+| `hide-clear` | `boolean` | `false` | Hides the clear button. |
+| `disable-auto-validation` | `boolean` | `false` | Disables automatic validation on user interactions. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `md` style defaults | Visual size variant. |
+
+### `jb-select` properties
+
+| name | type | readonly | description |
+| --- | --- | --- | --- |
+| [`value`](#get-value) | `TValue \| TValue[] \| null` | no | Canonical selected value. In multiple mode this is an array. |
+| `textValue` | `string` | no | Current search/filter text. |
+| `selectedOptionTitle` | `string` | yes | Visible title of the selected option or selected options. |
+| `validation` | `ValidationHelper<ValidationValue<TValue>>` | yes | Validation helper from `jb-validation`; set `validation.list` for custom rules. |
+| `callbacks` | `JBSelectCallbacks<TValue>` | no | Callback map, including `getSelectedValueDOM`. |
+| `multiple` | `boolean` | no | Enables or disables multiple selection. |
+| `disabled` | `boolean` | no | Disables the select and closes the option list. |
+| `required` | `boolean` | no | Enables required validation. |
+| `initialValue` | `TValue \| null` | no | Baseline value used by `isDirty`. |
+| `isDirty` | `boolean` | yes | `true` when current `value` differs from `initialValue`. |
+| `popoverPosition` | `'fixed' \| 'absolute'` | no | Controls how the option popover is positioned. |
+| `validationMessage` | `string` | yes | Current validation message. |
+
+### `jb-select` methods
+
+| name | returns | description |
+| --- | --- | --- |
+| `checkValidity()` | `boolean` | Runs validation without showing the error message. Dispatches `invalid` when invalid. |
+| `reportValidity()` | `boolean` | Runs validation and shows the first error message. Dispatches `invalid` when invalid. |
+| `focus()` | `void` | Focuses the search input and opens the option list. |
+| `blur()` | `void` | Closes the option list, clears search text, and validates. |
+
+### `jb-option` API
+
+| name | type | description |
+| --- | --- | --- |
+| `value` | attribute/property | Option value. Use the property for object values. |
+| `selected` | property | Whether the option is selected. |
+| `hidden` | property | Whether the option is hidden by filtering. |
+| `active` | property | Whether the option is the active keyboard/hover target. |
+| `optionContentText` | property | Text used for default filtering. |
+| `toggleOption()` | method | Selects or deselects the option using the normal click behavior. |
+
+### `jb-option-list` API
+
+| name | type | description |
+| --- | --- | --- |
+| `optionList` | `TOption[]` property | Source array used to render options. |
+| `optionListDom` | property | Rendered `jb-option` elements. |
+| `setCallback(key, callback)` | method | Sets `getTitle`, `getValue`, or `getContentDOM`. |
 
 ## set option list
 
@@ -185,7 +242,7 @@ you can also set `error` attribute to pass error directly to the component
 
 ## Change empty state shape
 when the searched value in select is not found, there is an open dropdown with the not found message.
-you can customize this entire section by adding a div with the `slot="empty-list"`
+you can customize this entire section by adding a div with the `slot="empty-list-message"`
 
 like the example the below:
 
@@ -229,12 +286,32 @@ for example if you have array of object as a option list and want to show custom
 remember you must set this callback before set value and option list
 
 ## Events
+
+| event | cancelable | when it fires |
+| --- | --- | --- |
+| `change` | yes | When selected value changes. Call `event.preventDefault()` to cancel a single-select change and restore the previous value. |
+| `input` | no | When the user types in the search input. |
+| `keyup` | no | Re-dispatched from the search input. Arrow keys navigate options and Enter toggles the active option. |
+| `keypress` | no | Re-dispatched from the search input. |
+| `invalid` | no | When `checkValidity()` or `reportValidity()` finds an invalid value. |
+| `load` | no | In `connectedCallback`, before `init`. |
+| `init` | no | In `connectedCallback`, after initial setup. |
+
 ```js
     dropDownElement.addEventListener('change',(e)=>{/*your function*/});
     dropDownElement.addEventListener('keyup',(e)=>{/*your function*/});
     dropDownElement.addEventListener('input',(e)=>{/*your function*/});
 
 ```
+
+## Slots
+
+| slot | description |
+| --- | --- |
+| default | Option content. Use `jb-option` or `jb-option-list` children. |
+| `start-section` | Content rendered before the selected value/search area. |
+| `select-arrow-icon` | Replaces the default arrow icon. |
+| `empty-list-message` | Custom empty-state content shown when no option is visible. |
 
 ## set custom style
 
@@ -333,3 +410,22 @@ For usage examples and the standalone option API, see [jb-option README](https:/
 - see [All JB Design system Component List](https://javadbat.github.io/design-system/) for more components.
 
 - use [Contribution Guide](https://github.com/javadbat/design-system/blob/main/docs/contribution-guide.md) if you want to contribute in this component.
+
+## AI agent notes
+
+This package includes [`custom-elements.json`](./custom-elements.json) so documentation tools, IDEs, and AI coding agents can discover `jb-select`, `jb-option`, `jb-option-list`, their attributes, properties, events, slots, CSS variables, and public methods.
+
+The package also exposes `"customElements": "custom-elements.json"` in `package.json`, which gives tools a stable package-level pointer to the manifest. This field is documented by the Custom Elements Manifest project in its [Referencing manifests from npm packages](https://github.com/webcomponents/custom-elements-manifest#referencing-manifests-from-npm-packages) section.
+
+In `custom-elements.json`, the `exports` array describes what each module makes available:
+
+| kind | meaning |
+| --- | --- |
+| `js` | A JavaScript/TypeScript export from the module, such as `JBSelectWebComponent`. |
+| `custom-element-definition` | The custom element registration for a tag name, such as `jb-select`. |
+
+- Import `jb-select` once before using `<jb-select>`, `<jb-option>`, or `<jb-option-list>`.
+- Use `.value` for the canonical selected value; use `selectedOptionTitle` only for display text.
+- Use `jb-option` for static options and `jb-option-list` for array-driven options.
+- Use `multiple` when `.value` should be an array.
+- Set `error` for externally controlled validation errors; the component observes the attribute and updates its validation UI.

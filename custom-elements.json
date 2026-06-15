@@ -1,0 +1,515 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "lib/jb-select.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Form-associated searchable select web component with single and multiple selection, validation, option filtering, custom selected-value rendering, slots for options and adornments, and mobile-friendly popover behavior.",
+          "name": "JBSelectWebComponent",
+          "tagName": "jb-select",
+          "customElement": true,
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "attributes": [
+            {
+              "name": "value",
+              "description": "Initial selected value from markup. For non-string values or runtime updates, use the value property.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "label",
+              "description": "Visible label text and accessible aria label.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "message",
+              "description": "Helper text shown under the select when no validation error is visible.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "name",
+              "description": "Form field name.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "multiple",
+              "description": "Enables multiple selection. In multiple mode, value is expected to be an array.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "placeholder",
+              "description": "Placeholder shown when no value is selected.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "search-placeholder",
+              "description": "Placeholder used by the mobile search input while the select is open.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "required",
+              "description": "Enables required validation.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "error",
+              "description": "External validation error message. When the attribute changes, the component updates its validation UI.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "hide-clear",
+              "description": "Hides the clear button when set to empty string or true.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "disable-auto-validation",
+              "description": "Disables automatic validation on user interactions when set to empty string or true.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "size",
+              "description": "Visual size variant used by CSS.",
+              "type": {
+                "text": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
+              }
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Canonical selected value. In multiple mode this is an array of selected option values.",
+              "type": {
+                "text": "TValue | TValue[] | null"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "textValue",
+              "description": "Current search/filter text shown in the search input.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selectedOptionTitle",
+              "description": "Visible title for the selected option or comma-separated selected options.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "validation",
+              "description": "jb-validation helper. Set validation.list for custom validation rules.",
+              "type": {
+                "text": "ValidationHelper<ValidationValue<TValue>>"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "callbacks",
+              "description": "Callback map. Use callbacks.getSelectedValueDOM to customize the selected value display.",
+              "type": {
+                "text": "JBSelectCallbacks<TValue>"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "multiple",
+              "description": "Enables or disables multiple selection.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Disables the select and closes the option list.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "description": "Enables required validation.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "initialValue",
+              "description": "Baseline value used by isDirty.",
+              "type": {
+                "text": "TValue | null"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isDirty",
+              "description": "True when current value differs from initialValue.",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "popoverPosition",
+              "description": "How the option popover is positioned.",
+              "type": {
+                "text": "'fixed' | 'absolute'"
+              }
+            }
+          ],
+          "methods": [
+            {
+              "name": "checkValidity",
+              "description": "Runs validation without showing the error message and returns whether the select is valid.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "name": "reportValidity",
+              "description": "Runs validation, shows the first error message, and returns whether the select is valid.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "name": "focus",
+              "description": "Focuses the internal search input and opens the option list."
+            },
+            {
+              "name": "blur",
+              "description": "Closes the option list, clears search text, and validates."
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "description": "Cancelable event fired when selected value changes."
+            },
+            {
+              "name": "input",
+              "description": "Fired when the user types in the search input."
+            },
+            {
+              "name": "keyup",
+              "description": "Keyboard event re-dispatched from the search input. Arrow keys navigate active options; Enter toggles the active option."
+            },
+            {
+              "name": "keypress",
+              "description": "Keyboard event re-dispatched from the search input."
+            },
+            {
+              "name": "invalid",
+              "description": "Dispatched when checkValidity or reportValidity finds an invalid value."
+            },
+            {
+              "name": "load",
+              "description": "Dispatched from connectedCallback before init."
+            },
+            {
+              "name": "init",
+              "description": "Dispatched from connectedCallback after initial setup."
+            },
+            {
+              "name": "filter-change",
+              "description": "Internal non-bubbling event used by options to filter themselves from search text."
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Option content. Use jb-option or jb-option-list children."
+            },
+            {
+              "name": "start-section",
+              "description": "Content rendered before the selected value/search area."
+            },
+            {
+              "name": "select-arrow-icon",
+              "description": "Custom arrow icon content."
+            },
+            {
+              "name": "empty-list-message",
+              "description": "Custom empty-state content shown when no option is visible."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--jb-select-width",
+              "description": "Select host width."
+            },
+            {
+              "name": "--jb-select-height",
+              "description": "Select box height."
+            },
+            {
+              "name": "--jb-select-border-color",
+              "description": "Border color in normal state."
+            },
+            {
+              "name": "--jb-select-border-color-focus",
+              "description": "Border color in focus/open state."
+            },
+            {
+              "name": "--jb-select-message-color-error",
+              "description": "Validation error message color."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JBSelectWebComponent",
+          "declaration": {
+            "name": "JBSelectWebComponent",
+            "module": "lib/jb-select.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jb-select",
+          "declaration": {
+            "name": "JBSelectWebComponent",
+            "module": "lib/jb-select.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "lib/jb-option/jb-option.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Selectable option web component used inside jb-select. The value can be a string from the attribute or any JavaScript value assigned through the value property.",
+          "name": "JBOptionWebComponent",
+          "tagName": "jb-option",
+          "customElement": true,
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "attributes": [
+            {
+              "name": "value",
+              "description": "Option value from markup. Use the value property for non-string values.",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Option value.",
+              "type": {
+                "text": "TValue | null"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "description": "Whether this option is selected.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hidden",
+              "description": "Whether this option is hidden by filtering.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "description": "Whether this option is the active keyboard/hover target.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "optionContentText",
+              "description": "Text content used for default filtering.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true
+            }
+          ],
+          "methods": [
+            {
+              "name": "toggleOption",
+              "description": "Selects or deselects the option using the same behavior as a click."
+            }
+          ],
+          "events": [
+            {
+              "name": "select",
+              "description": "Bubbling event fired when the option is selected."
+            },
+            {
+              "name": "deselect",
+              "description": "Bubbling event fired when the option is deselected in multiple mode."
+            },
+            {
+              "name": "jb-option-connected",
+              "description": "Internal event fired when the option connects so jb-select can register it."
+            },
+            {
+              "name": "jb-option-disconnected",
+              "description": "Internal event fired when the option disconnects so jb-select can unregister it."
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Visible option content."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--jb-option-padding",
+              "description": "Option padding."
+            },
+            {
+              "name": "--jb-option-background-color-active",
+              "description": "Option background color on hover or keyboard active state."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JBOptionWebComponent",
+          "declaration": {
+            "name": "JBOptionWebComponent",
+            "module": "lib/jb-option/jb-option.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jb-option",
+          "declaration": {
+            "name": "JBOptionWebComponent",
+            "module": "lib/jb-option/jb-option.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "lib/jb-option-list/jb-option-list.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Helper web component that renders jb-option elements from a JavaScript array and callback functions.",
+          "name": "JBOptionListWebComponent",
+          "tagName": "jb-option-list",
+          "customElement": true,
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "members": [
+            {
+              "kind": "field",
+              "name": "optionList",
+              "description": "Array of source options used to render jb-option children.",
+              "type": {
+                "text": "TOption[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "optionListDom",
+              "description": "Rendered jb-option elements.",
+              "type": {
+                "text": "JBOptionWebComponent<TValue>[]"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "callbacks",
+              "description": "Callback map used to extract title, value, or content DOM from source options.",
+              "type": {
+                "text": "OptionListCallbacks<TOption, TValue>"
+              },
+              "readonly": true
+            }
+          ],
+          "methods": [
+            {
+              "name": "setCallback",
+              "description": "Sets one callback by key. Valid keys are getTitle, getValue, and getContentDOM."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JBOptionListWebComponent",
+          "declaration": {
+            "name": "JBOptionListWebComponent",
+            "module": "lib/jb-option-list/jb-option-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jb-option-list",
+          "declaration": {
+            "name": "JBOptionListWebComponent",
+            "module": "lib/jb-option-list/jb-option-list.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

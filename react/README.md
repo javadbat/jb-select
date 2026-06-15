@@ -11,6 +11,8 @@ select component for react
 
 Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-select) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBSelect.tsx) if you want to see and play with code
 
+Storybook: [JBSelect docs](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect)
+
 ## Installation
 ```sh
 npm install jb-select
@@ -23,6 +25,40 @@ import {JBSelect} from 'jb-select/react';
 
 <JBSelect></JBSelect>
 ```
+
+## When to use
+
+Use `JBSelect` when the user must choose one or more values from a known option list and you need search, validation, custom option content, mobile-friendly popover behavior, or form association.
+
+## Props
+
+| prop | type | description |
+| --- | --- | --- |
+| `value` | `TValue` | Controlled selected value. In multiple mode, pass an array. |
+| `label` | `string` | Visible label text and accessible label. |
+| `message` | `string` | Helper text shown when no validation error is visible. |
+| `placeholder` | `string` | Placeholder when no value is selected. |
+| `searchPlaceholder` | `string` | Placeholder used by the mobile search input. |
+| `required` | `boolean` | Enables required validation. |
+| `error` | `string` | External validation error message. |
+| `validationList` | `ValidationItem<ValidationValue<TValue>>[]` | Custom validation rules from `jb-validation`. |
+| `hideClear` | `boolean` | Hides the clear button. |
+| `getSelectedValueDOM` | `(option: any) => HTMLElement` | Custom selected value renderer. |
+| `multiple` | `boolean` | Enables multiple selection. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | Visual size variant. |
+| `name` | `string` | Form field name. |
+| `disabled` | `boolean` | Disables the select. |
+| `popoverPosition` | `'fixed' \| 'absolute'` | Controls popover positioning. |
+
+## Events
+
+| prop | event |
+| --- | --- |
+| `onChange` | `change` |
+| `onInput` | `input` |
+| `onKeyUp` | `keyup` |
+| `onLoad` | `load` |
+| `onInit` | `init` |
 
 ## label
 use label property to describe your select component.
@@ -157,3 +193,11 @@ please read [jb-select](https://github.com/javadbat/jb-select) custom style sect
 ## Shared Documentation
 
 For web-component behavior, events, slots, and CSS variables, see [`jb-select`](https://github.com/javadbat/jb-select).
+
+## AI agent notes
+
+- Import `JBSelect`, `JBOption`, and `JBOptionList` from `jb-select/react`.
+- Use `JBOption` for static JSX options and `JBOptionList` for array-driven options.
+- Use `searchPlaceholder`, `hideClear`, and `getSelectedValueDOM` in React; the wrapper maps them to the underlying web-component API.
+- Use `multiple` when `value` should be an array.
+- Use `error` for externally controlled validation errors.
