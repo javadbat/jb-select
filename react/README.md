@@ -1,5 +1,10 @@
 # jb-select-react
 
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/jb-select)
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://raw.githubusercontent.com/javadbat/jb-select/main/LICENSE)
+[![NPM Version](https://img.shields.io/npm/v/jb-select-react)](https://www.npmjs.com/package/jb-select-react)
+![GitHub Created At](https://img.shields.io/github/created-at/javadbat/jb-select)
+
 select component for react 
 
 > this component is a react wrapper for [jb-select](https://github.com/javadbat/jb-select)
