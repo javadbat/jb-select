@@ -7,9 +7,9 @@ export function renderHTML(): string {
             <slot name="start-section"></slot>
         </div>
         <div class="middle-section">
-            <div class="selected-value-wrapper"></div>
+            <div class="selected-value-wrapper" ></div>
             <div class="front-box">
-                <input class="search-input" />
+                <input class="search-input" part="search-input"/>
             </div>
         </div>
         <div class="end-section">
@@ -19,7 +19,7 @@ export function renderHTML(): string {
                 <path d="M21.8882 24C21.3514 24 20.8146 23.8023 20.3908 23.3786L0.614479 3.60811C-0.204826 2.78905 -0.204826 1.43336 0.614479 0.614298C1.43378 -0.204766 2.78987 -0.204766 3.60918 0.614298L23.3855 20.3848C24.2048 21.2039 24.2048 22.5596 23.3855 23.3786C22.9617 23.8023 22.425 24 21.8882 24Z" fill="currentColor"/>
             </svg>
         </jb-button>
-            <div class="arrow-icon" tabindex="-1">
+            <div class="arrow-icon" tabindex="-1" part="arrow-icon">
                 <slot name="select-arrow-icon">
                     <svg width='8' height='8' id='Layer_1' x='0px' y='0px' viewBox='0 0 494.1 371.1'
                         style='enable-background:new 0 0 494.1 371.1;' xml:space='preserve'>
@@ -31,7 +31,7 @@ export function renderHTML(): string {
         </div>
     </div>
     <div class="popover-wrapper">
-        <jb-popover class="select-list-wrapper">
+        <jb-popover class="select-list-wrapper" part="popover">
             <div class="mobile-search-input-wrapper">
             <!-- Here we put search input in Mobile -->
             </div>

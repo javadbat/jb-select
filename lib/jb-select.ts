@@ -827,6 +827,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
 
     const selectedOptionDom = document.createElement("div");
     selectedOptionDom.classList.add("selected-value");
+    selectedOptionDom.part.add("selected-value")
     selectedOptionDom.append(...contentNodes);
     return selectedOptionDom;
   }

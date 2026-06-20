@@ -6,7 +6,10 @@
   --min-height: var(--jb-option-min-height, 2.25rem);
   /*Colors*/
   --color: var(--jb-option-color, inherit);
-  --color-active: var(--jb-option-color-active, var(--jb-option-color, inherit));
-  --background-color:var(--jb-option-background-color, transparent);
-  --background-color-active:var(--jb-option-background-color-active, var(--jb-primary-subtle));
+  --background-color:var(--jb-option-bg-color, transparent);
+}
+
+:host(:state(active)){
+  --background-color:var(--jb-option-bg-color-active, var(--jb-primary-subtle));
+  --color: var(--jb-option-color-active, var(--jb-option-color, inherit));
 }

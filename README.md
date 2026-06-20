@@ -307,6 +307,14 @@ remember you must set this callback before set value and option list
     dropDownElement.addEventListener('input',(e)=>{/*your function*/});
 
 ```
+## Parts
+
+| part | description |
+| --- | --- |
+| `selected-value` | Internal `selected-value`. |
+| `search-input` | Internal `search-input`. |
+| `arrow-icon` | Internal `arrow-icon`. |
+| `popover` | Internal `popover`. |
 
 ## Slots
 

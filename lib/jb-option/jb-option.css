@@ -1,7 +1,5 @@
 
-:host(:state(active)){
-  --background-color:var(--background-color-active);
-}
+
 .jb-options-web-component {
   .option-content-wrapper {
     min-height: var(--min-height);

@@ -25,6 +25,7 @@
   --value-color: var(--jb-select-value-color, var(--jb-text-primary));
   --placeholder-color: var(--jb-select-placeholder-color, var(--jb-neutral-6));
   --select-box-bg-color: var(--jb-select-bgcolor, var(--jb-neutral-10));
+  --popover-bg-color: var(--jb-popover-bg-color, var(--select-box-bg-color));
   --overlay-bg-color: var(--jb-select-overlay-bg-color, oklch(from var(--jb-black) l c h / calc(alpha - 0.5)));
   --list-scroll-color: var(--jb-select-list-scroll-color, oklch(from var(--select-box-bg-color) calc(l - 0.2) c h));
   --empty-list-placeholder-color: var(--jb-select-empty-list-placeholder-color, var(--jb-text-secondary))

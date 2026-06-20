@@ -28,5 +28,5 @@ You can place custom HTML inside the option when the visible label needs richer 
 | --jb-option-min-height | Option minimum height. |
 | --jb-option-color | Option text color. |
 | --jb-option-color-active | Option text color on hover or keyboard navigation. |
-| --jb-option-background-color | Option background color. |
-| --jb-option-background-color-active | Option background color on hover or keyboard navigation. |
+| --jb-option-bg-color | Option background color. |
+| --jb-option-bg-color-active | Option background color on hover or keyboard navigation. |

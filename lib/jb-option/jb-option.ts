@@ -29,6 +29,11 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     } else {
       this.#elements.componentWrapper.classList.remove("--selected");
     }
+    // if there is a checkbox inside option we select and deselect base on value
+    const checkbox = this.#getInsideCheckbox();
+    if (checkbox && checkbox?.value !== value) {
+      checkbox.value = value;
+    }
   }
   get selected() {
     return this.#selected;
@@ -148,23 +153,15 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     }
     if (!this.#selected) {
       this.#dispatchSelectEvent();
-      const checkbox = this.#getInsideCheckbox();
-      if (checkbox && checkbox?.value !== true) {
-        checkbox.value = true;
-      }
     } else if (this.#SelectElement?.multiple) {
       this.#dispatchDeSelectEvent();
-      const checkbox = this.#getInsideCheckbox();
-      if (checkbox && checkbox?.value !== false) {
-        checkbox.value = false;
-      }
     }
   }
   /**
    * @public
    * this function used by jb-select to toggle option when it active and user hit enter to select or deselect option
    */
-  toggleOption(){
+  toggleOption() {
     this.#onOptionClick();
   }
   #dispatchSelectEvent() {
@@ -193,14 +190,14 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     }
   }
   #active = false;
-  get active(){
+  get active() {
     return this.#active;
   }
-  set active(value:boolean){
+  set active(value: boolean) {
     this.#active = value;
-    if(value){
+    if (value) {
       this.#internals?.states.add("active");
-    }else{
+    } else {
       this.#internals?.states.delete("active");
     }
   }
