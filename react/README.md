@@ -44,7 +44,7 @@ Use `JBSelect` when the user must choose one or more values from a known option 
 | `validationList` | `ValidationItem<ValidationValue<TValue>>[]` | Custom validation rules from `jb-validation`. |
 | `hideClear` | `boolean` | Hides the clear button. |
 | `getSelectedValueDOM` | `(option: any) => HTMLElement` | Custom selected value renderer. |
-| `multiple` | `boolean` | Enables multiple selection. |
+| `multiple` | `boolean` | Enables multiple selection. See the [multiple selection guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-multiple-selection--docs). |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | Visual size variant. |
 | `name` | `string` | Form field name. |
 | `disabled` | `boolean` | Disables the select. |
@@ -69,6 +69,8 @@ use label property to describe your select component.
 
 ## option list
 if you want to add option to jb-select, you have 2 way:
+
+For help choosing between `JBOption` and `JBOptionList`, see the [options guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-options--docs).
 
 - use `<JBOption>`
 - use `<jbOptionList>`

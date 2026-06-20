@@ -1,0 +1,136 @@
+import { Meta, Source, Story } from '@storybook/blocks';
+import * as SelectStories from './JBSelect.stories';
+
+<Meta title="Components/form elements/JBSelect/Options" />
+
+# Supplying options
+
+`JBSelect` accepts options in two ways: `JBOption` and `JBOptionList`. Both are placed inside `JBSelect`, both participate in search and keyboard navigation, and both can be used with single or multiple selection. The right choice depends on whether you need custom option markup or simply need to display an array.
+
+## Choose an approach
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Use it when</th>
+      <th>Trade-off</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>JBOption</code></td>
+      <td>Each option has custom JSX or its own layout.</td>
+      <td>Maximum flexibility, with one rendered component per option.</td>
+    </tr>
+    <tr>
+      <td><code>JBOptionList</code></td>
+      <td>Your options already exist as an array of strings, numbers, or objects.</td>
+      <td>Less JSX and centralised mapping; custom content is created with a DOM callback rather than React JSX.</td>
+    </tr>
+  </tbody>
+</table>
+
+## `JBOption`: render each option yourself
+
+Use `JBOption` when the option needs custom content—such as a checkbox, icon, colour swatch, avatar, or secondary text. Set the value with `value` and place the visible JSX between the tags.
+
+```tsx
+import { JBOption, JBSelect } from 'jb-select/react';
+
+const people = [
+  { id: 1, name: 'Ava Patel', role: 'Designer' },
+  { id: 2, name: 'Sam Lee', role: 'Engineer' },
+];
+
+<JBSelect label="Assignee">
+  {people.map((person) => (
+    <JBOption key={person.id} value={person.id}>
+      <strong>{person.name}</strong>
+      <span>{person.role}</span>
+    </JBOption>
+  ))}
+</JBSelect>;
+```
+
+<Story of={SelectStories.OptionAsChildren} />
+
+<Source of={SelectStories.OptionAsChildren} />
+
+For multiple selection, this is also the approach to use when each row contains a `JBCheckbox`.
+
+<Story of={SelectStories.MultipleWithCheckbox} />
+
+<Source of={SelectStories.MultipleWithCheckbox} />
+
+## `JBOptionList`: create options from an array
+
+Use `JBOptionList` when the option data is already an array and each row can use a consistent layout. It creates the underlying `JBOption` elements for you.
+
+### Arrays of primitive values
+
+For strings or numbers, pass `optionList` directly. Each value is used for both the displayed title and selected value.
+
+```tsx
+import { JBOptionList, JBSelect } from 'jb-select/react';
+
+const languages = ['TypeScript', 'JavaScript', 'Rust'];
+
+<JBSelect label="Language">
+  <JBOptionList optionList={languages} />
+</JBSelect>;
+```
+
+### Arrays of objects
+
+For objects, provide `getTitle` to choose the display text and `getValue` to choose the value returned by `JBSelect`. If `getValue` is omitted, the whole object is the selected value.
+
+```tsx
+import { JBOptionList, JBSelect } from 'jb-select/react';
+
+const people = [
+  { id: 1, name: 'Ava Patel', role: 'Designer' },
+  { id: 2, name: 'Sam Lee', role: 'Engineer' },
+];
+
+<JBSelect label="Assignee">
+  <JBOptionList
+    optionList={people}
+    getTitle={(person) => `${person.name} — ${person.role}`}
+    getValue={(person) => person.id}
+  />
+</JBSelect>;
+```
+
+<Story of={SelectStories.OptionObject} />
+
+<Source of={SelectStories.OptionObject} />
+
+### Custom content with `JBOptionList`
+
+When an array-driven option needs non-text content, use `getContentDOM` and return an `HTMLElement`. If the option UI is naturally React JSX, prefer mapping to `JBOption` instead—it is simpler and keeps the rendering declarative.
+
+```tsx
+<JBOptionList
+  optionList={people}
+  getTitle={(person) => person.name}
+  getValue={(person) => person.id}
+  getContentDOM={(person) => {
+    const element = document.createElement('div');
+    element.textContent = `${person.name} — ${person.role}`;
+    return element;
+  }}
+/>
+```
+
+## Using `JBOptionList` with multiple selection
+
+The option source does not change the selection behaviour. Add `multiple` to the parent `JBSelect`; its value will contain an array of the values returned by `getValue`.
+
+<Story of={SelectStories.MultipleWithOptionList} />
+
+<Source of={SelectStories.MultipleWithOptionList} />
+
+## Practical rule
+
+Start with `JBOptionList` for simple API or data-driven lists. Switch to `JBOption` when the visible content needs React components or varies per option. Avoid nesting `JBOption` inside `JBOptionList`: choose one approach for each option collection.

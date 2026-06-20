@@ -42,6 +42,19 @@ export const Multiple: Story = {
     )
   }
 };
+export const MultipleWithOptionList: Story = {
+  render: () => {
+    return (
+      <JBSelect multiple label="Assignees" placeholder="Choose one or more people">
+        <JBOptionList
+          optionList={persons}
+          getTitle={(person) => `${person.name} ${person.family}`}
+          getValue={(person) => person.userId}
+        />
+      </JBSelect>
+    )
+  }
+};
 export const MultipleWithCheckbox: Story = {
   render: () => {
     return (

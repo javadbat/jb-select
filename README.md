@@ -116,6 +116,8 @@ then in your HTML file just use
 
 if you want to add option to jb-select, you have 2 way:
 
+For help choosing between the two approaches, see the [options guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-options--docs).
+
 - use `<jb-option>` tag 
 - use `<jb-option-list>`
 
@@ -218,6 +220,8 @@ remember set value as attribute if your option is a plain string but in direct a
 ## Multiple 
 
 by just set multiple Attribute (like native select).
+
+For React and web-component examples, see the [multiple selection guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-multiple-selection--docs).
 
 ```html
 <jb-select multiple></jb-select>
