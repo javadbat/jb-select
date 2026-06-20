@@ -457,7 +457,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #setSelectedOption(options: JBOptionWebComponent<TValue>[]): void
   #setSelectedOption(option: JBOptionWebComponent<TValue> | null): void
   #setSelectedOption(option: JBOptionWebComponent<TValue>[] | JBOptionWebComponent<TValue> | null): void {
-    if (option)
+    if (option) {
       if (this.multiple) {
         const selectOption = (op: JBOptionWebComponent<TValue>) => {
           op.selected = true;
@@ -467,10 +467,17 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       } else {
         // single select
         if (Array.isArray(option)) return;
-        this.#optionList.forEach((x) => { x.selected = false });
+        this.#deSelectAllOptions();
         option.selected = true;
         this.#selectedOption = option;
       }
+    }else if(option === null){
+      // we only call with null when value set null and all option must deselect.
+      this.#deSelectAllOptions();
+    }
+  }
+  #deSelectAllOptions(){
+    this.#optionList.forEach((x) => { x.selected = false });
   }
   #setValue(value: null, option: null): void
   #setValue(value: TValue, option: JBOptionWebComponent<TValue>): void
@@ -479,7 +486,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#notFoundedValue = null;
     this.#value = value;
     if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
-      if(!this.multiple){this.textValue = "";}
+      if (!this.multiple) { this.textValue = ""; }
       this.#updateSelectedOptionDom();
       //will deselect all option
       this.#setSelectedOption(null);
@@ -489,8 +496,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         this.elements.input.placeholder = this.placeholder;
       }
     } else {
-      
-      if(!this.multiple){this.textValue = "";}
+
+      if (!this.multiple) { this.textValue = ""; }
       //for typescript error
       Array.isArray(option) ? this.#setSelectedOption(option) : this.#setSelectedOption(option);
       this.#updateSelectedOptionDom();
@@ -501,7 +508,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       }
     }
     //if user select an option we rest filter so user see all option again when open a select
-    if(!this.multiple){
+    if (!this.multiple) {
       this.#updateOptionList("");
     }
   }
@@ -557,7 +564,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         break;
       case "Enter":
         this.#optionList.forEach(x => {
-          if (x.active) {x.toggleOption();}
+          if (x.active) { x.toggleOption(); }
         })
         break;
     }
@@ -731,7 +738,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.#setValueOnOptionListChanged();
     }
     this.#updateListEmptyPlaceholder();
-    target.addEventListener("mouseenter",this.#onOptionHover)
+    target.addEventListener("mouseenter", this.#onOptionHover)
   }
   #onOptionDisconnected(e: CustomEvent) {
     e.stopPropagation();
@@ -741,12 +748,12 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     if (target.value == this.#value) {
       this.#setValueOnOptionListChanged();
     }
-    target.removeEventListener("mouseenter",this.#onOptionHover)
+    target.removeEventListener("mouseenter", this.#onOptionHover)
   }
-  #onOptionHover = (e:MouseEvent)=>{
+  #onOptionHover = (e: MouseEvent) => {
     const target = e.target as JBOptionWebComponent<TValue>;
-    if(!target.active){
-      this.#optionList.forEach(x=>{x.active = false});
+    if (!target.active) {
+      this.#optionList.forEach(x => { x.active = false });
     }
     target.active = true;
   }
