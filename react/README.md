@@ -43,12 +43,12 @@ Use `JBSelect` when the user must choose one or more values from a known option 
 | `error` | `string` | External validation error message. |
 | `validationList` | `ValidationItem<ValidationValue<TValue>>[]` | Custom validation rules from `jb-validation`. |
 | `hideClear` | `boolean` | Hides the clear button. |
-| `getSelectedValueDOM` | `(option: any) => HTMLElement` | Custom selected value renderer. |
+| `getSelectedValueDOM` | `(option: any) => HTMLElement` | Custom selected value renderer. See the [custom selected value content guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-custom-selected-value-content--docs). |
 | `multiple` | `boolean` | Enables multiple selection. See the [multiple selection guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-multiple-selection--docs). |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | Visual size variant. |
 | `name` | `string` | Form field name. |
 | `disabled` | `boolean` | Disables the select. |
-| `popoverPosition` | `'fixed' \| 'absolute'` | Controls popover positioning. |
+| `popoverPosition` | `'fixed' \| 'absolute'` | Controls popover positioning. See the [popover positioning guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-popover-positioning--docs). |
 
 ## Events
 
@@ -139,6 +139,8 @@ return(
     </JBSelect>
 )
 ```
+
+For a live example, safe DOM-creation guidance, styling with `::part(...)`, and the current single-select limitation, see the [custom selected value content guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-custom-selected-value-content--docs).
 ### using `jbOptionList`:
 `JBOptionList` will create options for you and it's good for when you want some easy to use options without complexity of update & manage JSX and it's a little faster for high performance app
 

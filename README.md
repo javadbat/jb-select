@@ -81,7 +81,7 @@ then in your HTML file just use
 | `required` | `boolean` | no | Enables required validation. |
 | `initialValue` | `TValue \| null` | no | Baseline value used by `isDirty`. |
 | `isDirty` | `boolean` | yes | `true` when current `value` differs from `initialValue`. |
-| `popoverPosition` | `'fixed' \| 'absolute'` | no | Controls how the option popover is positioned. |
+| `popoverPosition` | `'fixed' \| 'absolute'` | no | Controls how the option popover is positioned. See the [popover positioning guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-popover-positioning--docs) for scrollable and clipped-container examples. |
 | `validationMessage` | `string` | yes | Current validation message. |
 
 ### `jb-select` methods
@@ -288,6 +288,8 @@ for example if you have array of object as a option list and want to show custom
 ```
 
 remember you must set this callback before set value and option list
+
+For a complete React and web-component example, styling guidance, and the single-select limitation, see the [custom selected value content guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-custom-selected-value-content--docs).
 
 ## Events
 

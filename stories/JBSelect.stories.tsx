@@ -236,6 +236,75 @@ export const OverflowTest: Story = {
     </div>
   }
 }
+export const FixedPopoverInScrollableContainer: Story = {
+  render: () => {
+    return (
+      <div
+        style={{
+          height: '14rem',
+          maxWidth: '28rem',
+          overflowY: 'auto',
+          border: '1px solid #94a3b8',
+          borderRadius: '0.5rem',
+          padding: '1rem',
+          background: '#f8fafc',
+        }}
+      >
+        <p style={{ margin: '0 0 8rem' }}>
+          Scroll this panel, then open each select near an edge to compare their popovers.
+        </p>
+        <JBSelect
+          label="Default absolute popover"
+          placeholder="Choose a person"
+          style={{ width: '16rem', marginBottom: '1rem' }}
+        >
+          <JBOptionList optionList={persons} getTitle={(person) => `${person.name} ${person.family}`} getValue={(person) => person.userId} />
+        </JBSelect>
+        <JBSelect
+          label="Fixed popover"
+          placeholder="Choose a person"
+          popoverPosition="fixed"
+          style={{ width: '16rem' }}
+        >
+          <JBOptionList optionList={persons} getTitle={(person) => `${person.name} ${person.family}`} getValue={(person) => person.userId} />
+        </JBSelect>
+        <div style={{ height: '16rem' }} />
+      </div>
+    );
+  },
+};
+
+export const FixedPopoverInPositionedContainer: Story = {
+  render: () => {
+    return (
+      <div
+        style={{
+          position: 'relative',
+          maxWidth: '28rem',
+          overflow: 'hidden',
+          border: '1px solid #a78bfa',
+          borderRadius: '0.5rem',
+          padding: '1rem',
+          background: '#faf5ff',
+        }}
+      >
+        <p style={{ marginTop: 0 }}>
+          This is a positioned parent with clipped overflow. Open the select to see the popover escape the container on desktop.
+        </p>
+        <JBSelect
+          label="Environment"
+          placeholder="Choose an environment"
+          popoverPosition="fixed"
+          style={{ width: '16rem' }}
+        >
+          <JBOption value="development">Development</JBOption>
+          <JBOption value="staging">Staging</JBOption>
+          <JBOption value="production">Production</JBOption>
+        </JBSelect>
+      </div>
+    );
+  },
+};
 export const EventTest: Story = {
   args: {
     ...Normal.args,
