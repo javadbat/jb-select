@@ -5,7 +5,6 @@
         "declarationDir": "./dist"
     },
     "include": [
-        "../global.d.ts",
         "lib/**/*.ts",
     ],
     "exclude": [
