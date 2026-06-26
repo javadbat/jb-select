@@ -2,23 +2,23 @@
 // biome-ignore lint/style/useImportType: <react must be import>
 import React from 'react';
 import { Fragment, useEffect, useState } from 'react';
-import { JBSelect, JBOptionList, JBOption, type Props, type JBSelectEventType } from 'jb-select/react';
+import { JBSelect, JBOptionList, JBOption, type JBSelectEventType } from 'jb-select/react';
 import { JBButton } from 'jb-button/react';
 //@ts-ignore
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
 import { colorList, nameList, numberOptionList, persons } from './constants';
 import { JBCheckbox } from 'jb-checkbox/react';
-const meta: Meta<Props<unknown>> = {
+const meta = {
   title: "Components/form elements/JBSelect",
   component: JBSelect,
   args: {
     children: <JBOptionList optionList={nameList} />
   }
-};
+} satisfies Meta<typeof JBSelect>;
 
 export default meta;
-type Story = StoryObj<typeof JBSelect>;
+type Story = StoryObj<typeof meta>;
 
 export const Normal: Story = {
   args: {
