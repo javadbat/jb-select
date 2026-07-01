@@ -577,18 +577,20 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const optionList = this.optionListWithOrder;
     const activeOption = optionList.find((option, index) => {
       if (option.active) {
-        if (optionList[index - 1]) {
+        const prevOption = optionList[index - 1];
+        if (prevOption) {
           option.active = false;
-          optionList[index - 1].active = true;
-          optionList[index - 1].scrollIntoView({ block: "nearest" });
+          prevOption.active = true;
+          prevOption.scrollIntoView({ block: "nearest" });
         }
         return true;
       }
       return false
     });
-    if (!activeOption && optionList[optionList.length - 1]) {
-      optionList[optionList.length - 1].active = true;
-      optionList[optionList.length - 1].scrollIntoView({ block: "nearest" });
+    const lastOption = optionList[optionList.length - 1];
+    if (!activeOption && lastOption) {
+      lastOption.active = true;
+      lastOption.scrollIntoView({ block: "nearest" });
     }
   }
   /**
@@ -598,16 +600,18 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const optionList = this.optionListWithOrder;
     const activeOption = optionList.find((option, index) => {
       if (option.active) {
-        if (optionList[index + 1]) {
+        const nextOption = optionList[index + 1];
+        if (nextOption) {
           option.active = false;
-          optionList[index + 1].active = true;
-          optionList[index + 1].scrollIntoView({ block: "nearest" });
+          nextOption.active = true;
+          nextOption.scrollIntoView({ block: "nearest" });
         }
         return true;
       }
       return false
     });
-    if (!activeOption && optionList[0]) { optionList[0].active = true; optionList[0].scrollIntoView({ block: "nearest" }) }
+    const firstOption = optionList[0];
+    if (!activeOption && firstOption) { firstOption.active = true; firstOption.scrollIntoView({ block: "nearest" }) }
   }
   #handleSelectedValueDisplay(inputValue: string) {
     if (inputValue !== "") {
@@ -908,7 +912,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   get validationMessage() {
-    return this.#internals?.validationMessage || this.#validation.resultSummary.message;
+    return this.#internals?.validationMessage || this.#validation.resultSummary?.message || null;
   }
 
 }
