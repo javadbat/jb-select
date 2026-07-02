@@ -717,10 +717,10 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
 
   }
   #onOptionDeselect(e: Event) {
-    const target = e.target as JBOptionWebComponent<unknown>;
+    const target = e.composedPath()[0] as JBOptionWebComponent<unknown>;
     //this only works on multi mode
     target.selected = false;
-    this.#selectedOptions.delete(e.target as JBOptionWebComponent<TValue>)
+    this.#selectedOptions.delete(target as JBOptionWebComponent<TValue>)
     this.#updateSelectedOptionDom();
     if (Array.isArray(this.#value)) {
       const index = this.#value.indexOf(target.value);
@@ -765,8 +765,10 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     if (this.multiple) {
       if (Array.isArray(this.#value)) {
         value = [...this.#value, value] as TValue
-      } else {
+      } else if (this.#value !== null && this.#value !== undefined) {
         value = [this.#value, value] as TValue
+      } else {
+        value = [value] as TValue
       }
     }
     this.#setValue(value, optionDom);

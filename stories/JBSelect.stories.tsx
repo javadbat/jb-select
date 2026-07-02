@@ -9,6 +9,21 @@ import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react';
 import { colorList, nameList, numberOptionList, persons } from './constants';
 import { JBCheckbox } from 'jb-checkbox/react';
+import { expect, userEvent, waitFor } from 'storybook/test';
+import {
+  appendEventTestSelect,
+  getClearButton,
+  getMessageText,
+  getNativeButton,
+  getNativeInput,
+  getOptionPopover,
+  getOptionPopoverWrapper,
+  getSelect,
+  getSelectedValueText,
+  selectOptionByIndex,
+  typeInSelect,
+  waitForOptions,
+} from './test-utils';
 const meta = {
   title: "Components/form elements/JBSelect",
   component: JBSelect,
@@ -25,6 +40,18 @@ export const Normal: Story = {
     label: 'select from menu',
     message: "please select a value",
     placeholder: "placeholder",
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+
+    await waitForOptions(select, 1);
+    const option = await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(select.value).toBe(nameList[0]);
+      expect(option.selected).toBe(true);
+      expect(getSelectedValueText(select)).toContain(nameList[0]);
+    });
   }
 };
 export const Multiple: Story = {
@@ -40,6 +67,27 @@ export const Multiple: Story = {
         }
       </JBSelect>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<number[]>(canvasElement);
+    const options = await waitForOptions<number>(select, 2);
+
+    await selectOptionByIndex(select, 0);
+    await selectOptionByIndex(select, 1);
+
+    await waitFor(() => {
+      expect(select.value).toEqual([persons[0].userId, persons[1].userId]);
+      expect(options[0].selected).toBe(true);
+      expect(options[1].selected).toBe(true);
+    });
+
+    options[0].toggleOption();
+
+    await waitFor(() => {
+      expect(select.value).toEqual([persons[1].userId]);
+      expect(options[0].selected).toBe(false);
+      expect(options[1].selected).toBe(true);
+    });
   }
 };
 export const MultipleWithOptionList: Story = {
@@ -53,6 +101,23 @@ export const MultipleWithOptionList: Story = {
         />
       </JBSelect>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<number[]>(canvasElement);
+    const options = await waitForOptions<number>(select, 2);
+
+    await selectOptionByIndex(select, 0);
+    await selectOptionByIndex(select, 1);
+
+    await waitFor(() => {
+      expect(select.value).toEqual([persons[0].userId, persons[1].userId]);
+    });
+
+    options[0].toggleOption();
+
+    await waitFor(() => {
+      expect(select.value).toEqual([persons[1].userId]);
+    });
   }
 };
 export const MultipleWithCheckbox: Story = {
@@ -68,6 +133,25 @@ export const MultipleWithCheckbox: Story = {
         }
       </JBSelect>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<number[]>(canvasElement);
+    const options = await waitForOptions<number>(select, 1);
+    const checkbox = options[0].querySelector('jb-checkbox') as HTMLElement & { value: boolean };
+
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(select.value).toEqual([persons[0].userId]);
+      expect(checkbox.value).toBe(true);
+    });
+
+    options[0].toggleOption();
+
+    await waitFor(() => {
+      expect(select.value).toEqual([]);
+      expect(checkbox.value).toBe(false);
+    });
   }
 };
 export const MultipleWithCheckboxAndLabel: Story = {
@@ -92,7 +176,7 @@ export const MultipleWithValue: Story = {
       setValue(args.value);
     }, [args.value])
     return (
-      <div style={{display:'flex',flexDirection:'column', gap:'0.5rem'}}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <JBSelect multiple value={value} onChange={(e) => setValue(e.target.value)} >
           {
             persons.map(p => {
@@ -102,12 +186,22 @@ export const MultipleWithValue: Story = {
             })
           }
         </JBSelect>
-        <JBButton size='sm' onClick={()=>console.log(value)}>Log Value (see console)</JBButton>
+        <JBButton size='sm' onClick={() => console.log(value)}>Log Value (see console)</JBButton>
       </div>
     )
   },
   args: {
     value: [...persons.filter((_, i) => i % 2 == 0).map(x => x.userId)]
+  },
+  play: async ({ canvasElement, args }) => {
+    const select = getSelect<number[]>(canvasElement);
+
+    await waitForOptions(select, persons.length);
+
+    await waitFor(() => {
+      expect(select.value).toEqual(args.value);
+      expect(getSelectedValueText(select)).toContain(persons[0].name);
+    });
   }
 };
 export const WithValue: Story = {
@@ -117,6 +211,16 @@ export const WithValue: Story = {
     placeholder: "placeholder",
     value: nameList[3],
     children: <JBOptionList optionList={nameList} />
+  },
+  play: async ({ canvasElement, args }) => {
+    const select = getSelect<string>(canvasElement);
+
+    await waitForOptions(select, 1);
+
+    await waitFor(() => {
+      expect(select.value).toBe(args.value);
+      expect(getSelectedValueText(select)).toContain(String(args.value));
+    });
   }
 };
 export const Disabled: Story = {
@@ -125,6 +229,19 @@ export const Disabled: Story = {
     message: "please select a value",
     value: nameList[3],
     disabled: true
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+    const input = getNativeInput(select);
+    const popover = getOptionPopover(select);
+
+    select.focus();
+
+    await waitFor(() => {
+      expect(select.disabled).toBe(true);
+      expect(input.disabled).toBe(true);
+      expect(popover.isOpen).toBe(false);
+    });
   }
 };
 export const FixedPopoverPosition: Story = {
@@ -132,6 +249,18 @@ export const FixedPopoverPosition: Story = {
     label: 'fixed',
     message: "open select and see popover(only works in a desktop)",
     popoverPosition: "fixed"
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+    const popoverWrapper = getOptionPopoverWrapper(select);
+
+    await waitForOptions(select, 1);
+    select.focus();
+
+    await waitFor(() => {
+      expect(getOptionPopover(select).isOpen).toBe(true);
+      expect(popoverWrapper.style.position).toBe('fixed');
+    });
   }
 };
 export const OptionObject: Story = {
@@ -139,6 +268,27 @@ export const OptionObject: Story = {
     label: 'select from menu',
     children: <JBOptionList optionList={[{ name: 'peter', family: 'hanan', userId: 1 }, { name: 'reza', family: 'asadi', userId: 2 }]} getTitle={(option) => `${option.name} ${option.family}`} getValue={(option) => option.userId} />,
     onChange: (e) => { console.log('onChange', e.target.value); }
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<number>(canvasElement);
+    const options = await waitForOptions<number>(select, 2);
+
+    expect(options[0].optionContentText).toBe('peter hanan');
+    expect(options[0].value).toBe(1);
+
+    await typeInSelect(select, 'peter');
+
+    await waitFor(() => {
+      expect(options[0].hidden).toBe(false);
+      expect(options[1].hidden).toBe(true);
+    });
+
+    options[0].toggleOption();
+
+    await waitFor(() => {
+      expect(select.value).toBe(1);
+      expect(getSelectedValueText(select)).toContain('peter hanan');
+    });
   }
 };
 export const HideCleanButton: Story = {
@@ -147,6 +297,13 @@ export const HideCleanButton: Story = {
     message: "please select a value",
     placeholder: "placeholder",
     hideClear: true,
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+
+    await waitFor(() => {
+      expect(getClearButton(select).style.display).toBe('none');
+    });
   }
 };
 export const OptionAsChildren: Story = {
@@ -183,6 +340,17 @@ export const OptionObjectAsChildren: Story = {
         <JBOption value={{ name: "joe", age: 14 }}>Joe</JBOption>
       </>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<{ name: string; age: number }>(canvasElement);
+    const options = await waitForOptions<{ name: string; age: number }>(select, 1);
+
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(select.value).toEqual(options[0].value);
+      expect(getSelectedValueText(select)).toContain('Ali');
+    });
   }
 }
 
@@ -306,9 +474,34 @@ export const FixedPopoverInPositionedContainer: Story = {
   },
 };
 export const EventTest: Story = {
-  args: {
-    ...Normal.args,
-    onChange: () => alert('Changed')
+  render: () => (
+    <JBSelect label="event test" required>
+      <JBOption value="alpha">alpha</JBOption>
+      <JBOption value="beta">beta</JBOption>
+    </JBSelect>
+  ),
+  play: async ({ canvasElement }) => {
+    const { select, events } = await appendEventTestSelect(canvasElement);
+    const input = getNativeInput(select);
+
+    expect(select.reportValidity()).toBe(false);
+
+    input.dispatchEvent(new KeyboardEvent('keypress', { key: 'a', bubbles: true }));
+    input.value = 'a';
+    input.dispatchEvent(new InputEvent('input', { data: 'a', inputType: 'insertText', bubbles: true, composed: true }));
+    input.dispatchEvent(new KeyboardEvent('keyup', { key: 'a', bubbles: true }));
+
+    await waitFor(() => {
+      expect(select.textValue).toBe('a');
+      expect(events).toEqual(expect.arrayContaining(['load', 'init', 'keypress', 'input', 'keyup', 'filter-change', 'invalid']));
+    });
+
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(select.value).toBe('alpha');
+      expect(events).toEqual(expect.arrayContaining(['change']));
+    });
   }
 };
 
@@ -335,16 +528,36 @@ export const EmptyList: Story = {
     label: 'empty list',
     message: "this list is a empty list",
     children: <JBOptionList optionList={[]} />,
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect(canvasElement);
+
+    select.focus();
+
+    await waitFor(() => {
+      expect(select.optionListWithOrder.length).toBe(0);
+      expect(select.shadowRoot?.querySelector('.empty-list-placeholder')?.textContent).toContain('no item available');
+    });
   }
 };
 
-export const ModalHeight: Story = {
+export const PopoverHeight: Story = {
   args: {
     label: 'select from in mobile',
     message: "put in mobile view and open menu. it must fill half of the page",
     placeholder: "select number here",
     children: <JBOptionList optionList={numberOptionList} />,
     style: { "--jb-select-mobile-modal-height": "50vh", "--jb-select-mobile-modal-border-radius": "1rem" } as React.CSSProperties
+  },
+  play: async ({ canvasElement, args }) => {
+    const select = getSelect(canvasElement);
+
+    await waitFor(() => {
+      expect(select.getAttribute('style')).toContain('--jb-select-mobile-modal-height');
+      expect(select.style.getPropertyValue('--jb-select-mobile-modal-height')).toBe(
+        (args.style as React.CSSProperties)['--jb-select-mobile-modal-height' as keyof React.CSSProperties],
+      );
+    });
   }
 };
 
@@ -353,6 +566,14 @@ export const WithError: Story = {
     label: 'with error',
     message: "please select a value",
     error: "error message",
+  },
+  play: async ({ canvasElement, args }) => {
+    const select = getSelect(canvasElement);
+
+    await waitFor(() => {
+      expect(select.reportValidity()).toBe(false);
+      expect(getMessageText(select)).toBe(args.error);
+    });
   }
 };
 
@@ -385,6 +606,16 @@ export const DynamicList: Story = {
       </div>
     );
   },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+
+    await waitForOptions(select, 20);
+    await typeInSelect(select, 'new');
+
+    await waitFor(() => {
+      expect(select.optionListWithOrder[0].optionContentText).toBe('new - 0');
+    });
+  }
 };
 
 export const CustomOption: Story = {
@@ -416,6 +647,17 @@ export const CustomSelectedValueRender: Story = {
         colorList.map((color) => <JBOption key={color.value} value={color}><span style={{ backgroundColor: color.value, marginInlineEnd: '0.5rem', width: '1rem', height: '1rem', borderRadius: '0.5rem' }}></span>{color.name}</JBOption>)
       }
     </>
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<(typeof colorList)[number]>(canvasElement);
+
+    await waitForOptions(select, 1);
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(getSelectedValueText(select)).toContain(`Color ${colorList[0].name}`);
+      expect(select.shadowRoot?.querySelector('[part="color-box"]')).toBeTruthy();
+    });
   }
 }
 
@@ -449,6 +691,18 @@ export const CustomOptionRender: Story = {
         />
       }
     </>
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<(typeof colorList)[number]>(canvasElement);
+    const options = await waitForOptions(select, 1);
+
+    expect(options[0].textContent).toContain(`Color ${colorList[0].name}`);
+
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(getSelectedValueText(select)).toContain(`Color ${colorList[0].name}`);
+    });
   }
 }
 
@@ -501,6 +755,22 @@ export const BooleanValue: Story = {
         <JBOption value={false}>False</JBOption>
       </JBSelect>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<boolean>(canvasElement);
+
+    await waitForOptions(select, 2);
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(select.value).toBe(true);
+    });
+
+    await selectOptionByIndex(select, 1);
+
+    await waitFor(() => {
+      expect(select.value).toBe(false);
+    });
   }
 }
 export const MissingOption: Story = {
@@ -523,5 +793,22 @@ export const MissingOption: Story = {
   },
   args: {
     value: persons[3]
+  },
+  play: async ({ canvasElement, args }) => {
+    const select = getSelect<(typeof persons)[number]>(canvasElement);
+    const fillButton = Array.from(canvasElement.querySelectorAll<HTMLElement>('jb-button')).find((button) =>
+      button.textContent?.includes('Fill Option')
+    );
+
+    expect(fillButton).toBeTruthy();
+    expect(select.optionListWithOrder.length).toBe(0);
+
+    await userEvent.click(fillButton!);
+    await waitForOptions(select, persons.length);
+
+    await waitFor(() => {
+      expect(select.value).toEqual(args.value);
+      expect(getSelectedValueText(select)).toContain(persons[3].name);
+    });
   }
 }
