@@ -471,12 +471,12 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         option.selected = true;
         this.#selectedOption = option;
       }
-    }else if(option === null){
+    } else if (option === null) {
       // we only call with null when value set null and all option must deselect.
       this.#deSelectAllOptions();
     }
   }
-  #deSelectAllOptions(){
+  #deSelectAllOptions() {
     this.#optionList.forEach((x) => { x.selected = false });
   }
   #setValue(value: null, option: null): void
@@ -862,6 +862,10 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   //
   #checkValidity(showError: boolean) {
     if (!this.isAutoValidationDisabled) {
+      if (this.#internals.states.has("invalid")) {
+        // if we currently showing error to user it make sure error get updated (when failed validation changed of function return different string as an error) 
+        showError = true;
+      }
       return this.#validation.checkValidity({ showError });
     }
   }
