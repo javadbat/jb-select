@@ -282,7 +282,7 @@ for example if you have array of object as a option list and want to show custom
     dropDownElement.callbacks.getSelectedValueDOM = (option)=>{
         const optionElement = document.createElement('div');
         optionElement.classList.add('selected-value');
-        optionElement.innerHTML = '<span part="color-box" style="background-color:'+option.value+';width:16px;height:16px"></span>'+'&nbsp;'+option.name;
+        optionElement.innerHTML = '<span part="color-box" style="background-color:'+option.value+';width:1rem;height:1rem"></span>'+'&nbsp;'+option.name;
         return optionElement;
     }
 ```
@@ -355,7 +355,7 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1rem`                                                     |
 | --jb-select-height                        | jb-select box height                                                                          |
-| --jb-select-list-padding                  | padding of opened list box default is `16px 0`                                                |
+| --jb-select-list-padding                  | padding of opened list box default is `1rem 0`                                                |
 | --jb-select-mobile-input-bgcolor          | background color search input when open in mobile                                             |
 | --jb-select-list-scroll-color              | list item scroll color                                                                       |
 | --jb-select-list-scroll-border-radius      | list item scroll border-radius default is `4px`                                              |

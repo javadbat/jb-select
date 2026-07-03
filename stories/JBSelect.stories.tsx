@@ -637,7 +637,7 @@ export const CustomSelectedValueRender: Story = {
       const optionElement = document.createElement("div");
       optionElement.classList.add("selected-value");
       optionElement.innerHTML = /*html */`
-        <span part="color-box" style="background-color:${option.value};width:32px;height:16px;display:inline-block;"></span>&nbsp;
+        <span part="color-box" style="background-color:${option.value};width:2rem;height:1rem;display:inline-block;"></span>&nbsp;
         <span>Color ${option.name}</span>
       `
       return optionElement;
@@ -669,7 +669,7 @@ export const CustomOptionRender: Story = {
       const optionElement = document.createElement("div");
       optionElement.classList.add("selected-value");
       optionElement.innerHTML = /*html */`
-              <span style="background-color:${option.value};width:16px;height:16px;display:inline-block;"></span>&nbsp;
+              <span style="background-color:${option.value};width:1rem;height:1rem;display:inline-block;"></span>&nbsp;
               <span>Color ${option.name}</span>
             `
       return optionElement;
@@ -683,7 +683,7 @@ export const CustomOptionRender: Story = {
             const optionElement = document.createElement("div");
             optionElement.classList.add("selected-value");
             optionElement.innerHTML = /*html */`
-              <span style="background-color:${option.value};width:16px;height:16px;display:inline-block;"></span>&nbsp;
+              <span style="background-color:${option.value};width:1rem;height:1rem;display:inline-block;"></span>&nbsp;
               <span>Color ${option.name}</span>
             `
             return optionElement;
@@ -713,7 +713,7 @@ export const JBSelectDesignTest: Story = {
       optionElement.classList.add("selected-value");
       optionElement.innerHTML =
         '<span part="color-box" style="background-color:' + option.value +
-        ';width:16px;height:16px"></span>' + "&nbsp;" + option.name;
+        ';width:1rem;height:1rem"></span>' + "&nbsp;" + option.name;
       return optionElement;
     }
     return (
@@ -725,7 +725,7 @@ export const JBSelectDesignTest: Story = {
           {
             colorList.map((o) => (<JBOption value={o} key={o.value}><span className="color-circle" style={{ backgroundColor: o.value }}></span>{o.name}</JBOption>))
           }
-          <div style={{ height: "24px" }} slot="select-arrow-icon">
+          <div style={{ height: "1.5rem" }} slot="select-arrow-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <title>arrow icon</title>
               <rect width="24" height="24" rx="5" fill="#E7E7E7" />

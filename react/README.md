@@ -125,7 +125,7 @@ function getSelectedValueDOM(option) {
     optionElement.classList.add("selected-value");
     optionElement.innerHTML =
       '<span part="color-box" style="background-color:' + option.value +
-      ';width:16px;height:16px;display:inline-block;"></span>' + "&nbsp;" +
+      ';width:1rem;height:1rem;display:inline-block;"></span>' + "&nbsp;" +
       option.name;
     return optionElement;
 }

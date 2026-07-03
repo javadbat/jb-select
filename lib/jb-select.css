@@ -1,5 +1,5 @@
-@custom-media --tablet-until (max-width: 768px);
-@custom-media --tablet-from (min-width: 769px);
+@custom-media --tablet-until (max-width: 48rem);
+@custom-media --tablet-from (min-width: 48.0625rem);
 
 :host {
   display: block;
@@ -257,11 +257,11 @@
 
       .select-list {
         width: 100%;
-        max-height: var(--jb-select-list-max-height, 400px);
+        max-height: var(--jb-select-list-max-height, 25rem);
         overflow-y: auto;
 
         slot {
-          padding: var(--jb-select-list-padding, 16px 0);
+          padding: var(--jb-select-list-padding, 1rem 0);
 
           &:empty {
             padding: 0;
@@ -271,7 +271,7 @@
         /* option style places */
 
         &::-webkit-scrollbar {
-          width: 9px;
+          width: 0.5625rem;
           background-color: transparent;
         }
 

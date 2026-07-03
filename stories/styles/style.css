@@ -1,11 +1,11 @@
 jb-select::part(color-box){
-    border-radius: 10px;
+    border-radius: 0.625rem;
 }
 .select-custom-design{
     --jb-select-border-color:none;
-    --jb-select-rounded:8px;
+    --jb-select-rounded:0.5rem;
     --jb-select-border-color-selected:none;
-    --jb-input-label-font-size:14px;
+    --jb-input-label-font-size:0.875rem;
     --jb-input-label-font-weight:500;
     --jb-select-border-bottom-width	:1px;
     --jb-select-bgcolor:#ececec;
