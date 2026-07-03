@@ -165,6 +165,36 @@ render(){
 }
 ```
 
+## get value
+
+Read `event.target.value` from `onChange` or use a ref to read `ref.current.value`.
+
+```jsx
+<JBSelect onChange={(event) => console.log(event.target.value)} />
+```
+
+## set value
+
+Use the controlled `value` prop to set the selected option from React state.
+
+```jsx
+<JBSelect value={selectedValue} onChange={(event) => setSelectedValue(event.target.value)}>
+  <JBOption value="a">A</JBOption>
+  <JBOption value="b">B</JBOption>
+</JBSelect>
+```
+
+## Multiple
+
+Set `multiple` when the selected value should be an array.
+
+```jsx
+<JBSelect multiple value={selectedValues}>
+  <JBOption value="red">Red</JBOption>
+  <JBOption value="blue">Blue</JBOption>
+</JBSelect>
+```
+
 ## Add Icon or Any Element into box
 
 sometimes you want to add icon into the select box before value box.
@@ -190,9 +220,25 @@ you can also set `error` attribute to pass error directly to the component
 <JBSelect error="your error message"></JBSelect>
 ```
 
+## Change empty state shape
+
+Use `placeholder`, `searchPlaceholder`, `hideClear`, and slotted start/end content to tune the empty-state and search UI.
+
+## Callbacks
+
+Use `getSelectedValueDOM` when the selected value needs custom DOM. Create DOM nodes safely and avoid injecting untrusted HTML.
+
 ## set custom style
 
 please read [jb-select](https://github.com/javadbat/jb-select) custom style section.
+
+## Parts
+
+The React wrapper exposes the same CSS parts as the web component. Use `className` on `JBSelect` and style with `::part(...)`.
+
+## Slots
+
+React children map to the underlying slots. Use `JBOption` or `JBOptionList` for options, and use `slot="start-section"` or `slot="end-section"` for custom content inside the select box.
 
 ## Shared Documentation
 
