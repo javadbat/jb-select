@@ -1,2 +1,2 @@
-import './dist/index.js';
-export * from './dist/index.js';
+import './web-component/dist/index.js';
+export * from './web-component/dist/index.js';

@@ -23,15 +23,15 @@
   "files": [
     "LICENSE",
     "README.md",
-    "custom-elements.json",
-    "lib/",
-    "dist/",
+    "web-component/custom-elements.json",
+    "web-component/lib/",
+    "web-component/dist/",
     "react/",
     "react/dist/"
   ],
-  "types": "./dist/index.d.ts",
+  "types": "./web-component/dist/index.d.ts",
   "main": "index.js",
-  "customElements": "custom-elements.json",
+  "customElements": "web-component/custom-elements.json",
   "repository": {
 		"type": "git",
 		"url": "git@github.com:javadbat/jb-select.git"
