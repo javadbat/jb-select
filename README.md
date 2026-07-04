@@ -355,6 +355,7 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1rem`                                                     |
 | --jb-select-height                        | jb-select box height                                                                          |
+| --jb-select-list-border-radius            | List border radius.                                                                           |
 | --jb-select-list-padding                  | padding of opened list box default is `1rem 0`                                                |
 | --jb-select-mobile-input-bg-color          | background color search input when open in mobile                                             |
 | --jb-select-list-scroll-color              | list item scroll color                                                                       |
@@ -365,11 +366,20 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-bg-color-disabled | Customize bg color disabled. |
 | --jb-select-border-color-focus | Customize border color focus. |
 | --jb-select-box-padding-end | Customize box padding end. |
+| --jb-select-clear-icon-size | Clear icon size. |
+| --jb-select-clear-icon-size-xs | Clear icon size for `size="xs"`. |
+| --jb-select-clear-icon-size-sm | Clear icon size for `size="sm"`. |
 | --jb-select-empty-list-placeholder-color | Customize empty list placeholder color. |
 | --jb-select-height-lg | Customize height lg. |
 | --jb-select-height-sm | Customize height sm. |
 | --jb-select-height-xl | Customize height xl. |
 | --jb-select-height-xs | Customize height xs. |
+| --jb-select-inline-space | Inline label/message spacing derived from rounded value. |
+| --jb-select-inline-slots-padding | Inline slot padding. |
+| --jb-select-inline-slots-padding-xs | Inline slot padding for `size="xs"`. |
+| --jb-select-inline-slots-padding-sm | Inline slot padding for `size="sm"`. |
+| --jb-select-inline-slots-padding-lg | Inline slot padding for `size="lg"`. |
+| --jb-select-inline-slots-padding-xl | Inline slot padding for `size="xl"`. |
 | --jb-select-input-font-size | Customize input font size. |
 | --jb-select-input-font-size-lg | Customize input font size lg. |
 | --jb-select-input-font-size-sm | Customize input font size sm. |
