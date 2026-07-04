@@ -3,8 +3,8 @@
 
 :host {
   display: block;
-  margin: var(--jb-select-margin, 0 0);
-  width: var(--jb-select-width, 100%);
+  margin: var(--margin);
+  width: var(--width);
 }
 
 :host(:focus),
@@ -38,8 +38,8 @@
 
     /*if user select a option and value is set and not null*/
     .select-box {
-      border-color: var(--jb-select-border-color-selected, var(--border-color));
-      background-color: var(--jb-select-bgcolor-selected, var(--select-box-bg-color));
+      border-color: var(--border-color-selected);
+      background-color: var(--select-box-bg-color-selected);
     }
 
     .select-box .end-section .clear-button {
@@ -53,7 +53,7 @@
     display: block;
     font-size: var(--label-font-size);
     color: var(--label-color);
-    font-weight: var(--jb-select-label-font-weight, 300);
+    font-weight: var(--label-font-weight);
 
     &:empty {
       display: none;
@@ -70,12 +70,12 @@
     border-bottom: solid var(--border-bottom-width) var(--border-color);
     border-radius: var(--box-border-radius);
     background-color: var(--select-box-bg-color);
-    margin: var(--jb-select-box-margin, 0px);
+    margin: var(--box-margin);
     overflow: hidden;
     display: grid;
     grid-template-rows: minmax(0, 1fr);
     grid-template-columns: auto 1fr auto;
-    padding-inline-end: var(--jb-select-box-padding-end, 1rem);
+    padding-inline-end: var(--box-padding-end);
     align-items: center;
 
     .start-section {
@@ -154,7 +154,7 @@
 
           &::placeholder {
             color: var(--placeholder-color);
-            font-size: var(--jb-select-placeholder-font-size, var(--input-font-size));
+            font-size: var(--placeholder-font-size);
           }
         }
       }
@@ -167,7 +167,7 @@
       padding-inline-start: 0.5rem;
 
       .arrow-icon {
-        margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
+        margin: var(--arrow-icon-margin);
       }
 
       .clear-button {
@@ -204,7 +204,7 @@
     font-size: var(--message-font-size);
     padding: 0.125rem var(--inline-space);
     color: var(--message-color);
-    display: var(--jb-select-message-box-display, block);
+    display: var(--message-box-display);
 
     &:empty {
       padding: 0;
@@ -243,7 +243,7 @@
           margin-inline: 0.75rem;
 
           .search-input {
-            background-color: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
+            background-color: var(--mobile-input-bgcolor);
             border-radius: var(--box-border-radius);
             padding: 0.125rem 0.75rem;
             font-size: 1rem;
@@ -257,11 +257,11 @@
 
       .select-list {
         width: 100%;
-        max-height: var(--jb-select-list-max-height, 25rem);
+        max-height: var(--list-max-height);
         overflow-y: auto;
 
         slot {
-          padding: var(--jb-select-list-padding, 1rem 0);
+          padding: var(--list-padding);
 
           &:empty {
             padding: 0;
@@ -277,7 +277,7 @@
 
         &::-webkit-scrollbar-thumb {
           background-color: var(--list-scroll-color);
-          border-radius: var(--jb-select-list-scroll-border-radius, 4px);
+          border-radius: var(--list-scroll-border-radius);
         }
       }
 
@@ -315,7 +315,7 @@
 
     &::placeholder {
       color: var(--placeholder-color);
-      font-size: var(--jb-select-placeholder-font-size, 1.1em);
+      font-size: var(--native-placeholder-font-size);
     }
   }
 }

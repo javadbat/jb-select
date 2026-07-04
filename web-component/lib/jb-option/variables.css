@@ -1,10 +1,10 @@
 :host{
-  /*Sizes*/
+  /* Size */
   --border-radius:var(--jb-option-border-radius, 0);
   --padding: var(--jb-option-padding, 0.5rem 1rem);
   --font-size: var(--jb-option-font-size, 0.9rem);
   --min-height: var(--jb-option-min-height, 2.25rem);
-  /*Colors*/
+  /* Theme/Color */
   --color: var(--jb-option-color, inherit);
   --background-color:var(--jb-option-bg-color, transparent);
 }

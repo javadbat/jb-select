@@ -1,5 +1,6 @@
 :host {
-  /*Sizes*/
+  /* Size */
+  --width: var(--jb-select-width, 100%);
   --height: var(--jb-select-height, 2.5rem);
   /*its rounded because it's only one value and not all radius 4 part value and needed to be one vale due to change in different situation*/
   --rounded: var(--jb-select-rounded, var(--jb-radius));
@@ -13,22 +14,37 @@
   --selected-value-padding:var(--jb-select-selected-value-padding, 0.125rem 0.75rem 0 0.75rem);
   --inline-slots-padding:0.375rem 0.625rem;
   --clear-icon-size: 1rem;
+  --box-padding-end: var(--jb-select-box-padding-end, 1rem);
+  --placeholder-font-size: var(--jb-select-placeholder-font-size, var(--input-font-size));
+  --native-placeholder-font-size: var(--jb-select-placeholder-font-size, 1.1em);
+  --list-max-height: var(--jb-select-list-max-height, 25rem);
+  --list-padding: var(--jb-select-list-padding, 1rem 0);
+  --list-scroll-border-radius: var(--jb-select-list-scroll-border-radius, 4px);
   /* put message and label forward base on border radius*/
   --inline-space: calc(var(--rounded) / 1.75);
   --label-margin: var(--jb-select-label-margin, 0.125rem var(--inline-space));
   --label-font-size: var(--jb-select-label-font-size, 0.8rem);
   --message-font-size:var(--jb-select-message-font-size, 0.7rem);
-  /*colors*/
+  /* Theme/Color */
   --border-color: var(--jb-select-border-color, var(--jb-neutral-10));
+  --border-color-selected: var(--jb-select-border-color-selected, var(--border-color));
   --message-color: var(--jb-select-message-color, var(--jb-text-secondary));
   --label-color: var(--jb-select-label-color, var(--jb-text-primary));
   --value-color: var(--jb-select-value-color, var(--jb-text-primary));
   --placeholder-color: var(--jb-select-placeholder-color, var(--jb-neutral-6));
   --select-box-bg-color: var(--jb-select-bgcolor, var(--jb-neutral-10));
+  --select-box-bg-color-selected: var(--jb-select-bgcolor-selected, var(--select-box-bg-color));
   --popover-bg-color: var(--jb-popover-bg-color, var(--select-box-bg-color));
   --overlay-bg-color: var(--jb-select-overlay-bg-color, oklch(from var(--jb-black) l c h / calc(alpha - 0.5)));
   --list-scroll-color: var(--jb-select-list-scroll-color, oklch(from var(--select-box-bg-color) calc(l - 0.2) c h));
-  --empty-list-placeholder-color: var(--jb-select-empty-list-placeholder-color, var(--jb-text-secondary))
+  --empty-list-placeholder-color: var(--jb-select-empty-list-placeholder-color, var(--jb-text-secondary));
+  --mobile-input-bgcolor: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
+  /* Other */
+  --margin: var(--jb-select-margin, 0 0);
+  --label-font-weight: var(--jb-select-label-font-weight, 300);
+  --box-margin: var(--jb-select-box-margin, 0px);
+  --arrow-icon-margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
+  --message-box-display: var(--jb-select-message-box-display, block);
 }
 
 :host(:state(invalid)) {
@@ -43,7 +59,7 @@
   --border-color: var(--jb-select-border-color-focus, var(--jb-neutral));
 }
 
-/*Size*/
+/* Size */
  :host([size="xs"]){
   --height:var(--jb-select-height-xs, 1.5rem);
   --selected-value-font-size:var(--jb-select-selected-value-font-size-xs, 0.75rem);
