@@ -7,7 +7,7 @@
     align-items: center;
     font-size: var(--font-size);
     color: var(--color);
-    background-color: var(--background-color);
+    background-color: var(--bg-color);
     padding: var(--padding);
     border-radius: var(--border-radius);
     cursor: pointer;

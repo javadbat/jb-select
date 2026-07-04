@@ -135,7 +135,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   static get observedAttributes() {
     return ["value"];
   }
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
     // do something when an attribute has changed
     this.#onAttributeChange(name, newValue);
   }
@@ -179,6 +179,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   #onInnerElementChange(e: Event) {
     // biome-ignore lint/suspicious/noExplicitAny: <it happen after change so it must have a value>
     if (typeof (e.target as any)?.value == "boolean") {
+      // biome-ignore lint/suspicious/noExplicitAny: <any checkbox maybe placed here with boolean value>
       const value: boolean = (e.target as any)?.value;
       if (value) {
         this.#dispatchSelectEvent();

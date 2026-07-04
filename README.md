@@ -341,14 +341,14 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-box-border-radius             | box `border-radius` it's full value so you can change it whatever you want                    |
 | --jb-select-border-color                  | border color of select in normal mode                                                         |
 | --jb-select-border-color-selected         | border color when user select a value from list                                               |
-| --jb-select-bgcolor                       | background color of input                                                                     |
+| --jb-select-bg-color                       | background color of input                                                                     |
 | --jb-select-list-max-height               | max height of option list                                                                     |
 | --jb-select-border-bottom-width           | width of border bottom                                                                        |
 | --jb-select-border-width                  | width of border                                                                               |
 | --jb-select-label-color                   | color of label                                                                                |
 | --jb-select-label-font-size               | label font size default is `0.8em`                                                            |
 | --jb-select-label-font-weight             | label font weight                                                                             |
-| --jb-select-bgcolor-selected              | set background color for selected status                                                      |
+| --jb-select-bg-color-selected              | set background color for selected status                                                      |
 | --jb-select-selected-value-font-size      | font-size of selected value default is `1.1rem`                                               |
 | --jb-select-message-color                 | message text color                                                                            |
 | --jb-select-message-font-size             | font size of message default is `0.7em`                                                       |
@@ -356,7 +356,7 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1rem`                                                     |
 | --jb-select-height                        | jb-select box height                                                                          |
 | --jb-select-list-padding                  | padding of opened list box default is `1rem 0`                                                |
-| --jb-select-mobile-input-bgcolor          | background color search input when open in mobile                                             |
+| --jb-select-mobile-input-bg-color          | background color search input when open in mobile                                             |
 | --jb-select-list-scroll-color              | list item scroll color                                                                       |
 | --jb-select-list-scroll-border-radius      | list item scroll border-radius default is `4px`                                              |
 | --jb-select-box-margin                     | margin of internal element called select box that wrapper display element of form in one box |

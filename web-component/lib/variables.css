@@ -32,13 +32,13 @@
   --label-color: var(--jb-select-label-color, var(--jb-text-primary));
   --value-color: var(--jb-select-value-color, var(--jb-text-primary));
   --placeholder-color: var(--jb-select-placeholder-color, var(--jb-neutral-6));
-  --select-box-bg-color: var(--jb-select-bgcolor, var(--jb-neutral-10));
-  --select-box-bg-color-selected: var(--jb-select-bgcolor-selected, var(--select-box-bg-color));
+  --select-box-bg-color: var(--jb-select-bg-color, var(--jb-neutral-10));
+  --select-box-bg-color-selected: var(--jb-select-bg-color-selected, var(--select-box-bg-color));
   --popover-bg-color: var(--jb-popover-bg-color, var(--select-box-bg-color));
   --overlay-bg-color: var(--jb-select-overlay-bg-color, oklch(from var(--jb-black) l c h / calc(alpha - 0.5)));
   --list-scroll-color: var(--jb-select-list-scroll-color, oklch(from var(--select-box-bg-color) calc(l - 0.2) c h));
   --empty-list-placeholder-color: var(--jb-select-empty-list-placeholder-color, var(--jb-text-secondary));
-  --mobile-input-bgcolor: var(--jb-select-mobile-input-bgcolor, var(--select-box-bg-color));
+  --mobile-input-bg-color: var(--jb-select-mobile-input-bg-color, var(--select-box-bg-color));
   /* Other */
   --margin: var(--jb-select-margin, 0 0);
   --label-font-weight: var(--jb-select-label-font-weight, 300);

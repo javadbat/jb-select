@@ -18,7 +18,7 @@
 .state-styled-select:state(open) {
   --jb-select-border-color: #2563eb;
   --jb-select-border-color-focus: #2563eb;
-  --jb-select-bgcolor: #eff6ff;
+  --jb-select-bg-color: #eff6ff;
 }
 
 .state-styled-select:state(disabled) {

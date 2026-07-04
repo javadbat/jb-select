@@ -243,7 +243,7 @@
           margin-inline: 0.75rem;
 
           .search-input {
-            background-color: var(--mobile-input-bgcolor);
+            background-color: var(--mobile-input-bg-color);
             border-radius: var(--box-border-radius);
             padding: 0.125rem 0.75rem;
             font-size: 1rem;

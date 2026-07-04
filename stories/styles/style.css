@@ -8,9 +8,9 @@ jb-select::part(color-box){
     --jb-input-label-font-size:0.875rem;
     --jb-input-label-font-weight:500;
     --jb-select-border-bottom-width	:1px;
-    --jb-select-bgcolor:#ececec;
+    --jb-select-bg-color:#ececec;
     --jb-select-option-background-color:#ececec;
-    --jb-select-bgcolor-selected:grey;
+    --jb-select-bg-color-selected:grey;
     --jb-select-option-color:#c3c5b7;
     --jb-select-selected-value-color:#c3c5b7;
     --jb-select-input-color:#c3c5b7;
