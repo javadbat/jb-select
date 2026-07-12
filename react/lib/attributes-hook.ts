@@ -6,7 +6,6 @@ export type JBSelectAttributes<TValue> = {
   validationList?: ValidationItem<ValidationValue<TValue>>[],
   label?: string,
   error?: string,
-  value?: TValue,
   message?: string,
   placeholder?: string,
   searchPlaceholder?: string,
@@ -72,11 +71,6 @@ export function useJBSelectAttribute<TValue>(element: RefObject<JBSelectWebCompo
       element?.current?.removeAttribute('error');
     }
   }, [props.error]);
-  useEffect(() => {
-    if (element.current) {
-      element.current.value = props.value;
-    }
-  }, [props.value]);
   useEffect(() => {
     if (typeof props.getSelectedValueDOM == "function" && element.current && element.current) {
       element.current.callbacks.getSelectedValueDOM = props.getSelectedValueDOM;

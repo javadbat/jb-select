@@ -26,6 +26,8 @@ declare module "react" {
       tabindex?: string,
       size?: string,
       "hide-clean"?: string,
+      value?: any,
+      initialValue?: any,
     }
   }
 }

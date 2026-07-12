@@ -13,7 +13,7 @@ export type JBSelectEventType<T> = T & {
 }
 export function JBSelect<TValue>(props: Props<TValue>) {
   const element = useRef<JBSelectWebComponent>(null);
-  const { onChange, onInit, onInput, onKeyUp, onLoad, ref, error, getSelectedValueDOM, label, required, message, placeholder, searchPlaceholder, validationList, value, hideClear, ...otherProps } = props;
+  const { onChange, onInit, onInput, onKeyUp, onLoad, ref, error, getSelectedValueDOM, initialValue, label, required, message, placeholder, searchPlaceholder, validationList, value, hideClear, ...otherProps } = props;
   // biome-ignore lint/correctness/useExhaustiveDependencies: <we need element for merging>
   useImperativeHandle(
     ref,
@@ -21,9 +21,9 @@ export function JBSelect<TValue>(props: Props<TValue>) {
     [element],
   );
   useEvents(element, { onChange, onInit, onInput, onKeyUp, onLoad });
-  useJBSelectAttribute(element, { error, getSelectedValueDOM, label, required, message, placeholder, searchPlaceholder, validationList, value, hideClear });
+  useJBSelectAttribute(element, { error, getSelectedValueDOM, label, required, message, placeholder, searchPlaceholder, validationList, hideClear });
   return (
-    <jb-select ref={element} {...otherProps}>
+    <jb-select ref={element} value={value ?? null} initialValue={initialValue ?? null} {...otherProps}>
       {props.children}
     </jb-select>
   );
@@ -36,4 +36,6 @@ export type Props<TValue> = PropsWithChildren<EventProps & JBSelectAttributes<TV
   name?: string,
   disabled?:boolean,
   popoverPosition?:PopoverPosition
+  value?: TValue | null,
+  initialValue?: TValue | null,
 }
