@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Added the standard `formResetCallback()` to restore `initialValue` and clear validation state.
+
 ### Changed
 
 - Added the React `initialValue` prop and forwarded `value` and `initialValue` directly as React 19 custom-element properties.

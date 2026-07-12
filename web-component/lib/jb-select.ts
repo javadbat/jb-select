@@ -204,6 +204,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   initialValue: TValue | null = null;
+  formResetCallback() {
+    this.value = this.initialValue;
+    this.#validation.reset();
+    this.#internals?.setValidity({}, '');
+  }
   get isDirty(): boolean {
     return this.value !== this.initialValue;
   }
@@ -296,7 +301,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.addEventListener("beforeinput", this.#onInputBeforeInput.bind(this));
     this.elements.input.addEventListener("input", (e) => { this.#onInputInput(e as unknown as InputEvent); });
     this.addEventListener("focus", this.#onSelectFocus.bind(this), {passive:true});
-    this.elements.input.addEventListener("blur", this.#onInputBlur.bind(this),{passive:true});
+    this.elements.input.addEventListener("focusout", this.#onInputBlur.bind(this),{passive:true});
     this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this), {passive:true});
     this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this), {passive:true});
     //events to work with options
