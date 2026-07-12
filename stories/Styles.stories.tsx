@@ -130,6 +130,11 @@ export const Gallery: Story = {
   ),
 };
 
+export const Default: Story = {
+  name: "Default",
+  render: () => <SelectStyleSample className="" />,
+};
+
 export const Carbon: Story = {
   name: "Carbon",
   render: () => <SelectStyleSample className="carbon-style carbon-style" />,

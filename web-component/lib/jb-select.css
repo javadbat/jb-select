@@ -167,12 +167,18 @@
       padding-inline-start: 0.5rem;
 
       .arrow-icon {
+        color: var(--icon-color);
         margin: var(--arrow-icon-margin);
+
+        svg {
+          fill: currentColor;
+        }
       }
 
       .clear-button {
         /*show when there is value*/
         display: none;
+        --jb-button-dark: var(--icon-color);
         --icon-size: var(--clear-icon-size);
         height: 100%;
       }
