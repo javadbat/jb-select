@@ -1,0 +1,36 @@
+jb-select.material-style {
+  --jb-select-height: 3rem;
+  --jb-select-rounded: 0.25rem;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 2px;
+  --jb-select-border-color: #c7c7c7;
+  --jb-select-border-color-focus: var(--jb-primary);
+  --jb-select-border-color-selected: var(--jb-primary);
+  --jb-select-bg-color: var(--jb-surface);
+  --jb-select-bg-color-selected: var(--jb-surface);
+  --jb-select-label-color: var(--jb-text-primary);
+  --jb-select-value-color: var(--jb-text-primary);
+  --jb-select-placeholder-color: #79747e;
+  --jb-select-message-color: var(--jb-text-secondary);
+  --jb-select-message-color-error: var(--jb-red);
+  --jb-select-list-padding: 0.5rem 0.25rem;
+  --jb-select-rounded: 0.75rem;
+  --jb-option-color: var(--jb-text-primary);
+  --jb-option-bg-color-active: var(--jb-surface-hover);
+  --jb-option-color-active: #21005d;
+  --jb-option-border-radius: 0.5rem;
+}
+
+jb-select.material-style::part(selected-value) {
+  font-weight: 500;
+}
+
+jb-select.material-style::part(arrow-icon) {
+  color: var(--jb-primary);
+}
+
+jb-select.material-style::part(popover-content) {
+  --jb-popover-bg-color: var(--jb-surface);
+  --jb-popover-padding: 0.25rem;
+  box-shadow: 0 0.5rem 1.5rem rgb(29 27 32 / 0.18);
+}

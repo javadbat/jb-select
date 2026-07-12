@@ -1,0 +1,40 @@
+jb-select.aurora-style {
+  --jb-select-height: 2.875rem;
+  --jb-select-rounded: 1rem;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: rgb(125 211 252 / 0.58);
+  --jb-select-border-color-focus: #a78bfa;
+  --jb-select-border-color-selected: #a78bfa;
+  --jb-select-bg-color: rgb(15 23 42 / 0.76);
+  --jb-select-bg-color-selected: rgb(15 23 42 / 0.82);
+  --jb-select-label-color: #e0f2fe;
+  --jb-select-value-color: #ffffff;
+  --jb-select-placeholder-color: #bae6fd;
+  --jb-select-message-color: #c4b5fd;
+  --jb-select-message-color-error: #fda4af;
+  --jb-select-list-padding: 0.5rem;
+  --jb-select-rounded: 1rem;
+  --jb-option-color: #eff6ff;
+  --jb-option-bg-color-active: rgb(167 139 250 / 0.22);
+  --jb-option-color-active: #ffffff;
+  --jb-option-border-radius: 0.75rem;
+  --jb-popover-box-shadow:
+    0 0.125rem 0.375rem rgb(0 0 0 / 0.28),
+    0 0.75rem 1.75rem rgb(0 0 0 / 0.22),
+    0 1.5rem 3.5rem rgb(79 70 229 / 0.12);
+}
+
+jb-select.aurora-style::part(selected-value) {
+  background: rgb(56 189 248 / 0.16);
+  border-radius: 999rem;
+}
+
+jb-select.aurora-style::part(arrow-icon) {
+  color: #c4b5fd;
+}
+
+jb-select.aurora-style::part(popover-content) {
+  --jb-popover-bg-color: #111827;
+  --jb-popover-padding: 0.5rem;
+}

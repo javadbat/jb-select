@@ -1,0 +1,37 @@
+jb-select.sunset-style {
+  --jb-select-height: 2.75rem;
+  --jb-select-rounded: 1rem;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: rgb(254 205 211 / 0.38);
+  --jb-select-border-color-focus: var(--jb-focus-color);
+  --jb-select-border-color-selected: var(--jb-focus-color);
+  --jb-select-bg-color: #963f5a;
+  --jb-select-bg-color-selected: #963f5a;
+  --jb-select-label-color: #fff1f2;
+  --jb-select-value-color: #fff7ed;
+  --jb-select-placeholder-color: #ffe4e6;
+  --jb-select-message-color: var(--jb-focus-color);
+  --jb-select-message-color-error: #fecaca;
+  --jb-select-list-padding: 0.5rem;
+  --jb-select-rounded: 1rem;
+  --jb-option-color: #fff7ed;
+  --jb-option-bg-color-active: rgb(255 209 102 / 0.2);
+  --jb-option-color-active: var(--jb-focus-color);
+  --jb-option-border-radius: 0.75rem;
+}
+
+jb-select.sunset-style::part(selected-value) {
+  background: rgb(255 209 102 / 0.12);
+  border-radius: 999rem;
+}
+
+jb-select.sunset-style::part(arrow-icon) {
+  color: var(--jb-focus-color);
+}
+
+jb-select.sunset-style::part(popover-content) {
+  --jb-popover-bg-color: #963f5a;
+  --jb-popover-padding: 0.5rem;
+  box-shadow: 0 1.25rem 2.5rem rgb(127 29 29 / 0.3);
+}

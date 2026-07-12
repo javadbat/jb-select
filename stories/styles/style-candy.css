@@ -1,0 +1,38 @@
+jb-select.candy-style {
+  --jb-select-height: 2.875rem;
+  --jb-select-rounded: 1.25rem;
+  --jb-select-border-width: 2px;
+  --jb-select-border-bottom-width: 2px;
+  --jb-select-border-color: #f0abfc;
+  --jb-select-border-color-focus: #fb7185;
+  --jb-select-border-color-selected: #fb7185;
+  --jb-select-bg-color: #fff1f2;
+  --jb-select-bg-color-selected: #fff7ed;
+  --jb-select-label-color: #be185d;
+  --jb-select-value-color: #831843;
+  --jb-select-placeholder-color: var(--jb-primary-pressed);
+  --jb-select-message-color: #be185d;
+  --jb-select-message-color-error: #e11d48;
+  --jb-select-list-padding: 0.5rem;
+  --jb-select-rounded: 1.25rem;
+  --jb-option-color: #831843;
+  --jb-option-bg-color-active: #fecdd3;
+  --jb-option-color-active: #831843;
+  --jb-option-border-radius: 1rem;
+}
+
+jb-select.candy-style::part(selected-value) {
+  background: #fce7f3;
+  border-radius: 999rem;
+  box-shadow: inset 0 0 0 1px #f9a8d4;
+}
+
+jb-select.candy-style::part(arrow-icon) {
+  color: #fb7185;
+}
+
+jb-select.candy-style::part(popover-content) {
+  --jb-popover-bg-color: #fff7ed;
+  --jb-popover-padding: 0.5rem;
+  box-shadow: 0 1rem 2rem rgb(244 114 182 / 0.26);
+}

@@ -6,7 +6,7 @@ import { JBSelect, JBOptionList, JBOption, type JBSelectEventType } from 'jb-sel
 import { JBButton } from 'jb-button/react';
 //@ts-ignore
 import './styles/style.css'
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { colorList, nameList, numberOptionList, persons } from './constants';
 import { JBCheckbox } from 'jb-checkbox/react';
 import { expect, userEvent, waitFor } from 'storybook/test';

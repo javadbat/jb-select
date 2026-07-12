@@ -1,0 +1,37 @@
+jb-select.forest-style {
+  --jb-select-height: 2.75rem;
+  --jb-select-rounded: 0.875rem;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: rgb(187 247 208 / 0.24);
+  --jb-select-border-color-focus: #f6d365;
+  --jb-select-border-color-selected: #f6d365;
+  --jb-select-bg-color: #173725;
+  --jb-select-bg-color-selected: #173725;
+  --jb-select-label-color: #fff7d6;
+  --jb-select-value-color: #f1f5df;
+  --jb-select-placeholder-color: #d9edc2;
+  --jb-select-message-color: #f6d365;
+  --jb-select-message-color-error: #fca5a5;
+  --jb-select-list-padding: 0.5rem;
+  --jb-select-rounded: 1rem;
+  --jb-option-color: #f1f5df;
+  --jb-option-bg-color-active: rgb(246 211 101 / 0.18);
+  --jb-option-color-active: #ffe08a;
+  --jb-option-border-radius: 0.75rem;
+}
+
+jb-select.forest-style::part(selected-value) {
+  background: rgb(246 211 101 / 0.12);
+  border-radius: 999rem;
+}
+
+jb-select.forest-style::part(arrow-icon) {
+  color: #f6d365;
+}
+
+jb-select.forest-style::part(popover-content) {
+  --jb-popover-bg-color: #173725;
+  --jb-popover-padding: 0.5rem;
+  box-shadow: 0 1.25rem 2.5rem rgb(20 83 45 / 0.34);
+}

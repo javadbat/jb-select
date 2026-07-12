@@ -1,229 +1,410 @@
-import { Meta, Title } from '@storybook/addon-docs/blocks';
-import { JBOptionList, JBSelect } from 'jb-select/react';
-import { numberOptionList } from './constants';
-import './styles/styling.css';
+import { Meta, Source, Story, Title } from '@storybook/addon-docs/blocks';
+import * as StyleStories from './Styles.stories';
+import antDesignThemeCss from '../../../docs/styles/ant-design.css?raw';
+import auroraThemeCss from '../../../docs/styles/aurora.css?raw';
+import bootstrapThemeCss from '../../../docs/styles/bootstrap.css?raw';
+import candyThemeCss from '../../../docs/styles/candy.css?raw';
+import carbonThemeCss from '../../../docs/styles/carbon.css?raw';
+import cupertinoThemeCss from '../../../docs/styles/cupertino.css?raw';
+import fluentThemeCss from '../../../docs/styles/fluent.css?raw';
+import forestThemeCss from '../../../docs/styles/forest.css?raw';
+import materialThemeCss from '../../../docs/styles/material.css?raw';
+import porcelainThemeCss from '../../../docs/styles/porcelain.css?raw';
+import sunsetThemeCss from '../../../docs/styles/sunset.css?raw';
+import terminalThemeCss from '../../../docs/styles/terminal.css?raw';
+import antDesignSelectCss from './styles/style-ant-design.css?raw';
+import auroraSelectCss from './styles/style-aurora.css?raw';
+import bootstrapSelectCss from './styles/style-bootstrap.css?raw';
+import candySelectCss from './styles/style-candy.css?raw';
+import carbonSelectCss from './styles/style-carbon.css?raw';
+import cupertinoSelectCss from './styles/style-cupertino.css?raw';
+import fluentSelectCss from './styles/style-fluent.css?raw';
+import forestSelectCss from './styles/style-forest.css?raw';
+import materialSelectCss from './styles/style-material.css?raw';
+import porcelainSelectCss from './styles/style-porcelain.css?raw';
+import sunsetSelectCss from './styles/style-sunset.css?raw';
+import terminalSelectCss from './styles/style-terminal.css?raw';
 
 <Meta title="Components/form elements/JBSelect/Styling" />
 
 <Title>Styling</Title>
 
-Set CSS custom properties directly on `JBSelect` to scope a visual treatment to one select.
+`JBSelect` styling is split between the select host, the popover shell, and the option rows. Use `--jb-select-*` variables for the control, `--jb-option-*` variables for rows, and official parts only when a specific internal surface needs fine styling.
 
-## Rounded select
+## Live Gallery
 
-<JBSelect
-  label="Select option"
-  style={{
-    '--jb-select-margin': '0px 2px',
-    '--jb-select-rounded': '1.5rem',
-    '--jb-select-border-color': 'royalblue',
-    '--jb-select-border-color-selected': 'tomato',
-    '--jb-select-bg-color': 'mintcream',
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+<Story of={StyleStories.Gallery} />
 
-```tsx
-<JBSelect
-  label="Select option"
-  style={{
-    '--jb-select-margin': '0px 2px',
-    '--jb-select-rounded': '1.5rem',
-    '--jb-select-border-color': 'royalblue',
-    '--jb-select-border-color-selected': 'tomato',
-    '--jb-select-bg-color': 'mintcream',
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
-```
+<Source of={StyleStories.Gallery} />
 
-## Underlined select
+## Common Design Tokens
 
-<JBSelect
-  label="Select option"
-  message="A compact, underlined treatment"
-  style={{
-    '--jb-select-rounded': '0px',
-    '--jb-select-border-width': '0px',
-    '--jb-select-border-bottom-width': '2px',
-    '--jb-select-border-color': 'slateblue',
-    '--jb-select-border-color-focus': 'rebeccapurple',
-    '--jb-select-label-color': 'slateblue',
-    '--jb-select-bg-color': 'transparent',
-    '--jb-popover-bg-color': '#fff'
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+Use the core theme docs as the source of truth for shared design-system variables:
 
-```tsx
-<JBSelect
-  label="Select option"
-  message="A compact, underlined treatment"
-  style={{
-    '--jb-select-rounded': '0px',
-    '--jb-select-border-width': '0px',
-    '--jb-select-border-bottom-width': '2px',
-    '--jb-select-border-color': 'slateblue',
-    '--jb-select-border-color-focus': 'rebeccapurple',
-    '--jb-select-label-color': 'slateblue',
-    '--jb-select-bg-color': 'transparent',
-    '--jb-popover-bg-color': '#fff'
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
-```
+- [Theme Colors](../../jb-core/theme/stories/colors.mdx) explains the general color palette variables, default colors, customization approaches, and color generation helpers.
+- [Theme Sizes](../../jb-core/theme/stories/sizes.mdx) explains shared size and radius variables.
+- [Theme Custom Galleries](https://javadbat.github.io/design-system/?path=/docs/theme-custom-material--docs) gathers the shared custom style recipes across components.
 
-## High-contrast select
+Select recipes should use those common tokens where possible, then map them into `--jb-select-*`, `--jb-option-*`, and `--jb-popover-*` variables where the select needs component-specific values.
 
-<JBSelect
-  label="Select option"
-  placeholder="Choose a number"
-  style={{
-    '--jb-select-rounded': '0.75rem',
-    '--jb-select-border-color': '#475569',
-    '--jb-select-border-color-focus': '#38bdf8',
-    '--jb-select-bg-color': '#0f172a',
-    '--jb-select-label-color': '#cbd5e1',
-    '--jb-select-value-color': '#f8fafc',
-    '--jb-select-placeholder-color': '#94a3b8',
-    '--jb-option-color':'#eee',
-    '--jb-option-bg-color-active':'var(--jb-secondary)',
-    '--jb-option-color-active':'#fff',
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+## Styling Model
 
-```tsx
-<JBSelect
-  label="Select option"
-  placeholder="Choose a number"
-  style={{
-    '--jb-select-rounded': '0.75rem',
-    '--jb-select-border-color': '#475569',
-    '--jb-select-border-color-focus': '#38bdf8',
-    '--jb-select-bg-color': '#0f172a',
-    '--jb-select-label-color': '#cbd5e1',
-    '--jb-select-value-color': '#f8fafc',
-    '--jb-select-placeholder-color': '#94a3b8',
-    '--jb-option-color':'#eee',
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
-```
+Use four layers when styling select examples:
 
-## Styling component parts
+- Common design tokens are documented in [Theme Colors](../../jb-core/theme/stories/colors.mdx) and [Theme Sizes](../../jb-core/theme/stories/sizes.mdx).
+- Reusable example theme packs live in [`docs/styles`](https://github.com/javadbat/design-system/tree/main/docs/styles) and can be shared across components.
+- Component recipe files live in [`modules/jb-select/stories/styles`](https://github.com/javadbat/design-system/tree/main/modules/jb-select/stories/styles).
+- Public component variables use `--jb-select-*` on `jb-select`, `--jb-option-*` on `jb-option`, and `--jb-popover-*` on `jb-select::part(popover)`.
 
-`JBSelect` exposes the `selected-value`, `search-input`, and `arrow-icon` parts. Style them from outside the component with `::part(...)`.
+Each example uses one shared example theme pack from [`docs/styles`](https://github.com/javadbat/design-system/tree/main/docs/styles) and one select-specific recipe from [`modules/jb-select/stories/styles`](https://github.com/javadbat/design-system/tree/main/modules/jb-select/stories/styles). The style story applies both classes directly to `JBSelect`.
 
-<JBSelect
-  className="part-styled-select"
-  label="Selected number"
-  value="7"
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+## Recommended Customization Path
 
-```tsx
-<JBSelect
-  className="part-styled-select"
-  label="Selected number"
-  value="7"
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
-```
+1. Use `--jb-select-*` variables first for width, height, border, radius, value text, labels, helper text, and list spacing.
+2. Use `--jb-option-*` variables for option row colors, active state, padding, radius, and row height. See [Options](./Options.mdx) for the option API.
+3. Style the dropdown shell by setting `--jb-popover-*` variables on `jb-select::part(popover)`.
+4. Use official parts such as `selected-value`, `search-input`, and `arrow-icon` only when a public variable is not specific enough.
+5. Use common theme variables from [Theme Colors](../../jb-core/theme/stories/colors.mdx) and [Theme Sizes](../../jb-core/theme/stories/sizes.mdx) when the style should align with the design system.
+6. Put reusable theme-pack values in [`docs/styles`](https://github.com/javadbat/design-system/tree/main/docs/styles) only when they should be shared by multiple component demos.
+7. Add a new select variable or part only when a needed internal surface cannot be customized with current public variables or official parts.
 
-```css
-.part-styled-select::part(selected-value) {
-  border-radius: 62.4375rem;
-  background: #dbeafe;
-  color: #1d4ed8;
-  font-weight: 700;
-  padding: 0.125rem 0.5rem;
-}
+## Parts And States
 
-.part-styled-select::part(search-input) {
-  color: #1d4ed8;
-  caret-color: #1d4ed8;
-}
+<table>
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Element</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>selected-value</code></td><td>Rendered selected option value.</td><td>Use for fine styling of selected chips/text, especially in multiple mode.</td></tr>
+    <tr><td><code>search-input</code></td><td>Internal search input.</td><td>Use for text cursor, font, or input-specific details that are not covered by variables.</td></tr>
+    <tr><td><code>arrow-icon</code></td><td>Dropdown arrow icon.</td><td>Use for icon color or targeted icon treatment.</td></tr>
+    <tr><td><code>popover</code></td><td>Internal <code>jb-popover</code>.</td><td>Use for dropdown shell variables such as background, padding, radius, and shadow.</td></tr>
+  </tbody>
+</table>
 
-.part-styled-select::part(arrow-icon) {
-  color: #1d4ed8;
-}
-```
+<table>
+  <thead>
+    <tr>
+      <th>Custom State</th>
+      <th>Meaning</th>
+      <th>Example Selector</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>open</code></td><td>Applied while the option list is open.</td><td><code>jb-select:state(open)::part(arrow-icon)</code></td></tr>
+    <tr><td><code>disabled</code></td><td>Applied when the select is disabled.</td><td><code>jb-select:state(disabled)</code></td></tr>
+    <tr><td><code>invalid</code></td><td>Applied while validation error text is visible.</td><td><code>jb-select:state(invalid)</code></td></tr>
+  </tbody>
+</table>
 
-## Styling component states
+## CSS Variables
 
-`JBSelect` exposes the `open`, `disabled`, and `invalid` custom states. Use `:state(...)` to change variables only while that state is active. Open the first example to see its active state; the second shows the disabled state.
+These variables belong to `JBSelect` itself.
 
-<JBSelect className="state-styled-select" label="Open this select" required>
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Category</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>--jb-select-width</code></td><td>Size</td><td>Select host width.</td></tr>
+    <tr><td><code>--jb-select-height</code></td><td>Size</td><td>Select box height.</td></tr>
+    <tr><td><code>--jb-select-rounded</code></td><td>Size</td><td>Base single-value radius used by box and list radius variables.</td></tr>
+    <tr><td><code>--jb-select-box-border-radius</code></td><td>Size</td><td>Select box border radius.</td></tr>
+    <tr><td><code>--jb-select-rounded</code></td><td>Size</td><td>Dropdown list border radius.</td></tr>
+    <tr><td><code>--jb-select-border-width</code></td><td>Size</td><td>Select box border width.</td></tr>
+    <tr><td><code>--jb-select-border-bottom-width</code></td><td>Size</td><td>Select box bottom border width.</td></tr>
+    <tr><td><code>--jb-select-selected-value-font-size</code></td><td>Size</td><td>Selected value text size.</td></tr>
+    <tr><td><code>--jb-select-input-font-size</code></td><td>Size</td><td>Search input text size.</td></tr>
+    <tr><td><code>--jb-select-selected-value-padding</code></td><td>Size</td><td>Padding for selected value content.</td></tr>
+    <tr><td><code>--jb-select-inline-slots-padding</code></td><td>Size</td><td>Padding for inline slots.</td></tr>
+    <tr><td><code>--jb-select-clear-icon-size</code></td><td>Size</td><td>Clear icon size.</td></tr>
+    <tr><td><code>--jb-select-box-padding-end</code></td><td>Size</td><td>End padding reserved inside the select box.</td></tr>
+    <tr><td><code>--jb-select-placeholder-font-size</code></td><td>Size</td><td>Placeholder font size.</td></tr>
+    <tr><td><code>--jb-select-list-max-height</code></td><td>Size</td><td>Maximum dropdown list height.</td></tr>
+    <tr><td><code>--jb-select-list-padding</code></td><td>Size</td><td>Dropdown list padding.</td></tr>
+    <tr><td><code>--jb-select-list-scroll-border-radius</code></td><td>Size</td><td>Dropdown scrollbar radius.</td></tr>
+    <tr><td><code>--jb-select-inline-space</code></td><td>Size</td><td>Inline spacing used by label and helper message alignment.</td></tr>
+    <tr><td><code>--jb-select-label-margin</code></td><td>Size</td><td>Label margin.</td></tr>
+    <tr><td><code>--jb-select-label-font-size</code></td><td>Size</td><td>Label font size.</td></tr>
+    <tr><td><code>--jb-select-message-font-size</code></td><td>Size</td><td>Helper/error message font size.</td></tr>
+    <tr><td><code>--jb-select-border-color</code></td><td>Theme/Color</td><td>Default select border color.</td></tr>
+    <tr><td><code>--jb-select-border-color-selected</code></td><td>Theme/Color</td><td>Select border color while a value is selected.</td></tr>
+    <tr><td><code>--jb-select-border-color-focus</code></td><td>Theme/Color</td><td>Select border color while focused.</td></tr>
+    <tr><td><code>--jb-select-message-color</code></td><td>Theme/Color</td><td>Helper message color.</td></tr>
+    <tr><td><code>--jb-select-message-color-error</code></td><td>Theme/Color</td><td>Error message color.</td></tr>
+    <tr><td><code>--jb-select-label-color</code></td><td>Theme/Color</td><td>Label color.</td></tr>
+    <tr><td><code>--jb-select-value-color</code></td><td>Theme/Color</td><td>Selected value text color.</td></tr>
+    <tr><td><code>--jb-select-value-color-disabled</code></td><td>Theme/Color</td><td>Selected value text color while disabled.</td></tr>
+    <tr><td><code>--jb-select-placeholder-color</code></td><td>Theme/Color</td><td>Placeholder color.</td></tr>
+    <tr><td><code>--jb-select-bg-color</code></td><td>Theme/Color</td><td>Select box background color.</td></tr>
+    <tr><td><code>--jb-select-bg-color-selected</code></td><td>Theme/Color</td><td>Select box background color while a value is selected.</td></tr>
+    <tr><td><code>--jb-select-bg-color-disabled</code></td><td>Theme/Color</td><td>Select box background color while disabled.</td></tr>
+    <tr><td><code>--jb-select-overlay-bg-color</code></td><td>Theme/Color</td><td>Mobile overlay background color.</td></tr>
+    <tr><td><code>--jb-select-list-scroll-color</code></td><td>Theme/Color</td><td>Dropdown list scrollbar color.</td></tr>
+    <tr><td><code>--jb-select-empty-list-placeholder-color</code></td><td>Theme/Color</td><td>Empty list placeholder color.</td></tr>
+    <tr><td><code>--jb-select-mobile-input-bg-color</code></td><td>Theme/Color</td><td>Mobile search input background color.</td></tr>
+    <tr><td><code>--jb-select-margin</code></td><td>Other</td><td>Host component margin.</td></tr>
+    <tr><td><code>--jb-select-base-z-index</code></td><td>Other</td><td>Base z-index used by the select dropdown stack.</td></tr>
+    <tr><td><code>--jb-select-label-font-weight</code></td><td>Other</td><td>Label font weight.</td></tr>
+    <tr><td><code>--jb-select-box-margin</code></td><td>Other</td><td>Select box margin.</td></tr>
+    <tr><td><code>--jb-select-arrow-icon-margin</code></td><td>Other</td><td>Arrow icon margin.</td></tr>
+    <tr><td><code>--jb-select-message-box-display</code></td><td>Other</td><td>Helper/error message display value.</td></tr>
+  </tbody>
+</table>
 
-<JBSelect className="state-styled-select" label="Disabled select" value="7" disabled>
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+Size-specific variables also exist for `xs`, `sm`, `lg`, and `xl` sizes using the same naming pattern, such as `--jb-select-height-sm`, `--jb-select-input-font-size-lg`, and `--jb-select-rounded-xl`.
+
+### Option Variables
+
+Use these on `jb-option` rows or inherited from the select recipe.
+
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Category</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>--jb-option-border-radius</code></td><td>Size</td><td>Option row radius.</td></tr>
+    <tr><td><code>--jb-option-padding</code></td><td>Size</td><td>Option row padding.</td></tr>
+    <tr><td><code>--jb-option-font-size</code></td><td>Size</td><td>Option row font size.</td></tr>
+    <tr><td><code>--jb-option-min-height</code></td><td>Size</td><td>Minimum option row height.</td></tr>
+    <tr><td><code>--jb-option-color</code></td><td>Theme/Color</td><td>Option row text color.</td></tr>
+    <tr><td><code>--jb-option-bg-color</code></td><td>Theme/Color</td><td>Option row background color.</td></tr>
+    <tr><td><code>--jb-option-bg-color-active</code></td><td>Theme/Color</td><td>Active option row background color.</td></tr>
+    <tr><td><code>--jb-option-color-active</code></td><td>Theme/Color</td><td>Active option row text color.</td></tr>
+  </tbody>
+</table>
+
+## Starter Recipe
+
+Use this minimal recipe when a product only needs brand alignment across the select and dropdown.
 
 ```css
-.state-styled-select:state(open) {
-  --jb-select-border-color: #2563eb;
+jb-select.brand-select {
   --jb-select-border-color-focus: #2563eb;
-  --jb-select-bg-color: #eff6ff;
+  --jb-select-border-color-selected: #2563eb;
+  --jb-select-value-color: #0f172a;
+  --jb-select-placeholder-color: #64748b;
+  --jb-select-rounded: 0.75rem;
+  --jb-option-bg-color-active: #dbeafe;
+  --jb-option-color-active: #1d4ed8;
+  --jb-option-border-radius: 0.5rem;
 }
 
-.state-styled-select:state(disabled) {
-  --jb-select-bg-color-disabled: #f1f5f9;
-  --jb-select-value-color-disabled: #64748b;
+jb-select.brand-select::part(popover) {
+  --jb-popover-bg-color: #ffffff;
+  --jb-popover-padding: 0.375rem;
+  box-shadow: 0 1rem 2rem rgb(15 23 42 / 0.14);
 }
 
-.state-styled-select:state(invalid) {
-  --jb-select-border-color: #dc2626;
-  --jb-select-message-color-error: #dc2626;
+jb-select.brand-select::part(arrow-icon) {
+  color: #2563eb;
 }
 ```
 
-The `invalid` state becomes active when the component reports a validation error, for example after `reportValidity()`.
+## Style Recipes
 
-## Square select with mobile overrides
+### Carbon
 
-<JBSelect
-  label="Select option"
-  style={{
-    '--jb-select-margin': '0px 4px',
-    '--jb-select-rounded': '0px',
-    '--jb-select-border-color': 'rgb(26, 23, 23)',
-    '--jb-select-border-color-selected': 'rgb(30, 29, 43)',
-    '--jb-select-bg-color-selected': 'rgb(195, 57, 230)',
-    '--jb-select-bg-color': 'lightgray',
-    '--jb-select-mobile-search-input-height': '4rem',
-    '--jb-select-border-bottom-width': '1px',
-    '--jb-select-mobile-item-list-border-radius': '1rem',
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+<Story of={StyleStories.Carbon} />
 
-```tsx
-<JBSelect
-  label="Select option"
-  style={{
-    '--jb-select-margin': '0px 4px',
-    '--jb-select-rounded': '0px',
-    '--jb-select-border-color': 'rgb(26, 23, 23)',
-    '--jb-select-border-color-selected': 'rgb(30, 29, 43)',
-    '--jb-select-bg-color-selected': 'rgb(195, 57, 230)',
-    '--jb-select-bg-color': 'lightgray',
-    '--jb-select-mobile-search-input-height': '4rem',
-    '--jb-select-border-bottom-width': '1px',
-    '--jb-select-mobile-item-list-border-radius': '1rem',
-  }}
->
-  <JBOptionList optionList={numberOptionList} />
-</JBSelect>
+<Source of={StyleStories.Carbon} />
+
+#### Shared Tokens
+
+<Source code={carbonThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={carbonSelectCss} language="css" />
+
+### Aurora
+
+<Story of={StyleStories.Aurora} />
+
+<Source of={StyleStories.Aurora} />
+
+#### Shared Tokens
+
+<Source code={auroraThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={auroraSelectCss} language="css" />
+
+### Forest
+
+<Story of={StyleStories.Forest} />
+
+<Source of={StyleStories.Forest} />
+
+#### Shared Tokens
+
+<Source code={forestThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={forestSelectCss} language="css" />
+
+### Sunset
+
+<Story of={StyleStories.Sunset} />
+
+<Source of={StyleStories.Sunset} />
+
+#### Shared Tokens
+
+<Source code={sunsetThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={sunsetSelectCss} language="css" />
+
+### Porcelain
+
+<Story of={StyleStories.Porcelain} />
+
+<Source of={StyleStories.Porcelain} />
+
+#### Shared Tokens
+
+<Source code={porcelainThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={porcelainSelectCss} language="css" />
+
+### Candy
+
+<Story of={StyleStories.Candy} />
+
+<Source of={StyleStories.Candy} />
+
+#### Shared Tokens
+
+<Source code={candyThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={candySelectCss} language="css" />
+
+### Terminal
+
+<Story of={StyleStories.Terminal} />
+
+<Source of={StyleStories.Terminal} />
+
+#### Shared Tokens
+
+<Source code={terminalThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={terminalSelectCss} language="css" />
+
+### Material
+
+<Story of={StyleStories.Material} />
+
+<Source of={StyleStories.Material} />
+
+#### Shared Tokens
+
+<Source code={materialThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={materialSelectCss} language="css" />
+
+### Fluent
+
+<Story of={StyleStories.Fluent} />
+
+<Source of={StyleStories.Fluent} />
+
+#### Shared Tokens
+
+<Source code={fluentThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={fluentSelectCss} language="css" />
+
+### Bootstrap
+
+<Story of={StyleStories.Bootstrap} />
+
+<Source of={StyleStories.Bootstrap} />
+
+#### Shared Tokens
+
+<Source code={bootstrapThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={bootstrapSelectCss} language="css" />
+
+### Cupertino
+
+<Story of={StyleStories.Cupertino} />
+
+<Source of={StyleStories.Cupertino} />
+
+#### Shared Tokens
+
+<Source code={cupertinoThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={cupertinoSelectCss} language="css" />
+
+### Ant Design
+
+<Story of={StyleStories.AntDesign} />
+
+<Source of={StyleStories.AntDesign} />
+
+#### Shared Tokens
+
+<Source code={antDesignThemeCss} language="css" />
+
+#### Select CSS
+
+<Source code={antDesignSelectCss} language="css" />
+
+## Theme File Pattern
+
+Use [Theme Colors](../../jb-core/theme/stories/colors.mdx) and [Theme Sizes](../../jb-core/theme/stories/sizes.mdx) as the common design-token guides. Theme-pack files should keep reusable demo variables in [`docs/styles`](https://github.com/javadbat/design-system/tree/main/docs/styles), then each component should keep its own style CSS in its story [`styles`](https://github.com/javadbat/design-system/tree/main/modules/jb-select/stories/styles) folder.
+
+```css
+/* https://github.com/javadbat/design-system/blob/main/docs/styles/carbon.css */
+.theme-name-style {
+  /* shared design-system variables */
+}
+
+/* https://github.com/javadbat/design-system/blob/main/modules/jb-select/stories/styles/style-carbon.css */
+jb-select.theme-name-select {
+  /* select host and jb-option variables */
+}
+
+jb-select.theme-name-select::part(popover) {
+  /* jb-popover background, radius, padding, and shell treatment */
+}
+
+jb-select.theme-name-select::part(selected-value) {
+  /* selected value/chip styling when variables are not enough */
+}
 ```
+
+This keeps common theme tokens reusable while making the `JBSelect`, `JBOption`, and `JBPopover` styling APIs visible in one select page.

@@ -31,7 +31,7 @@ export function renderHTML(): string {
         </div>
     </div>
     <div class="popover-wrapper">
-        <jb-popover class="select-list-wrapper" part="popover">
+        <jb-popover class="select-list-wrapper" part="popover" exportparts="content: popover-content">
             <div class="mobile-search-input-wrapper">
             <!-- Here we put search input in Mobile -->
             </div>

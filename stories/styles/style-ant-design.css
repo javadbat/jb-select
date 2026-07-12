@@ -1,0 +1,36 @@
+jb-select.ant-design-style {
+  --jb-select-height: 2rem;
+  --jb-select-rounded: 0.375rem;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: #d9d9d9;
+  --jb-select-border-color-focus: var(--jb-focus-color);
+  --jb-select-border-color-selected: var(--jb-focus-color);
+  --jb-select-bg-color: var(--jb-surface);
+  --jb-select-bg-color-selected: var(--jb-surface);
+  --jb-select-label-color: var(--jb-text-primary);
+  --jb-select-value-color: var(--jb-text-primary);
+  --jb-select-placeholder-color: var(--jb-text-disabled);
+  --jb-select-message-color: var(--jb-text-secondary);
+  --jb-select-message-color-error: #ff4d4f;
+  --jb-select-list-padding: 0.25rem;
+  --jb-select-rounded: 0.5rem;
+  --jb-option-color: var(--jb-text-primary);
+  --jb-option-bg-color-active: var(--jb-surface-hover);
+  --jb-option-color-active: var(--jb-focus-color);
+  --jb-option-border-radius: 0.25rem;
+}
+
+jb-select.ant-design-style::part(selected-value) {
+  font-size: 0.875rem;
+}
+
+jb-select.ant-design-style::part(arrow-icon) {
+  color: var(--jb-focus-color);
+}
+
+jb-select.ant-design-style::part(popover-content) {
+  --jb-popover-bg-color: var(--jb-surface);
+  --jb-popover-padding: 0.25rem;
+  box-shadow: 0 0.375rem 1rem rgb(0 0 0 / 0.14);
+}

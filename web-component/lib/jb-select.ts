@@ -295,14 +295,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.addEventListener("keyup", this.#onInputKeyup.bind(this));
     this.elements.input.addEventListener("beforeinput", this.#onInputBeforeInput.bind(this));
     this.elements.input.addEventListener("input", (e) => { this.#onInputInput(e as unknown as InputEvent); });
-    this.addEventListener("focus", this.#onSelectFocus.bind(this));
-    this.elements.input.addEventListener("blur", this.#onInputBlur.bind(this));
-    this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this));
-    this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this));
+    this.addEventListener("focus", this.#onSelectFocus.bind(this), {passive:true});
+    this.elements.input.addEventListener("blur", this.#onInputBlur.bind(this),{passive:true});
+    this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this), {passive:true});
+    this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this), {passive:true});
     //events to work with options
     this.addEventListener("select", this.#onOptionSelect.bind(this));
     this.addEventListener("deselect", this.#onOptionDeselect.bind(this));
-    this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this));
+    this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this),{passive:true});
     this.elements.optionListSlot.addEventListener("slotchange", this.#onOptionSlotChange.bind(this));
 
   }

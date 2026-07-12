@@ -274,6 +274,28 @@
               "description": "Custom empty-state content shown when no option is visible."
             }
           ],
+          "cssParts": [
+            {
+              "name": "search-input",
+              "description": "Internal search input."
+            },
+            {
+              "name": "selected-value",
+              "description": "Rendered selected value item."
+            },
+            {
+              "name": "arrow-icon",
+              "description": "Select arrow icon wrapper."
+            },
+            {
+              "name": "popover",
+              "description": "Internal jb-popover host."
+            },
+            {
+              "name": "popover-content",
+              "description": "Forwarded content part from the internal jb-popover."
+            }
+          ],
           "cssProperties": [
             {
               "name": "--jb-select-width",

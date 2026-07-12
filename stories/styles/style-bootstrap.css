@@ -1,0 +1,36 @@
+jb-select.bootstrap-style {
+  --jb-select-height: 2.375rem;
+  --jb-select-rounded: 0.375rem;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: var(--jb-border-color);
+  --jb-select-border-color-focus: #86b7fe;
+  --jb-select-border-color-selected: #86b7fe;
+  --jb-select-bg-color: var(--jb-surface);
+  --jb-select-bg-color-selected: var(--jb-surface);
+  --jb-select-label-color: var(--jb-text-primary);
+  --jb-select-value-color: var(--jb-text-primary);
+  --jb-select-placeholder-color: #6c757d;
+  --jb-select-message-color: #6c757d;
+  --jb-select-message-color-error: #dc3545;
+  --jb-select-list-padding: 0.375rem;
+  --jb-select-rounded: 0.375rem;
+  --jb-option-color: var(--jb-text-primary);
+  --jb-option-bg-color-active: var(--jb-focus-color);
+  --jb-option-color-active: var(--jb-surface);
+  --jb-option-border-radius: 0.25rem;
+}
+
+jb-select.bootstrap-style::part(search-input) {
+  font-family: var(--jb-font-family);
+}
+
+jb-select.bootstrap-style::part(arrow-icon) {
+  color: var(--jb-focus-color);
+}
+
+jb-select.bootstrap-style::part(popover-content) {
+  --jb-popover-bg-color: var(--jb-surface);
+  --jb-popover-padding: 0.375rem;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.15);
+}

@@ -355,7 +355,6 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1rem`                                                     |
 | --jb-select-height                        | jb-select box height                                                                          |
-| --jb-select-list-border-radius            | List border radius.                                                                           |
 | --jb-select-list-padding                  | padding of opened list box default is `1rem 0`                                                |
 | --jb-select-mobile-input-bg-color          | background color search input when open in mobile                                             |
 | --jb-select-list-scroll-color              | list item scroll color                                                                       |

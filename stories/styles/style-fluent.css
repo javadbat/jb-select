@@ -1,0 +1,36 @@
+jb-select.fluent-style {
+  --jb-select-height: 2.5rem;
+  --jb-select-rounded: 0.25rem;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: #8a8886;
+  --jb-select-border-color-focus: var(--jb-focus-color);
+  --jb-select-border-color-selected: var(--jb-focus-color);
+  --jb-select-bg-color: var(--jb-text-contrast);
+  --jb-select-bg-color-selected: var(--jb-text-contrast);
+  --jb-select-label-color: var(--jb-text-secondary);
+  --jb-select-value-color: var(--jb-text-secondary);
+  --jb-select-placeholder-color: #605e5c;
+  --jb-select-message-color: #605e5c;
+  --jb-select-message-color-error: #a4262c;
+  --jb-select-list-padding: 0.25rem;
+  --jb-select-rounded: 0.25rem;
+  --jb-option-color: var(--jb-text-secondary);
+  --jb-option-bg-color-active: var(--jb-surface-hover);
+  --jb-option-color-active: var(--jb-text-primary);
+  --jb-option-border-radius: 0.125rem;
+}
+
+jb-select.fluent-style::part(selected-value) {
+  font-weight: 500;
+}
+
+jb-select.fluent-style::part(arrow-icon) {
+  color: var(--jb-focus-color);
+}
+
+jb-select.fluent-style::part(popover-content) {
+  --jb-popover-bg-color: var(--jb-text-contrast);
+  --jb-popover-padding: 0.25rem;
+  box-shadow: 0 0.4rem 1rem rgb(0 0 0 / 0.18);
+}

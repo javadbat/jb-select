@@ -5,7 +5,7 @@
   /*its rounded because it's only one value and not all radius 4 part value and needed to be one vale due to change in different situation*/
   --rounded: var(--jb-select-rounded, var(--jb-radius));
   --box-border-radius: var(--jb-select-box-border-radius, var(--rounded));
-  --list-border-radius: var(--jb-select-list-border-radius, 0 0 var(--rounded) var(--rounded));
+  --list-border-radius:  0 0 var(--rounded) var(--rounded);
   --border-width: var(--jb-select-border-width, 1px);
   --border-bottom-width: var(--jb-select-border-bottom-width, var(--jb-select-border-width, 3px));
   --base-z-index: var(--jb-select-base-z-index, 1);
@@ -21,7 +21,7 @@
   --list-padding: var(--jb-select-list-padding, 1rem 0);
   --list-scroll-border-radius: var(--jb-select-list-scroll-border-radius, 4px);
   /* put message and label forward base on border radius*/
-  --inline-space: var(--jb-select-inline-space, calc(var(--rounded) / 1.75));
+  --inline-space: var(--jb-select-inline-space,min(calc(var(--rounded) / 1.75), calc(--height / 2)));
   --label-margin: var(--jb-select-label-margin, 0.125rem var(--inline-space));
   --label-font-size: var(--jb-select-label-font-size, 0.8rem);
   --message-font-size:var(--jb-select-message-font-size, 0.7rem);

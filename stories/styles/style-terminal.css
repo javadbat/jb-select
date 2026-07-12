@@ -1,0 +1,38 @@
+jb-select.terminal-style {
+  --jb-select-height: 2.625rem;
+  --jb-select-rounded: 0;
+  --jb-select-border-width: 1px;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: #22c55e;
+  --jb-select-border-color-focus: #86efac;
+  --jb-select-border-color-selected: #86efac;
+  --jb-select-bg-color: #020617;
+  --jb-select-bg-color-selected: #020617;
+  --jb-select-label-color: #86efac;
+  --jb-select-value-color: #bbf7d0;
+  --jb-select-placeholder-color: #4ade80;
+  --jb-select-message-color: #22c55e;
+  --jb-select-message-color-error: #fb7185;
+  --jb-select-list-padding: 0.25rem;
+  --jb-select-rounded: 0;
+  --jb-option-color: #bbf7d0;
+  --jb-option-bg-color-active: #064e3b;
+  --jb-option-color-active: #dcfce7;
+  --jb-option-border-radius: 0;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+jb-select.terminal-style::part(search-input),
+jb-select.terminal-style::part(selected-value) {
+  font-family: Consolas, "Courier New", monospace;
+}
+
+jb-select.terminal-style::part(arrow-icon) {
+  color: #86efac;
+}
+
+jb-select.terminal-style::part(popover-content) {
+  --jb-popover-bg-color: #020617;
+  --jb-popover-padding: 0.25rem;
+  box-shadow: 0 0 0 1px #22c55e, 0 1rem 2rem rgb(0 0 0 / 0.4);
+}
