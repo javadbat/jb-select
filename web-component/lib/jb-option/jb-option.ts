@@ -24,6 +24,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   #selected = false;
   set selected(value: boolean) {
     this.#selected = value;
+    if (this.#internals) this.#internals.ariaSelected = value ? "true" : "false";
     if (value) {
       this.#elements.componentWrapper.classList.add("--selected");
     } else {

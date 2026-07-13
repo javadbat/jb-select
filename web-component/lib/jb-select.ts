@@ -692,10 +692,16 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
   #showOptionList() {
     this.#internals.states.add("open")
+    this.#internals.ariaExpanded = "true";
+    this.elements.input.setAttribute("aria-expanded", "true");
+    this.elements.arrowIcon.setAttribute("aria-expanded", "true");
     this.elements.optionListWrapper.classList.add("--show");
   }
   #hideOptionList() {
     this.#internals.states.delete("open")
+    this.#internals.ariaExpanded = "false";
+    this.elements.input.setAttribute("aria-expanded", "false");
+    this.elements.arrowIcon.setAttribute("aria-expanded", "false");
     this.elements.optionListWrapper.classList.remove("--show");
   }
   #updateOptionList(filterText: string) {

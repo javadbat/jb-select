@@ -1,6 +1,9 @@
 import {JBDictionary} from 'jb-core/i18n';
 export type JBSelectDictionary = {
   requireMessage:(label:string|null)=>string,
+  clearSelection:string,
+  toggleOptions:string,
+  noItems:string,
 }
 
 /**
@@ -17,8 +20,14 @@ export type JBSelectDictionary = {
 export const dictionary = new JBDictionary<JBSelectDictionary>({
   "fa":{
     requireMessage:(label:string| null)=>`${label} حتما باید انتخاب شود`,
+    clearSelection:"پاک کردن انتخاب",
+    toggleOptions:"نمایش یا پنهان کردن گزینه‌ها",
+    noItems:"هیچ گزینه‌ای موجود نیست",
   },
   "en":{
     requireMessage:(label:string| null)=>`${label} is required`,
+    clearSelection:"Clear selection",
+    toggleOptions:"Toggle options",
+    noItems:"No item available",
   }
 });
