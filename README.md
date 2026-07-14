@@ -354,7 +354,7 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-message-font-size             | font size of message default is `0.7em`                                                       |
 | --jb-select-placeholder-color             | placeholder color default is `initial`                                                        |
 | --jb-select-placeholder-font-size         | placeholder font-size default is `1.1rem`                                                     |
-| --jb-select-height                        | jb-select box height                                                                          |
+| --jb-select-height                        | jb-select box height; overrides the shared `--jb-control-height-md` default                   |
 | --jb-select-list-padding                  | padding of opened list box default is `1rem 0`                                                |
 | --jb-select-mobile-input-bg-color          | background color search input when open in mobile                                             |
 | --jb-select-list-scroll-color              | list item scroll color                                                                       |
@@ -369,10 +369,10 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-clear-icon-size-xs | Clear icon size for `size="xs"`. |
 | --jb-select-clear-icon-size-sm | Clear icon size for `size="sm"`. |
 | --jb-select-empty-list-placeholder-color | Customize empty list placeholder color. |
-| --jb-select-height-lg | Customize height lg. |
-| --jb-select-height-sm | Customize height sm. |
-| --jb-select-height-xl | Customize height xl. |
-| --jb-select-height-xs | Customize height xs. |
+| --jb-select-height-lg | Customize large height; overrides `--jb-control-height-lg`. |
+| --jb-select-height-sm | Customize small height; overrides `--jb-control-height-sm`. |
+| --jb-select-height-xl | Customize extra-large height; overrides `--jb-control-height-xl`. |
+| --jb-select-height-xs | Customize extra-small height; overrides `--jb-control-height-xs`. |
 | --jb-select-inline-space | Inline label/message spacing derived from rounded value. |
 | --jb-select-inline-slots-padding | Inline slot padding. |
 | --jb-select-inline-slots-padding-xs | Inline slot padding for `size="xs"`. |

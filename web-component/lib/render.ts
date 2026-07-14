@@ -22,7 +22,7 @@ export function renderHTML(): string {
                 <path d="M21.8882 24C21.3514 24 20.8146 23.8023 20.3908 23.3786L0.614479 3.60811C-0.204826 2.78905 -0.204826 1.43336 0.614479 0.614298C1.43378 -0.204766 2.78987 -0.204766 3.60918 0.614298L23.3855 20.3848C24.2048 21.2039 24.2048 22.5596 23.3855 23.3786C22.9617 23.8023 22.425 24 21.8882 24Z" fill="currentColor"/>
             </svg>
         </jb-button>
-            <div class="arrow-icon" tabindex="-1" part="arrow-icon" role="button" aria-label="${dictionary.get(i18n, "toggleOptions")}" aria-expanded="false">
+            <button class="arrow-icon" tabindex="-1" part="arrow-icon" type="button" aria-label="${dictionary.get(i18n, "toggleOptions")}" aria-expanded="false">
                 <slot name="select-arrow-icon">
                     <svg width='8' height='8' id='Layer_1' x='0px' y='0px' viewBox='0 0 494.1 371.1' aria-hidden="true"
                         style='enable-background:new 0 0 494.1 371.1;' xml:space='preserve'>
@@ -30,7 +30,7 @@ export function renderHTML(): string {
                             d='M293,343.8L480.9,69.3c8.7-12.7,13.3-25.4,13.3-36.1c0-20.5-16.5-33.2-44-33.2H44C16.4,0,0,12.7,0,33.2  c0,10.6,4.6,23.2,13.3,35.9l187.9,274.6c12.1,17.7,28.4,27.4,45.9,27.4C264.6,371.1,280.9,361.4,293,343.8z' />
                     </svg>
                 </slot>
-            </div>
+            </button>
         </div>
     </div>
     <div class="popover-wrapper">

@@ -15,7 +15,7 @@ export type JBSelectElements = {
     optionList: HTMLDivElement,
     optionListWrapper: JBPopoverWebComponent,
     optionListSlot:HTMLSlotElement,
-    arrowIcon: HTMLDivElement,
+    arrowIcon: HTMLButtonElement,
     clearButton: JBButtonWebComponent,
     label:HTMLLabelElement,
     emptyListPlaceholder: HTMLDivElement,

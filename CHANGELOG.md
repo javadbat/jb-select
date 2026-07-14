@@ -8,6 +8,8 @@
 
 ### Changed
 
+- The option-list trigger now uses a native button and follows the select's disabled state.
+- Select heights now inherit the shared `--jb-control-height-*` theme tokens for each size while preserving `--jb-select-height*` as the component-level override.
 - Added the React `initialValue` prop and forwarded `value` and `initialValue` directly as React 19 custom-element properties.
 - Breaking: renamed public CSS variables from `--jb-select-bgcolor*` to `--jb-select-bg-color*`.
 - Breaking: renamed `--jb-select-mobile-input-bgcolor` to `--jb-select-mobile-input-bg-color`.

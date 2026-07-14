@@ -162,6 +162,18 @@
       padding-inline-start: 0.5rem;
 
       .arrow-icon {
+        all: unset;
+        box-sizing: border-box;
+        cursor: pointer;
+
+        &:disabled {
+          cursor: default;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--jb-select-focus-ring-color, Highlight);
+          outline-offset: 2px;
+        }
         color: var(--icon-color);
         margin: var(--arrow-icon-margin);
 

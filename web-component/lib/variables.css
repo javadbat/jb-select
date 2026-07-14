@@ -1,7 +1,7 @@
 :host {
   /* Size */
   --width: var(--jb-select-width, 100%);
-  --height: var(--jb-select-height, 2.5rem);
+  --height: var(--jb-select-height, var(--jb-control-height-md, 2.5rem));
   /*its rounded because it's only one value and not all radius 4 part value and needed to be one vale due to change in different situation*/
   --rounded: var(--jb-select-rounded, var(--jb-radius));
   --box-border-radius: var(--jb-select-box-border-radius, var(--rounded));
@@ -62,7 +62,7 @@
 
 /* Size */
  :host([size="xs"]){
-  --height:var(--jb-select-height-xs, 1.5rem);
+  --height:var(--jb-select-height-xs, var(--jb-control-height-xs, 1.5rem));
   --selected-value-font-size:var(--jb-select-selected-value-font-size-xs, 0.75rem);
   --input-font-size:var(--jb-select-input-font-size-xs, 0.75rem);
   --label-font-size:var(--jb-select-label-font-size-xs, 0.6rem);
@@ -76,7 +76,7 @@
 }
 
 :host([size="sm"]){
-  --height: var(--jb-select-height-sm, 2rem);
+  --height: var(--jb-select-height-sm, var(--jb-control-height-sm, 2rem));
   --selected-value-font-size:var(--jb-select-selected-value-font-size-sm, 0.875rem);
   --input-font-size:var(--jb-select-input-font-size-sm, 0.875rem);
   --label-font-size:var(--jb-select-label-font-size-sm, 0.7rem);
@@ -88,7 +88,7 @@
 }
 
 :host([size="lg"]){
-  --height: var(--jb-select-height-lg, 3rem);
+  --height: var(--jb-select-height-lg, var(--jb-control-height-lg, 3rem));
   --selected-value-font-size:var(--jb-select-selected-value-font-size-lg, 1.125rem);
   --input-font-size:var(--jb-select-input-font-size-lg, 1.125rem);
   --label-font-size:var(--jb-select-label-font-size-lg, 0.9rem);
@@ -100,7 +100,7 @@
 }
 
 :host([size="xl"]){
-  --height: var(--jb-select-height-xl, 4rem);
+  --height: var(--jb-select-height-xl, var(--jb-control-height-xl, 4rem));
   --selected-value-font-size:var(--jb-select-selected-value-font-size-xl, 1.25rem);
   --input-font-size:var(--jb-select-input-font-size-xl, 1.25rem);
   --label-font-size:var(--jb-select-label-font-size-xl, 1rem);

@@ -167,6 +167,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   set disabled(value: boolean) {
     this.#disabled = value;
     this.elements.input.disabled = value;
+    this.elements.arrowIcon.disabled = value;
     if (value) {
       this.#internals.states?.add("disabled");
       this.#internals.ariaDisabled = "true";
