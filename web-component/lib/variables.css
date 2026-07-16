@@ -25,6 +25,7 @@
   --label-margin: var(--jb-select-label-margin, 0.125rem var(--inline-space));
   --label-font-size: var(--jb-select-label-font-size, 0.8rem);
   --message-font-size:var(--jb-select-message-font-size, 0.7rem);
+  --message-padding: var(--jb-select-message-padding, 0.125rem var(--inline-space));
   /* Theme/Color */
   --border-color: var(--jb-select-border-color, var(--jb-neutral-10));
   --border-color-selected: var(--jb-select-border-color-selected, var(--border-color));

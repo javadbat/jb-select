@@ -9,21 +9,18 @@ jb-select.carbon-style {
   --jb-select-bg-color: var(--jb-surface);
   --jb-select-bg-color-selected: var(--jb-surface);
   --jb-select-label-color: var(--jb-text-primary);
-  --jb-select-label-margin: 0 0 0.375rem;
   --jb-select-value-color: var(--jb-text-primary);
   --jb-select-placeholder-color: #a8a8a8;
   --jb-select-message-color: var(--jb-text-secondary);
   --jb-select-message-color-error: #ff8389;
+  --jb-select-label-margin: 0 0 0.375rem;
+  --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.25rem;
   --jb-select-rounded: 0.25rem;
   --jb-option-color: var(--jb-text-primary);
   --jb-option-bg-color-active: var(--jb-surface-hover);
   --jb-option-color-active: var(--jb-text-contrast);
   --jb-option-border-radius: 0.125rem;
-}
-
-jb-select.carbon-style::part(message) {
-  padding: 0.375rem 0 0;
 }
 
 jb-select.carbon-style::part(selected-value) {

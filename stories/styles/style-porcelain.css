@@ -13,6 +13,8 @@ jb-select.porcelain-style {
   --jb-select-placeholder-color: #6b85a0;
   --jb-select-message-color: #4d6882;
   --jb-select-message-color-error: #d14343;
+  --jb-select-label-margin: 0 0 0.375rem;
+  --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.375rem;
   --jb-select-rounded: 0.75rem;
   --jb-option-color: #12304f;

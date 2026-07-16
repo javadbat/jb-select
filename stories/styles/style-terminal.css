@@ -13,6 +13,8 @@ jb-select.terminal-style {
   --jb-select-placeholder-color: #4ade80;
   --jb-select-message-color: #22c55e;
   --jb-select-message-color-error: #fb7185;
+  --jb-select-label-margin: 0 0 0.375rem;
+  --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.25rem;
   --jb-select-rounded: 0;
   --jb-option-color: #bbf7d0;

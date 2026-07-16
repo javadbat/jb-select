@@ -13,6 +13,8 @@ jb-select.sunset-style {
   --jb-select-placeholder-color: #ffe4e6;
   --jb-select-message-color: var(--jb-focus-color);
   --jb-select-message-color-error: #fecaca;
+  --jb-select-label-margin: 0 0 0.375rem;
+  --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.5rem;
   --jb-select-rounded: 1rem;
   --jb-option-color: #fff7ed;

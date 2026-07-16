@@ -13,6 +13,8 @@ jb-select.forest-style {
   --jb-select-placeholder-color: #d9edc2;
   --jb-select-message-color: #f6d365;
   --jb-select-message-color-error: #fca5a5;
+  --jb-select-label-margin: 0 0 0.375rem;
+  --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.5rem;
   --jb-select-rounded: 1rem;
   --jb-option-color: #f1f5df;

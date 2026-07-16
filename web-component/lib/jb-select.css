@@ -72,11 +72,6 @@
     grid-template-columns: auto 1fr auto;
     padding-inline-end: var(--box-padding-end);
     align-items: center;
-    &:has(.search-input:focus-visible) {
-      outline: 2px solid var(--jb-select-focus-ring-color, Highlight);
-      outline-offset: 2px;
-    }
-
     .start-section {
       height: 100%;
       width: auto;
@@ -215,7 +210,7 @@
 
   .message-box {
     font-size: var(--message-font-size);
-    padding: 0.125rem var(--inline-space);
+    padding: var(--message-padding);
     color: var(--message-color);
     display: var(--message-box-display);
 

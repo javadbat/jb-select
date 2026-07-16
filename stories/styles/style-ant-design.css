@@ -13,6 +13,8 @@ jb-select.ant-design-style {
   --jb-select-placeholder-color: var(--jb-text-disabled);
   --jb-select-message-color: var(--jb-text-secondary);
   --jb-select-message-color-error: #ff4d4f;
+  --jb-select-label-margin: 0 0 0.375rem;
+  --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.25rem;
   --jb-select-rounded: 0.5rem;
   --jb-option-color: var(--jb-text-primary);

@@ -13,6 +13,8 @@ jb-select.aurora-style {
   --jb-select-placeholder-color: #bae6fd;
   --jb-select-message-color: #c4b5fd;
   --jb-select-message-color-error: #fda4af;
+  --jb-select-label-margin: 0 0 0.375rem;
+  --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.5rem;
   --jb-select-rounded: 1rem;
   --jb-option-color: #eff6ff;
