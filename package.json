@@ -30,6 +30,17 @@
     "react/dist/"
   ],
   "types": "./web-component/dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./web-component/dist/index.d.ts",
+      "default": "./index.js"
+    },
+    "./react": {
+      "types": "./react/dist/index.d.ts",
+      "default": "./react/index.js"
+    },
+    "./*": "./*"
+  },
   "main": "index.js",
   "customElements": "web-component/custom-elements.json",
   "repository": {
