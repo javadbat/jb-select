@@ -1,26 +1,30 @@
 jb-select.material-style {
   --jb-select-height: 3rem;
-  --jb-select-rounded: 0.25rem;
+  --jb-select-rounded: var(--jb-radius-xs);
   --jb-select-border-width: 1px;
-  --jb-select-border-bottom-width: 2px;
-  --jb-select-border-color: #c7c7c7;
+  --jb-select-border-bottom-width: 1px;
+  --jb-select-border-color: var(--jb-outline);
   --jb-select-border-color-focus: var(--jb-primary);
   --jb-select-border-color-selected: var(--jb-primary);
   --jb-select-bg-color: var(--jb-surface);
   --jb-select-bg-color-selected: var(--jb-surface);
+  --jb-select-bg-color-disabled: var(--jb-surface-container-highest);
   --jb-select-label-color: var(--jb-text-primary);
+  --jb-select-label-font-weight: 500;
+  --jb-select-label-font-size: 0.75rem;
   --jb-select-value-color: var(--jb-text-primary);
-  --jb-select-placeholder-color: #79747e;
+  --jb-select-value-color-disabled: var(--jb-text-disabled);
+  --jb-select-placeholder-color: var(--jb-text-secondary);
   --jb-select-message-color: var(--jb-text-secondary);
-  --jb-select-message-color-error: var(--jb-red);
+  --jb-select-message-color-error: var(--jb-error);
+  --jb-select-message-font-size: 0.75rem;
   --jb-select-label-margin: 0 0 0.375rem;
   --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.5rem 0.25rem;
-  --jb-select-rounded: 0.75rem;
   --jb-option-color: var(--jb-text-primary);
-  --jb-option-bg-color-active: var(--jb-surface-hover);
-  --jb-option-color-active: #21005d;
-  --jb-option-border-radius: 0.5rem;
+  --jb-option-bg-color-active: var(--jb-primary-container);
+  --jb-option-color-active: var(--jb-on-primary-container);
+  --jb-option-border-radius: var(--jb-radius-sm);
 }
 
 jb-select.material-style::part(selected-value) {
@@ -32,7 +36,12 @@ jb-select.material-style::part(arrow-icon) {
 }
 
 jb-select.material-style::part(popover-content) {
-  --jb-popover-bg-color: var(--jb-surface);
+  --jb-popover-bg-color: var(--jb-surface-container-low);
   --jb-popover-padding: 0.25rem;
-  box-shadow: 0 0.5rem 1.5rem rgb(29 27 32 / 0.18);
+  border: 1px solid var(--jb-outline-variant);
+  box-shadow: var(--jb-elevation-2);
+}
+
+jb-select.material-style:state(invalid) {
+  --jb-select-border-color: var(--jb-error);
 }
