@@ -708,38 +708,70 @@ export const CustomOptionRender: Story = {
 
 export const JBSelectDesignTest: Story = {
   render: () => {
-    function getSelectedValueDOM(option: any) {
+    function getSelectedValueDOM(option: (typeof colorList)[number]) {
       const optionElement = document.createElement("div");
       optionElement.classList.add("selected-value");
-      optionElement.innerHTML =
-        '<span part="color-box" style="background-color:' + option.value +
-        ';width:1rem;height:1rem"></span>' + "&nbsp;" + option.name;
+      const colorBox = document.createElement("span");
+      colorBox.setAttribute("part", "color-box");
+      colorBox.style.backgroundColor = option.value;
+      optionElement.append(colorBox, `${option.name} · ${option.value.toUpperCase()}`);
       return optionElement;
     }
     return (
-      <div className="select-custom-design">
-        <JBSelect
-          searchPlaceholder="search color"
-          getSelectedValueDOM={getSelectedValueDOM}
-        >
-          {
-            colorList.map((o) => (<JBOption value={o} key={o.value}><span className="color-circle" style={{ backgroundColor: o.value }}></span>{o.name}</JBOption>))
-          }
-          <div style={{ height: "1.5rem" }} slot="select-arrow-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <title>arrow icon</title>
-              <rect width="24" height="24" rx="5" fill="#E7E7E7" />
-              <path
-                d="M19 8.5L12 15.5L5 8.5"
-                stroke="#8B8B8B"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+      <main className="select-custom-design">
+        <section className="select-design-card" aria-labelledby="palette-title">
+          <header className="select-design-header">
+            <span className="select-design-kicker"><i aria-hidden="true" />Palette studio</span>
+            <h1 id="palette-title">Pick a color that feels like you.</h1>
+            <p>Give your workspace a little personality with one expressive accent.</p>
+          </header>
+
+          <div className="select-design-palette" aria-hidden="true">
+            {colorList.map((color) => (
+              <span key={color.value} style={{ backgroundColor: color.value }} />
+            ))}
           </div>
-        </JBSelect>
-      </div>
+
+          <div className="select-design-field">
+            <JBSelect
+              label="Accent color"
+              message="Four vivid colors, one clear choice."
+              placeholder="Choose a color"
+              searchPlaceholder="Search colors..."
+              getSelectedValueDOM={getSelectedValueDOM}
+            >
+              {colorList.map((color) => (
+                <JBOption value={color} key={color.value}>
+                  <span className="color-option">
+                    <span className="color-circle" style={{ backgroundColor: color.value }} aria-hidden="true" />
+                    <span className="color-option-copy">
+                      <strong>{color.name}</strong>
+                      <small>{color.value.toUpperCase()}</small>
+                    </span>
+                  </span>
+                </JBOption>
+              ))}
+              <span className="select-design-arrow" slot="select-arrow-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <title>Open color menu</title>
+                  <path
+                    d="m6 8 4 4 4-4"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </JBSelect>
+          </div>
+
+          <footer className="select-design-footer">
+            <span><i aria-hidden="true" />Live component</span>
+            <span>Keyboard ready</span>
+          </footer>
+        </section>
+      </main>
     );
   },
 };

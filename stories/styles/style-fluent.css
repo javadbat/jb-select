@@ -1,9 +1,9 @@
 jb-select.fluent-style {
-  --jb-select-height: 2.5rem;
+  --jb-select-height: 2.25rem;
   --jb-select-rounded: 0.25rem;
   --jb-select-border-width: 1px;
   --jb-select-border-bottom-width: 1px;
-  --jb-select-border-color: #8a8886;
+  --jb-select-border-color: var(--jb-border-color);
   --jb-select-border-color-focus: var(--jb-focus-color);
   --jb-select-border-color-selected: var(--jb-focus-color);
   --jb-select-bg-color: var(--jb-text-contrast);
@@ -34,5 +34,5 @@ jb-select.fluent-style::part(arrow-icon) {
 jb-select.fluent-style::part(popover-content) {
   --jb-popover-bg-color: var(--jb-text-contrast);
   --jb-popover-padding: 0.25rem;
-  box-shadow: 0 0.4rem 1rem rgb(0 0 0 / 0.18);
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 0.14);
 }

@@ -72,6 +72,7 @@
     grid-template-columns: auto 1fr auto;
     padding-inline-end: var(--box-padding-end);
     align-items: center;
+
     .start-section {
       height: 100%;
       width: auto;
@@ -169,6 +170,7 @@
           outline: 2px solid var(--jb-select-focus-ring-color, Highlight);
           outline-offset: 2px;
         }
+
         color: var(--icon-color);
         margin: var(--arrow-icon-margin);
 
@@ -312,7 +314,8 @@
     font-family: inherit;
     font-size: var(--input-font-size);
     color: var(--value-color);
-
+    outline: none;
+    
     &:disabled {
       cursor: inherit;
     }

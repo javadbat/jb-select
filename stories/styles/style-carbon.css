@@ -1,7 +1,7 @@
 jb-select.carbon-style {
-  --jb-select-height: 2.75rem;
-  --jb-select-rounded: 0.25rem;
-  --jb-select-border-width: 1px;
+  --jb-select-height: 2.5rem;
+  --jb-select-rounded: 0;
+  --jb-select-border-width: 0;
   --jb-select-border-bottom-width: 1px;
   --jb-select-border-color: var(--jb-border-color);
   --jb-select-border-color-focus: var(--jb-primary);
@@ -12,15 +12,15 @@ jb-select.carbon-style {
   --jb-select-value-color: var(--jb-text-primary);
   --jb-select-placeholder-color: #a8a8a8;
   --jb-select-message-color: var(--jb-text-secondary);
-  --jb-select-message-color-error: #ff8389;
+  --jb-select-message-color-error: #fa4d56;
   --jb-select-label-margin: 0 0 0.375rem;
   --jb-select-message-padding: 0.375rem 0 0;
-  --jb-select-list-padding: 0.25rem;
-  --jb-select-rounded: 0.25rem;
+  --jb-select-list-padding: 0;
+  --jb-select-rounded: 0;
   --jb-option-color: var(--jb-text-primary);
   --jb-option-bg-color-active: var(--jb-surface-hover);
   --jb-option-color-active: var(--jb-text-contrast);
-  --jb-option-border-radius: 0.125rem;
+  --jb-option-border-radius: 0;
 }
 
 jb-select.carbon-style::part(selected-value) {
@@ -37,6 +37,13 @@ jb-select.carbon-style::part(arrow-icon) {
 
 jb-select.carbon-style::part(popover-content) {
   --jb-popover-bg-color: var(--jb-surface);
-  --jb-popover-padding: 0.25rem;
-  box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.32);
+  --jb-popover-padding: 0;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.28);
+}
+
+jb-select.carbon-style:state(invalid) {
+  --jb-select-border-color: #fa4d56;
+  --jb-select-border-color-focus: #fa4d56;
+  --jb-select-border-color-selected: #fa4d56;
+  --jb-select-border-bottom-width: 2px;
 }

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [7.4.0] 2026-07-18
 
 ### Added
 
@@ -16,3 +16,7 @@
 - Added public inline spacing, inline slot padding, list radius, and clear icon size variables.
 - Forwarded the internal popover content as `popover-content` and standardized theme recipes on the select host plus exported parts.
 - Removed redundant child theme-class hooks and refined Aurora popover elevation through the shared popover shadow API.
+
+### Fixed
+
+- fix clear button not reset selectedOptionList in multiple mode 

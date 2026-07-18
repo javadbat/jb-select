@@ -1,10 +1,10 @@
 jb-select.aurora-style {
-  --jb-select-height: 2.875rem;
-  --jb-select-rounded: 1rem;
+  --jb-select-height: 2.5rem;
+  --jb-select-rounded: 0.75rem;
   --jb-select-border-width: 1px;
   --jb-select-border-bottom-width: 1px;
-  --jb-select-border-color: rgb(125 211 252 / 0.58);
-  --jb-select-border-color-focus: #a78bfa;
+  --jb-select-border-color: var(--jb-border-color);
+  --jb-select-border-color-focus: var(--jb-focus-color);
   --jb-select-border-color-selected: #a78bfa;
   --jb-select-bg-color: rgb(15 23 42 / 0.76);
   --jb-select-bg-color-selected: rgb(15 23 42 / 0.82);
@@ -16,7 +16,6 @@ jb-select.aurora-style {
   --jb-select-label-margin: 0 0 0.375rem;
   --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.5rem;
-  --jb-select-rounded: 1rem;
   --jb-option-color: #eff6ff;
   --jb-option-bg-color-active: rgb(167 139 250 / 0.22);
   --jb-option-color-active: #ffffff;
@@ -28,8 +27,8 @@ jb-select.aurora-style {
 }
 
 jb-select.aurora-style::part(selected-value) {
-  background: rgb(56 189 248 / 0.16);
-  border-radius: 999rem;
+  background: rgb(56 189 248 / 0.1);
+  border-radius: 0.625rem;
 }
 
 jb-select.aurora-style::part(arrow-icon) {
