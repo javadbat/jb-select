@@ -301,14 +301,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.addEventListener("keyup", this.#onInputKeyup.bind(this));
     this.elements.input.addEventListener("beforeinput", this.#onInputBeforeInput.bind(this));
     this.elements.input.addEventListener("input", (e) => { this.#onInputInput(e as unknown as InputEvent); });
-    this.addEventListener("focus", this.#onSelectFocus.bind(this), {passive:true});
-    this.elements.input.addEventListener("focusout", this.#onInputBlur.bind(this),{passive:true});
-    this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this), {passive:true});
-    this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this), {passive:true});
+    this.addEventListener("focus", this.#onSelectFocus.bind(this), { passive: true });
+    this.elements.input.addEventListener("focusout", this.#onInputBlur.bind(this), { passive: true });
+    this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this), { passive: true });
+    this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this), { passive: true });
     //events to work with options
     this.addEventListener("select", this.#onOptionSelect.bind(this));
     this.addEventListener("deselect", this.#onOptionDeselect.bind(this));
-    this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this),{passive:true});
+    this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this), { passive: true });
     this.elements.optionListSlot.addEventListener("slotchange", this.#onOptionSlotChange.bind(this));
 
   }
@@ -492,7 +492,13 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#notFoundedValue = null;
     this.#value = value;
     if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
-      if (!this.multiple) { this.textValue = ""; }
+      // handle null value
+      if (!this.multiple) {
+        this.textValue = "";
+      } else {
+        // on multiple we clear old selected options
+        this.#selectedOptions.clear()
+      }
       this.#updateSelectedOptionDom();
       //will deselect all option
       this.#setSelectedOption(null);
