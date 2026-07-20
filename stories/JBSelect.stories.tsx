@@ -136,7 +136,7 @@ export const MultipleWithCheckbox: Story = {
   },
   play: async ({ canvasElement }) => {
     const select = getSelect<number[]>(canvasElement);
-    const options = await waitForOptions<number>(select, 1);
+    const options = await waitForOptions(select, 1);
     const checkbox = options[0].querySelector('jb-checkbox') as HTMLElement & { value: boolean };
 
     await selectOptionByIndex(select, 0);
