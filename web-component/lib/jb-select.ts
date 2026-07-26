@@ -2,16 +2,10 @@ import "jb-button";
 import "jb-popover";
 import CSS from "./jb-select.css";
 import VariablesCSS from "./variables.css";
-import type {
-  JBSelectCallbacks,
-  JBSelectElements,
-  PopoverPosition,
-  ValidationValue,
-} from "./types";
+import type { JBSelectCallbacks,JBSelectElements,PopoverPosition,ValidationValue,} from "./types";
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
 import { createInputEvent, createKeyboardEvent, isMobile } from "jb-core";
 import type { JBFormInputStandards } from 'jb-form';
-// eslint-disable-next-line no-duplicate-imports
 import { JBOptionWebComponent } from "./jb-option/jb-option";
 import { registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from "./render";
@@ -204,7 +198,18 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       this.removeAttribute('name');
     }
   }
-  initialValue: TValue | null = null;
+
+  #initialValue: TValue | null = null;
+
+  get initialValue(){
+    return this.#initialValue;
+  }
+  set initialValue(value:TValue|null){
+    this.#initialValue = value;
+    if(this.#value === null && value !== null){
+      this.#setValueFromOutside(value);
+    }
+  }
   formResetCallback() {
     this.value = this.initialValue;
     this.#validation.reset();

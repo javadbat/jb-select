@@ -1,6 +1,6 @@
 
 // biome-ignore lint/style/useImportType: <react must be import>
-import React from 'react';
+import React, { useRef } from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { JBSelect, JBOptionList, JBOption, type JBSelectEventType } from 'jb-select/react';
 import { JBButton } from 'jb-button/react';
@@ -54,6 +54,78 @@ export const Normal: Story = {
     });
   }
 };
+export const InitialValue: Story = {
+  render(args){
+    const formRef = useRef<HTMLFormElement>(null);
+    return(
+      <form ref={formRef}>
+        <JBSelect {...args} />
+        <JBButton onClick={()=>{formRef.current?.reset()}}>Reset</JBButton>
+      </form>
+    )
+  },
+  args: {
+    label: 'initialValueTest',
+    message: "a initial provided value should be setted by default",
+    initialValue:nameList[0],
+    placeholder: "select a value",
+  },
+  play: async ({ canvasElement, args }) => {
+    const select = getSelect<string>(canvasElement);
+    const options = await waitForOptions<string>(select, 3);
+    const resetButton = canvasElement.querySelector<HTMLElement>('jb-button');
+
+    expect(resetButton).toBeTruthy();
+
+    await waitFor(() => {
+      expect(select.value).toBe(args.initialValue);
+      expect(options[0].selected).toBe(true);
+      expect(getSelectedValueText(select)).toContain(String(args.initialValue));
+    });
+
+    await selectOptionByIndex(select, 1);
+
+    await waitFor(() => {
+      expect(select.value).toBe(nameList[1]);
+      expect(options[0].selected).toBe(false);
+      expect(options[1].selected).toBe(true);
+    });
+
+    select.initialValue = null;
+
+    await waitFor(() => {
+      expect(select.initialValue).toBeNull();
+      expect(select.value).toBe(nameList[1]);
+      expect(options[1].selected).toBe(true);
+    });
+
+    await userEvent.click(getNativeButton(resetButton!));
+
+    await waitFor(() => {
+      expect(select.value).toBeNull();
+      expect(options.every((option) => !option.selected)).toBe(true);
+    });
+
+    await selectOptionByIndex(select, 0);
+    select.initialValue = nameList[2];
+
+    await waitFor(() => {
+      expect(select.initialValue).toBe(nameList[2]);
+      expect(select.value).toBe(nameList[0]);
+      expect(options[0].selected).toBe(true);
+      expect(options[2].selected).toBe(false);
+    });
+
+    await userEvent.click(getNativeButton(resetButton!));
+
+    await waitFor(() => {
+      expect(select.value).toBe(nameList[2]);
+      expect(options[0].selected).toBe(false);
+      expect(options[2].selected).toBe(true);
+      expect(getSelectedValueText(select)).toContain(nameList[2]);
+    });
+  }
+};
 export const Multiple: Story = {
   render: () => {
     return (
@@ -70,7 +142,7 @@ export const Multiple: Story = {
   },
   play: async ({ canvasElement }) => {
     const select = getSelect<number[]>(canvasElement);
-    const options = await waitForOptions<number>(select, 2);
+    const options = await waitForOptions<number[]>(select, 2);
 
     await selectOptionByIndex(select, 0);
     await selectOptionByIndex(select, 1);
@@ -104,7 +176,7 @@ export const MultipleWithOptionList: Story = {
   },
   play: async ({ canvasElement }) => {
     const select = getSelect<number[]>(canvasElement);
-    const options = await waitForOptions<number>(select, 2);
+    const options = await waitForOptions<number[]>(select, 2);
 
     await selectOptionByIndex(select, 0);
     await selectOptionByIndex(select, 1);
@@ -844,3 +916,7 @@ export const MissingOption: Story = {
     });
   }
 }
+function FormHTMLAttributes<T>() {
+  throw new Error('Function not implemented.');
+}
+

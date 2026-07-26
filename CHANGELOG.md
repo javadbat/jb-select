@@ -1,5 +1,11 @@
 # Changelog
 
+## [7.4.1] 2026-07-26
+
+### Fixed
+
+- add functionality for initial value so it also set value when value is not exist.
+
 ## [7.4.0] 2026-07-18
 
 ### Added
