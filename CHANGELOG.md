@@ -1,5 +1,11 @@
 # Changelog
 
+## [7.4.3] 2026-07-27
+
+### Fixed
+- make clear button click non passive
+- scroll to selected option when menu open
+
 ## [7.4.2] 2026-07-27
 
 ### Added

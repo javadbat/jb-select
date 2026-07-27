@@ -228,7 +228,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     if (Array.isArray(this.#value) && Array.isArray(this.#initialValue)) {
       // Array identity is intentionally different; compare selected values.
       return this.#value.length !== this.#initialValue.length
-        || this.#value.some((value, index) => value !== this.#initialValue![index]);
+        || this.#value.some((value) => value !== (this.#initialValue as any[]).includes(value));
     }
     return this.#value !== this.#initialValue;
   }
@@ -326,7 +326,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.addEventListener("focus", this.#onSelectFocus.bind(this), { passive: true });
     this.elements.input.addEventListener("focusout", this.#onInputBlur.bind(this), { passive: true });
     this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this), { passive: true });
-    this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this), { passive: true });
+    this.elements.clearButton.addEventListener("click", this.#onClearButtonClick.bind(this), { passive: false });
     //events to work with options
     this.addEventListener("select", this.#onOptionSelect.bind(this));
     this.addEventListener("deselect", this.#onOptionDeselect.bind(this));
@@ -705,6 +705,11 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.elements.input.focus();
     this.#showOptionList();
     this.elements.optionListWrapper.open();
+    if(this.#selectedOption && !this.multiple){
+      this.#selectedOption.scrollIntoView({behavior:"instant",block:"nearest"})
+    }else if(this.multiple && this.#selectedOptions.size>0){
+      this.#selectedOptions.values()?.next()?.value?.scrollIntoView({behavior:"instant",block:"nearest"})
+    }
     if (this.isMobileDevice) {
       this.elements.input.placeholder = this.#searchPlaceholder;
     }
