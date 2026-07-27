@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Added Storybook interaction coverage for initial-value initialization, live-value precedence, explicit `null`, multiple selection, and native form reset.
+
+### Changed
+
+- Updated `initialValue` to seed `value` only until the live value is explicitly set; native form reset restores the latest initial value and re-enables initialization.
+- Updated the React wrapper so an omitted `value` does not overwrite `initialValue`, while explicit `null` remains an explicit live value.
+
 ## [7.4.1] 2026-07-26
 
 ### Fixed
@@ -25,4 +36,4 @@
 
 ### Fixed
 
-- fix clear button not reset selectedOptionList in multiple mode 
+- fix clear button not reset selectedOptionList in multiple mode

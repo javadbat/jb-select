@@ -81,7 +81,7 @@ then in your HTML file just use
 | `multiple` | `boolean` | no | Enables or disables multiple selection. |
 | `disabled` | `boolean` | no | Disables the select and closes the option list. |
 | `required` | `boolean` | no | Enables required validation. |
-| `initialValue` | `TValue \| null` | no | Baseline value used by `isDirty`. |
+| `initialValue` | `TValue \| null` | no | Default and reset value. It initializes `value` until the live value is explicitly set. |
 | `isDirty` | `boolean` | yes | `true` when current `value` differs from `initialValue`. |
 | `popoverPosition` | `'fixed' \| 'absolute'` | no | Controls how the option popover is positioned. See the [popover positioning guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-popover-positioning--docs) for scrollable and clipped-container examples. |
 | `validationMessage` | `string` | yes | Current validation message. |

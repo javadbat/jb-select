@@ -85,6 +85,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     }
   }
   set value(value: TValue | null) {
+    this.#isDirty = true;
     this.#setValueFromOutside(value);
   }
   get textValue() {
@@ -200,23 +201,39 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
 
   #initialValue: TValue | null = null;
+  // Tracks whether the live value has been explicitly set. This is separate
+  // from the public isDirty comparison against initialValue.
+  #isDirty = false;
 
-  get initialValue(){
+  get initialValue() {
     return this.#initialValue;
   }
-  set initialValue(value:TValue|null){
-    this.#initialValue = value;
-    if(this.#value === null && value !== null){
-      this.#setValueFromOutside(value);
+  set initialValue(value: TValue | null) {
+    // Multiple-select values are mutable arrays. Keep a dedicated baseline so
+    // deselecting a live option cannot also mutate the form-reset value.
+    this.#initialValue = this.#cloneArrayValue(value);
+    if (!this.#isDirty) {
+      this.#setValueFromOutside(this.#cloneArrayValue(this.#initialValue));
     }
   }
   formResetCallback() {
-    this.value = this.initialValue;
+    this.#isDirty = false;
+    // Reset receives a fresh array because the live selection is mutated when
+    // an option is deselected.
+    this.#setValueFromOutside(this.#cloneArrayValue(this.initialValue));
     this.#validation.reset();
     this.#internals?.setValidity({}, '');
   }
   get isDirty(): boolean {
-    return this.value !== this.initialValue;
+    if (Array.isArray(this.#value) && Array.isArray(this.#initialValue)) {
+      // Array identity is intentionally different; compare selected values.
+      return this.#value.length !== this.#initialValue.length
+        || this.#value.some((value, index) => value !== this.#initialValue![index]);
+    }
+    return this.#value !== this.#initialValue;
+  }
+  #cloneArrayValue(value: TValue | null): TValue | null {
+    return Array.isArray(value) ? [...value] as TValue : value;
   }
   constructor() {
     super();
@@ -320,7 +337,12 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
 
   #initProp() {
     this.textValue = "";
-    this.value = this.getAttribute("value") as TValue || null;
+    const valueAttribute = this.getAttribute("value");
+    if (valueAttribute === null) {
+      this.#setValueFromOutside(null);
+    } else {
+      this.value = valueAttribute as TValue;
+    }
   }
   static get observedAttributes() {
     return [
@@ -349,7 +371,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         this.elements.messageBox.innerHTML = value;
         break;
       case "value":
-        this.#setValueFromOutside(value as TValue);
+        this.value = value as TValue;
         break;
       case "required":
         if (value === "" || value == "true" || value == "True") {
@@ -459,7 +481,8 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       if (selectedOptions.length == 0 && value.length > 0) {
         this.#notFoundedValue = value;
       } else {
-        this.#setValue(value, selectedOptions);
+        // Do not retain the caller's mutable array as the live selection.
+        this.#setValue([...value] as TValue, selectedOptions);
       }
     }
     return false;
@@ -539,6 +562,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #onClearButtonClick(e: MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
+    this.#isDirty = true;
     this.#setValue(null, null);
     this.#checkValidity(true);
     this.#dispatchOnChangeEvent();
@@ -723,6 +747,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   #onOptionSelect(e: Event) {
     const prevValue = this.#value;
     const prevOption = this.#selectedOption;
+    const wasDirty = this.#isDirty;
     //because jb-option may be in another shadow dom like jb-option-list we have to get first composed element as a target
     const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
     if (target instanceof JBOptionWebComponent) {
@@ -735,12 +760,14 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
       if (dispatchedEvent.defaultPrevented) {
         e.preventDefault();
         this.#selectOption(prevValue!, prevOption!);
+        this.#isDirty = wasDirty;
       }
     }
 
   }
   #onOptionDeselect(e: Event) {
     const target = e.composedPath()[0] as JBOptionWebComponent<unknown>;
+    this.#isDirty = true;
     //this only works on multi mode
     target.selected = false;
     this.#selectedOptions.delete(target as JBOptionWebComponent<TValue>)
@@ -785,6 +812,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     target.active = true;
   }
   #selectOption(value: TValue, optionDom: JBOptionWebComponent<TValue>) {
+    this.#isDirty = true;
     if (this.multiple) {
       if (Array.isArray(this.#value)) {
         value = [...this.#value, value] as TValue

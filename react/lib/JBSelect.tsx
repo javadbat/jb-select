@@ -22,8 +22,9 @@ export function JBSelect<TValue>(props: Props<TValue>) {
   );
   useEvents(element, { onChange, onInit, onInput, onKeyUp, onLoad });
   useJBSelectAttribute(element, { error, getSelectedValueDOM, label, required, message, placeholder, searchPlaceholder, validationList, hideClear });
+  const valueProps = value === undefined ? {} : { value };
   return (
-    <jb-select ref={element} value={value ?? null} initialValue={initialValue ?? null} {...otherProps}>
+    <jb-select ref={element} initialValue={initialValue ?? null} {...valueProps} {...otherProps}>
       {props.children}
     </jb-select>
   );

@@ -79,6 +79,7 @@ export const InitialValue: Story = {
 
     await waitFor(() => {
       expect(select.value).toBe(args.initialValue);
+      expect(select.isDirty).toBe(false);
       expect(options[0].selected).toBe(true);
       expect(getSelectedValueText(select)).toContain(String(args.initialValue));
     });
@@ -87,6 +88,7 @@ export const InitialValue: Story = {
 
     await waitFor(() => {
       expect(select.value).toBe(nameList[1]);
+      expect(select.isDirty).toBe(true);
       expect(options[0].selected).toBe(false);
       expect(options[1].selected).toBe(true);
     });
@@ -95,6 +97,7 @@ export const InitialValue: Story = {
 
     await waitFor(() => {
       expect(select.initialValue).toBeNull();
+      expect(select.isDirty).toBe(true);
       expect(select.value).toBe(nameList[1]);
       expect(options[1].selected).toBe(true);
     });
@@ -103,6 +106,7 @@ export const InitialValue: Story = {
 
     await waitFor(() => {
       expect(select.value).toBeNull();
+      expect(select.isDirty).toBe(false);
       expect(options.every((option) => !option.selected)).toBe(true);
     });
 
@@ -112,6 +116,7 @@ export const InitialValue: Story = {
     await waitFor(() => {
       expect(select.initialValue).toBe(nameList[2]);
       expect(select.value).toBe(nameList[0]);
+      expect(select.isDirty).toBe(true);
       expect(options[0].selected).toBe(true);
       expect(options[2].selected).toBe(false);
     });
@@ -120,11 +125,153 @@ export const InitialValue: Story = {
 
     await waitFor(() => {
       expect(select.value).toBe(nameList[2]);
+      expect(select.initialValue).toBe(select.value)
+      expect(select.isDirty).toBe(false);
       expect(options[0].selected).toBe(false);
       expect(options[2].selected).toBe(true);
       expect(getSelectedValueText(select)).toContain(nameList[2]);
     });
   }
+};
+export const InitialValueDoesNotOverrideValue: Story = {
+  args: {
+    initialValue: nameList[0],
+    value: nameList[1],
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+    const options = await waitForOptions<string>(select, 3);
+
+    await waitFor(() => {
+      expect(select.value).toBe(nameList[1]);
+      expect(select.isDirty).toBe(true);
+      expect(options[0].selected).toBe(false);
+      expect(options[1].selected).toBe(true);
+    });
+  }
+};
+export const ExplicitNullValueDoesNotFallBackToInitialValue: Story = {
+  args: {
+    initialValue: nameList[0],
+    value: null,
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+    const options = await waitForOptions<string>(select, 3);
+
+    await waitFor(() => {
+      expect(select.value).toBeNull();
+      expect(select.isDirty).toBe(true);
+      expect(options.every((option) => !option.selected)).toBe(true);
+    });
+  }
+};
+export const MultipleInitialValue: Story = {
+  render: (args) => {
+    const formRef = useRef<HTMLFormElement>(null);
+    return (
+      <form ref={formRef}>
+        <JBSelect {...args}>
+          <JBOptionList optionList={nameList} />
+        </JBSelect>
+        <JBButton onClick={() => { formRef.current?.reset() }}>Reset</JBButton>
+      </form>
+    );
+  },
+  args: {
+    multiple: true,
+    initialValue: [nameList[0], nameList[2]],
+  },
+  play: async ({ canvasElement, args }) => {
+    const select = getSelect<string[]>(canvasElement);
+    const options = await waitForOptions<string[]>(select, 3);
+    const resetButton = canvasElement.querySelector<HTMLElement>('jb-button');
+
+    expect(resetButton).toBeTruthy();
+
+    await waitFor(() => {
+      expect(select.value).toEqual([nameList[0], nameList[2]]);
+      // Both the reset baseline and live selection must be isolated from the
+      // mutable array supplied by Storybook/React.
+      expect(select.initialValue).not.toBe(args.initialValue);
+      expect(select.value).not.toBe(args.initialValue);
+      expect(select.isDirty).toBe(false);
+      expect(options[0].selected).toBe(true);
+      expect(options[1].selected).toBe(false);
+      expect(options[2].selected).toBe(true);
+    });
+
+    // Deselect an option from the initial array. This used to mutate both the
+    // live value and initialValue because they shared the same array instance.
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(select.value).toEqual([nameList[2]]);
+      expect(select.initialValue).toEqual([nameList[0], nameList[2]]);
+      expect(args.initialValue).toEqual([nameList[0], nameList[2]]);
+      expect(select.isDirty).toBe(true);
+    });
+
+    await userEvent.click(getNativeButton(resetButton!));
+
+    await waitFor(() => {
+      expect(select.value).toEqual([nameList[0], nameList[2]]);
+      expect(select.isDirty).toBe(false);
+      expect(options[0].selected).toBe(true);
+      expect(options[1].selected).toBe(false);
+      expect(options[2].selected).toBe(true);
+    });
+
+    const callerOwnedValue = [nameList[0], nameList[1]];
+    select.value = callerOwnedValue;
+
+    await waitFor(() => {
+      expect(select.value).toEqual(callerOwnedValue);
+      expect(select.value).not.toBe(callerOwnedValue);
+    });
+
+    // Deselecting mutates the component's live array in place. The array
+    // passed to the value setter must remain safe for controlled consumers.
+    await selectOptionByIndex(select, 0);
+
+    await waitFor(() => {
+      expect(select.value).toEqual([nameList[1]]);
+      expect(callerOwnedValue).toEqual([nameList[0], nameList[1]]);
+    });
+  }
+};
+export const PreventedChangeKeepsInitialValueClean: Story = {
+  args: {
+    initialValue: nameList[0],
+  },
+  play: async ({ canvasElement }) => {
+    const select = getSelect<string>(canvasElement);
+    const options = await waitForOptions<string>(select, 2);
+
+    await waitFor(() => {
+      expect(select.value).toBe(nameList[0]);
+      expect(select.isDirty).toBe(false);
+    });
+
+    // A canceled selection restores both value and the internal assignment
+    // latch, so a later initialValue can still initialize the component.
+    select.addEventListener('change', (event) => event.preventDefault(), { once: true });
+    await selectOptionByIndex(select, 1);
+
+    await waitFor(() => {
+      expect(select.value).toBe(nameList[0]);
+      expect(select.isDirty).toBe(false);
+      expect(options[0].selected).toBe(true);
+      expect(options[1].selected).toBe(false);
+    });
+
+    select.initialValue = nameList[2];
+
+    await waitFor(() => {
+      expect(select.value).toBe(nameList[2]);
+      expect(select.isDirty).toBe(false);
+    });
+  },
 };
 export const Multiple: Story = {
   render: () => {
