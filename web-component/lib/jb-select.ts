@@ -224,6 +224,9 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     this.#validation.reset();
     this.#internals?.setValidity({}, '');
   }
+  formDisabledCallback(disabled: boolean) {
+    this.disabled = disabled;
+  }
   get isDirty(): boolean {
     if (Array.isArray(this.#value) && Array.isArray(this.#initialValue)) {
       // Array identity is intentionally different; compare selected values.
