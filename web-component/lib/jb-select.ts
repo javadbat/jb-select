@@ -4,7 +4,7 @@ import CSS from "./jb-select.css";
 import VariablesCSS from "./variables.css";
 import type { JBSelectCallbacks,JBSelectElements,PopoverPosition,ValidationValue,} from "./types";
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
-import { createInputEvent, createKeyboardEvent, isMobile } from "jb-core";
+import { createInputEvent, createKeyboardEvent, isMobile, parseBooleanAttribute } from "jb-core";
 import type { JBFormInputStandards } from 'jb-form';
 import { JBOptionWebComponent } from "./jb-option/jb-option";
 import { registerDefaultVariables } from 'jb-core/theme';
@@ -68,7 +68,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     return optionList as JBOptionWebComponent<TValue>[];
   }
   get multiple() {
-    return this.hasAttribute('multiple')
+    return parseBooleanAttribute(this.getAttribute('multiple'))
   }
   set multiple(value: boolean) {
     if (value) {
@@ -187,7 +187,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
  */
   get isAutoValidationDisabled(): boolean {
     //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
-    return !!(this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true');
+    return parseBooleanAttribute(this.getAttribute('disable-auto-validation'));
   }
   get name() {
     return this.getAttribute('name') || '';
@@ -377,11 +377,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         this.value = value as TValue;
         break;
       case "required":
-        if (value === "" || value == "true" || value == "True") {
-          this.required = true;
-        } else {
-          this.required = false;
-        }
+        this.required = parseBooleanAttribute(value);
         break;
       case "placeholder":
         this.placeholder = value;
@@ -394,7 +390,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
         this.reportValidity();
         break;
       case 'hide-clear':
-        if (value === '' || value === 'true') {
+        if (parseBooleanAttribute(value)) {
           this.elements.clearButton.style.display = 'none'
         } else {
           this.elements.clearButton.style.display = 'block'
