@@ -18,14 +18,13 @@ pure js standalone select box web-component.
 
 ## When to use
 
-Use `jb-select` when the user must choose one or more values from a known option list and you need search, validation, custom option content, mobile-friendly popover behavior, or form association.
+Use `jb-select` when the user must choose one or more values from a known option list and you need search, validation, custom option content, mobile-friendly popover behavior, or form association. See the [basic selection demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal) for the default interaction.
 
 Use `jb-option` for hand-written options. Use `jb-option-list` when the options come from a JavaScript array and you want callbacks to extract title, value, or custom DOM.
 
 ## Demo
-- [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect)
-- [Codepen](https://codepen.io/javadbat/pen/abpjKVP)
-- [CodeSandbox](https://3f63dj.csb.app/samples/jb-select)
+- Explore the [select examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal), including [multiple values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple), [validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--required), [custom selected content](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-selected-value-render), and [popover positioning](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--fixed-popover-position).
+- Try the standalone [CodePen](https://codepen.io/javadbat/pen/abpjKVP) or [CodeSandbox](https://3f63dj.csb.app/samples/jb-select) examples.
 
 ## Using With JS Frameworks
 <a href="https://github.com/javadbat/jb-select/tree/main/react" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/React.js-jb--select%2Freact-000.svg?logo=react&logoColor=%2361DAFB" height="30" /></a>
@@ -56,69 +55,69 @@ then in your HTML file just use
 
 | name | type | default | description |
 | --- | --- | --- | --- |
-| [`value`](#get-value) | `string` | `""` | Initial selected value from markup. Use the property for non-string values or runtime updates. |
-| `label` | `string` | `""` | Visible label text and accessible aria label. |
+| [`value`](#get-value) | `string` | `""` | Initial selected value from markup. Use the property for non-string values or runtime updates; see [controlled values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-value). |
+| `label` | `string` | `""` | Visible label text and accessible aria label; see the [basic selection demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal). |
 | `message` | `string` | `""` | Helper text shown when no validation error is visible. |
 | `name` | `string` | `""` | Form field name. |
-| [`multiple`](#multiple) | `boolean` | `false` | Enables multiple selection. |
+| [`multiple`](#multiple) | `boolean` | `false` | Enables multiple selection; see the [multiple selection demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple). |
 | [`placeholder`](#placeholder) | `string` | `""` | Placeholder when no value is selected. |
 | `search-placeholder` | `string` | `"search"` | Placeholder used by the mobile search input while open. |
-| [`required`](#validation) | `boolean` | `false` | Enables required validation. |
-| [`error`](#validation) | `string` | `""` | External validation error message. |
+| [`required`](#validation) | `boolean` | `false` | Enables required validation; see the [required demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--required). |
+| [`error`](#validation) | `string` | `""` | External validation error message; see the [error demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-error). |
 | `hide-clear` | `boolean` | `false` | Hides the clear button. |
 | `disable-auto-validation` | `boolean` | `false` | Disables automatic validation on user interactions. |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `md` style defaults | Visual size variant. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `md` style defaults | Visual size variant; see [size variants](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--size-variants). |
 
 ### `jb-select` properties
 
 | name | type | readonly | description |
 | --- | --- | --- | --- |
-| [`value`](#get-value) | `TValue \| TValue[] \| null` | no | Canonical selected value. In multiple mode this is an array. |
-| `textValue` | `string` | no | Current search/filter text. |
+| [`value`](#get-value) | `TValue \| TValue[] \| null` | no | Canonical selected value. In multiple mode this is an array; see [controlled values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-value). |
+| `textValue` | `string` | no | Current search/filter text; see the [dynamic list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--dynamic-list). |
 | `selectedOptionTitle` | `string` | yes | Visible title of the selected option or selected options. |
 | `validation` | `ValidationHelper<ValidationValue<TValue>>` | yes | Validation helper from `jb-validation`; set `validation.list` for custom rules. |
 | `callbacks` | `JBSelectCallbacks<TValue>` | no | Callback map, including `getSelectedValueDOM`. |
-| `multiple` | `boolean` | no | Enables or disables multiple selection. |
-| `disabled` | `boolean` | no | Disables the select and closes the option list. |
-| `required` | `boolean` | no | Enables required validation. |
-| `initialValue` | `TValue \| null` | no | Default and reset value. It initializes `value` until the live value is explicitly set. |
+| `multiple` | `boolean` | no | Enables or disables multiple selection; see [multiple values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple). |
+| `disabled` | `boolean` | no | Disables the select and closes the option list; see the [disabled demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--disabled). |
+| `required` | `boolean` | no | Enables required validation; see [validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--required). |
+| `initialValue` | `TValue \| null` | no | Default and reset value. It initializes `value` until the live value is explicitly set; see [initial value](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--initial-value). |
 | `isDirty` | `boolean` | yes | `true` when current `value` differs from `initialValue`. |
-| `popoverPosition` | `'fixed' \| 'absolute'` | no | Controls how the option popover is positioned. See the [popover positioning guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-popover-positioning--docs) for scrollable and clipped-container examples. |
+| `popoverPosition` | `'fixed' \| 'absolute'` | no | Controls how the option popover is positioned. See the [popover positioning guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-popover-positioning--docs) and [fixed-position demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--fixed-popover-position). |
 | `validationMessage` | `string` | yes | Current validation message. |
 
 ### `jb-select` methods
 
 | name | returns | description |
 | --- | --- | --- |
-| `checkValidity()` | `boolean` | Runs validation without showing the error message. Dispatches `invalid` when invalid. |
-| `reportValidity()` | `boolean` | Runs validation and shows the first error message. Dispatches `invalid` when invalid. |
-| `focus()` | `void` | Focuses the search input and opens the option list. |
-| `blur()` | `void` | Closes the option list, clears search text, and validates. |
+| `checkValidity()` | `boolean` | Runs validation without showing the error message. Dispatches `invalid` when invalid; see the [event and validation demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
+| `reportValidity()` | `boolean` | Runs validation and shows the first error message. Dispatches `invalid` when invalid; see [validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-error). |
+| `focus()` | `void` | Focuses the search input and opens the option list; see the [basic selection demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal). |
+| `blur()` | `void` | Closes the option list, clears search text, and validates; see the [event demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
 
 ### `jb-option` API
 
 | name | type | description |
 | --- | --- | --- |
-| `value` | attribute/property | Option value. Use the property for object values. |
-| `selected` | property | Whether the option is selected. |
-| `hidden` | property | Whether the option is hidden by filtering. |
+| `value` | attribute/property | Option value. Use the property for object values; see [object options](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-object). |
+| `selected` | property | Whether the option is selected; see the [normal selection demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal). |
+| `hidden` | property | Whether the option is hidden by filtering; see the [dynamic list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--dynamic-list). |
 | `active` | property | Whether the option is the active keyboard/hover target. |
 | `optionContentText` | property | Text used for default filtering. |
-| `toggleOption()` | method | Selects or deselects the option using the normal click behavior. |
+| `toggleOption()` | method | Selects or deselects the option using the normal click behavior; see [multiple selection](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple). |
 
 ### `jb-option-list` API
 
 | name | type | description |
 | --- | --- | --- |
-| `optionList` | `TOption[]` property | Source array used to render options. |
+| `optionList` | `TOption[]` property | Source array used to render options; see the [option-list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple-with-option-list). |
 | `optionListDom` | property | Rendered `jb-option` elements. |
-| `setCallback(key, callback)` | method | Sets `getTitle`, `getValue`, or `getContentDOM`. |
+| `setCallback(key, callback)` | method | Sets `getTitle`, `getValue`, or `getContentDOM`; see [custom option rendering](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option-render). |
 
 ## set option list
 
 if you want to add option to jb-select, you have 2 way:
 
-For help choosing between the two approaches, see the [options guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-options--docs).
+For help choosing between the two approaches, see the [options guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-options--docs), [static option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-as-children), and [array option-list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-object).
 
 - use `<jb-option>` tag 
 - use `<jb-option-list>`
@@ -195,6 +194,8 @@ For the standalone `jb-option` API and CSS variables, see [jb-option README](htt
 
 ## get value
 
+Read `.value` and `selectedOptionTitle` after selection; see the [value demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-value).
+
 its simple like any other form element use `.value` of dom
 
 ```javascript
@@ -206,12 +207,16 @@ document.querySelector('jb-select').selectedOptionTitle;
 
 ## set value
 
+Assign a string or object to `.value`, or use the `value` attribute for plain strings. See [controlled values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-value) and [object values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-object).
+
 to select value in your code you have 2 option:
 1- set it via dom assign `dropDownElement.value = yourValue`
 2- set through dom attribute `<jb-select value="yourValueSting"></jb-select>`
 remember set value as attribute if your option is a plain string but in direct assign like first option you can attach both string or object value assignation
 
 ### placeholder
+
+Use `placeholder` and `search-placeholder` for empty and mobile search states; see the [normal select demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal).
 
  you can set placeholder when data is empty.    
  `search-placeholder`work on mobile device when user focus on select and modal open this text will be placed in top search input box
@@ -223,7 +228,7 @@ remember set value as attribute if your option is a plain string but in direct a
 
 by just set multiple Attribute (like native select).
 
-For React and web-component examples, see the [multiple selection guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-multiple-selection--docs).
+For React and web-component examples, see the [multiple selection guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-multiple-selection--docs), [multiple demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple), and [checkbox demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple-with-checkbox).
 
 ```html
 <jb-select multiple></jb-select>
@@ -237,7 +242,19 @@ you can also use `jb-checkbox` if you want to add checkbox to your multi select.
 </jb-select>
 ```
 
+## Responsive positioning and RTL
+
+Use `popoverPosition="fixed"` when the select is inside a clipped or scrollable container. Compare the [fixed popover](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--fixed-popover-position), [scrollable container](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--fixed-popover-in-scrollable-container), and [positioned container](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--fixed-popover-in-positioned-container) demos. The [RTL demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--rtl) covers right-to-left layout.
+
+Use the [size variants](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--size-variants) for compact or spacious controls.
+
+## Advanced value and option behavior
+
+See [initial/reset behavior](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--initial-value), [controlled value precedence](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--initial-value-does-not-override-value), [boolean values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--boolean-value), and [missing options](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--missing-option) for less common data flows. For mobile sizing, see [popover height](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--popover-height).
+
 ## Validation
+
+Use `required`, `error`, `checkValidity()`, and `reportValidity()` for validation; see the [required](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--required) and [error](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-error) demos.
 since select has a limited value options, validation have different story here. the only validation i really necessary here is required that indicate if user must select a value before he can move on so pass `required` attribute in dom then call `checkValidity` function like all other jb web component family. but if you need more customize validation just read [jb-validation](https://github.com/javadbat/jb-validation)
 
 you can also set `error` attribute to pass error directly to the component
@@ -247,6 +264,8 @@ you can also set `error` attribute to pass error directly to the component
 ```
 
 ## Change empty state shape
+
+Customize the no-results content with `slot="empty-list-message"`; see the [empty list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--empty-list).
 when the searched value in select is not found, there is an open dropdown with the not found message.
 you can customize this entire section by adding a div with the `slot="empty-list-message"`
 
@@ -261,6 +280,8 @@ like the example the below:
 ```
 
 ### Add Icon or Any Element into box
+
+Use `slot="start-section"` for leading icons or custom content; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option).
 sometimes you want to add icon into the select box before value box.
 you can customize this entire section by adding a div or any other Tag with the `slot="start-section"`
 
@@ -291,19 +312,19 @@ for example if you have array of object as a option list and want to show custom
 
 remember you must set this callback before set value and option list
 
-For a complete React and web-component example, styling guidance, and the single-select limitation, see the [custom selected value content guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-custom-selected-value-content--docs).
+For a complete React and web-component example, styling guidance, and the single-select limitation, see the [custom selected value content guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-custom-selected-value-content--docs) and [custom renderer demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-selected-value-render).
 
 ## Events
 
 | event | cancelable | when it fires |
 | --- | --- | --- |
-| `change` | yes | When selected value changes. Call `event.preventDefault()` to cancel a single-select change and restore the previous value. |
-| `input` | no | When the user types in the search input. |
-| `keyup` | no | Re-dispatched from the search input. Arrow keys navigate options and Enter toggles the active option. |
-| `keypress` | no | Re-dispatched from the search input. |
-| `invalid` | no | When `checkValidity()` or `reportValidity()` finds an invalid value. |
-| `load` | no | In `connectedCallback`, before `init`. |
-| `init` | no | In `connectedCallback`, after initial setup. |
+| `change` | yes | When selected value changes. Call `event.preventDefault()` to cancel a single-select change and restore the previous value; see the [event demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
+| `input` | no | When the user types in the search input; see the [event demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
+| `keyup` | no | Re-dispatched from the search input. Arrow keys navigate options and Enter toggles the active option; see [keyboard interaction](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
+| `keypress` | no | Re-dispatched from the search input; see the [event demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
+| `invalid` | no | When `checkValidity()` or `reportValidity()` finds an invalid value; see [validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
+| `load` | no | In `connectedCallback`, before `init`; see the [event demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
+| `init` | no | In `connectedCallback`, after initial setup; see the [event demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
 
 ```js
     dropDownElement.addEventListener('change',(e)=>{/*your function*/});
@@ -312,6 +333,8 @@ For a complete React and web-component example, styling guidance, and the single
 
 ```
 ## Parts
+
+See the [select style gallery](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect-style--gallery) for these parts in context.
 
 | part | description |
 | --- | --- |
@@ -324,14 +347,18 @@ For a complete React and web-component example, styling guidance, and the single
 
 | slot | description |
 | --- | --- |
-| default | Option content. Use `jb-option` or `jb-option-list` children. |
-| `start-section` | Content rendered before the selected value/search area. |
+| default | Option content. Use `jb-option` or `jb-option-list` children; see the [option examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-as-children). |
+| `start-section` | Content rendered before the selected value/search area; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option). |
 | `select-arrow-icon` | Replaces the default arrow icon. |
-| `empty-list-message` | Custom empty-state content shown when no option is visible. |
+| `empty-list-message` | Custom empty-state content shown when no option is visible; see the [empty list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--empty-list). |
+
+## Accessibility notes
+
+Provide a meaningful `label`, keep option content readable, and preserve keyboard interaction when customizing slots. The [normal select](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal) and [event](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test) demos show the accessible focus and keyboard flow.
 
 ## set custom style
 
-in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
+in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc. See the [select style gallery](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect-style--gallery).
 if you want to set a custom style to this web-component all you need is to set CSS variable in parent scope of web-component
 
 
