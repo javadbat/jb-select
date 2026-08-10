@@ -6,10 +6,10 @@ jb-select.fluent-style {
   --jb-select-border-color: var(--jb-border-color);
   --jb-select-border-color-focus: var(--jb-focus-color);
   --jb-select-border-color-selected: var(--jb-focus-color);
-  --jb-select-bg-color: var(--jb-text-inverse);
-  --jb-select-bg-color-selected: var(--jb-text-inverse);
-  --jb-select-label-color: var(--jb-text-secondary);
-  --jb-select-value-color: var(--jb-text-secondary);
+  --jb-select-bg-color: var(--jb-content-inverse);
+  --jb-select-bg-color-selected: var(--jb-content-inverse);
+  --jb-select-label-color: var(--jb-content-secondary);
+  --jb-select-value-color: var(--jb-content-secondary);
   --jb-select-placeholder-color: #605e5c;
   --jb-select-message-color: #605e5c;
   --jb-select-message-color-error: #a4262c;
@@ -17,9 +17,9 @@ jb-select.fluent-style {
   --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0.25rem;
   --jb-select-rounded: 0.25rem;
-  --jb-option-color: var(--jb-text-secondary);
+  --jb-option-color: var(--jb-content-secondary);
   --jb-option-bg-color-active: var(--jb-surface-hover);
-  --jb-option-color-active: var(--jb-text-primary);
+  --jb-option-color-active: var(--jb-content-primary);
   --jb-option-border-radius: 0.125rem;
 }
 
@@ -32,7 +32,7 @@ jb-select.fluent-style::part(arrow-icon) {
 }
 
 jb-select.fluent-style::part(popover-content) {
-  --jb-popover-bg-color: var(--jb-text-inverse);
+  --jb-popover-bg-color: var(--jb-content-inverse);
   --jb-popover-padding: 0.25rem;
   box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 0.14);
 }

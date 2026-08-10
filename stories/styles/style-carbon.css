@@ -6,25 +6,25 @@ jb-select.carbon-style {
   --jb-select-border-color: var(--jb-border-color);
   --jb-select-border-color-focus: var(--jb-primary);
   --jb-select-border-color-selected: var(--jb-primary);
-  --jb-select-bg-color: var(--jb-surface);
-  --jb-select-bg-color-selected: var(--jb-surface);
-  --jb-select-label-color: var(--jb-text-primary);
-  --jb-select-value-color: var(--jb-text-primary);
+  --jb-select-bg-color: var(--jb-surface-primary);
+  --jb-select-bg-color-selected: var(--jb-surface-primary);
+  --jb-select-label-color: var(--jb-content-primary);
+  --jb-select-value-color: var(--jb-content-primary);
   --jb-select-placeholder-color: #a8a8a8;
-  --jb-select-message-color: var(--jb-text-secondary);
+  --jb-select-message-color: var(--jb-content-secondary);
   --jb-select-message-color-error: #fa4d56;
   --jb-select-label-margin: 0 0 0.375rem;
   --jb-select-message-padding: 0.375rem 0 0;
   --jb-select-list-padding: 0;
   --jb-select-rounded: 0;
-  --jb-option-color: var(--jb-text-primary);
+  --jb-option-color: var(--jb-content-primary);
   --jb-option-bg-color-active: var(--jb-surface-hover);
-  --jb-option-color-active: var(--jb-text-inverse);
+  --jb-option-color-active: var(--jb-content-inverse);
   --jb-option-border-radius: 0;
 }
 
 jb-select.carbon-style::part(selected-value) {
-  color: var(--jb-text-primary);
+  color: var(--jb-content-primary);
 }
 
 jb-select.carbon-style::part(search-input) {
@@ -36,7 +36,7 @@ jb-select.carbon-style::part(arrow-icon) {
 }
 
 jb-select.carbon-style::part(popover-content) {
-  --jb-popover-bg-color: var(--jb-surface);
+  --jb-popover-bg-color: var(--jb-surface-primary);
   --jb-popover-padding: 0;
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.28);
 }

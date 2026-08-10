@@ -6,8 +6,8 @@ jb-select.porcelain-style {
   --jb-select-border-color: #d6e4f0;
   --jb-select-border-color-focus: #2f80ed;
   --jb-select-border-color-selected: #2f80ed;
-  --jb-select-bg-color: var(--jb-surface);
-  --jb-select-bg-color-selected: var(--jb-surface);
+  --jb-select-bg-color: var(--jb-surface-primary);
+  --jb-select-bg-color-selected: var(--jb-surface-primary);
   --jb-select-label-color: #0f2742;
   --jb-select-value-color: #12304f;
   --jb-select-placeholder-color: #6b85a0;
@@ -28,7 +28,7 @@ jb-select.porcelain-style::part(arrow-icon) {
 }
 
 jb-select.porcelain-style::part(popover-content) {
-  --jb-popover-bg-color: var(--jb-surface);
+  --jb-popover-bg-color: var(--jb-surface-primary);
   --jb-popover-padding: 0.375rem;
   box-shadow: 0 1rem 2rem rgb(47 128 237 / 0.12);
 }
