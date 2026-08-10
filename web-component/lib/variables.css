@@ -29,17 +29,17 @@
   /* Theme/Color */
   --border-color: var(--jb-select-border-color, var(--jb-neutral-10));
   --border-color-selected: var(--jb-select-border-color-selected, var(--border-color));
-  --message-color: var(--jb-select-message-color, var(--jb-text-secondary));
-  --label-color: var(--jb-select-label-color, var(--jb-text-primary));
-  --value-color: var(--jb-select-value-color, var(--jb-text-primary));
+  --message-color: var(--jb-select-message-color, var(--jb-content-secondary));
+  --label-color: var(--jb-select-label-color, var(--jb-content-primary));
+  --value-color: var(--jb-select-value-color, var(--jb-content-primary));
   --icon-color: var(--jb-select-icon-color, var(--value-color));
   --placeholder-color: var(--jb-select-placeholder-color, var(--jb-neutral-6));
-  --select-box-bg-color: var(--jb-select-bg-color, var(--jb-neutral-10));
+  --select-box-bg-color: var(--jb-select-bg-color, var(--jb-surface-secondary));
   --select-box-bg-color-selected: var(--jb-select-bg-color-selected, var(--select-box-bg-color));
   --popover-bg-color: var(--jb-popover-bg-color, var(--select-box-bg-color));
   --overlay-bg-color: var(--jb-select-overlay-bg-color, oklch(from var(--jb-black) l c h / calc(alpha - 0.5)));
   --list-scroll-color: var(--jb-select-list-scroll-color, oklch(from var(--select-box-bg-color) calc(l - 0.2) c h));
-  --empty-list-placeholder-color: var(--jb-select-empty-list-placeholder-color, var(--jb-text-secondary));
+  --empty-list-placeholder-color: var(--jb-select-empty-list-placeholder-color, var(--jb-content-secondary));
   --mobile-input-bg-color: var(--jb-select-mobile-input-bg-color, var(--select-box-bg-color));
   /* Other */
   --margin: var(--jb-select-margin, 0 0);
@@ -54,7 +54,7 @@
 }
 :host(:state(disabled)) {
  cursor: not-allowed;
- --select-box-bg-color: var(--jb-select-bg-color-disabled, hsl(from var(--jb-neutral-10) h 12% 66.1));
+ --select-box-bg-color: var(--jb-select-bg-color-disabled, hsl(from var(--jb-surface-secondary) h 12% 66.1));
  --value-color:var(--jb-select-value-color-disabled, var(--jb-neutral-3));
 }
 :host(:focus-within:not(:state(disabled))) {
