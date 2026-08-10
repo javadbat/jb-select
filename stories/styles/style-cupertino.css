@@ -7,7 +7,7 @@ jb-select.cupertino-style {
   --jb-select-border-color-focus: var(--jb-focus-color);
   --jb-select-border-color-selected: var(--jb-focus-color);
   --jb-select-bg-color: rgb(242 242 247 / 0.86);
-  --jb-select-bg-color-selected: var(--jb-text-contrast);
+  --jb-select-bg-color-selected: var(--jb-text-inverse);
   --jb-select-label-color: #1c1c1e;
   --jb-select-value-color: #1c1c1e;
   --jb-select-placeholder-color: rgb(60 60 67 / 0.6);

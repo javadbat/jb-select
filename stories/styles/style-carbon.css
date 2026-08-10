@@ -19,7 +19,7 @@ jb-select.carbon-style {
   --jb-select-rounded: 0;
   --jb-option-color: var(--jb-text-primary);
   --jb-option-bg-color-active: var(--jb-surface-hover);
-  --jb-option-color-active: var(--jb-text-contrast);
+  --jb-option-color-active: var(--jb-text-inverse);
   --jb-option-border-radius: 0;
 }
 

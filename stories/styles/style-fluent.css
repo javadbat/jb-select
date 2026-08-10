@@ -6,8 +6,8 @@ jb-select.fluent-style {
   --jb-select-border-color: var(--jb-border-color);
   --jb-select-border-color-focus: var(--jb-focus-color);
   --jb-select-border-color-selected: var(--jb-focus-color);
-  --jb-select-bg-color: var(--jb-text-contrast);
-  --jb-select-bg-color-selected: var(--jb-text-contrast);
+  --jb-select-bg-color: var(--jb-text-inverse);
+  --jb-select-bg-color-selected: var(--jb-text-inverse);
   --jb-select-label-color: var(--jb-text-secondary);
   --jb-select-value-color: var(--jb-text-secondary);
   --jb-select-placeholder-color: #605e5c;
@@ -32,7 +32,7 @@ jb-select.fluent-style::part(arrow-icon) {
 }
 
 jb-select.fluent-style::part(popover-content) {
-  --jb-popover-bg-color: var(--jb-text-contrast);
+  --jb-popover-bg-color: var(--jb-text-inverse);
   --jb-popover-padding: 0.25rem;
   box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 0.14);
 }
