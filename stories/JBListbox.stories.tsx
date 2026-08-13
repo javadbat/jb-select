@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import { useEffect, useRef, useState } from "react";
 import { expect, userEvent, waitFor } from "storybook/test";
 import type { JBListboxWebComponent } from "jb-select/listbox";
+import type { JBOptionWebComponent } from "jb-select/option";
 import { JBListbox } from "jb-select/listbox/react";
 import { JBOption } from "jb-select/option/react";
 import { JBCheckbox } from "jb-checkbox/react";
@@ -45,7 +46,7 @@ export const Normal: Story = {
     await userEvent.click(getOptionControl(listbox, 1));
     await waitFor(() => {
       expect(listbox.value).toBe("staging");
-      expect(listbox.querySelectorAll("jb-option")[1].selected).toBe(true);
+      expect(listbox.querySelectorAll<JBOptionWebComponent<string>>("jb-option")[1].selected).toBe(true);
     });
   },
 };
@@ -192,7 +193,7 @@ export const SingleWithCheckbox: Story = {
     await userEvent.click(checkbox.shadowRoot!.querySelector<HTMLElement>(".jb-checkbox-web-component")!);
 
     expect(listbox.value).toBe("pro");
-    expect(listbox.querySelectorAll("jb-option")[1].selected).toBe(true);
+    expect(listbox.querySelectorAll<JBOptionWebComponent<string>>("jb-option")[1].selected).toBe(true);
   },
 };
 
