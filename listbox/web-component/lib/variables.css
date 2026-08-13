@@ -1,0 +1,30 @@
+:host {
+  --border-color: var(--jb-listbox-border-color, var(--jb-input-border-color, var(--jb-neutral-10)));
+  --border-color-focus: var(--jb-listbox-border-color-focus, var(--jb-input-border-color-focus, var(--jb-neutral)));
+  --border-color-invalid: var(--jb-listbox-border-color-invalid, var(--jb-error, #b3261e));
+  --background: var(--jb-listbox-background, var(--jb-input-bg-color, var(--jb-surface-secondary)));
+  --border-radius: var(--jb-listbox-border-radius, var(--jb-input-border-radius, var(--jb-radius)));
+  --border-width: var(--jb-listbox-border-width, var(--jb-input-border-width, 1px));
+  --border-bottom-width: var(--jb-listbox-border-bottom-width, var(--jb-input-border-bottom-width, 3px));
+  --border-width-focus: var(--jb-listbox-border-width-focus, var(--jb-input-border-width-focus, var(--border-width)));
+  --border-bottom-width-focus: var(--jb-listbox-border-bottom-width-focus, var(--jb-input-border-bottom-width-focus, var(--border-bottom-width)));
+  --padding: var(--jb-listbox-padding, 0.25rem);
+  --option-border-radius: max(0px, calc(var(--border-radius) - var(--padding)));
+  --gap: var(--jb-listbox-gap, 0.125rem);
+  --max-height: var(--jb-listbox-max-height, 18rem);
+  --label-color: var(--jb-listbox-label-color, inherit);
+  --label-font-size: var(--jb-listbox-label-font-size, 0.875rem);
+  --message-color: var(--jb-listbox-message-color, inherit);
+  --message-color-invalid: var(--jb-listbox-message-color-invalid, var(--jb-error, #b3261e));
+  --message-font-size: var(--jb-listbox-message-font-size, 0.75rem);
+  --box-shadow: var(--jb-listbox-box-shadow, var(--jb-input-box-shadow, none));
+  --box-shadow-focus: var(--jb-listbox-box-shadow-focus, var(--jb-input-box-shadow-focus, none));
+}
+
+:host(:focus-within) {
+  --border-color: var(--jb-listbox-border-color-focus, var(--jb-input-border-color-focus, var(--jb-neutral)));
+}
+
+:host(:state(disabled)) {
+  --background: var(--jb-listbox-background-disabled, var(--jb-surface-secondary));
+}

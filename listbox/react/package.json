@@ -1,0 +1,11 @@
+{
+  "name": "jb-listbox-react",
+  "description": "React wrapper for jb-listbox",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "jb-select": "^7.4.3"
+  }
+}

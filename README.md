@@ -22,6 +22,8 @@ Use `jb-select` when the user must choose one or more values from a known option
 
 Use `jb-option` for hand-written options. Use `jb-option-list` when the options come from a JavaScript array and you want callbacks to extract title, value, or custom DOM.
 
+Use `jb-select/listbox` when the options should remain visible instead of opening in a dropdown. It reuses the same `jb-option` elements and supports single and multiple selection. See the [Listbox web-component README](listbox/web-component/README.md) and [Listbox React README](listbox/react/README.md).
+
 ## Demo
 - Explore the [select examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal), including [multiple values](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple), [validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--required), [custom selected content](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-selected-value-render), and [popover positioning](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--fixed-popover-position).
 - Try the standalone [CodePen](https://codepen.io/javadbat/pen/abpjKVP) or [CodeSandbox](https://3f63dj.csb.app/samples/jb-select) examples.
@@ -37,6 +39,15 @@ Other integrations: <a href="https://javadbat.github.io/design-system/?path=/doc
 
 ```sh
     npm i jb-select
+```
+
+Import the select and option registrations you use:
+
+```js
+import 'jb-select';
+import 'jb-select/option';
+import 'jb-select/option-list';
+import 'jb-select/listbox';
 ```
 ### using cdn:
 
@@ -465,9 +476,9 @@ For usage examples and the standalone option API, see [jb-option README](https:/
 
 ## AI agent notes
 
-This package includes [`custom-elements.json`](./custom-elements.json) so documentation tools, IDEs, and AI coding agents can discover `jb-select`, `jb-option`, `jb-option-list`, their attributes, properties, events, slots, CSS variables, and public methods.
+This package includes [`web-component/custom-elements.json`](./web-component/custom-elements.json) for the select, [`option/web-component/custom-elements.json`](./option/web-component/custom-elements.json) for the option, and [`option-list/web-component/custom-elements.json`](./option-list/web-component/custom-elements.json) for the option list, so documentation tools, IDEs, and AI coding agents can discover their attributes, properties, events, slots, CSS variables, and public methods.
 
-The package also exposes `"customElements": "custom-elements.json"` in `package.json`, which gives tools a stable package-level pointer to the manifest. This field is documented by the Custom Elements Manifest project in its [Referencing manifests from npm packages](https://github.com/webcomponents/custom-elements-manifest#referencing-manifests-from-npm-packages) section.
+The package also exposes `"customElements": "web-component/custom-elements.json"` in `package.json`, while the option and option-list package metadata point to their own manifests. This field is documented by the Custom Elements Manifest project in its [Referencing manifests from npm packages](https://github.com/webcomponents/custom-elements-manifest#referencing-manifests-from-npm-packages) section.
 
 In `custom-elements.json`, the `exports` array describes what each module makes available:
 
@@ -476,7 +487,7 @@ In `custom-elements.json`, the `exports` array describes what each module makes 
 | `js` | A JavaScript/TypeScript export from the module, such as `JBSelectWebComponent`. |
 | `custom-element-definition` | The custom element registration for a tag name, such as `jb-select`. |
 
-- Import `jb-select` once before using `<jb-select>`, `<jb-option>`, or `<jb-option-list>`.
+- Import `jb-select` before using `<jb-select>`, `jb-select/option` before using `<jb-option>`, and `jb-select/option-list` before using `<jb-option-list>`.
 - Use `.value` for the canonical selected value; use `selectedOptionTitle` only for display text.
 - Use `jb-option` for static options and `jb-option-list` for array-driven options.
 - Use `multiple` when `.value` should be an array.

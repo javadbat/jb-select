@@ -82,7 +82,8 @@ For help choosing between `JBOption` and `JBOptionList`, see the [options guide]
 using `JBOption` is quite an easy job:
 
 ```jsx
-import {JBSelect,JBOption} from 'jb-select/react';
+import {JBSelect} from 'jb-select/react';
+import {JBOption} from 'jb-select/option/react';
 
   <JBSelect label="gender">
       <JBOption value="male">Male</JBOption>
@@ -151,7 +152,8 @@ Use `JBOptionList` for array-driven options and callback-based title/value extra
 example:
 
 ```jsx
-import {JBSelect,JBOptionList} from 'jb-select/react';
+import {JBSelect} from 'jb-select/react';
+import {JBOptionList} from 'jb-select/option-list/react';
 
 render(){
     const list = [{name:'reza',family:'asadi',userId:1},{name:'peter',family:'peterson',userId:2}];
@@ -272,7 +274,7 @@ For web-component behavior, events, slots, and CSS variables, see [`jb-select`](
 
 ## AI agent notes
 
-- Import `JBSelect`, `JBOption`, and `JBOptionList` from `jb-select/react`.
+- Import `JBSelect` from `jb-select/react`, `JBOption` from `jb-select/option/react`, and `JBOptionList` from `jb-select/option-list/react`.
 - Use `JBOption` for static JSX options and `JBOptionList` for array-driven options.
 - Use `searchPlaceholder`, `hideClear`, and `getSelectedValueDOM` in React; the wrapper maps them to the underlying web-component API.
 - Use `multiple` when `value` should be an array.

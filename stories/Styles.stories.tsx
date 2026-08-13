@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { JBOption, JBOptionList, JBSelect } from 'jb-select/react';
+import { JBSelect } from 'jb-select/react';
+import { JBOption } from 'jb-select/option/react';
+import { JBOptionList } from 'jb-select/option-list/react';
 import type { JBSelectWebComponent } from 'jb-select';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '../../../docs/styles/ant-design.css';

@@ -8,14 +8,13 @@
 }
 
 :host(:state(open)) {
-  .select-box {
-    @media(--tablet-from) {
-      /*when there is focus on whole select means menu is open so we change select styles*/
-      border-color: var(--border-color);
-      border-bottom-color: transparent;
-      border-radius: var(--rounded) var(--rounded) 0 0;
+  @media(--tablet-from) {
+    /*when there is focus on whole select means menu is open so we change select styles*/
+    --box-border-radius: var(--rounded) var(--rounded) 0 0;
+    .select-box {
+      border-bottom-color: transparent!important; 
     }
-  }
+  }   
 }
 
 :host(:state(disabled)) {

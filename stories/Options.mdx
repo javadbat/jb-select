@@ -36,7 +36,8 @@ import * as SelectStories from './JBSelect.stories';
 Use `JBOption` when the option needs custom content—such as a checkbox, icon, color swatch, avatar, or secondary text. Set the value with `value` and place the visible JSX between the tags.
 
 ```tsx
-import { JBOption, JBSelect } from 'jb-select/react';
+import { JBSelect } from 'jb-select/react';
+import { JBOption } from 'jb-select/option/react';
 
 const people = [
   { id: 1, name: 'Ava Patel', role: 'Designer' },
@@ -72,7 +73,8 @@ Use `JBOptionList` when the option data is already an array and each row can use
 For strings or numbers, pass `optionList` directly. Each value is used for both the displayed title and selected value.
 
 ```tsx
-import { JBOptionList, JBSelect } from 'jb-select/react';
+import { JBSelect } from 'jb-select/react';
+import { JBOptionList } from 'jb-select/option-list/react';
 
 const languages = ['TypeScript', 'JavaScript', 'Rust'];
 
@@ -86,7 +88,8 @@ const languages = ['TypeScript', 'JavaScript', 'Rust'];
 For objects, provide `getTitle` to choose the display text and `getValue` to choose the value returned by `JBSelect`. If `getValue` is omitted, the whole object is the selected value.
 
 ```tsx
-import { JBOptionList, JBSelect } from 'jb-select/react';
+import { JBSelect } from 'jb-select/react';
+import { JBOptionList } from 'jb-select/option-list/react';
 
 const people = [
   { id: 1, name: 'Ava Patel', role: 'Designer' },

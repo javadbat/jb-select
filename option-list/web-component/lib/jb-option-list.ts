@@ -1,4 +1,5 @@
-import { JBOptionWebComponent } from "../jb-option/jb-option";
+import "jb-select/option";
+import type { JBOptionWebComponent } from "jb-select/option";
 import type { OptionListCallbacks } from "./types";
 
 //TOption is the type of option, TValue is the type of value we extract from option
@@ -115,8 +116,7 @@ export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
     }
   }
   #createOptionDOM(item: TOption): JBOptionWebComponent<TValue> {
-    // const optionElement = document.createElement("jb-option") as JBOptionWebComponent<TValue>;
-    const optionElement = new JBOptionWebComponent<TValue>();
+    const optionElement = document.createElement("jb-option") as JBOptionWebComponent<TValue>;
     //it has default function who return exact same input
     this.#fillOptionContent(item, optionElement);
     optionElement.value = this.#getOptionValue(item);

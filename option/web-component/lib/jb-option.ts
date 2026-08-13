@@ -1,8 +1,7 @@
-import type { JBSelectWebComponent } from '../jb-select';
 import CSS from './jb-option.css';
 import CSSVariable from './variables.css';
 import { renderHTML } from "./render";
-import type { JBOptionElements } from "./types";
+import type { JBOptionElements, JBOptionSelectElement } from "./types";
 import { removeCheckboxNodes } from './utils';
 
 //TODO: check for filter text to set visibility on mount
@@ -12,7 +11,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
 
   #elements!: JBOptionElements;
   // it may be empty
-  #SelectElement?: JBSelectWebComponent
+  #SelectElement?: JBOptionSelectElement
   #value: TValue | null = null;
   #internals?: ElementInternals;
   get value(): TValue | null {
@@ -86,7 +85,7 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
     this.#dispatchPlaceEvent();
 
   }
-  setSelectElement(element: JBSelectWebComponent) {
+  setSelectElement(element: JBOptionSelectElement) {
     if (element) {
       this.#SelectElement = element;
       this.#SelectElement.addEventListener("filter-change", this.#onFilterChange.bind(this));

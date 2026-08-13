@@ -1,19 +1,43 @@
-import {Meta, Title, Story, Controls, Stories, Source} from '@storybook/addon-docs/blocks';
-import * as SelectStories from './JBSelect.stories';
+import { Meta, Title, Story, Controls, Source } from "@storybook/addon-docs/blocks";
+import * as ListboxStories from "./JBListbox.stories";
 
-<Meta of={SelectStories}/>
+<Meta of={ListboxStories} />
 
-<Title>JB Select</Title>
+<Title>JB Listbox</Title>
 
-Dynamic Select Component.
+Always-visible, form-associated listbox built with reusable `JBOption` children.
 
-<Story of={SelectStories.Normal}  inline={true}/>
+<Story of={ListboxStories.Normal} inline={true} />
 <Controls />
-<Source of={SelectStories.Normal}/>
+<Source of={ListboxStories.Normal} />
 
-## Option as Children
+## Multiple selection
 
-Here we have sample of using `JBOption` an an children for options. in this mode you can easily customize how option must be shown to the user.
+Use `multiple` when the listbox should expose an array value and repeated form entries.
 
-<Story of={SelectStories.OptionAsChildren}  inline={true}/>
-<Source of={SelectStories.OptionAsChildren}/>
+<Story of={ListboxStories.MultipleSelection} inline={true} />
+<Source of={ListboxStories.MultipleSelection} />
+
+## Filtering options
+
+Filtering is intentionally left to the consumer for the native web component. In React, a regular `JBInput` can be composed with `JBListbox` and the story can hide options based on the input value.
+
+<Story of={ListboxStories.FilteredOptions} inline={true} />
+<Source of={ListboxStories.FilteredOptions} />
+
+## Options with checkboxes
+
+`JBCheckbox` can be placed inside an option for a familiar selection affordance in both single and multiple modes.
+
+<Story of={ListboxStories.SingleWithCheckbox} inline={true} />
+<Source of={ListboxStories.SingleWithCheckbox} />
+
+<Story of={ListboxStories.MultipleWithCheckbox} inline={true} />
+<Source of={ListboxStories.MultipleWithCheckbox} />
+
+## Validation
+
+The listbox supports required and custom validation while remaining compatible with forms.
+
+<Story of={ListboxStories.RequiredValidation} inline={true} />
+<Source of={ListboxStories.RequiredValidation} />

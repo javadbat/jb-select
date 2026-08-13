@@ -16,7 +16,7 @@
     "web component",
     "react component"
   ],
-  "version": "7.4.3",
+  "version": "8.0.0",
   "bugs": "https://github.com/javadbat/jb-select/issues",
   "homepage": "https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect",
   "license": "MIT",
@@ -26,6 +26,9 @@
     "web-component/custom-elements.json",
     "web-component/lib/",
     "web-component/dist/",
+    "option/",
+    "option-list/",
+    "listbox/",
     "react/",
     "react/dist/"
   ],
@@ -38,6 +41,42 @@
     "./react": {
       "types": "./react/dist/index.d.ts",
       "default": "./react/index.js"
+    },
+    "./option": {
+      "types": "./option/web-component/dist/index.d.ts",
+      "default": "./option/index.js"
+    },
+    "./option/web-component": {
+      "types": "./option/web-component/dist/index.d.ts",
+      "default": "./option/web-component/index.js"
+    },
+    "./option/react": {
+      "types": "./option/react/dist/index.d.ts",
+      "default": "./option/react/index.js"
+    },
+    "./option-list": {
+      "types": "./option-list/web-component/dist/index.d.ts",
+      "default": "./option-list/index.js"
+    },
+    "./option-list/web-component": {
+      "types": "./option-list/web-component/dist/index.d.ts",
+      "default": "./option-list/web-component/index.js"
+    },
+    "./option-list/react": {
+      "types": "./option-list/react/dist/index.d.ts",
+      "default": "./option-list/react/index.js"
+    },
+    "./listbox": {
+      "types": "./listbox/web-component/dist/index.d.ts",
+      "default": "./listbox/index.js"
+    },
+    "./listbox/web-component": {
+      "types": "./listbox/web-component/dist/index.d.ts",
+      "default": "./listbox/web-component/index.js"
+    },
+    "./listbox/react": {
+      "types": "./listbox/react/dist/index.d.ts",
+      "default": "./listbox/react/index.js"
     },
     "./*": "./*"
   },

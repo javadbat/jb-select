@@ -7,6 +7,10 @@ declare global {
 }
 
 export type JBOptionElements = {
-  componentWrapper:HTMLDivElement,
-  contentWrapper:HTMLDivElement,
-}
+  componentWrapper: HTMLDivElement;
+  contentWrapper: HTMLDivElement;
+};
+
+export type JBOptionSelectElement = HTMLElement & {
+  multiple: boolean;
+};

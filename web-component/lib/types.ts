@@ -1,4 +1,4 @@
-import type { JBOptionWebComponent } from "./jb-option/jb-option";
+import type { JBOptionWebComponent } from "jb-select/option";
 import type {EventTypeWithTarget} from "jb-core";
 import type{ JBSelectWebComponent } from "./jb-select";
 import type {JBButtonWebComponent} from "jb-button";

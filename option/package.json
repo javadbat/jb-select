@@ -1,0 +1,9 @@
+{
+  "name": "jb-option",
+  "description": "Option web component for jb-select",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "types": "./web-component/dist/index.d.ts",
+  "customElements": "./web-component/custom-elements.json"
+}

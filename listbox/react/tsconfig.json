@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "rootDir": "./lib",
+    "declarationDir": "./dist",
+    "paths": {
+      "jb-select/listbox": ["../web-component/dist/index.d.ts"]
+    }
+  },
+  "include": ["lib/**/*.ts", "lib/**/*.tsx"],
+  "exclude": ["node_modules", "**/*.spec.ts", "dist"],
+  "extends": "jb-core/configs/tsconfig-react.json"
+}

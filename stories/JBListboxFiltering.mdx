@@ -1,0 +1,67 @@
+import { Meta, Story, Source } from "@storybook/addon-docs/blocks";
+import * as ListboxStories from "./JBListbox.stories";
+
+<Meta title="Components/form elements/JBListbox/Filtering" />
+
+# Build a searchable listbox
+
+`JBListbox` intentionally does not render a search field. This keeps the native web component focused on listbox behavior and lets each application choose its own input, layout, and filtering experience.
+
+In React, compose a regular `JBInput` with the listbox and keep the filter text in state. When the text changes, dispatch a `filter-change` event on the listbox ref:
+
+```tsx
+import { useEffect, useRef, useState } from "react";
+import { JBInput } from "jb-input/react";
+import type { JBListboxWebComponent } from "jb-select/listbox";
+import { JBListbox } from "jb-select/listbox/react";
+import { JBOption } from "jb-select/option/react";
+import "jb-icons/search";
+
+const StringListbox = JBListbox<string>;
+
+export function SearchableListbox() {
+  const [filter, setFilter] = useState("");
+  const listboxRef = useRef<JBListboxWebComponent<string>>(null);
+
+  useEffect(() => {
+    listboxRef.current?.dispatchEvent(
+      new CustomEvent("filter-change", {
+        detail: { filterText: filter },
+      }),
+    );
+  }, [filter]);
+
+  return (
+    <StringListbox ref={listboxRef} label="Environment" name="environment">
+      <JBInput
+        placeholder="Search environments"
+        value={filter}
+        onInput={event => setFilter(event.target.value)}
+      >
+        <jb-icon-search slot="end-section" size="sm" />
+      </JBInput>
+
+      <JBOption value="development">Development</JBOption>
+      <JBOption value="staging">Staging</JBOption>
+      <JBOption value="production">Production</JBOption>
+    </StringListbox>
+  );
+}
+```
+
+`JBListbox` calls `setSelectElement` when each `JBOption` is registered. That connects the option to the listbox's `filter-change` event. Each option then compares its text with `detail.filterText` and updates its own `hidden` state, so the consumer does not need to query or manually update individual options.
+
+The same event can be dispatched from a native web-component application. Keep a reference to `<jb-listbox>` and send the event whenever the search input changes:
+
+```js
+listbox.dispatchEvent(
+  new CustomEvent("filter-change", {
+    detail: { filterText: searchInput.value },
+  }),
+);
+```
+
+The listbox remains form-compatible, supports single or multiple selection, and still uses the same `JBOption` children. The filter only controls which options are visible; selection and validation continue to be handled by `JBListbox`.
+
+<Story of={ListboxStories.FilteredOptions} />
+<Source of={ListboxStories.FilteredOptions} />

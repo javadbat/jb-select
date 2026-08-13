@@ -3,11 +3,25 @@
 `jb-option` is the option item web component used inside `jb-select` and `jb-option-list`.
 
 ## Usage
+
+Import the independently built web component entry point:
+
+```js
+import 'jb-select';
+import 'jb-select/option';
+```
+
 ```html
 <jb-select label="City">
   <jb-option value="tehran">Tehran</jb-option>
   <jb-option value="shiraz">Shiraz</jb-option>
 </jb-select>
+```
+
+For React, use the dedicated wrapper entry point:
+
+```tsx
+import { JBOption } from 'jb-select/option/react';
 ```
 
 You can place custom HTML inside the option when the visible label needs richer UI.

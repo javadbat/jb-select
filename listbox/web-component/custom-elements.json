@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "../README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "lib/jb-listbox.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Always-visible, form-associated listbox supporting single and multiple selection with jb-option children.",
+          "name": "JBListboxWebComponent",
+          "tagName": "jb-listbox",
+          "customElement": true,
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "attributes": [
+            { "name": "value", "description": "Initial string value from markup." },
+            { "name": "name", "description": "Form field name." },
+            { "name": "label", "description": "Visible and accessible label." },
+            { "name": "message", "description": "Helper text displayed below the list." },
+            { "name": "multiple", "description": "Enables multiple selection and array values.", "type": { "text": "boolean" } },
+            { "name": "required", "description": "Requires at least one selected option.", "type": { "text": "boolean" } },
+            { "name": "disabled", "description": "Disables interaction and form participation.", "type": { "text": "boolean" } },
+            { "name": "error", "description": "External custom validation error." }
+          ],
+          "members": [
+            { "kind": "field", "name": "value", "type": { "text": "TValue | TValue[] | null" } },
+            { "kind": "field", "name": "initialValue", "description": "Initial and form-reset value.", "type": { "text": "TValue | TValue[] | null" } },
+            { "kind": "field", "name": "multiple", "type": { "text": "boolean" } },
+            { "kind": "field", "name": "required", "type": { "text": "boolean" } },
+            { "kind": "field", "name": "disabled", "type": { "text": "boolean" } },
+            { "kind": "field", "name": "name", "type": { "text": "string" } },
+            { "kind": "field", "name": "isDirty", "readonly": true, "type": { "text": "boolean" } },
+            { "kind": "field", "name": "validationMessage", "readonly": true, "type": { "text": "string | null" } }
+          ],
+          "methods": [
+            { "name": "checkValidity", "description": "Checks validity without displaying an error." },
+            { "name": "reportValidity", "description": "Checks validity and displays the first error." },
+            { "name": "setCustomValidity", "description": "Sets or clears a custom validation error." },
+            { "name": "focus", "description": "Focuses the listbox and activates the selected or first option." }
+          ],
+          "events": [
+            { "name": "input", "description": "Fired after user selection changes." },
+            { "name": "change", "description": "Fired after the value changes." },
+            { "name": "invalid", "description": "Fired when imperative validation fails." },
+            { "name": "load", "description": "Fired on first connection." },
+            { "name": "init", "description": "Fired after first-connection initialization." }
+          ],
+          "slots": [{ "name": "", "description": "jb-option children." }],
+          "cssParts": [{ "name": "wrapper" }, { "name": "label" }, { "name": "list" }, { "name": "message" }]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JBListboxWebComponent",
+          "declaration": { "name": "JBListboxWebComponent", "module": "lib/jb-listbox.ts" }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jb-listbox",
+          "declaration": { "name": "JBListboxWebComponent", "module": "lib/jb-listbox.ts" }
+        }
+      ]
+    }
+  ]
+}

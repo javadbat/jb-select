@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "../README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "lib/jb-option-list.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Helper web component that renders jb-option elements from a JavaScript array and callback functions.",
+          "name": "JBOptionListWebComponent",
+          "tagName": "jb-option-list",
+          "customElement": true,
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "members": [
+            {
+              "kind": "field",
+              "name": "optionList",
+              "description": "Array of source options used to render jb-option children.",
+              "type": {
+                "text": "TOption[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "optionListDom",
+              "description": "Rendered jb-option elements.",
+              "type": {
+                "text": "JBOptionWebComponent<TValue>[]"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "callbacks",
+              "description": "Callback map used to extract title, value, or content DOM from source options.",
+              "type": {
+                "text": "OptionListCallbacks<TOption, TValue>"
+              },
+              "readonly": true
+            }
+          ],
+          "methods": [
+            {
+              "name": "setCallback",
+              "description": "Sets one callback by key. Valid keys are getTitle, getValue, and getContentDOM."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JBOptionListWebComponent",
+          "declaration": {
+            "name": "JBOptionListWebComponent",
+            "module": "lib/jb-option-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jb-option-list",
+          "declaration": {
+            "name": "JBOptionListWebComponent",
+            "module": "lib/jb-option-list.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

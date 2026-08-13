@@ -2,7 +2,9 @@
 // biome-ignore lint/style/useImportType: <react must be import>
 import React, { useRef } from 'react';
 import { Fragment, useEffect, useState } from 'react';
-import { JBSelect, JBOptionList, JBOption, type JBSelectEventType } from 'jb-select/react';
+import { JBSelect, type JBSelectEventType } from 'jb-select/react';
+import { JBOption } from 'jb-select/option/react';
+import { JBOptionList } from 'jb-select/option-list/react';
 import { JBButton } from 'jb-button/react';
 //@ts-ignore
 import './styles/style.css'
@@ -1066,4 +1068,3 @@ export const MissingOption: Story = {
 function FormHTMLAttributes<T>() {
   throw new Error('Function not implemented.');
 }
-

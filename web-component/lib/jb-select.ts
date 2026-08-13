@@ -6,14 +6,14 @@ import type { JBSelectCallbacks,JBSelectElements,PopoverPosition,ValidationValue
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
 import { createInputEvent, createKeyboardEvent, isMobile, parseBooleanAttribute } from "jb-core";
 import type { JBFormInputStandards } from 'jb-form';
-import { JBOptionWebComponent } from "./jb-option/jb-option";
+import type { JBOptionWebComponent } from "jb-select/option";
 import { registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from "./render";
 import { dictionary } from "./i18n";
 import { i18n } from "jb-core/i18n";
 import type { JBButtonWebComponent } from "jb-button";
 import { JBPopoverWebComponent } from "jb-popover";
-import { JBOptionListWebComponent } from "./jb-option-list/jb-option-list";
+import type { JBOptionListWebComponent } from "jb-select/option-list";
 
 //TODO: add IncludeInputInList or freeSolo so user can select item that he wrote without even it exist in select list
 //TODO: handleHomeEndKeys to move focus inside the popup with the Home and End keys.
@@ -59,12 +59,12 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const elements = this.elements.optionListSlot.assignedElements();
     const optionList = elements.flatMap(x => {
       // extract option list from JBOptionList to make option list flat by index
-      if (x instanceof JBOptionListWebComponent) {
-        return x.optionListDom;
+      if (x.localName === "jb-option-list") {
+        return (x as JBOptionListWebComponent<unknown, TValue>).optionListDom;
       } else {
         return x
       }
-    }).filter(x => (x instanceof JBOptionWebComponent && !x.hidden));
+    }).filter(x => (x.localName === "jb-option" && !(x as JBOptionWebComponent<TValue>).hidden));
     return optionList as JBOptionWebComponent<TValue>[];
   }
   get multiple() {
@@ -754,7 +754,7 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
     const wasDirty = this.#isDirty;
     //because jb-option may be in another shadow dom like jb-option-list we have to get first composed element as a target
     const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
-    if (target instanceof JBOptionWebComponent) {
+    if (target.localName === "jb-option") {
       const value = target.value!;
       this.#selectOption(value, target);
       if (!this.multiple) {

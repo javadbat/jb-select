@@ -6,8 +6,7 @@
     },
     "include": [
         "lib/**/*.ts",
-        "lib/**/*.tsx",
-        "lib/JBOptionList.tsx"
+        "lib/**/*.tsx"
     ],
     "exclude": [
         "node_modules",

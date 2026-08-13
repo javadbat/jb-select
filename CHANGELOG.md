@@ -1,14 +1,43 @@
 # Changelog
 
-## Unreleased
+## [8.0.0] 2026-08-13
 
 ### Added
 
 - Added the standard `formDisabledCallback()` to synchronize the component disabled state with disabled forms and fieldsets.
+- Added independently built entry points for `jb-select/option` and `jb-select/option-list`, including `/web-component` and `/react` variants.
+- Added the form-associated `jb-select/listbox` entry point with single and multiple selection, validation, keyboard navigation, and React support.
+
+### Breaking changes
+
+- `JBOptionWebComponent` and `JBOptionListWebComponent` are no longer registered or exported by the main `jb-select` entry point. Import each element independently wherever it is used:
+
+  ```js
+  import "jb-select";
+  import "jb-select/option";
+  import "jb-select/option-list";
+  ```
+
+  Update named imports in TypeScript in the same way:
+
+  ```ts
+  import { JBSelectWebComponent } from "jb-select";
+  import { JBOptionWebComponent } from "jb-select/option";
+  import { JBOptionListWebComponent } from "jb-select/option-list";
+  ```
+
+- `JBOption` and `JBOptionList` are no longer exported by `jb-select/react`. Import the React components independently:
+
+  ```tsx
+  import { JBSelect } from "jb-select/react";
+  import { JBOption } from "jb-select/option/react";
+  import { JBOptionList } from "jb-select/option-list/react";
+  ```
 
 ### Changed
 
 - Updated component color defaults to use the shared semantic content and surface tokens.
+- Added checkbox-based listbox examples for both single and multiple selection.
 
 ## [7.4.3] 2026-07-27
 

@@ -22,7 +22,8 @@ Choose a colour below. The selected value includes both a swatch and a label, wh
 Pass a function to `getSelectedValueDOM`. Its argument is the selected `value` from the matching `JBOption`, and the function must return a newly created `HTMLElement`.
 
 ```tsx
-import { JBOption, JBSelect } from 'jb-select/react';
+import { JBSelect } from 'jb-select/react';
+import { JBOption } from 'jb-select/option/react';
 
 type Color = {
   name: string;
