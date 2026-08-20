@@ -978,3 +978,9 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
 
 }
 defineWebComponent("jb-select", JBSelectWebComponent);
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "jb-select": JBSelectWebComponent;
+  }
+}

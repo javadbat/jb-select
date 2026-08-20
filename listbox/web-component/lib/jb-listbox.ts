@@ -526,3 +526,9 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
 }
 
 defineWebComponent("jb-listbox", JBListboxWebComponent);
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "jb-listbox": JBListboxWebComponent;
+  }
+}

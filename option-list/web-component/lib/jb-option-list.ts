@@ -126,3 +126,9 @@ export class JBOptionListWebComponent<TOption, TValue> extends JBBaseComponent {
 
 }
 defineWebComponent("jb-option-list", JBOptionListWebComponent);
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "jb-option-list": JBOptionListWebComponent<unknown, unknown>;
+  }
+}
