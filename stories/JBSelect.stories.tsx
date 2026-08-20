@@ -278,7 +278,7 @@ export const PreventedChangeKeepsInitialValueClean: Story = {
 export const Multiple: Story = {
   render: () => {
     return (
-      <JBSelect multiple>
+      <JBSelect multiple label='multiple select' placeholder='Select Options from Here'>
         {
           persons.map(p => {
             return (

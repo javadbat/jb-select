@@ -779,8 +779,11 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (Array.isArray(this.#value)) {
       const index = this.#value.indexOf(target.value);
       if (index !== -1) this.#value.splice(index, 1);
+      if(this.#value.length === 0){
+        this.#setValue(null,null);
+      }
     } else if (this.value === target.value) {
-      this.#value = null;
+      this.#setValue(null,null);
     }
     this.#value = this.#value
     this.#checkValidity(true);
