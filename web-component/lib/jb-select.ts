@@ -1,10 +1,10 @@
+import { defineWebComponent, JBBaseComponent, createInputEvent, createKeyboardEvent, isMobile, parseBooleanAttribute } from "jb-core";
 import "jb-button";
 import "jb-popover";
 import CSS from "./jb-select.css";
 import VariablesCSS from "./variables.css";
 import type { JBSelectCallbacks,JBSelectElements,PopoverPosition,ValidationValue,} from "./types";
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
-import { createInputEvent, createKeyboardEvent, isMobile, parseBooleanAttribute } from "jb-core";
 import type { JBFormInputStandards } from 'jb-form';
 import type { JBOptionWebComponent } from "jb-select/option";
 import { registerDefaultVariables } from 'jb-core/theme';
@@ -22,7 +22,7 @@ import type { JBOptionListWebComponent } from "jb-select/option-list";
  */
 
 // biome-ignore lint/suspicious/noExplicitAny: <we support any type of value and there is no limitation on value type>
-export class JBSelectWebComponent<TValue = any> extends HTMLElement implements WithValidation<ValidationValue<TValue>>, JBFormInputStandards<TValue | null> {
+export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implements WithValidation<ValidationValue<TValue>>, JBFormInputStandards<TValue | null> {
   static get formAssociated() {
     return true;
   }
@@ -977,8 +977,4 @@ export class JBSelectWebComponent<TValue = any> extends HTMLElement implements W
   }
 
 }
-const myElementNotExists = !customElements.get("jb-select");
-if (myElementNotExists) {
-  //prevent duplicate registering
-  window.customElements.define("jb-select", JBSelectWebComponent);
-}
+defineWebComponent("jb-select", JBSelectWebComponent);

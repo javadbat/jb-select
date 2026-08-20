@@ -1,9 +1,10 @@
+import { defineWebComponent, JBBaseComponent } from "jb-core";
 import "jb-select/option";
 import type { JBOptionWebComponent } from "jb-select/option";
 import type { OptionListCallbacks } from "./types";
 
 //TOption is the type of option, TValue is the type of value we extract from option
-export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
+export class JBOptionListWebComponent<TOption, TValue> extends JBBaseComponent {
   #callbacks: OptionListCallbacks<TOption, TValue> = {};
   get callbacks() {
     return this.#callbacks;
@@ -124,8 +125,4 @@ export class JBOptionListWebComponent<TOption, TValue> extends HTMLElement {
   }
 
 }
-const myElementNotExists = !customElements.get("jb-option-list");
-if (myElementNotExists) {
-  //prevent duplicate registering
-  window.customElements.define("jb-option-list", JBOptionListWebComponent);
-}
+defineWebComponent("jb-option-list", JBOptionListWebComponent);

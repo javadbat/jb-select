@@ -1,5 +1,5 @@
+import { defineWebComponent, JBBaseComponent, parseBooleanAttribute } from "jb-core";
 import "jb-select/option";
-import { parseBooleanAttribute } from "jb-core";
 import { i18n } from "jb-core/i18n";
 import { registerDefaultVariables } from "jb-core/theme";
 import type { JBFormInputStandards, JBFormWebComponent } from "jb-form";
@@ -11,7 +11,7 @@ import { renderHTML } from "./render.js";
 import type { JBListboxElements, JBListboxValue } from "./types.js";
 import VariablesCSS from "./variables.css";
 
-export class JBListboxWebComponent<TValue = unknown> extends HTMLElement implements WithValidation<JBListboxValue<TValue>>, JBFormInputStandards<JBListboxValue<TValue>> {
+export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent implements WithValidation<JBListboxValue<TValue>>, JBFormInputStandards<JBListboxValue<TValue>> {
   static get formAssociated() {
     return true;
   }
@@ -525,6 +525,4 @@ export class JBListboxWebComponent<TValue = unknown> extends HTMLElement impleme
   }
 }
 
-if (!customElements.get("jb-listbox")) {
-  customElements.define("jb-listbox", JBListboxWebComponent);
-}
+defineWebComponent("jb-listbox", JBListboxWebComponent);

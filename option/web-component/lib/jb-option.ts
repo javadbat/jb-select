@@ -1,3 +1,4 @@
+import { defineWebComponent, JBBaseComponent } from "jb-core";
 import CSS from './jb-option.css';
 import CSSVariable from './variables.css';
 import { renderHTML } from "./render";
@@ -7,7 +8,7 @@ import { removeCheckboxNodes } from './utils';
 //TODO: check for filter text to set visibility on mount
 //TODO: add disable option (will be displayed but can not be select)
 //TODO: add highlight to highlight the searched value
-export class JBOptionWebComponent<TValue> extends HTMLElement {
+export class JBOptionWebComponent<TValue> extends JBBaseComponent {
 
   #elements!: JBOptionElements;
   // it may be empty
@@ -204,8 +205,4 @@ export class JBOptionWebComponent<TValue> extends HTMLElement {
   }
 
 }
-const myElementNotExists = !customElements.get("jb-option");
-if (myElementNotExists) {
-  //prevent duplicate registering
-  window.customElements.define("jb-option", JBOptionWebComponent);
-}
+defineWebComponent("jb-option", JBOptionWebComponent);
