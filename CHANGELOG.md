@@ -1,10 +1,15 @@
 # Changelog
 
-## Unreleased
+## [8.1.0] - 2026-08-22
 
 ### Changed
 
 - Made custom-element module evaluation SSR-safe by extending `JBBaseComponent` where needed and registering elements through the shared `defineWebComponent()` helper; raised the minimum `jb-core` version to `0.35.0`.
+
+
+### Fixed
+
+- fix empty placeholder on multi-select
 
 ## [8.0.0] 2026-08-13
 
