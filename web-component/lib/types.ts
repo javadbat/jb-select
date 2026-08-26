@@ -13,7 +13,7 @@ export type JBSelectElements = {
     selectedValueWrapper: HTMLDivElement,
     messageBox:HTMLDivElement,
     optionList: HTMLDivElement,
-    optionListWrapper: JBPopoverWebComponent,
+    optionListPopover: JBPopoverWebComponent,
     optionListSlot:HTMLSlotElement,
     arrowIcon: HTMLButtonElement,
     clearButton: JBButtonWebComponent,

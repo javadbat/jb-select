@@ -11,7 +11,7 @@ export function renderHTML(): string {
         </div>
         <div class="middle-section">
             <div class="selected-value-wrapper" ></div>
-            <div class="front-box">
+            <div class="front-box" tabindex="0">
                 <input class="search-input" part="search-input" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="option-list"/>
             </div>
         </div>

@@ -7,7 +7,7 @@ import type { JBSelectCallbacks,JBSelectElements,PopoverPosition,ValidationValue
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
 import type { JBFormInputStandards } from 'jb-form';
 import type { JBOptionWebComponent } from "jb-select/option";
-import { registerDefaultVariables } from 'jb-core/theme';
+import { breakPoints, registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from "./render";
 import { dictionary } from "./i18n";
 import { i18n } from "jb-core/i18n";
@@ -130,8 +130,9 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   set searchPlaceholder(value) {
     this.#searchPlaceholder = value;
   }
-  get isMobileDevice() {
-    return isMobile();
+  get isMobileMode() {
+    //TODO: cache this and add change EventListener to it to update cache and behavior
+    return window.matchMedia(`(max-width: ${breakPoints.md/16}rem)`).matches
   }
   get isOpen() {
     return this.elements.componentWrapper.classList.contains("--focused");
@@ -166,7 +167,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (value) {
       this.#internals.states?.add("disabled");
       this.#internals.ariaDisabled = "true";
-      this.#hideOptionList();
+      this.#setHideOptionListA11y();
     } else {
       this.#internals.states?.delete("disabled");
       this.#internals.ariaDisabled = "false";
@@ -252,7 +253,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     // standard web component event that called when all of dom is bound
     this.#callOnLoadEvent();
     this.#callOnInitEvent();
-    if (this.elements.optionListWrapper instanceof JBPopoverWebComponent) {
+    if (this.elements.optionListPopover instanceof JBPopoverWebComponent) {
       this.#setupPopover();
     } else {
       customElements.whenDefined("jb-popover").then(() => this.#setupPopover())
@@ -260,9 +261,9 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   }
   #setupPopover() {
     if (this.popoverPosition == "fixed") {
-      this.elements.optionListWrapper.bindTarget(this.elements.selectBox);
+      this.elements.optionListPopover.bindTarget(this.elements.selectBox);
     } else {
-      this.elements.optionListWrapper.unBindTarget();
+      this.elements.optionListPopover.unBindTarget();
     }
   }
   #callOnInitEvent() {
@@ -290,7 +291,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       selectedValueWrapper: shadowRoot.querySelector(".selected-value-wrapper")!,
       messageBox: shadowRoot.querySelector(".message-box")!,
       optionList: shadowRoot.querySelector(".select-list")!,
-      optionListWrapper: shadowRoot.querySelector(".select-list-wrapper")!,
+      optionListPopover: shadowRoot.querySelector(".select-list-wrapper")!,
       optionListSlot: shadowRoot.querySelector(".select-list-wrapper .select-list slot")!,
       arrowIcon: shadowRoot.querySelector(".arrow-icon")!,
       clearButton: shadowRoot.querySelector(".clear-button") as JBButtonWebComponent,
@@ -309,7 +310,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
    */
   #setupDeviceRelates() {
     const onResize = () => {
-      if (isMobile()) {
+      if (this.isMobileMode) {
         this.elements.mobileSearchInputWrapper.appendChild(this.elements.input)
       } else {
         this.elements.frontBox.appendChild(this.elements.input);
@@ -335,7 +336,8 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.addEventListener("deselect", this.#onOptionDeselect.bind(this));
     this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this), { passive: true });
     this.elements.optionListSlot.addEventListener("slotchange", this.#onOptionSlotChange.bind(this));
-
+    //in mobile or tablet when popover close front-box still keep focus so we blur 100%.
+    this.elements.optionListPopover.addEventListener("close",()=>this.blur());
   }
 
   #initProp() {
@@ -531,7 +533,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       this.#setSelectedOption(null);
       this.elements.componentWrapper.classList.remove("--has-value");
       //show placeholder when user empty data
-      if (!(this.isMobileDevice && this.isOpen)) {
+      if (!(this.isMobileMode && this.isOpen)) {
         this.elements.input.placeholder = this.placeholder;
       }
     } else {
@@ -542,7 +544,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       this.#updateSelectedOptionDom();
       this.elements.componentWrapper.classList.add("--has-value");
       //hide placeholder when user select data
-      if (!(this.isMobileDevice && this.isOpen)) {
+      if (!(this.isMobileMode && this.isOpen)) {
         this.elements.input.placeholder = "";
       }
     }
@@ -688,7 +690,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       }
     }
     if (
-      this.elements.optionListWrapper.contains(focusedElement) ||
+      this.elements.optionListPopover.contains(focusedElement) ||
       //focused element is children of slots of us like option content
       this.contains(focusedElement)
     ) {
@@ -701,26 +703,29 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (this.#disabled) {
       return;
     }
-    this.elements.input.focus();
-    this.#showOptionList();
-    this.elements.optionListWrapper.open();
+
     if(this.#selectedOption && !this.multiple){
       this.#selectedOption.scrollIntoView({behavior:"instant",block:"nearest"})
     }else if(this.multiple && this.#selectedOptions.size>0){
       this.#selectedOptions.values()?.next()?.value?.scrollIntoView({behavior:"instant",block:"nearest"})
     }
-    if (this.isMobileDevice) {
+    if (this.isMobileMode) {
       this.elements.input.placeholder = this.#searchPlaceholder;
+    }else{
+      // in mobile we don't focus on search by default
+      this.elements.input.focus();
     }
+    this.#setShowOptionListA11y();
+    this.elements.optionListPopover.open();
   }
   blur() {
     // this.elements.componentWrapper.classList.remove("--focused");
-    this.elements.optionListWrapper.close();
+    this.elements.optionListPopover.close();
     this.textValue = "";
     this.#handleSelectedValueDisplay("");
-    this.#hideOptionList();
+    this.#setHideOptionListA11y();
     this.#validation.checkValidity({ showError: true });
-    if (this.isMobileDevice) {
+    if (this.isMobileMode) {
       if (this.value) {
         this.elements.input.placeholder = "";
       } else {
@@ -728,21 +733,21 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       }
     }
     this.elements.input.blur();
+    // frontbox has a focus in tablet,... we blur it here
+    this.elements.frontBox.blur();
     this.#optionList.forEach(x => { x.active = false })
   }
-  #showOptionList() {
+  #setShowOptionListA11y() {
     this.#internals.states.add("open")
     this.#internals.ariaExpanded = "true";
     this.elements.input.setAttribute("aria-expanded", "true");
     this.elements.arrowIcon.setAttribute("aria-expanded", "true");
-    this.elements.optionListWrapper.classList.add("--show");
   }
-  #hideOptionList() {
+  #setHideOptionListA11y() {
     this.#internals.states.delete("open")
     this.#internals.ariaExpanded = "false";
     this.elements.input.setAttribute("aria-expanded", "false");
     this.elements.arrowIcon.setAttribute("aria-expanded", "false");
-    this.elements.optionListWrapper.classList.remove("--show");
   }
   #updateOptionList(filterText: string) {
     const event = new CustomEvent("filter-change", { detail: { filterText }, bubbles: false, cancelable: false, composed: false });

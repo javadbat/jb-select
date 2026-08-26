@@ -1,5 +1,11 @@
 # Changelog
 
+## [8.1.1] - 2026-08-22
+
+### Fixed
+
+- fix tablet size problems.
+
 ## [8.1.0] - 2026-08-22
 
 ### Changed

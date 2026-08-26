@@ -25,7 +25,7 @@
   "types": "./dist/index.d.ts",
   "repository": {
 		"type": "git",
-		"url": "git@github.com:javadbat/jb-select.git"
+		"url": "https://github.com/javadbat/jb-select.git"
   },
   "dependencies": {
     "jb-select": "^6.0.0"

@@ -1,5 +1,4 @@
-@custom-media --tablet-until (max-width: 48rem);
-@custom-media --tablet-from (min-width: 48.0625rem);
+@import "jb-core/style/media.css";
 
 :host {
   display: block;
@@ -8,7 +7,7 @@
 }
 
 :host(:state(open)) {
-  @media(--tablet-from) {
+  @media(--jb-viewport-md-from) {
     /*when there is focus on whole select means menu is open so we change select styles*/
     --box-border-radius: var(--rounded) var(--rounded) 0 0;
     .select-box {
@@ -225,7 +224,7 @@
     --jb-popover-padding: 0;
 
     .select-list-wrapper {
-      @media(--tablet-from) {
+      @media(--jb-viewport-md-from) {
         width: 100cqi;
         --jb-popover-border-radius: var(--list-border-radius);
         --jb-popover-bg-color: var(--popover-bg-color);
@@ -235,7 +234,7 @@
 
       &::part(content) {
 
-        @media(--tablet-from) {
+        @media(--jb-viewport-md-from) {
           /*in desktop*/
           border: solid var(--border-width) var(--border-color);
           border-bottom: solid var(--border-bottom-width) var(--border-color);
@@ -246,7 +245,7 @@
       .mobile-search-input-wrapper {
         display: none;
 
-        @media(--tablet-until) {
+        @media(--jb-viewport-md-to) {
           display: block;
           margin-block-end: 1rem;
           margin-inline: 0.75rem;
@@ -268,7 +267,9 @@
         width: 100%;
         max-height: var(--list-max-height);
         overflow-y: auto;
-
+        @media (--jb-viewport-sm-from) and (--jb-viewport-md-to) {
+          max-height: 60dvh;
+        }
         slot {
           padding: var(--list-padding);
 
