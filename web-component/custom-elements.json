@@ -196,6 +196,10 @@
           ],
           "methods": [
             {
+              "name": "reset",
+              "description": "Restores initialValue and clears displayed validation."
+            },
+            {
               "name": "checkValidity",
               "description": "Runs validation without showing the error message and returns whether the select is valid.",
               "return": {
@@ -218,8 +222,16 @@
               "description": "Focuses the internal search input and opens the option list."
             },
             {
+              "name": "open",
+              "description": "Opens the option list."
+            },
+            {
               "name": "blur",
               "description": "Closes the option list, clears search text, and validates."
+            },
+            {
+              "name": "close",
+              "description": "Closes the option list."
             }
           ],
           "events": [
@@ -262,7 +274,7 @@
               "description": "Option content. Use jb-option or jb-option-list children."
             },
             {
-              "name": "start-section",
+              "name": "inline-start",
               "description": "Content rendered before the selected value/search area."
             },
             {

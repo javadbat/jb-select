@@ -17,7 +17,7 @@
 }
 
 :host(:state(disabled)) {
-  .jb-select-web-component .select-box .end-section .clear-button {
+  .jb-select-web-component .select-box .inline-end .clear-button {
     display: none;
   }
 }
@@ -35,7 +35,7 @@
       background-color: var(--select-box-bg-color-selected);
     }
 
-    .select-box .end-section .clear-button {
+    .select-box .inline-end .clear-button {
       display: block;
     }
   }
@@ -71,7 +71,7 @@
     padding-inline-end: var(--box-padding-end);
     align-items: center;
 
-    .start-section {
+    .inline-start {
       height: 100%;
       width: auto;
       display: flex;
@@ -149,7 +149,7 @@
       }
     }
 
-    .end-section {
+    .inline-end {
       display: flex;
       gap: 1.5rem;
       align-items: center;
@@ -186,8 +186,8 @@
       }
     }
 
-    ::slotted([slot="start-section"]),
-    ::slotted([slot="end-section"]) {
+    ::slotted([slot="inline-start"]),
+    ::slotted([slot="inline-end"]) {
       height: 100%;
       display: flex;
       justify-content: center;

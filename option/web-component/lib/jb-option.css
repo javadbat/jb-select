@@ -1,7 +1,7 @@
 
 
 .jb-options-web-component {
-  .option-content-wrapper {
+  .option-content {
     min-height: var(--min-height);
     display: flex;
     align-items: center;

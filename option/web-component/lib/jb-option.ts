@@ -117,7 +117,7 @@ export class JBOptionWebComponent<TValue> extends JBBaseComponent {
     shadowRoot.appendChild(element.content.cloneNode(true));
     this.#elements = {
       componentWrapper: shadowRoot.querySelector(".jb-options-web-component")!,
-      contentWrapper: shadowRoot.querySelector(".option-content-wrapper")!,
+      contentWrapper: shadowRoot.querySelector(".option-content")!,
     };
     this.#registerEventListener();
   }
@@ -191,12 +191,12 @@ export class JBOptionWebComponent<TValue> extends JBBaseComponent {
       }
     }
   }
-  #active = false;
-  get active() {
-    return this.#active;
+  #isActive = false;
+  get isActive() {
+    return this.#isActive;
   }
-  set active(value: boolean) {
-    this.#active = value;
+  set isActive(value: boolean) {
+    this.#isActive = value;
     if (value) {
       this.#internals?.states.add("active");
     } else {

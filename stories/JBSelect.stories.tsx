@@ -54,6 +54,10 @@ export const Normal: Story = {
       expect(option.selected).toBe(true);
       expect(getSelectedValueText(select)).toContain(nameList[0]);
     });
+
+    option.isActive = true;
+    expect(option.isActive).toBe(true);
+    option.isActive = false;
   }
 };
 export const InitialValue: Story = {
@@ -812,7 +816,7 @@ export const DynamicList: Story = {
     useEffect(() => {
       fillList();
     }, []);
-    const onKeyup = function (e: JBSelectEventType<KeyboardEvent>) {
+    const onKeyUp = function (e: JBSelectEventType<KeyboardEvent>) {
       const text = e.target.textValue;
       fillList(text);
     };
@@ -820,7 +824,7 @@ export const DynamicList: Story = {
       <div>
         <JBSelect
           label="please type and see result change"
-          onKeyUp={onKeyup}
+          onKeyUp={onKeyUp}
         >
           <JBOptionList optionList={optionList}></JBOptionList>
         </JBSelect>

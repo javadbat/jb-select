@@ -1,5 +1,20 @@
 # Changelog
 
+
+## [9.0.0] - 2026-09-03
+
+### Changed
+
+- Standardized private DOM event handlers on the `#on<Target><Event>()` naming convention.
+- Standardized private empty-value and form synchronization helpers as `#clearValue()` and `#updateFormValue()` in select and listbox.
+- Breaking: renamed the public `jb-option.active` property to `isActive`; the `active` CSS custom state and style-token suffix remain unchanged.
+- Added the standard public `reset()` method to select and listbox; native form reset delegates to the same behavior.
+- Added `open()`/`close()` methods for programmatic option-list control; `focus()`/`blur()` remain available for focus behavior.
+- Breaking: renamed directional slots to `inline-start`/`inline-end` and the listbox root part to `root`.
+
+### Fixed
+
+- Corrected multiple-value `isDirty` comparison so an unchanged selection is not reported as dirty.
 ## [8.1.1] - 2026-08-22
 
 ### Fixed

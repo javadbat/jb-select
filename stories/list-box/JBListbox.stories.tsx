@@ -68,7 +68,7 @@ export const FilteredOptions: Story = {
       <form>
         <StringListbox {...args} ref={listboxRef}>
           <JBInput placeholder="Search Company Here" value={filter} onInput={event => setFilter(event.target.value)}>
-            <jb-icon-search slot="end-section"  />
+            <jb-icon-search slot="inline-end"  />
           </JBInput>
           <hr style={{ margin: "1rem 0", border: "1px solid #ccc" }} />
           <div style={{ maxHeight: "400px", overflowY: "auto" }}>
@@ -90,7 +90,7 @@ function getListbox(canvasElement: HTMLElement) {
 
 function getOptionControl(listbox: JBListboxWebComponent<string>, index: number) {
   const option = listbox.querySelectorAll("jb-option")[index];
-  return option.shadowRoot!.querySelector<HTMLElement>(".option-content-wrapper")!;
+  return option.shadowRoot!.querySelector<HTMLElement>(".option-content")!;
 }
 
 export const SingleSelection: Story = {

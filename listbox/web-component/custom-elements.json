@@ -36,6 +36,7 @@
             { "kind": "field", "name": "validationMessage", "readonly": true, "type": { "text": "string | null" } }
           ],
           "methods": [
+            { "name": "reset", "description": "Restores initialValue and clears displayed validation." },
             { "name": "checkValidity", "description": "Checks validity without displaying an error." },
             { "name": "reportValidity", "description": "Checks validity and displays the first error." },
             { "name": "setCustomValidity", "description": "Sets or clears a custom validation error." },
@@ -49,7 +50,7 @@
             { "name": "init", "description": "Fired after first-connection initialization." }
           ],
           "slots": [{ "name": "", "description": "jb-option children." }],
-          "cssParts": [{ "name": "wrapper" }, { "name": "label" }, { "name": "list" }, { "name": "message" }]
+          "cssParts": [{ "name": "root" }, { "name": "label" }, { "name": "list" }, { "name": "message" }]
         }
       ],
       "exports": [

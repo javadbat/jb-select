@@ -33,6 +33,15 @@ You can place custom HTML inside the option when the visible label needs richer 
 </jb-option>
 ```
 
+## Properties
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `value` | `TValue \| null` | Value returned by the owning selection control. |
+| `selected` | `boolean` | Writable native-style selection state. |
+| `hidden` | `boolean` | Native-style filtering visibility state. |
+| `isActive` | `boolean` | Writable transient keyboard/hover-target state. |
+
 ## CSS Variables
 | CSS variable name | description |
 | --- | --- |

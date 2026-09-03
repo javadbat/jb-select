@@ -84,7 +84,7 @@ function SearchableListbox() {
   return (
     <StringListbox ref={listboxRef} label="Environment">
       <JBInput value={filter} onInput={event => setFilter(event.target.value)}>
-        <jb-icon-search slot="end-section" size="sm" />
+        <jb-icon-search slot="inline-end" size="sm" />
       </JBInput>
       <JBOption value="development">Development</JBOption>
       <JBOption value="production">Production</JBOption>
@@ -105,7 +105,7 @@ The wrapper exposes the underlying form-associated element. Use `onInput` and `o
 listboxRef.current?.reportValidity();
 ```
 
-The component supports `FormData`, `form.reset()`, `checkValidity()`, `reportValidity()`, `setCustomValidity()`, `isDirty`, and custom `validationList` rules.
+The component supports `FormData`, component `reset()`, native `form.reset()`, `checkValidity()`, `reportValidity()`, `setCustomValidity()`, `isDirty`, and custom `validationList` rules.
 
 ## Related components
 

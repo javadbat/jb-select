@@ -7,6 +7,8 @@ declare module "react" {
     }
     interface JBOptionType extends React.DetailedHTMLProps<React.HTMLAttributes<JBOptionWebComponent<unknown>>, JBOptionWebComponent<unknown>> {
       class?: string;
+      selected?: boolean;
+      isActive?: boolean;
     }
   }
 }

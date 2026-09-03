@@ -4,7 +4,7 @@ import { expect, userEvent, waitFor } from 'storybook/test';
 export type SelectOption<TValue = unknown> = HTMLElement & {
   value: TValue;
   selected: boolean;
-  active: boolean;
+  isActive: boolean;
   hidden: boolean;
   optionContentText: string;
   toggleOption: () => void;

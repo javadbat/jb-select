@@ -6,8 +6,8 @@ export function renderHTML(): string {
   <div class="jb-select-web-component">
     <label class="label-value"></label>
     <div class="select-box">
-        <div class="start-section">
-            <slot name="start-section"></slot>
+        <div class="inline-start">
+            <slot name="inline-start"></slot>
         </div>
         <div class="middle-section">
             <div class="selected-value-wrapper" ></div>
@@ -15,7 +15,7 @@ export function renderHTML(): string {
                 <input class="search-input" part="search-input" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="option-list"/>
             </div>
         </div>
-        <div class="end-section">
+        <div class="inline-end">
         <jb-button class="clear-button" part="clear-button" color="dark" variant="ghost" size="xs" aria-label="${dictionary.get(i18n, "clearSelection")}">
             <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M2.11183 24C1.57504 24 1.03826 23.8023 0.614479 23.3786C-0.204826 22.5596 -0.204826 21.2039 0.614479 20.3848L20.3908 0.614298C21.2101 -0.204766 22.5662 -0.204766 23.3855 0.614298C24.2048 1.43336 24.2048 2.78905 23.3855 3.60811L3.60918 23.3786C3.1854 23.8023 2.64861 24 2.11183 24Z" fill="currentColor"/>

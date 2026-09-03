@@ -33,7 +33,7 @@ Use the `multiple` attribute for array values:
 </jb-listbox>
 ```
 
-The public API includes `value`, `initialValue`, `multiple`, `name`, `required`, `disabled`, `isDirty`, `form`, `validation`, `checkValidity()`, `reportValidity()`, and `setCustomValidity()`.
+The public API includes `value`, `initialValue`, `multiple`, `name`, `required`, `disabled`, `isDirty`, `form`, `validation`, `reset()`, `checkValidity()`, `reportValidity()`, and `setCustomValidity()`.
 
 ## React
 

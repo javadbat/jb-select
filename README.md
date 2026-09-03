@@ -102,6 +102,7 @@ then in your HTML file just use
 | --- | --- | --- |
 | `checkValidity()` | `boolean` | Runs validation without showing the error message. Dispatches `invalid` when invalid; see the [event and validation demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
 | `reportValidity()` | `boolean` | Runs validation and shows the first error message. Dispatches `invalid` when invalid; see [validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-error). |
+| `reset()` | `void` | Restores `initialValue` and clears displayed validation. |
 | `focus()` | `void` | Focuses the search input and opens the option list; see the [basic selection demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal). |
 | `blur()` | `void` | Closes the option list, clears search text, and validates; see the [event demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
 
@@ -112,7 +113,7 @@ then in your HTML file just use
 | `value` | attribute/property | Option value. Use the property for object values; see [object options](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-object). |
 | `selected` | property | Whether the option is selected; see the [normal selection demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--normal). |
 | `hidden` | property | Whether the option is hidden by filtering; see the [dynamic list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--dynamic-list). |
-| `active` | property | Whether the option is the active keyboard/hover target. |
+| `isActive` | property | Whether the option is the active keyboard/hover target. |
 | `optionContentText` | property | Text used for default filtering. |
 | `toggleOption()` | method | Selects or deselects the option using the normal click behavior; see [multiple selection](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple). |
 
@@ -292,15 +293,15 @@ like the example the below:
 
 ### Add Icon or Any Element into box
 
-Use `slot="start-section"` for leading icons or custom content; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option).
+Use `slot="inline-start"` for leading icons or custom content; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option).
 sometimes you want to add icon into the select box before value box.
-you can customize this entire section by adding a div or any other Tag with the `slot="start-section"`
+you can customize this entire section by adding a div or any other Tag with the `slot="inline-start"`
 
 like the example the below:
 
 ```html
 <jb-select>
-    <div slot="start-section">
+    <div slot="inline-start">
         <img class="your-custom-icon" src="./path/to/file.svg">
     </div>
 </jb-select>
@@ -359,7 +360,7 @@ See the [select style gallery](https://javadbat.github.io/design-system/?path=/s
 | slot | description |
 | --- | --- |
 | default | Option content. Use `jb-option` or `jb-option-list` children; see the [option examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-as-children). |
-| `start-section` | Content rendered before the selected value/search area; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option). |
+| `inline-start` | Content rendered before the selected value/search area; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option). |
 | `select-arrow-icon` | Replaces the default arrow icon. |
 | `empty-list-message` | Custom empty-state content shown when no option is visible; see the [empty list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--empty-list). |
 

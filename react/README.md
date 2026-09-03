@@ -70,6 +70,7 @@ use label property to describe your select component.
 ## option list
 
 Choose between static `JBOption` children and array-driven `JBOptionList`; see the [options guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-options--docs), [option children](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-as-children), and [option-list demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-object).
+`JBOption` exposes writable `selected`, native `hidden`, and transient `isActive` properties through its props and forwarded ref.
 if you want to add option to jb-select, you have 2 way:
 
 For help choosing between `JBOption` and `JBOptionList`, see the [options guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-options--docs).
@@ -207,16 +208,16 @@ Set `multiple` when the selected value should be an array; see the [multiple sel
 
 ## Add Icon or Any Element into box
 
-Use `slot="start-section"` for leading icons or custom content; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option).
+Use `slot="inline-start"` for leading icons or custom content; see the [custom option demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-option).
 
 sometimes you want to add icon into the select box before value box.
-you can customize this entire section by adding a div or any other Tag with the `slot="start-section"`
+you can customize this entire section by adding a div or any other Tag with the `slot="inline-start"`
 
 like the example the below:
 
 ```jsx
 <JBSelect>
-    <div slot="start-section">
+    <div slot="inline-start">
         <img class="your-custom-icon" src="./path/to/file.svg">
     </div>
 </JBSelect>
@@ -254,7 +255,7 @@ The React wrapper exposes the same CSS parts as the web component. Use `classNam
 
 ## Slots
 
-React children map to the underlying slots. Use `JBOption` or `JBOptionList` for options, and use `slot="start-section"` or `slot="end-section"` for custom content inside the select box; see the [option examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-as-children).
+React children map to the underlying slots. Use `JBOption` or `JBOptionList` for options, and use `slot="inline-start"` or `slot="inline-end"` for custom content inside the select box; see the [option examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--option-as-children).
 
 ## Responsive positioning and RTL
 

@@ -48,7 +48,7 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
 
   set value(value: JBListboxValue<TValue>) {
     this.#hasLiveValue = true;
-    this.#setValue(value);
+    value === null ? this.#clearValue() : this.#setValue(value);
   }
 
   get initialValue(): JBListboxValue<TValue> {
@@ -189,7 +189,7 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
         this.multiple = parseBooleanAttribute(newValue);
         break;
       case "name":
-        this.#syncFormValue();
+        this.#updateFormValue();
         break;
       case "required":
         this.required = parseBooleanAttribute(newValue);
@@ -206,11 +206,15 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
     }
   }
 
-  formResetCallback() {
+  reset() {
     this.#hasLiveValue = false;
     this.#setValue(this.#cloneValue(this.#initialValue));
     this.#validation.reset();
     this.#internals?.setValidity({});
+  }
+
+  formResetCallback() {
+    this.reset();
   }
 
   formDisabledCallback(disabled: boolean) {
@@ -358,7 +362,7 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
   #setValue(value: JBListboxValue<TValue>) {
     this.#value = this.#normalizeValue(value);
     this.#syncOptionSelection();
-    this.#syncFormValue();
+    this.#updateFormValue();
   }
 
   #normalizeValue(value: JBListboxValue<TValue>): JBListboxValue<TValue> {
@@ -387,7 +391,7 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
     return Array.isArray(this.#value) ? this.#value.some(value => Object.is(value, optionValue)) : Object.is(this.#value, optionValue);
   }
 
-  #syncFormValue() {
+  #updateFormValue() {
     if (!this.#internals || typeof this.#internals.setFormValue !== "function") return;
     const state = this.#serializeState();
     if (Array.isArray(this.#value)) {
@@ -401,6 +405,10 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
       return;
     }
     this.#internals.setFormValue(this.#value === null ? null : this.#serializeValue(this.#value), state);
+  }
+
+  #clearValue() {
+    this.#setValue(this.multiple ? [] : null);
   }
 
   #serializeValue(value: TValue) {
@@ -445,7 +453,7 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
   }
 
   #setActiveOption(option: JBOptionWebComponent<TValue>) {
-    for (const item of this.#options) item.active = item === option;
+    for (const item of this.#options) item.isActive = item === option;
     if (this.#internals) this.#internals.ariaActiveDescendantElement = option;
   }
 
@@ -453,7 +461,7 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
     if (this.disabled || this.#isInteractiveChild(event.composedPath()[0])) return;
     const options = this.#visibleOptions;
     if (options.length === 0) return;
-    const activeIndex = options.findIndex(option => option.active);
+    const activeIndex = options.findIndex(option => option.isActive);
     let nextOption: JBOptionWebComponent<TValue> | undefined;
     switch (event.key) {
       case "ArrowDown":

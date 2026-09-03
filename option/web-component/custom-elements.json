@@ -51,7 +51,7 @@
             },
             {
               "kind": "field",
-              "name": "active",
+              "name": "isActive",
               "description": "Whether this option is the active keyboard/hover target.",
               "type": {
                 "text": "boolean"

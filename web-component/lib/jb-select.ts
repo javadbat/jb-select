@@ -217,13 +217,16 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       this.#setValueFromOutside(this.#cloneArrayValue(this.#initialValue));
     }
   }
-  formResetCallback() {
+  reset() {
     this.#isDirty = false;
     // Reset receives a fresh array because the live selection is mutated when
     // an option is deselected.
     this.#setValueFromOutside(this.#cloneArrayValue(this.initialValue));
     this.#validation.reset();
     this.#internals?.setValidity({}, '');
+  }
+  formResetCallback() {
+    this.reset();
   }
   formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
@@ -232,7 +235,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (Array.isArray(this.#value) && Array.isArray(this.#initialValue)) {
       // Array identity is intentionally different; compare selected values.
       return this.#value.length !== this.#initialValue.length
-        || this.#value.some((value) => value !== (this.#initialValue as any[]).includes(value));
+        || this.#value.some((value) => !(this.#initialValue as any[]).includes(value));
     }
     return this.#value !== this.#initialValue;
   }
@@ -324,7 +327,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       this.#onInputChange(e);
     });
     this.elements.input.addEventListener("keypress", this.#onInputKeyPress.bind(this));
-    this.elements.input.addEventListener("keyup", this.#onInputKeyup.bind(this));
+    this.elements.input.addEventListener("keyup", this.#onInputKeyUp.bind(this));
     this.elements.input.addEventListener("beforeinput", this.#onInputBeforeInput.bind(this));
     this.elements.input.addEventListener("input", (e) => { this.#onInputInput(e as unknown as InputEvent); });
     this.addEventListener("focus", this.#onSelectFocus.bind(this), { passive: true });
@@ -445,7 +448,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   //when user set value by attribute or value prop directly we call this function
   #setValueFromOutside(value: TValue | null | undefined): boolean {
     if (value === null || value === undefined) {
-      this.#setValue(null, null);
+      this.#clearValue();
       return true;
     }
     if (!this.multiple) {
@@ -552,6 +555,36 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (!this.multiple) {
       this.#updateOptionList("");
     }
+    this.#updateFormValue();
+  }
+  #clearValue() {
+    this.#setValue(null, null);
+  }
+  #updateFormValue() {
+    if (!this.#internals || typeof this.#internals.setFormValue !== "function") return;
+    if (Array.isArray(this.#value)) {
+      if (this.#value.length === 0 || !this.name) {
+        this.#internals.setFormValue(null);
+        return;
+      }
+      const formData = new FormData();
+      for (const value of this.#value) formData.append(this.name, this.#serializeFormValue(value));
+      this.#internals.setFormValue(formData);
+      return;
+    }
+    this.#internals.setFormValue(this.#value === null ? null : this.#serializeFormValue(this.#value));
+  }
+  #serializeFormValue(value: TValue): string {
+    if (typeof value === "string") return value;
+    if (value instanceof Date) return value.toISOString();
+    if (typeof value === "object" && value !== null) {
+      try {
+        return JSON.stringify(value);
+      } catch {
+        return String(value);
+      }
+    }
+    return String(value);
   }
   #onArrowKeyClick() {
     if (this.isOpen) {
@@ -590,7 +623,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     const event = createInputEvent("input", e, {});
     this.dispatchEvent(event);
   }
-  #onInputKeyup(e: KeyboardEvent) {
+  #onInputKeyUp(e: KeyboardEvent) {
     const inputText = (e.target as HTMLInputElement).value;
     //here is the rare  time we update #value directly because we want trigger event that may read value directly from dom
     if (e.key === "Backspace" || e.key === "Delete") {
@@ -606,7 +639,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         break;
       case "Enter":
         this.#optionList.forEach(x => {
-          if (x.active) { x.toggleOption(); }
+          if (x.isActive) { x.toggleOption(); }
         })
         break;
     }
@@ -618,11 +651,11 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   #activePrevOption() {
     const optionList = this.optionListWithOrder;
     const activeOption = optionList.find((option, index) => {
-      if (option.active) {
+      if (option.isActive) {
         const prevOption = optionList[index - 1];
         if (prevOption) {
-          option.active = false;
-          prevOption.active = true;
+          option.isActive = false;
+          prevOption.isActive = true;
           prevOption.scrollIntoView({ block: "nearest" });
         }
         return true;
@@ -631,7 +664,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     });
     const lastOption = optionList[optionList.length - 1];
     if (!activeOption && lastOption) {
-      lastOption.active = true;
+      lastOption.isActive = true;
       lastOption.scrollIntoView({ block: "nearest" });
     }
   }
@@ -641,11 +674,11 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   #activeNextOption() {
     const optionList = this.optionListWithOrder;
     const activeOption = optionList.find((option, index) => {
-      if (option.active) {
+      if (option.isActive) {
         const nextOption = optionList[index + 1];
         if (nextOption) {
-          option.active = false;
-          nextOption.active = true;
+          option.isActive = false;
+          nextOption.isActive = true;
           nextOption.scrollIntoView({ block: "nearest" });
         }
         return true;
@@ -653,7 +686,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       return false
     });
     const firstOption = optionList[0];
-    if (!activeOption && firstOption) { firstOption.active = true; firstOption.scrollIntoView({ block: "nearest" }) }
+    if (!activeOption && firstOption) { firstOption.isActive = true; firstOption.scrollIntoView({ block: "nearest" }) }
   }
   #handleSelectedValueDisplay(inputValue: string) {
     if (inputValue !== "") {
@@ -718,6 +751,11 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.#setShowOptionListA11y();
     this.elements.optionListPopover.open();
   }
+
+  open(): void {
+    this.focus();
+  }
+
   blur() {
     // this.elements.componentWrapper.classList.remove("--focused");
     this.elements.optionListPopover.close();
@@ -735,7 +773,11 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.elements.input.blur();
     // frontbox has a focus in tablet,... we blur it here
     this.elements.frontBox.blur();
-    this.#optionList.forEach(x => { x.active = false })
+    this.#optionList.forEach(x => { x.isActive = false })
+  }
+
+  close(): void {
+    this.blur();
   }
   #setShowOptionListA11y() {
     this.#internals.states.add("open")
@@ -818,10 +860,10 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   }
   #onOptionHover = (e: MouseEvent) => {
     const target = e.target as JBOptionWebComponent<TValue>;
-    if (!target.active) {
-      this.#optionList.forEach(x => { x.active = false });
+    if (!target.isActive) {
+      this.#optionList.forEach(x => { x.isActive = false });
     }
-    target.active = true;
+    target.isActive = true;
   }
   #selectOption(value: TValue, optionDom: JBOptionWebComponent<TValue>) {
     this.#isDirty = true;
@@ -982,6 +1024,10 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   }
   get validationMessage() {
     return this.#internals?.validationMessage || this.#validation.resultSummary?.message || null;
+  }
+
+  get validity() {
+    return this.#internals?.validity;
   }
 
 }

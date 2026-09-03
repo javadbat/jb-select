@@ -1,6 +1,6 @@
 export function renderHTML(): string {
   return /* html */ `
-    <div class="jb-listbox-web-component" part="wrapper">
+    <div class="jb-listbox-web-component" part="root">
       <label class="label" part="label">
         <span class="label-text"></span>
       </label>

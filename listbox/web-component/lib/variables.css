@@ -17,8 +17,8 @@
   --message-color: var(--jb-listbox-message-color, inherit);
   --message-color-invalid: var(--jb-listbox-message-color-invalid, var(--jb-error, #b3261e));
   --message-font-size: var(--jb-listbox-message-font-size, 0.75rem);
-  --box-shadow: var(--jb-listbox-box-shadow, var(--jb-input-box-shadow, none));
-  --box-shadow-focus: var(--jb-listbox-box-shadow-focus, var(--jb-input-box-shadow-focus, none));
+  --box-shadow: var(--jb-listbox-box-shadow, var(--jb-control-shadow, none));
+  --box-shadow-focus: var(--jb-listbox-box-shadow-focus, var(--jb-control-shadow-focus, none));
 }
 
 :host(:focus-within) {
