@@ -21,7 +21,7 @@
   --list-padding: var(--jb-select-list-padding, 1rem 0);
   --list-scroll-border-radius: var(--jb-select-list-scroll-border-radius, 4px);
   /* put message and label forward base on border radius*/
-  --inline-space: var(--jb-select-inline-space,min(calc(var(--rounded) / 1.75), calc(--height / 2)));
+  --inline-space: var(--jb-select-inline-space,min(calc(var(--rounded) / 1.75), calc(var(--height) / 2)));
   --label-margin: var(--jb-select-label-margin, 0.125rem var(--inline-space));
   --label-font-size: var(--jb-select-label-font-size, 0.8rem);
   --message-font-size:var(--jb-select-message-font-size, 0.7rem);

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": "./lib",
-    "declarationDir": "./dist",
+    "outDir": "./dist",
     "paths": {
       "jb-select/listbox": ["../web-component/dist/index.d.ts"]
     }

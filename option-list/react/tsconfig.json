@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": "./lib",
-    "declarationDir": "./dist"
+    "outDir": "./dist"
   },
   "include": ["lib/**/*.ts", "lib/**/*.tsx"],
   "exclude": ["node_modules", "**/*.spec.ts", "dist"],
