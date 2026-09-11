@@ -88,11 +88,11 @@
   },
   "dependencies": {
     "jb-validation": "^1.0.0",
-    "jb-button": "^4.2.0",
-    "jb-popover": "^1.14.0",
-    "jb-core":"^0.36.0"
+    "jb-button": "^5.1.0",
+    "jb-popover": "^2.0.0",
+    "jb-core":"^0.37.0"
   },
   "devDependencies": {
-    "jb-form":"0.13.0"
+    "jb-form":"00.14.0"
   }
 }
