@@ -80,8 +80,8 @@
               }
             },
             {
-              "name": "hide-clear",
-              "description": "Hides the clear button when set to empty string or true.",
+              "name": "clearable",
+              "description": "Controls whether the clear button is available. Defaults to true; set to false to hide it.",
               "type": {
                 "text": "boolean"
               }
@@ -156,6 +156,14 @@
               "kind": "field",
               "name": "disabled",
               "description": "Disables the select and closes the option list.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "clearable",
+              "description": "Whether the clear button is available. Defaults to true.",
               "type": {
                 "text": "boolean"
               }
@@ -324,6 +332,10 @@
             {
               "name": "--jb-select-border-color-focus",
               "description": "Border color in focus/open state."
+            },
+            {
+              "name": "--jb-select-clear-icon-color",
+              "description": "Clear icon color. Defaults to the clear button's current color."
             },
             {
               "name": "--jb-select-message-color-error",

@@ -10,7 +10,7 @@ export type JBSelectAttributes<TValue> = {
   placeholder?: string,
   searchPlaceholder?: string,
   required?: boolean,
-  hideClear?:boolean,
+  clearable?:boolean,
   getSelectedValueDOM?: (option: any) => HTMLElement,
 
 }
@@ -46,12 +46,12 @@ export function useJBSelectAttribute<TValue>(element: RefObject<JBSelectWebCompo
   }, [props.required, element]);
 
   useEffect(() => {
-    if (props.hideClear !== null && props.hideClear !== undefined) {
-      element.current?.setAttribute("hide-clear", "");
+    if (props.clearable !== null && props.clearable !== undefined) {
+      element.current?.setAttribute("clearable", String(props.clearable));
     } else {
-      element.current?.removeAttribute("hide-clear");
+      element.current?.removeAttribute("clearable");
     }
-  }, [props.hideClear, element]);
+  }, [props.clearable, element]);
 
   useEffect(() => {
     if (props.placeholder !== null && props.placeholder !== undefined) {

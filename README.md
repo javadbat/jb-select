@@ -75,7 +75,7 @@ then in your HTML file just use
 | `search-placeholder` | `string` | `"search"` | Placeholder used by the mobile search input while open. |
 | [`required`](#validation) | `boolean` | `false` | Enables required validation; see the [required demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--required). |
 | [`error`](#validation) | `string` | `""` | External validation error message; see the [error demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-error). |
-| `hide-clear` | `boolean` | `false` | Hides the clear button. |
+| `clearable` | `boolean` | `true` | Controls whether the clear button is available; set it to `false` to hide the button. |
 | `disable-auto-validation` | `boolean` | `false` | Disables automatic validation on user interactions. |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `md` style defaults | Visual size variant; see [size variants](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--size-variants). |
 
@@ -406,6 +406,7 @@ if you want to set a custom style to this web-component all you need is to set C
 | --jb-select-bg-color-disabled | Customize bg color disabled. |
 | --jb-select-border-color-focus | Customize border color focus. |
 | --jb-select-box-padding-end | Customize box padding end. |
+| --jb-select-clear-icon-color | Clear icon color; defaults to the clear button's current color. |
 | --jb-select-clear-icon-size | Clear icon size. |
 | --jb-select-clear-icon-size-xs | Clear icon size for `size="xs"`. |
 | --jb-select-clear-icon-size-sm | Clear icon size for `size="sm"`. |

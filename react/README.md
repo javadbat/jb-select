@@ -40,7 +40,7 @@ Use `JBSelect` when the user must choose one or more values from a known option 
 | `required` | `boolean` | Enables required validation; see the [required demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--required). |
 | `error` | `string` | External validation error message; see the [error demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--with-error). |
 | `validationList` | `ValidationItem<ValidationValue<TValue>>[]` | Custom validation rules from `jb-validation`; see the [event/validation demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--event-test). |
-| `hideClear` | `boolean` | Hides the clear button; see [hide clear](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--hide-clean-button). |
+| `clearable` | `boolean` | Controls whether the clear button is available and defaults to `true`; see [hide clear](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--hide-clean-button). |
 | `getSelectedValueDOM` | `(option: any) => HTMLElement` | Custom selected value renderer. See the [custom selected value content guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-custom-selected-value-content--docs) and [renderer demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--custom-selected-value-render). |
 | `multiple` | `boolean` | Enables multiple selection. See the [multiple selection guide](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbselect-multiple-selection--docs) and [multiple demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--multiple). |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | Visual size variant; see [size variants](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--size-variants). |
@@ -237,9 +237,9 @@ you can also set `error` attribute to pass error directly to the component
 
 ## Change empty state shape
 
-Use `placeholder`, `searchPlaceholder`, `hideClear`, and custom slots to tune the empty state; see [empty list](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--empty-list) and [hide clear](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--hide-clean-button).
+Use `placeholder`, `searchPlaceholder`, `clearable`, and custom slots to tune the empty state; see [empty list](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--empty-list) and [hide clear](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbselect--hide-clean-button).
 
-Use `placeholder`, `searchPlaceholder`, `hideClear`, and slotted start/end content to tune the empty-state and search UI.
+Use `placeholder`, `searchPlaceholder`, `clearable`, and slotted start/end content to tune the empty-state and search UI.
 
 ## Callbacks
 
@@ -273,10 +273,12 @@ Give each select a meaningful label, keep option content readable, and preserve 
 
 For web-component behavior, events, slots, and CSS variables, see [`jb-select`](https://github.com/javadbat/jb-select).
 
+Set `--jb-select-clear-icon-color` on the React component to customize its clear icon color. It defaults to the clear button's current color.
+
 ## AI agent notes
 
 - Import `JBSelect` from `jb-select/react`, `JBOption` from `jb-select/option/react`, and `JBOptionList` from `jb-select/option-list/react`.
 - Use `JBOption` for static JSX options and `JBOptionList` for array-driven options.
-- Use `searchPlaceholder`, `hideClear`, and `getSelectedValueDOM` in React; the wrapper maps them to the underlying web-component API.
+- Use `searchPlaceholder`, `clearable`, and `getSelectedValueDOM` in React; the wrapper maps them to the underlying web-component API.
 - Use `multiple` when `value` should be an array.
 - Use `error` for externally controlled validation errors.

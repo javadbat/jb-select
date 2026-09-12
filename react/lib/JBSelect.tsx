@@ -13,7 +13,7 @@ export type JBSelectEventType<T> = T & {
 }
 export function JBSelect<TValue>(props: Props<TValue>) {
   const element = useRef<JBSelectWebComponent>(null);
-  const { onChange, onInit, onInput, onKeyUp, onLoad, ref, error, getSelectedValueDOM, initialValue, label, required, message, placeholder, searchPlaceholder, validationList, value, hideClear, ...otherProps } = props;
+  const { onChange, onInit, onInput, onKeyUp, onLoad, ref, clearable, error, getSelectedValueDOM, initialValue, label, required, message, placeholder, searchPlaceholder, validationList, value, ...otherProps } = props;
   // biome-ignore lint/correctness/useExhaustiveDependencies: <we need element for merging>
   useImperativeHandle(
     ref,
@@ -21,7 +21,7 @@ export function JBSelect<TValue>(props: Props<TValue>) {
     [element],
   );
   useEvents(element, { onChange, onInit, onInput, onKeyUp, onLoad });
-  useJBSelectAttribute(element, { error, getSelectedValueDOM, label, required, message, placeholder, searchPlaceholder, validationList, hideClear });
+  useJBSelectAttribute(element, { clearable, error, getSelectedValueDOM, label, required, message, placeholder, searchPlaceholder, validationList });
   const valueProps = value === undefined ? {} : { value };
   return (
     <jb-select ref={element} initialValue={initialValue ?? null} {...valueProps} {...otherProps}>

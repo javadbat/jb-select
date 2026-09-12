@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.1.0] - 2026-09-13
+
+### Changed
+
+- The clear control now uses a native button with the shared `jb-icon-close` icon, removing `jb-button` from runtime dependencies.
+- Breaking: renamed `hide-clear`/`hideClear` to `clearable`; clearing remains enabled by default and can be disabled with `clearable="false"` or `clearable={false}`.
+- The clear button now uses a hybrid lifecycle: it disconnects when clearing is disabled, otherwise the same button instance is retained and its `hidden` state follows the value.
+- Added `--jb-select-clear-icon-color` to customize the clear icon color.
+
 
 ## [9.0.0] - 2026-09-03
 

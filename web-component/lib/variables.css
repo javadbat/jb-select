@@ -33,6 +33,7 @@
   --label-color: var(--jb-select-label-color, var(--jb-content-primary));
   --value-color: var(--jb-select-value-color, var(--jb-content-primary));
   --icon-color: var(--jb-select-icon-color, var(--value-color));
+  --clear-icon-color: var(--jb-select-clear-icon-color, currentColor);
   --placeholder-color: var(--jb-select-placeholder-color, var(--jb-neutral-6));
   --select-box-bg-color: var(--jb-select-bg-color, var(--jb-surface-secondary));
   --select-box-bg-color-selected: var(--jb-select-bg-color-selected, var(--select-box-bg-color));

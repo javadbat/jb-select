@@ -32,7 +32,7 @@ export function getMessageText(select: JBSelectWebComponent) {
 }
 
 export function getClearButton(select: JBSelectWebComponent) {
-  const clearButton = select.shadowRoot?.querySelector<HTMLElement>('.clear-button');
+  const clearButton = select.shadowRoot?.querySelector<HTMLButtonElement>('.clear-button');
   expect(clearButton).toBeTruthy();
   return clearButton!;
 }

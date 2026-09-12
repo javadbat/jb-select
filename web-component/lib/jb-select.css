@@ -35,9 +35,6 @@
       background-color: var(--select-box-bg-color-selected);
     }
 
-    .select-box .inline-end .clear-button {
-      display: block;
-    }
   }
 
   label {
@@ -178,11 +175,28 @@
       }
 
       .clear-button {
-        /*show when there is value*/
-        display: none;
-        --jb-button-dark: var(--icon-color);
-        --icon-size: var(--clear-icon-size);
+        display: flex;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--icon-color);
+        cursor: pointer;
+        font: inherit;
+        --jb-icon-color: var(--clear-icon-color);
+        --jb-icon-size: var(--clear-icon-size);
         height: 100%;
+
+        &:disabled {
+          cursor: default;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--jb-select-focus-ring-color, Highlight);
+          outline-offset: 2px;
+        }
       }
     }
 
@@ -325,4 +339,8 @@
       font-size: var(--native-placeholder-font-size);
     }
   }
+}
+
+.jb-select-web-component .select-box .inline-end .clear-button[hidden] {
+  display: none;
 }

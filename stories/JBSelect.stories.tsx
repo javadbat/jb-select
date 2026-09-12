@@ -439,13 +439,26 @@ export const WithValue: Story = {
   },
   play: async ({ canvasElement, args }) => {
     const select = getSelect<string>(canvasElement);
+    const clearButton = getClearButton(select);
 
     await waitForOptions(select, 1);
 
     await waitFor(() => {
       expect(select.value).toBe(args.value);
       expect(getSelectedValueText(select)).toContain(String(args.value));
+      expect(clearButton.localName).toBe('button');
+      expect(clearButton.type).toBe('button');
+      expect(clearButton.hidden).toBe(false);
+      expect(getComputedStyle(clearButton).display).toBe('flex');
     });
+
+    select.value = null;
+    await waitFor(() => expect(clearButton.hidden).toBe(true));
+    expect(select.shadowRoot?.querySelector('.clear-button')).toBe(clearButton);
+
+    select.value = args.value;
+    await waitFor(() => expect(clearButton.hidden).toBe(false));
+    expect(select.shadowRoot?.querySelector('.clear-button')).toBe(clearButton);
   }
 };
 export const Disabled: Story = {
@@ -458,6 +471,7 @@ export const Disabled: Story = {
   play: async ({ canvasElement }) => {
     const select = getSelect<string>(canvasElement);
     const input = getNativeInput(select);
+    const clearButton = getClearButton(select);
     const popover = getOptionPopover(select);
 
     select.focus();
@@ -465,6 +479,7 @@ export const Disabled: Story = {
     await waitFor(() => {
       expect(select.disabled).toBe(true);
       expect(input.disabled).toBe(true);
+      expect(clearButton.disabled).toBe(true);
       expect(popover.isOpen).toBe(false);
     });
   }
@@ -521,14 +536,27 @@ export const HideCleanButton: Story = {
     label: 'select from menu',
     message: "please select a value",
     placeholder: "placeholder",
-    hideClear: true,
+    value: nameList[0],
+    clearable: false,
   },
   play: async ({ canvasElement }) => {
     const select = getSelect<string>(canvasElement);
 
     await waitFor(() => {
-      expect(getClearButton(select).style.display).toBe('none');
+      expect(select.value).toBe(nameList[0]);
+      expect(select.clearable).toBe(false);
+      expect(select.shadowRoot?.querySelector('.clear-button')).toBeNull();
     });
+
+    select.clearable = true;
+    const clearButton = getClearButton(select);
+    expect(clearButton.hidden).toBe(false);
+    expect(clearButton.querySelector('jb-icon-close')?.shadowRoot).toBeTruthy();
+
+    select.clearable = false;
+    expect(select.shadowRoot?.querySelector('.clear-button')).toBeNull();
+    select.clearable = true;
+    expect(getClearButton(select)).toBe(clearButton);
   }
 };
 export const OptionAsChildren: Story = {

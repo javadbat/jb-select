@@ -1,5 +1,5 @@
 import { defineWebComponent, JBBaseComponent, createInputEvent, createKeyboardEvent, isMobile, parseBooleanAttribute } from "jb-core";
-import "jb-button";
+import "jb-icons/close";
 import "jb-popover";
 import CSS from "./jb-select.css";
 import VariablesCSS from "./variables.css";
@@ -11,7 +11,6 @@ import { breakPoints, registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from "./render";
 import { dictionary } from "./i18n";
 import { i18n } from "jb-core/i18n";
-import type { JBButtonWebComponent } from "jb-button";
 import { JBPopoverWebComponent } from "jb-popover";
 import type { JBOptionListWebComponent } from "jb-select/option-list";
 
@@ -156,6 +155,21 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   get validation() {
     return this.#validation;
   }
+  #clearable = true;
+  get clearable() {
+    return this.#clearable;
+  }
+  set clearable(value: boolean) {
+    this.#clearable = value;
+    if (!value) {
+      this.elements.clearButton.remove();
+      return;
+    }
+    if (!this.elements.clearButton.parentElement) {
+      this.elements.arrowIcon.before(this.elements.clearButton);
+    }
+    this.#updateClearButton();
+  }
   #disabled = false;
   get disabled() {
     return this.#disabled;
@@ -164,6 +178,8 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.#disabled = value;
     this.elements.input.disabled = value;
     this.elements.arrowIcon.disabled = value;
+    this.elements.clearButton.disabled = value;
+    this.#updateClearButton();
     if (value) {
       this.#internals.states?.add("disabled");
       this.#internals.ariaDisabled = "true";
@@ -297,7 +313,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       optionListPopover: shadowRoot.querySelector(".select-list-wrapper")!,
       optionListSlot: shadowRoot.querySelector(".select-list-wrapper .select-list slot")!,
       arrowIcon: shadowRoot.querySelector(".arrow-icon")!,
-      clearButton: shadowRoot.querySelector(".clear-button") as JBButtonWebComponent,
+      clearButton: shadowRoot.querySelector(".clear-button")!,
       label: shadowRoot.querySelector("label")!,
       emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
       mobileSearchInputWrapper: shadowRoot.querySelector(".mobile-search-input-wrapper")!,
@@ -356,7 +372,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     return [
       "label",
       "message",
-      "hide-clear",
+      "clearable",
       "value",
       "required",
       "placeholder",
@@ -394,12 +410,8 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       case "error":
         this.reportValidity();
         break;
-      case 'hide-clear':
-        if (parseBooleanAttribute(value)) {
-          this.elements.clearButton.style.display = 'none'
-        } else {
-          this.elements.clearButton.style.display = 'block'
-        }
+      case "clearable":
+        this.clearable = parseBooleanAttribute(value, true);
         break;
     }
   }
@@ -556,6 +568,11 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       this.#updateOptionList("");
     }
     this.#updateFormValue();
+    this.#updateClearButton();
+  }
+  #updateClearButton() {
+    const isEmpty = this.#value === null || this.#value === undefined || (Array.isArray(this.#value) && this.#value.length === 0);
+    this.elements.clearButton.hidden = isEmpty || this.#disabled;
   }
   #clearValue() {
     this.#setValue(null, null);

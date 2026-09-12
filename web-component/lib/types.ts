@@ -1,7 +1,6 @@
 import type { JBOptionWebComponent } from "jb-select/option";
 import type {EventTypeWithTarget} from "jb-core";
 import type{ JBSelectWebComponent } from "./jb-select";
-import type {JBButtonWebComponent} from "jb-button";
 import type { JBPopoverWebComponent } from "jb-popover";
 export type JBSelectCallbacks<TValue> = {
     getSelectedValueDOM?:(value:TValue|null,content:HTMLElement|null) => HTMLElement;
@@ -16,7 +15,7 @@ export type JBSelectElements = {
     optionListPopover: JBPopoverWebComponent,
     optionListSlot:HTMLSlotElement,
     arrowIcon: HTMLButtonElement,
-    clearButton: JBButtonWebComponent,
+    clearButton: HTMLButtonElement,
     label:HTMLLabelElement,
     emptyListPlaceholder: HTMLDivElement,
     mobileSearchInputWrapper:HTMLDivElement,
