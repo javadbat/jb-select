@@ -33,7 +33,7 @@ export const webComponentList: WebComponentBuildConfig[] = [
       "jb-form": "JBForm",
       "jb-core": "JBCore",
       "jb-core/theme": "JBCoreTheme",
-      "jb-core/i18n": "JBCoreI18N",
+      "jb-core/i18n": "JBCoreI18n",
     },
     umdName: "JBListbox",
     dir: "./listbox",
@@ -51,7 +51,7 @@ export const webComponentList: WebComponentBuildConfig[] = [
       "jb-form":"JBForm",
       "jb-popover":"JBPopover",
       "jb-icons/close": "JBIconClose",
-      "jb-core/i18n":"JBCoreI18N",
+      "jb-core/i18n":"JBCoreI18n",
       "jb-core/theme":"JBCoreTheme",
       "jb-select/option":"JBOption",
       "jb-select/option-list":"JBOptionList"
