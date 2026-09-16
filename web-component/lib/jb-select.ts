@@ -286,7 +286,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     }
   }
   #callOnInitEvent() {
-    const event = new CustomEvent("init", { bubbles: true, composed: true });
+    const event = new CustomEvent("init", { bubbles: true, composed: false });
     this.dispatchEvent(event);
   }
   #callOnLoadEvent() {

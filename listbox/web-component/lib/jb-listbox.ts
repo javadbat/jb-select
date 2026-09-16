@@ -161,7 +161,7 @@ export class JBListboxWebComponent<TValue = unknown> extends JBBaseComponent imp
     if (!this.#connected) {
       this.#connected = true;
       this.dispatchEvent(new CustomEvent("load"));
-      queueMicrotask(() => this.dispatchEvent(new CustomEvent("init")));
+      queueMicrotask(() => this.dispatchEvent(new CustomEvent("init", { composed: false })));
     }
   }
 
