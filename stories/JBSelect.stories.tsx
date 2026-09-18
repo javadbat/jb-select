@@ -6,7 +6,6 @@ import { JBSelect, type JBSelectEventType } from 'jb-select/react';
 import { JBOption } from 'jb-select/option/react';
 import { JBOptionList } from 'jb-select/option-list/react';
 import { JBButton } from 'jb-button/react';
-//@ts-ignore
 import './styles/style.css'
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { colorList, nameList, numberOptionList, persons } from './constants';
@@ -456,7 +455,7 @@ export const WithValue: Story = {
     await waitFor(() => expect(clearButton.hidden).toBe(true));
     expect(select.shadowRoot?.querySelector('.clear-button')).toBe(clearButton);
 
-    select.value = args.value;
+    select.value = args.value as string;
     await waitFor(() => expect(clearButton.hidden).toBe(false));
     expect(select.shadowRoot?.querySelector('.clear-button')).toBe(clearButton);
   }

@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.1.1] - 2026-09-13
+
+### Fixed
+
+- fix option list syncing when `jb-select` connect after `jb-option`
+
 ## [9.1.0] - 2026-09-13
 
 ### Changed

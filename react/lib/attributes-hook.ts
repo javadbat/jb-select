@@ -24,7 +24,7 @@ export function useJBSelectAttribute<TValue>(element: RefObject<JBSelectWebCompo
   }, [props.message]);
 
   useEffect(() => {
-    if (element?.current) {
+    if (element?.current?.validation) {
       element.current.validation.list = props.validationList || [];
     }
   }, [element.current, props.validationList]);

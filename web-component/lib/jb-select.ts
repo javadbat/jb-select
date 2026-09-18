@@ -3,11 +3,11 @@ import "jb-icons/close";
 import "jb-popover";
 import CSS from "./jb-select.css";
 import VariablesCSS from "./variables.css";
-import type { JBSelectCallbacks,JBSelectElements,PopoverPosition,ValidationValue,} from "./types";
+import type { JBSelectCallbacks, JBSelectElements, PopoverPosition, ValidationValue } from "./types";
 import { type ShowValidationErrorParameters, ValidationHelper, type ValidationItem, type ValidationResult, type WithValidation } from "jb-validation";
-import type { JBFormInputStandards } from 'jb-form';
-import type { JBOptionWebComponent } from "jb-select/option";
-import { breakPoints, registerDefaultVariables } from 'jb-core/theme';
+import type { JBFormInputStandards } from "jb-form";
+import { JBOptionWebComponent } from "jb-select/option";
+import { breakPoints, registerDefaultVariables } from "jb-core/theme";
 import { renderHTML } from "./render";
 import { dictionary } from "./i18n";
 import { i18n } from "jb-core/i18n";
@@ -31,49 +31,54 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   // if user set value and current option list is not contain the option.
   // we hold it in #notFoundedValue and select value when option value get updated
   #notFoundedValue: TValue | null = null;
-  #optionList = new Set<JBOptionWebComponent<TValue>>()
+  #optionList = new Set<JBOptionWebComponent<TValue>>();
   //keep selected option dom
   #selectedOption: JBOptionWebComponent<TValue> | null = null;
   /**
    * selected option when multiple mode
    */
   #selectedOptions = new Set<JBOptionWebComponent<TValue>>([]);
-  callbacks: JBSelectCallbacks<TValue> = {}
+  callbacks: JBSelectCallbacks<TValue> = {};
   elements!: JBSelectElements;
-  #popoverPosition: PopoverPosition = "absolute"
+  #popoverPosition: PopoverPosition = "absolute";
   /**
    * how we set popover position
    */
   get popoverPosition() {
-    return this.#popoverPosition
+    return this.#popoverPosition;
   }
   set popoverPosition(value: PopoverPosition | undefined) {
-    if (value === undefined) return;
+    if (value === undefined || value == null) {
+      value = "absolute";
+    }
     this.#popoverPosition = value;
+    this.#setupPopover();
   }
   /**
-  * this is a expensive option list please use it when you really need optionList with order
-  */
+   * this is a expensive option list please use it when you really need optionList with order
+   */
   get optionListWithOrder(): JBOptionWebComponent<TValue>[] {
     const elements = this.elements.optionListSlot.assignedElements();
-    const optionList = elements.flatMap(x => {
-      // extract option list from JBOptionList to make option list flat by index
-      if (x.localName === "jb-option-list") {
-        return (x as JBOptionListWebComponent<unknown, TValue>).optionListDom;
-      } else {
-        return x
-      }
-    }).filter(x => (x.localName === "jb-option" && !(x as JBOptionWebComponent<TValue>).hidden));
+    const optionList = elements
+      .flatMap(x => {
+        // extract option list from JBOptionList to make option list flat by index
+        if (x.localName === "jb-option-list") {
+          return (x as JBOptionListWebComponent<unknown, TValue>).optionListDom;
+        } else {
+          return x;
+        }
+      })
+      .filter(x => x.localName === "jb-option" && !(x as JBOptionWebComponent<TValue>).hidden);
     return optionList as JBOptionWebComponent<TValue>[];
   }
   get multiple() {
-    return parseBooleanAttribute(this.getAttribute('multiple'))
+    return parseBooleanAttribute(this.getAttribute("multiple"));
   }
   set multiple(value: boolean) {
     if (value) {
-      this.setAttribute('multiple', '');
+      this.setAttribute("multiple", "");
     } else {
-      this.removeAttribute('multiple')
+      this.removeAttribute("multiple");
     }
   }
   get value() {
@@ -98,7 +103,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   get selectedOptionTitle(): string {
     if (this.value) {
       if (this.multiple) {
-        return Array.from(this.#selectedOptions).reduce((acc, x) => acc.concat(", ", x.optionContentText), "")
+        return Array.from(this.#selectedOptions).reduce((acc, x) => acc.concat(", ", x.optionContentText), "");
       }
       return this.#selectedOption?.optionContentText ?? "";
     } else {
@@ -131,7 +136,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   }
   get isMobileMode() {
     //TODO: cache this and add change EventListener to it to update cache and behavior
-    return window.matchMedia(`(max-width: ${breakPoints.md/16}rem)`).matches
+    return window.matchMedia(`(max-width: ${breakPoints.md / 16}rem)`).matches;
   }
   get isOpen() {
     return this.elements.componentWrapper.classList.contains("--focused");
@@ -141,7 +146,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     return {
       inputtedText: this.#textValue,
       selectedOption: this.#selectedOption,
-      value: this.value
+      value: this.value,
     };
   }
   #validation = new ValidationHelper<ValidationValue<TValue>>({
@@ -150,7 +155,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     getValue: () => this.#ValidationValue,
     getValidations: this.#getInsideValidation.bind(this),
     getValueString: () => this.#textValue,
-    setValidationResult: this.#setValidationResult.bind(this)
+    setValidationResult: this.#setValidationResult.bind(this),
   });
   get validation() {
     return this.#validation;
@@ -200,20 +205,20 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   }
   #internals!: ElementInternals;
   /**
- * @description will determine if component trigger jb-validation mechanism automatically on user event or it just let user-developer handle validation mechanism by himself
- */
+   * @description will determine if component trigger jb-validation mechanism automatically on user event or it just let user-developer handle validation mechanism by himself
+   */
   get isAutoValidationDisabled(): boolean {
-    //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
-    return parseBooleanAttribute(this.getAttribute('disable-auto-validation'));
+    //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this
+    return parseBooleanAttribute(this.getAttribute("disable-auto-validation"));
   }
   get name() {
-    return this.getAttribute('name') || '';
+    return this.getAttribute("name") || "";
   }
   set name(value: string) {
     if (value) {
-      this.setAttribute('name', value);
+      this.setAttribute("name", value);
     } else {
-      this.removeAttribute('name');
+      this.removeAttribute("name");
     }
   }
 
@@ -239,7 +244,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     // an option is deselected.
     this.#setValueFromOutside(this.#cloneArrayValue(this.initialValue));
     this.#validation.reset();
-    this.#internals?.setValidity({}, '');
+    this.#internals?.setValidity({}, "");
   }
   formResetCallback() {
     this.reset();
@@ -250,20 +255,19 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   get isDirty(): boolean {
     if (Array.isArray(this.#value) && Array.isArray(this.#initialValue)) {
       // Array identity is intentionally different; compare selected values.
-      return this.#value.length !== this.#initialValue.length
-        || this.#value.some((value) => !(this.#initialValue as any[]).includes(value));
+      return this.#value.length !== this.#initialValue.length || this.#value.some(value => !(this.#initialValue as any[]).includes(value));
     }
     return this.#value !== this.#initialValue;
   }
   #cloneArrayValue(value: TValue | null): TValue | null {
-    return Array.isArray(value) ? [...value] as TValue : value;
+    return Array.isArray(value) ? ([...value] as TValue) : value;
   }
   constructor() {
     super();
     if (typeof this.attachInternals == "function") {
       //some browser dont support attachInternals
       this.#internals = this.attachInternals();
-      this.#internals.role = "combobox"
+      this.#internals.role = "combobox";
     }
     this.#initWebComponent();
     this.#initProp();
@@ -275,12 +279,26 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (this.elements.optionListPopover instanceof JBPopoverWebComponent) {
       this.#setupPopover();
     } else {
-      customElements.whenDefined("jb-popover").then(() => this.#setupPopover())
+      (this.elements.optionListPopover as HTMLElement).addEventListener("init", () => {
+        this.#setupPopover();
+      });
     }
+    this.#initOptionList();
+  }
+  #initOptionList() {
+    this.elements.optionListSlot.assignedElements().forEach(x => {
+      if (x instanceof JBOptionWebComponent) {
+        this.#addOption(x);
+      } else if (x.localName === "jb-option-list") {
+        (x as JBOptionListWebComponent<unknown, TValue>).optionListDom.forEach(op => {
+          this.#addOption(op);
+        });
+      }
+    });
   }
   #setupPopover() {
     if (this.popoverPosition == "fixed") {
-      this.elements.optionListPopover.bindTarget(this.elements.selectBox);
+      this.elements.optionListPopover.bindTarget?.(this.elements.selectBox);
     } else {
       this.elements.optionListPopover.unBindTarget();
     }
@@ -297,7 +315,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     const shadowRoot = this.attachShadow({
       mode: "open",
       delegatesFocus: true,
-      serializable: true
+      serializable: true,
     });
     registerDefaultVariables();
     const html = `<style>${CSS} ${VariablesCSS}</style>\n${renderHTML()}`;
@@ -318,7 +336,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       emptyListPlaceholder: shadowRoot.querySelector(".empty-list-placeholder")!,
       mobileSearchInputWrapper: shadowRoot.querySelector(".mobile-search-input-wrapper")!,
       frontBox: shadowRoot.querySelector(".front-box")!,
-      selectBox: shadowRoot.querySelector(".select-box")!
+      selectBox: shadowRoot.querySelector(".select-box")!,
     };
     this.#registerEventListener();
     this.#updateListEmptyPlaceholder();
@@ -330,11 +348,11 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   #setupDeviceRelates() {
     const onResize = () => {
       if (this.isMobileMode) {
-        this.elements.mobileSearchInputWrapper.appendChild(this.elements.input)
+        this.elements.mobileSearchInputWrapper.appendChild(this.elements.input);
       } else {
         this.elements.frontBox.appendChild(this.elements.input);
       }
-    }
+    };
     addEventListener("resize", onResize);
     onResize();
   }
@@ -345,7 +363,9 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.elements.input.addEventListener("keypress", this.#onInputKeyPress.bind(this));
     this.elements.input.addEventListener("keyup", this.#onInputKeyUp.bind(this));
     this.elements.input.addEventListener("beforeinput", this.#onInputBeforeInput.bind(this));
-    this.elements.input.addEventListener("input", (e) => { this.#onInputInput(e as unknown as InputEvent); });
+    this.elements.input.addEventListener("input", e => {
+      this.#onInputInput(e as unknown as InputEvent);
+    });
     this.addEventListener("focus", this.#onSelectFocus.bind(this), { passive: true });
     this.elements.input.addEventListener("focusout", this.#onInputBlur.bind(this), { passive: true });
     this.elements.arrowIcon.addEventListener("click", this.#onArrowKeyClick.bind(this), { passive: true });
@@ -356,7 +376,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.addEventListener("jb-option-connected", this.#onOptionConnected.bind(this), { passive: true });
     this.elements.optionListSlot.addEventListener("slotchange", this.#onOptionSlotChange.bind(this));
     //in mobile or tablet when popover close front-box still keep focus so we blur 100%.
-    this.elements.optionListPopover.addEventListener("close",()=>this.blur());
+    this.elements.optionListPopover.addEventListener("close", () => this.blur());
   }
 
   #initProp() {
@@ -369,16 +389,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     }
   }
   static get observedAttributes() {
-    return [
-      "label",
-      "message",
-      "clearable",
-      "value",
-      "required",
-      "placeholder",
-      "search-placeholder",
-      "error",
-    ];
+    return ["label", "message", "clearable", "value", "required", "placeholder", "search-placeholder", "error"];
   }
   attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
     // do something when an attribute has changed
@@ -447,7 +458,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (this.multiple && Array.isArray(this.#value) && this.#selectedOptions.values.length < this.#value.length) {
       //in this particular edge case our value is already set but some option maybe missing in first place and added later
       const missing: JBOptionWebComponent<TValue>[] = [];
-      this.#optionList.forEach((op) => {
+      this.#optionList.forEach(op => {
         if (op.selected == false && (this.#value as unknown[]).includes(op.value)) {
           missing.push(op);
         }
@@ -485,13 +496,13 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         return false;
       }
       const selectedOptions: JBOptionWebComponent<TValue>[] = [];
-      this.#optionList.forEach((op) => {
+      this.#optionList.forEach(op => {
         if (value.includes(op.value)) {
-          selectedOptions.push(op)
+          selectedOptions.push(op);
         } else {
           // because in multi select `setValue` only append select and do not deselect options if they are not in list (it used internally when new item selected) so we de-select here.
           op.selected = false;
-          this.#selectedOptions.delete(op)
+          this.#selectedOptions.delete(op);
         }
       });
       if (selectedOptions.length == 0 && value.length > 0) {
@@ -504,16 +515,20 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     return false;
   }
   //null option mean deselect all
-  #setSelectedOption(options: JBOptionWebComponent<TValue>[]): void
-  #setSelectedOption(option: JBOptionWebComponent<TValue> | null): void
+  #setSelectedOption(options: JBOptionWebComponent<TValue>[]): void;
+  #setSelectedOption(option: JBOptionWebComponent<TValue> | null): void;
   #setSelectedOption(option: JBOptionWebComponent<TValue>[] | JBOptionWebComponent<TValue> | null): void {
     if (option) {
       if (this.multiple) {
         const selectOption = (op: JBOptionWebComponent<TValue>) => {
           op.selected = true;
           this.#selectedOptions.add(op);
-        }
-        Array.isArray(option) ? option.forEach(op => { selectOption(op) }) : selectOption(option)
+        };
+        Array.isArray(option)
+          ? option.forEach(op => {
+              selectOption(op);
+            })
+          : selectOption(option);
       } else {
         // single select
         if (Array.isArray(option)) return;
@@ -527,11 +542,13 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     }
   }
   #deSelectAllOptions() {
-    this.#optionList.forEach((x) => { x.selected = false });
+    this.#optionList.forEach(x => {
+      x.selected = false;
+    });
   }
-  #setValue(value: null, option: null): void
-  #setValue(value: TValue, option: JBOptionWebComponent<TValue>): void
-  #setValue(value: TValue, option: JBOptionWebComponent<TValue>[]): void
+  #setValue(value: null, option: null): void;
+  #setValue(value: TValue, option: JBOptionWebComponent<TValue>): void;
+  #setValue(value: TValue, option: JBOptionWebComponent<TValue>[]): void;
   #setValue(value: TValue | null, option: JBOptionWebComponent<TValue> | JBOptionWebComponent<TValue>[] | null): void {
     this.#notFoundedValue = null;
     this.#value = value;
@@ -541,7 +558,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         this.textValue = "";
       } else {
         // on multiple we clear old selected options
-        this.#selectedOptions.clear()
+        this.#selectedOptions.clear();
       }
       this.#updateSelectedOptionDom();
       //will deselect all option
@@ -552,8 +569,9 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         this.elements.input.placeholder = this.placeholder;
       }
     } else {
-
-      if (!this.multiple) { this.textValue = ""; }
+      if (!this.multiple) {
+        this.textValue = "";
+      }
       //for typescript error
       Array.isArray(option) ? this.#setSelectedOption(option) : this.#setSelectedOption(option);
       this.#updateSelectedOptionDom();
@@ -619,10 +637,9 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.#dispatchOnChangeEvent();
   }
   #onInputKeyPress(e: KeyboardEvent) {
-    const event = createKeyboardEvent("keypress", e, {})
+    const event = createKeyboardEvent("keypress", e, {});
     this.dispatchEvent(event);
   }
-
 
   #onInputBeforeInput(_e: InputEvent) {
     // const inputtedText = e.data || "";
@@ -656,15 +673,17 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         break;
       case "Enter":
         this.#optionList.forEach(x => {
-          if (x.isActive) { x.toggleOption(); }
-        })
+          if (x.isActive) {
+            x.toggleOption();
+          }
+        });
         break;
     }
     this.#triggerOnInputKeyup(e);
   }
   /**
-* used when change activeItem with arrow keys 
-*/
+   * used when change activeItem with arrow keys
+   */
   #activePrevOption() {
     const optionList = this.optionListWithOrder;
     const activeOption = optionList.find((option, index) => {
@@ -677,7 +696,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         }
         return true;
       }
-      return false
+      return false;
     });
     const lastOption = optionList[optionList.length - 1];
     if (!activeOption && lastOption) {
@@ -686,8 +705,8 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     }
   }
   /**
-  * used when change activeItem with arrow keys 
-  */
+   * used when change activeItem with arrow keys
+   */
   #activeNextOption() {
     const optionList = this.optionListWithOrder;
     const activeOption = optionList.find((option, index) => {
@@ -700,10 +719,13 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         }
         return true;
       }
-      return false
+      return false;
     });
     const firstOption = optionList[0];
-    if (!activeOption && firstOption) { firstOption.isActive = true; firstOption.scrollIntoView({ block: "nearest" }) }
+    if (!activeOption && firstOption) {
+      firstOption.isActive = true;
+      firstOption.scrollIntoView({ block: "nearest" });
+    }
   }
   #handleSelectedValueDisplay(inputValue: string) {
     if (inputValue !== "") {
@@ -713,8 +735,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     }
   }
   #triggerOnInputKeyup(e: KeyboardEvent) {
-
-    const event = createKeyboardEvent('keyup', e, {})
+    const event = createKeyboardEvent("keyup", e, {});
     this.dispatchEvent(event);
   }
   #onInputChange(e: Event) {
@@ -724,7 +745,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   }
   #onSelectFocus(e: FocusEvent) {
     if (e.composedPath().find(x => x == this.elements.clearButton)) {
-      // we don't want focus when user click on clear button 
+      // we don't want focus when user click on clear button
       return;
     }
     this.focus();
@@ -734,7 +755,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (this.elements.arrowIcon.contains(focusedElement)) {
       if (this.isOpen) {
         this.blur();
-        return
+        return;
       } else {
         return;
       }
@@ -744,7 +765,13 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       //focused element is children of slots of us like option content
       this.contains(focusedElement)
     ) {
-      focusedElement.addEventListener("blur", (e) => { this.#onInputBlur(e as FocusEvent) }, { once: true, passive: true })
+      focusedElement.addEventListener(
+        "blur",
+        e => {
+          this.#onInputBlur(e as FocusEvent);
+        },
+        { once: true, passive: true },
+      );
     } else {
       this.blur();
     }
@@ -754,14 +781,14 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       return;
     }
 
-    if(this.#selectedOption && !this.multiple){
-      this.#selectedOption.scrollIntoView({behavior:"instant",block:"nearest"})
-    }else if(this.multiple && this.#selectedOptions.size>0){
-      this.#selectedOptions.values()?.next()?.value?.scrollIntoView({behavior:"instant",block:"nearest"})
+    if (this.#selectedOption && !this.multiple) {
+      this.#selectedOption.scrollIntoView({ behavior: "instant", block: "nearest" });
+    } else if (this.multiple && this.#selectedOptions.size > 0) {
+      this.#selectedOptions.values()?.next()?.value?.scrollIntoView({ behavior: "instant", block: "nearest" });
     }
     if (this.isMobileMode) {
       this.elements.input.placeholder = this.#searchPlaceholder;
-    }else{
+    } else {
       // in mobile we don't focus on search by default
       this.elements.input.focus();
     }
@@ -790,20 +817,22 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.elements.input.blur();
     // frontbox has a focus in tablet,... we blur it here
     this.elements.frontBox.blur();
-    this.#optionList.forEach(x => { x.isActive = false })
+    this.#optionList.forEach(x => {
+      x.isActive = false;
+    });
   }
 
   close(): void {
     this.blur();
   }
   #setShowOptionListA11y() {
-    this.#internals.states.add("open")
+    this.#internals.states.add("open");
     this.#internals.ariaExpanded = "true";
     this.elements.input.setAttribute("aria-expanded", "true");
     this.elements.arrowIcon.setAttribute("aria-expanded", "true");
   }
   #setHideOptionListA11y() {
-    this.#internals.states.delete("open")
+    this.#internals.states.delete("open");
     this.#internals.ariaExpanded = "false";
     this.elements.input.setAttribute("aria-expanded", "false");
     this.elements.arrowIcon.setAttribute("aria-expanded", "false");
@@ -817,7 +846,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     const prevOption = this.#selectedOption;
     const wasDirty = this.#isDirty;
     //because jb-option may be in another shadow dom like jb-option-list we have to get first composed element as a target
-    const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
+    const target = e.composedPath()[0] as JBOptionWebComponent<TValue>;
     if (target.localName === "jb-option") {
       const value = target.value!;
       this.#selectOption(value, target);
@@ -831,39 +860,44 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
         this.#isDirty = wasDirty;
       }
     }
-
   }
   #onOptionDeselect(e: Event) {
     const target = e.composedPath()[0] as JBOptionWebComponent<unknown>;
     this.#isDirty = true;
     //this only works on multi mode
     target.selected = false;
-    this.#selectedOptions.delete(target as JBOptionWebComponent<TValue>)
+    this.#selectedOptions.delete(target as JBOptionWebComponent<TValue>);
     this.#updateSelectedOptionDom();
     if (Array.isArray(this.#value)) {
       const index = this.#value.indexOf(target.value);
       if (index !== -1) this.#value.splice(index, 1);
-      if(this.#value.length === 0){
-        this.#setValue(null,null);
+      if (this.#value.length === 0) {
+        this.#setValue(null, null);
       }
     } else if (this.value === target.value) {
-      this.#setValue(null,null);
+      this.#setValue(null, null);
     }
-    this.#value = this.#value
+    this.#value = this.#value;
     this.#checkValidity(true);
   }
   //called when an jb-Option connected to the dom
   #onOptionConnected(e: CustomEvent) {
     e.stopPropagation();
-    const target = (e.composedPath()[0] as JBOptionWebComponent<TValue>);
-    target.addEventListener("jb-option-disconnected", this.#onOptionDisconnected.bind(this), { once: true, passive: true });
-    target.setSelectElement(this);
-    this.#optionList.add(target);
+    const target = e.composedPath()[0] as JBOptionWebComponent<TValue>;
+    this.#addOption(target);
+  }
+  #addOption(option: JBOptionWebComponent<TValue>) {
+    if (this.#optionList.has(option)) {
+      return;
+    }
+    option.addEventListener("jb-option-disconnected", this.#onOptionDisconnected.bind(this), { once: true, passive: true });
+    option.setSelectElement(this);
+    this.#optionList.add(option);
     if (this.#notFoundedValue !== null) {
       this.#setValueOnOptionListChanged();
     }
+    option.addEventListener("mouseenter", this.#onOptionHover, { passive: true });
     this.#updateListEmptyPlaceholder();
-    target.addEventListener("mouseenter", this.#onOptionHover)
   }
   #onOptionDisconnected(e: CustomEvent) {
     e.stopPropagation();
@@ -873,24 +907,26 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     if (target.value == this.#value) {
       this.#setValueOnOptionListChanged();
     }
-    target.removeEventListener("mouseenter", this.#onOptionHover)
+    target.removeEventListener("mouseenter", this.#onOptionHover);
   }
   #onOptionHover = (e: MouseEvent) => {
     const target = e.target as JBOptionWebComponent<TValue>;
     if (!target.isActive) {
-      this.#optionList.forEach(x => { x.isActive = false });
+      this.#optionList.forEach(x => {
+        x.isActive = false;
+      });
     }
     target.isActive = true;
-  }
+  };
   #selectOption(value: TValue, optionDom: JBOptionWebComponent<TValue>) {
     this.#isDirty = true;
     if (this.multiple) {
       if (Array.isArray(this.#value)) {
-        value = [...this.#value, value] as TValue
+        value = [...this.#value, value] as TValue;
       } else if (this.#value !== null && this.#value !== undefined) {
-        value = [this.#value, value] as TValue
+        value = [this.#value, value] as TValue;
       } else {
-        value = [value] as TValue
+        value = [value] as TValue;
       }
     }
     this.#setValue(value, optionDom);
@@ -905,12 +941,12 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.elements.messageBox.innerHTML = message;
     //invalid state is used for ui purpose
     this.#internals.states?.add("invalid");
-    this.#internals.ariaInvalid = "true"
+    this.#internals.ariaInvalid = "true";
   }
   clearValidationError() {
     this.elements.messageBox.innerHTML = this.getAttribute("message") || "";
     this.#internals.states?.delete("invalid");
-    this.#internals.ariaInvalid = "false"
+    this.#internals.ariaInvalid = "false";
   }
   #dispatchOnChangeEvent() {
     const event = new Event("change", { bubbles: true, cancelable: true });
@@ -937,13 +973,13 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   #createDefaultSelectedValueDom() {
     let contentNodes: Node[] = [];
     if (this.multiple) {
-      const wrapperDiv = document.createElement('div');
+      const wrapperDiv = document.createElement("div");
       wrapperDiv.style.display = "flex";
       const divider = document.createElement("div");
       divider.innerHTML = ",";
       divider.classList.add("multiple-divider");
       Array.from(this.#selectedOptions).forEach((x, i) => {
-        wrapperDiv.append(...(i !== 0 ? [divider.cloneNode(true)] : []), ...x.optionContent)
+        wrapperDiv.append(...(i !== 0 ? [divider.cloneNode(true)] : []), ...x.optionContent);
       });
       contentNodes = [wrapperDiv];
     } else {
@@ -955,7 +991,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
 
     const selectedOptionDom = document.createElement("div");
     selectedOptionDom.classList.add("selected-value");
-    selectedOptionDom.part.add("selected-value")
+    selectedOptionDom.part.add("selected-value");
     selectedOptionDom.append(...contentNodes);
     return selectedOptionDom;
   }
@@ -965,7 +1001,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
       validationList.push({
         validator: undefined,
         message: this.getAttribute("error")!,
-        stateType: "customError"
+        stateType: "customError",
       });
     }
     if (this.required) {
@@ -976,7 +1012,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
           return value !== null && value !== undefined;
         },
         message: message,
-        stateType: "valueMissing"
+        stateType: "valueMissing",
       });
     }
     return validationList;
@@ -985,33 +1021,33 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   #checkValidity(showError: boolean) {
     if (!this.isAutoValidationDisabled) {
       if (this.#internals.states.has("invalid")) {
-        // if we currently showing error to user it make sure error get updated (when failed validation changed of function return different string as an error) 
+        // if we currently showing error to user it make sure error get updated (when failed validation changed of function return different string as an error)
         showError = true;
       }
       return this.#validation.checkValidity({ showError });
     }
   }
   /**
- * @public
- * @description this method used to check for validity but doesn't show error to user and just return the result
- * this method used by #internal of component
- */
+   * @public
+   * @description this method used to check for validity but doesn't show error to user and just return the result
+   * this method used by #internal of component
+   */
   checkValidity(): boolean {
     const validationResult = this.#validation.checkValiditySync({ showError: false });
     if (!validationResult.isAllValid) {
-      const event = new CustomEvent('invalid');
+      const event = new CustomEvent("invalid");
       this.dispatchEvent(event);
     }
     return validationResult.isAllValid;
   }
   /**
-  * @public
- * @description this method used to check for validity and show error to user
- */
+   * @public
+   * @description this method used to check for validity and show error to user
+   */
   reportValidity(): boolean {
     const validationResult = this.#validation.checkValiditySync({ showError: true });
     if (!validationResult.isAllValid) {
-      const event = new CustomEvent('invalid');
+      const event = new CustomEvent("invalid");
       this.dispatchEvent(event);
     }
     return validationResult.isAllValid;
@@ -1021,19 +1057,20 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
    */
   #setValidationResult(result: ValidationResult<ValidationValue<TValue>>) {
     if (result.isAllValid) {
-      this.#internals?.setValidity({}, '');
+      this.#internals?.setValidity({}, "");
     } else {
       const states: ValidityStateFlags = {};
       let message = "";
-      result.validationList.forEach((res) => {
+      result.validationList.forEach(res => {
         if (!res.isValid) {
           if (res.validation.stateType) {
             states[res.validation.stateType] = true;
           } else {
             states["customError"] = true;
           }
-          if (message == '') { message = res.message ?? ""; }
-
+          if (message == "") {
+            message = res.message ?? "";
+          }
         }
       });
       this.#internals?.setValidity(states, message);
@@ -1046,7 +1083,6 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
   get validity() {
     return this.#internals?.validity;
   }
-
 }
 defineWebComponent("jb-select", JBSelectWebComponent);
 
