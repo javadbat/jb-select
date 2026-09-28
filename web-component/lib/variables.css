@@ -46,6 +46,9 @@
   --margin: var(--jb-select-margin, 0 0);
   --label-font-weight: var(--jb-select-label-font-weight, 300);
   --box-margin: var(--jb-select-box-margin, 0px);
+  --box-shadow: var(--jb-select-box-shadow, var(--jb-control-shadow));
+  --box-shadow-focus: var(--jb-select-box-shadow-focus, var(--jb-control-shadow-focus));
+  --box-corner-shape: var(--jb-corner-shape);
   --arrow-icon-margin: var(--jb-select-arrow-icon-margin, 0 0 0 0);
   --message-box-display: var(--jb-select-message-box-display, block);
 }

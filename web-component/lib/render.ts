@@ -5,7 +5,7 @@ export function renderHTML(): string {
     return /* html */ `
   <div class="jb-select-web-component">
     <label class="label-value"></label>
-    <div class="select-box">
+    <div class="select-box control">
         <div class="inline-start">
             <slot name="inline-start"></slot>
         </div>

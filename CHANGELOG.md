@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.2.0] - 2026-09-28
+
+### Added
+
+- add corner shape and box-shadow design system token support 
+
 ## [9.1.1] - 2026-09-13
 
 ### Fixed

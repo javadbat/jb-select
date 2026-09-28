@@ -52,13 +52,14 @@
 
 
 
-  .select-box {
+  .control{
     width: 100%;
     box-sizing: border-box;
     height: var(--height);
     border: solid var(--border-width) var(--border-color);
     border-bottom: solid var(--border-bottom-width) var(--border-color);
     border-radius: var(--box-border-radius);
+    corner-shape: var(--box-corner-shape);
     background-color: var(--select-box-bg-color);
     margin: var(--box-margin);
     overflow: hidden;
@@ -67,7 +68,10 @@
     grid-template-columns: auto 1fr auto;
     padding-inline-end: var(--box-padding-end);
     align-items: center;
-
+    box-shadow: var(--box-shadow);
+    &:focus-within{
+      box-shadow: var(--box-shadow-focus);
+    }
     .inline-start {
       height: 100%;
       width: auto;
