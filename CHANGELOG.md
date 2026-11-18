@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.2.1] - 2026-11-18
+
+### Fixed
+
+- fix [disabled but still selectable bug](https://github.com/javadbat/jb-select/issues/15);
+- fix search input misplacement after popover update
+- fix aria-hidden warnings.
+- fix empty return of Assigned Elements on selected option problem.
+
 ## [9.2.0] - 2026-09-28
 
 ### Added
