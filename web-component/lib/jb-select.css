@@ -146,6 +146,9 @@
             color: var(--placeholder-color);
             font-size: var(--placeholder-font-size);
           }
+          &[disabled] {
+            pointer-events: none;
+          }
         }
       }
     }

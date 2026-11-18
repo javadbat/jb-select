@@ -842,6 +842,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.dispatchEvent(event);
   }
   #onOptionSelect(e: Event) {
+    if(this.#disabled) return;
     const prevValue = this.#value;
     const prevOption = this.#selectedOption;
     const wasDirty = this.#isDirty;
