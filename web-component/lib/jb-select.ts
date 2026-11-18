@@ -286,7 +286,7 @@ export class JBSelectWebComponent<TValue = any> extends JBBaseComponent implemen
     this.#initOptionList();
   }
   #initOptionList() {
-    this.elements.optionListSlot.assignedElements().forEach(x => {
+    this.elements.optionListSlot.assignedElements()?.forEach(x => {
       if (x instanceof JBOptionWebComponent) {
         this.#addOption(x);
       } else if (x.localName === "jb-option-list") {
